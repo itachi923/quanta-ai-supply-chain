@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>廣達 (2382) 與 AI 伺服器產業鏈樹狀支鏈圖 · Quanta Supply Chain Atlas</title>
-  <meta name="description" content="互動式樹狀支鏈圖！點擊任何一家公司，即時串聯並高亮整個上下游產業鏈路徑。從台積電輝達晶片、川湖奇鋐零組件，到廣達中游整合與微軟Google終端客戶。">
+  <meta name="description" content="互動式樹狀支鏈圖！點擊任何一家公司，即時串聯並高亮整個上下游產業鏈路徑。包含廣達、鴻海、緯創、緯穎、英業達、技嘉等中游代工六大巨頭。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -62,7 +62,7 @@
       border-bottom: 1px solid rgba(195, 222, 245, 0.8);
     }
     .nav-container {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
       padding: 14px 24px;
       display: flex;
@@ -116,20 +116,20 @@
     }
 
     .container {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
-      padding: 30px 24px 60px;
+      padding: 25px 24px 60px;
     }
 
     /* Hero 區域 */
     .hero {
       text-align: center;
-      padding: 40px 20px 35px;
+      padding: 35px 20px 30px;
       background: radial-gradient(circle at center, rgba(255, 255, 255, 0.96) 0%, rgba(240, 247, 255, 0.7) 100%);
       border-radius: var(--radius-lg);
       border: 1px solid var(--card-border);
       box-shadow: var(--shadow-md);
-      margin-bottom: 35px;
+      margin-bottom: 30px;
     }
     .hero-tag {
       display: inline-flex;
@@ -141,14 +141,14 @@
       border-radius: 20px;
       font-size: 0.88rem;
       font-weight: 800;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .hero h1 {
-      font-size: 2.35rem;
+      font-size: 2.3rem;
       color: var(--text-title);
       font-weight: 800;
       line-height: 1.35;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .hero h1 span {
       background: linear-gradient(135deg, #0284c7 0%, #1d4ed8 100%);
@@ -156,10 +156,10 @@
       -webkit-text-fill-color: transparent;
     }
     .hero p {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       color: var(--text-muted);
-      max-width: 860px;
-      margin: 0 auto 15px;
+      max-width: 880px;
+      margin: 0 auto;
       line-height: 1.75;
     }
 
@@ -170,9 +170,9 @@
       background: #ffffff;
       border-radius: var(--radius-lg);
       border: 2px solid #bae6fd;
-      padding: 30px 24px;
+      padding: 26px 20px;
       box-shadow: var(--shadow-md);
-      margin-bottom: 50px;
+      margin-bottom: 45px;
       position: relative;
     }
     .tree-header {
@@ -180,13 +180,13 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 20px;
-      padding-bottom: 16px;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
       border-bottom: 1px solid #e2e8f0;
     }
     .tree-title-group h2 {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       color: var(--blue-navy);
       font-weight: 800;
       display: flex;
@@ -194,24 +194,24 @@
       gap: 8px;
     }
     .tree-title-group p {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     /* 快捷篩選標籤 */
     .tree-quick-filters {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
       align-items: center;
     }
     .filter-btn {
       background: #f8fafc;
       border: 1px solid #cbd5e1;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      padding: 5px 12px;
+      border-radius: 18px;
+      font-size: 0.82rem;
       font-weight: 700;
       color: var(--text-body);
       cursor: pointer;
@@ -232,7 +232,7 @@
     /* 樹狀圖畫布 (SVG Board) */
     .tree-viewport {
       width: 100%;
-      height: 720px;
+      height: 760px;
       background: radial-gradient(circle at center, #ffffff 0%, #f8fbff 100%);
       border: 1.5px solid #e2e8f0;
       border-radius: 14px;
@@ -271,7 +271,7 @@
       position: absolute;
       top: 14px;
       right: 14px;
-      width: 340px;
+      width: 350px;
       max-height: calc(100% - 28px);
       background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(10px);
@@ -305,7 +305,7 @@
       color: #0f172a;
     }
 
-    /* SVG 節點與連接線樣式 */
+    /* SVG 節點與連接線樣式 —— 徹底消除抖動 */
     .tree-link {
       fill: none;
       stroke: #cbd5e1;
@@ -327,33 +327,33 @@
       to { stroke-dashoffset: 0; }
     }
 
+    /* 節點群組：絕對不可使用 transform: scale 防止滑鼠引發無限抖動 (Jitter) */
     .node-group {
       cursor: pointer;
-      transition: opacity 0.3s, transform 0.25s;
+      transition: opacity 0.2s ease;
     }
-    .node-group:hover {
-      transform: scale(1.05);
+    .node-group text {
+      pointer-events: none; /* 防止滑鼠在文字與框線間切換引發抖動 */
+      user-select: none;
     }
     .node-group.faded {
-      opacity: 0.2;
-    }
-    .node-group.active text {
-      font-weight: 800;
+      opacity: 0.18;
     }
     .node-box {
       rx: 8px;
       ry: 8px;
-      stroke-width: 2px;
-      transition: all 0.25s;
+      stroke-width: 1.8px;
+      transition: stroke-width 0.15s, stroke 0.15s, filter 0.15s;
     }
+    /* 懸停改用外框加粗與發光陰影，位置絕對靜止不抖動 */
     .node-group:hover .node-box {
-      stroke-width: 3px;
-      filter: drop-shadow(0 4px 10px rgba(2, 132, 199, 0.3));
+      stroke-width: 3.5px;
+      filter: drop-shadow(0 3px 10px rgba(2, 132, 199, 0.45));
     }
     .node-group.active .node-box {
-      stroke-width: 3.5px;
+      stroke-width: 3.8px;
       stroke: #f59e0b !important;
-      filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.5));
+      filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.6));
     }
 
     /* 輔助單元：BOM 表成本長條圖與說明 */
@@ -403,11 +403,11 @@
     footer {
       background: #0f2c4d;
       color: #94a3b8;
-      padding: 40px 24px 25px;
-      margin-top: 50px;
+      padding: 35px 24px 25px;
+      margin-top: 40px;
     }
     .footer-content {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -433,7 +433,7 @@
     @media (max-width: 768px) {
       .hero h1 { font-size: 1.8rem; }
       .tree-viewport { height: 600px; }
-      .inspector-panel { width: 90%; left: 5%; right: 5%; }
+      .inspector-panel { width: 92%; left: 4%; right: 4%; }
       .bom-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -448,12 +448,11 @@
         <div>
           <span>廣達 (2382) 產業鏈樹狀支鏈圖</span>
         </div>
-        <span class="brand-badge">TREE BRANCH MAP</span>
+        <span class="brand-badge">TREE BRANCH ATLAS</span>
       </a>
       <ul class="nav-links">
         <li><a href="#tree-area">樹狀支鏈圖</a></li>
         <li><a href="#bom-area">機櫃BOM成本</a></li>
-        <li><a href="#guide-area">使用說明</a></li>
       </ul>
     </div>
   </header>
@@ -465,7 +464,7 @@
       <div class="hero-tag">🔗 INTERACTIVE NODE-LINK SUPPLY CHAIN TREE</div>
       <h1>點擊任一公司 · 瞬間展開<span>完整產業鏈脈絡</span></h1>
       <p>
-        告別死板方塊！本站採用<strong>樹狀支鏈拓撲圖（Tree Branch Diagram）</strong>，以<strong>中游核心【廣達 (2382)】</strong>為中樞，向左延伸出 7 大上游關鍵零組件枝條，向右延展至全球四大 CSP 雲端客戶。<br>
+        告別死板方塊！本站採用<strong>雙向樹狀支鏈拓撲圖</strong>，以<strong>中游六大代工巨頭（廣達、鴻海、緯創、緯穎、英業達、技嘉）</strong>為中樞，向左延伸 6 大上游關鍵零組件枝條，向右延展至全球四大 CSP 雲端客戶。<br>
         <strong>只要點擊畫面中任何一家公司</strong>，系統立即點亮其連通的全產業鏈路徑，並在右側即時解析其採購、組裝與出貨全貌！
       </p>
     </section>
@@ -476,18 +475,19 @@
     <section id="tree-area" class="tree-section">
       <div class="tree-header">
         <div class="tree-title-group">
-          <h2>🌳 廣達 AI 伺服器產業鏈 · 樹狀互動支鏈圖</h2>
-          <p>💡 點擊下方節點立即點亮連通路徑；可點擊標籤快速聚焦指定指標股：</p>
+          <h2>🌳 AI 伺服器產業鏈 · 樹狀互動支鏈全景圖</h2>
+          <p>💡 點擊下方任何節點立即高亮全鏈；文字已加寬防溢出，鼠標平穩不抖動：</p>
         </div>
 
         <div class="tree-quick-filters">
           <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted);">一鍵聚焦：</span>
           <button class="filter-btn active" onclick="focusNode('quanta')">🤖 廣達 (2382)</button>
+          <button class="filter-btn" onclick="focusNode('foxconn')">🦊 鴻海 (2317)</button>
+          <button class="filter-btn" onclick="focusNode('wistron')">🧩 緯創 (3231)</button>
+          <button class="filter-btn" onclick="focusNode('wiwynn')">☁️ 緯穎 (6669)</button>
           <button class="filter-btn" onclick="focusNode('kingslide')">🗄️ 川湖 (2059)</button>
           <button class="filter-btn" onclick="focusNode('auras')">❄️ 奇鋐 (3017)</button>
-          <button class="filter-btn" onclick="focusNode('tsmc')">晶圓 台積電</button>
-          <button class="filter-btn" onclick="focusNode('nvidia')">晶片 輝達</button>
-          <button class="filter-btn" onclick="focusNode('msft')">客戶 微軟</button>
+          <button class="filter-btn" onclick="focusNode('msft')">☁️ 微軟 (Azure)</button>
           <button class="filter-btn reset-btn" onclick="resetHighlight()">🔄 顯示全產業鏈</button>
         </div>
       </div>
@@ -502,7 +502,7 @@
         </div>
 
         <!-- 樹狀 SVG 畫布 -->
-        <svg id="tree-svg" width="100%" height="100%"></svg>
+        <svg id="tree-svg" width="100%" height="100%" viewBox="0 0 1340 760"></svg>
 
         <!-- 點擊透視面板 (Inspector Panel) -->
         <div id="inspector" class="inspector-panel">
@@ -542,7 +542,7 @@
           </div>
           <div class="bom-item">
             <div class="bom-meta">
-              <span>🤖 廣達整機組裝代工與軟體整合</span>
+              <span>🤖 中游伺服器代工組裝與軟體整合</span>
               <span>6% ($600 萬)</span>
             </div>
             <div class="bom-progress"><div class="bom-fill" style="width:6%; background:#2563eb;"></div></div>
@@ -580,7 +580,7 @@
         <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:20px; font-size:0.92rem; line-height:1.7;">
           <h4 style="color:var(--blue-navy); margin-bottom:8px; font-size:1.05rem;">💡 樹狀支鏈圖的投資觀察結論：</h4>
           <p>
-            • <strong>中游廣達：</strong>雖然佔比 6%，但單櫃造價高達 1 億元，<strong>單櫃毛利高達 500~600 萬元</strong>！出貨幾千櫃即可創造數百億營收與獲利。<br>
+            • <strong>中游代工群（廣達、鴻海、緯穎等）：</strong>雖然佔比 6%，但單櫃造價高達 1 億元，<strong>單櫃毛利高達 500~600 萬元</strong>！出貨幾千櫃即可創造數百億營收與獲利。<br>
             • <strong>上游川湖、奇鋐：</strong>雖然佔比僅 3%~5%，但因具備專利定價權與技術門檻，毛利率高達 25%~68%，獲利純度最高！<br>
             • <strong>下游客戶：</strong>微軟、Google、Meta 買走這台一億元機櫃後，透過雲端 AI API 與廣告獲利，年產值達數千億美元。
           </p>
@@ -608,64 +608,70 @@
        樹狀拓撲圖資料與互動引擎腳本 (Vanilla SVG Tree Engine)
        ======================================================== -->
   <script>
-    // 樹狀節點資料定義
+    // 樹狀節點資料定義 —— 完美布局，文字加寬，中游六巨頭齊全
     const treeData = {
-      // 核心根節點
       nodes: [
-        // 中游中樞
-        { id: "quanta", name: "廣達電腦", code: "2382", role: "中游代工霸主", level: "mid", x: 600, y: 360, w: 140, h: 50, color: "#2563eb", icon: "🤖" },
+        // ==========================================
+        // 欄位 1：最左側上游具體公司 (x: 80, w: 140)
+        // ==========================================
+        { id: "tsmc", name: "台積電", code: "2330", role: "晶圓代工/CoWoS", level: "up_leaf", x: 80, y: 55, w: 140, h: 42, color: "#0369a1", icon: "🏭" },
+        { id: "nvidia", name: "輝達", code: "NVDA", role: "GPU/CPU晶片核心", level: "up_leaf", x: 80, y: 110, w: 140, h: 42, color: "#0369a1", icon: "⚡" },
 
-        // 左側一級主幹（上游領域）
-        { id: "b_chip", name: "運算半導體", code: "STAGE 1-A", level: "up_branch", x: 400, y: 120, w: 110, h: 36, color: "#0284c7", icon: "🧠" },
-        { id: "b_cooling", name: "水冷散熱系統", code: "STAGE 1-B", level: "up_branch", x: 400, y: 220, w: 110, h: 36, color: "#0284c7", icon: "❄️" },
-        { id: "b_rail", name: "重型導軌機殼", code: "STAGE 1-C", level: "up_branch", x: 400, y: 320, w: 110, h: 36, color: "#0284c7", icon: "🗄️" },
-        { id: "b_power", name: "雲端電力機箱", code: "STAGE 1-D", level: "up_branch", x: 400, y: 410, w: 110, h: 36, color: "#0284c7", icon: "⚡" },
-        { id: "b_pcb", name: "高階PCB與材料", code: "STAGE 1-E", level: "up_branch", x: 400, y: 500, w: 110, h: 36, color: "#0284c7", icon: "🧬" },
-        { id: "b_cable", name: "高速傳輸線束", code: "STAGE 1-F", level: "up_branch", x: 400, y: 590, w: 110, h: 36, color: "#0284c7", icon: "🔌" },
+        { id: "auras", name: "奇鋐", code: "3017", role: "水冷板/CDU系統", level: "up_leaf", x: 80, y: 175, w: 140, h: 42, color: "#0284c7", icon: "❄️" },
+        { id: "cci", name: "雙鴻", code: "3324", role: "液冷散熱模組", level: "up_leaf", x: 80, y: 230, w: 140, h: 42, color: "#0284c7", icon: "💧" },
 
-        // 左側二級葉子節點（上游具體公司）
-        { id: "tsmc", name: "台積電", code: "2330", role: "晶圓代工/CoWoS", level: "up_leaf", x: 180, y: 80, w: 120, h: 42, color: "#0369a1", icon: "🏭" },
-        { id: "nvidia", name: "輝達", code: "NVDA", role: "GPU/CPU晶片核心", level: "up_leaf", x: 180, y: 140, w: 120, h: 42, color: "#0369a1", icon: "⚡" },
+        { id: "kingslide", name: "川湖", code: "2059", role: "專利導軌(毛利68%)", level: "up_leaf", x: 80, y: 295, w: 140, h: 42, color: "#d97706", icon: "👑" },
+        { id: "chenbro", name: "勤誠", code: "8210", role: "伺服器機箱霸主", level: "up_leaf", x: 80, y: 350, w: 140, h: 42, color: "#0284c7", icon: "📦" },
 
-        { id: "auras", name: "奇鋐", code: "3017", role: "水冷板/CDU系統", level: "up_leaf", x: 180, y: 200, w: 120, h: 42, color: "#0284c7", icon: "❄️" },
-        { id: "cci", name: "雙鴻", code: "3324", role: "液冷散熱模組", level: "up_leaf", x: 180, y: 255, w: 120, h: 42, color: "#0284c7", icon: "💧" },
+        { id: "liteon", name: "光寶科", code: "2301", role: "5.5~33kW電源", level: "up_leaf", x: 80, y: 415, w: 140, h: 42, color: "#0284c7", icon: "⚡" },
+        { id: "delta", name: "台達電", code: "2308", role: "伺服器電源供應", level: "up_leaf", x: 80, y: 470, w: 140, h: 42, color: "#0284c7", icon: "🔋" },
 
-        { id: "kingslide", name: "川湖", code: "2059", role: "專利導軌(毛利68%)", level: "up_leaf", x: 180, y: 310, w: 120, h: 42, color: "#d97706", icon: "👑" },
-        { id: "chenbro", name: "勤誠", code: "8210", role: "伺服器機箱霸主", level: "up_leaf", x: 180, y: 365, w: 120, h: 42, color: "#0284c7", icon: "📦" },
+        { id: "emc", name: "台光電", code: "2383", role: "超高階銅箔基板", level: "up_leaf", x: 80, y: 535, w: 140, h: 42, color: "#0284c7", icon: "🧬" },
+        { id: "gce", name: "金像電", code: "2368", role: "高多層伺服器板", level: "up_leaf", x: 80, y: 590, w: 140, h: 42, color: "#0284c7", icon: "🎛️" },
 
-        { id: "liteon", name: "光寶科", code: "2301", role: "5.5~33kW電源", level: "up_leaf", x: 180, y: 425, w: 120, h: 42, color: "#0284c7", icon: "⚡" },
-        { id: "delta", name: "台達電", code: "2308", role: "伺服器電源供應", level: "up_leaf", x: 180, y: 480, w: 120, h: 42, color: "#0284c7", icon: "🔋" },
+        { id: "bizlink", name: "貿聯-KY", code: "3665", role: "內部高速銅纜線束", level: "up_leaf", x: 80, y: 655, w: 140, h: 42, color: "#0284c7", icon: "🔌" },
 
-        { id: "emc", name: "台光電", code: "2383", role: "超高階銅箔基板", level: "up_leaf", x: 180, y: 540, w: 120, h: 42, color: "#0284c7", icon: "🧬" },
-        { id: "gce", name: "金像電", code: "2368", role: "高多層伺服器板", level: "up_leaf", x: 180, y: 595, w: 120, h: 42, color: "#0284c7", icon: "🎛️" },
+        // ==========================================
+        // 欄位 2：左側上游分類枝幹 (x: 290, w: 160) —— 加寬至 160px，絕不超格！
+        // ==========================================
+        { id: "b_chip", name: "運算半導體", code: "STAGE 1-A", level: "up_branch", x: 290, y: 80, w: 160, h: 38, color: "#0284c7", icon: "🧠" },
+        { id: "b_cooling", name: "水冷散熱系統", code: "STAGE 1-B", level: "up_branch", x: 290, y: 200, w: 160, h: 38, color: "#0284c7", icon: "❄️" },
+        { id: "b_rail", name: "重型導軌機殼", code: "STAGE 1-C", level: "up_branch", x: 290, y: 320, w: 160, h: 38, color: "#0284c7", icon: "🗄️" },
+        { id: "b_power", name: "雲端電力機箱", code: "STAGE 1-D", level: "up_branch", x: 290, y: 440, w: 160, h: 38, color: "#0284c7", icon: "⚡" },
+        { id: "b_pcb", name: "高階PCB與材料", code: "STAGE 1-E", level: "up_branch", x: 290, y: 560, w: 160, h: 38, color: "#0284c7", icon: "🧬" },
+        { id: "b_cable", name: "高速傳輸線束", code: "STAGE 1-F", level: "up_branch", x: 290, y: 655, w: 160, h: 38, color: "#0284c7", icon: "🔌" },
 
-        { id: "bizlink", name: "貿聯-KY", code: "3665", role: "內部高速銅纜線束", level: "up_leaf", x: 180, y: 655, w: 120, h: 42, color: "#0284c7", icon: "🔌" },
+        // ==========================================
+        // 欄位 3：正中樞紐 · 中游伺服器代工六大巨頭 (x: 520, w: 175)
+        // ==========================================
+        { id: "quanta", name: "廣達 (2382)", code: "2382", role: "中游代工霸主(兆元)", level: "mid", x: 520, y: 95, w: 175, h: 48, color: "#2563eb", icon: "🤖" },
+        { id: "foxconn", name: "鴻海 (2317)", code: "2317", role: "全球EMS電子代工龍頭", level: "mid", x: 520, y: 200, w: 175, h: 46, color: "#2563eb", icon: "🦊" },
+        { id: "wistron", name: "緯創 (3231)", code: "3231", role: "GPU運算基板主力代工", level: "mid", x: 520, y: 305, w: 175, h: 46, color: "#2563eb", icon: "🧩" },
+        { id: "wiwynn", name: "緯穎 (6669)", code: "6669", role: "白牌伺服器直供股王", level: "mid", x: 520, y: 410, w: 175, h: 46, color: "#2563eb", icon: "☁️" },
+        { id: "inventec", name: "英業達 (2356)", code: "2356", role: "主機板與伺服器代工", level: "mid", x: 520, y: 515, w: 175, h: 46, color: "#2563eb", icon: "⚡" },
+        { id: "gigabyte", name: "技嘉 (2376)", code: "2376", role: "AI伺服器與主板準系統", level: "mid", x: 520, y: 620, w: 175, h: 46, color: "#2563eb", icon: "🎮" },
 
-        // 右側一級主幹（下游客戶分類）
-        { id: "b_csp", name: "超大規模CSP", code: "STAGE 3-A", level: "down_branch", x: 820, y: 220, w: 110, h: 36, color: "#0d9488", icon: "☁️" },
-        { id: "b_brand", name: "品牌與車載", code: "STAGE 3-B", level: "down_branch", x: 820, y: 450, w: 110, h: 36, color: "#0d9488", icon: "💻" },
+        // ==========================================
+        // 欄位 4：右側下游分類枝幹 (x: 770, w: 155)
+        // ==========================================
+        { id: "b_csp", name: "超大規模CSP", code: "STAGE 3-A", level: "down_branch", x: 770, y: 250, w: 155, h: 38, color: "#0d9488", icon: "☁️" },
+        { id: "b_brand", name: "品牌與車載", code: "STAGE 3-B", level: "down_branch", x: 770, y: 520, w: 155, h: 38, color: "#0d9488", icon: "💻" },
 
-        // 右側二級葉子節點（下游具體大客戶）
-        { id: "msft", name: "微軟 (Azure)", code: "MSFT", role: "OpenAI算力大本營", level: "down_leaf", x: 1020, y: 150, w: 140, h: 46, color: "#0f766e", icon: "☁️" },
-        { id: "goog", name: "Google", code: "GOOGL", role: "Gemini與自研TPU", level: "down_leaf", x: 1020, y: 220, w: 140, h: 46, color: "#0f766e", icon: "🔍" },
-        { id: "aws", name: "亞馬遜 AWS", code: "AMZN", role: "雲端運算市占第一", level: "down_leaf", x: 1020, y: 290, w: 140, h: 46, color: "#0f766e", icon: "📦" },
-        { id: "meta", name: "Meta (臉書)", code: "META", role: "Llama開源大模型", level: "down_leaf", x: 1020, y: 360, w: 140, h: 46, color: "#0f766e", icon: "👥" },
+        // ==========================================
+        // 欄位 5：最右側下游客戶與終端 (x: 1000, w: 160)
+        // ==========================================
+        { id: "msft", name: "微軟 (Azure)", code: "MSFT", role: "OpenAI算力大本營", level: "down_leaf", x: 1000, y: 140, w: 160, h: 44, color: "#0f766e", icon: "☁️" },
+        { id: "goog", name: "Google", code: "GOOGL", role: "Gemini與自研TPU", level: "down_leaf", x: 1000, y: 210, w: 160, h: 44, color: "#0f766e", icon: "🔍" },
+        { id: "aws", name: "亞馬遜 AWS", code: "AMZN", role: "雲端運算市占第一", level: "down_leaf", x: 1000, y: 280, w: 160, h: 44, color: "#0f766e", icon: "📦" },
+        { id: "meta", name: "Meta (臉書)", code: "META", role: "Llama開源大模型", level: "down_leaf", x: 1000, y: 350, w: 160, h: 44, color: "#0f766e", icon: "👥" },
 
-        { id: "apple", name: "蘋果 Apple", code: "AAPL", role: "MacBook主力代工", level: "down_leaf", x: 1020, y: 440, w: 140, h: 46, color: "#0f766e", icon: "🍎" },
-        { id: "tesla", name: "特斯拉", code: "TSLA", role: "自駕中控電腦ECU", level: "down_leaf", x: 1020, y: 510, w: 140, h: 46, color: "#0f766e", icon: "🚗" }
+        { id: "apple", name: "蘋果 Apple", code: "AAPL", role: "MacBook筆電主力", level: "down_leaf", x: 1000, y: 485, w: 160, h: 44, color: "#0f766e", icon: "🍎" },
+        { id: "tesla", name: "特斯拉", code: "TSLA", role: "自駕中控電腦ECU", level: "down_leaf", x: 1000, y: 555, w: 160, h: 44, color: "#0f766e", icon: "🚗" }
       ],
 
       // 連接枝條（Links / Branches）
       links: [
-        // 廣達連向左側上游一級分支
-        { source: "b_chip", target: "quanta" },
-        { source: "b_cooling", target: "quanta" },
-        { source: "b_rail", target: "quanta" },
-        { source: "b_power", target: "quanta" },
-        { source: "b_pcb", target: "quanta" },
-        { source: "b_cable", target: "quanta" },
-
-        // 上游二級葉子連向一級分支
+        // 1. 上游葉子 ➔ 上游分類枝幹
         { source: "tsmc", target: "b_chip" },
         { source: "nvidia", target: "b_chip" },
 
@@ -683,11 +689,43 @@
 
         { source: "bizlink", target: "b_cable" },
 
-        // 廣達連向右側下游一級分支
+        // 2. 上游分類枝幹 ➔ 中游六大代工巨頭 (連通至廣達、鴻海、緯創、緯穎、英業達、技嘉)
+        { source: "b_chip", target: "quanta" },
+        { source: "b_chip", target: "foxconn" },
+        { source: "b_chip", target: "wistron" },
+
+        { source: "b_cooling", target: "quanta" },
+        { source: "b_cooling", target: "foxconn" },
+        { source: "b_cooling", target: "wiwynn" },
+
+        { source: "b_rail", target: "quanta" },
+        { source: "b_rail", target: "foxconn" },
+        { source: "b_rail", target: "inventec" },
+
+        { source: "b_power", target: "quanta" },
+        { source: "b_power", target: "foxconn" },
+        { source: "b_power", target: "gigabyte" },
+
+        { source: "b_pcb", target: "quanta" },
+        { source: "b_pcb", target: "wistron" },
+        { source: "b_pcb", target: "wiwynn" },
+
+        { source: "b_cable", target: "quanta" },
+        { source: "b_cable", target: "foxconn" },
+
+        // 3. 中游六大代工 ➔ 下游分類枝幹
         { source: "quanta", target: "b_csp" },
         { source: "quanta", target: "b_brand" },
 
-        // 下游一級分支連向二級客戶
+        { source: "foxconn", target: "b_csp" },
+        { source: "foxconn", target: "b_brand" },
+
+        { source: "wistron", target: "b_csp" },
+        { source: "wiwynn", target: "b_csp" },
+        { source: "inventec", target: "b_csp" },
+        { source: "gigabyte", target: "b_csp" },
+
+        // 4. 下游分類枝幹 ➔ 終端買家客戶
         { source: "b_csp", target: "msft" },
         { source: "b_csp", target: "goog" },
         { source: "b_csp", target: "aws" },
@@ -698,16 +736,61 @@
       ]
     };
 
-    // 公司詳細情報庫
+    // 公司詳細情報庫 —— 包含廣達與中游五大同業
     const companyDetails = {
       quanta: {
         name: "廣達電腦 (2382)",
         role: "中游核心樞紐 · 全球 AI 伺服器與筆電代工霸主",
-        margin: "8.0% ~ 9.0% (代工同業最高)",
+        margin: "8.0% ~ 9.0% (同業領先)",
         scale: "年營收突破 1.2 兆元新台幣",
-        upstream: "向台積電/輝達採購晶片，向奇鋐買水冷、川湖買滑軌、光寶科買電源。",
-        downstream: "直供微軟 Azure、Google GCP、亞馬遜 AWS、Meta 等資料中心現場插電即用。",
+        upstream: "採購台積電/輝達晶片、奇鋐水冷、川湖重軌、光寶科電源、台光電PCB。",
+        downstream: "直供微軟 Azure、Google GCP、亞馬遜 AWS、Meta 資料中心現場插電即用。",
         highlights: "輝達第一線 Tier-1 首發合作夥伴，掌握 L6 到 L12 一條龍整機機櫃系統整合能力，為全球 AI 算力落地的心臟。"
+      },
+      foxconn: {
+        name: "鴻海 (2317)",
+        role: "中游代工巨擘 · 全球電子代工 (EMS) 龍頭與 GB200 垂直整合主力",
+        margin: "6.0% ~ 6.5%",
+        scale: "年營收突破 6 兆元新台幣 (台股第一大營收企業)",
+        upstream: "採購半導體晶片、高速連接線，並具備強大自製機箱、散熱與電源垂直整合能力。",
+        downstream: "直供北美 CSP 四大巨頭 (微軟、AWS、Google) 與 Apple 蘋果全球產品線。",
+        highlights: "全球製造產能最大、供應鏈垂直整合最深。在輝達 GB200 NVL72 整機機櫃中，具備從 GPU 模組、運算基板到整機機櫃製造的一條龍實力。"
+      },
+      wistron: {
+        name: "緯創 (3231)",
+        role: "中游系統代工 · 輝達 GPU 加速運算基板 (UBB) 全球主力代工廠",
+        margin: "7.5% ~ 8.5%",
+        scale: "全球輝達 GPU 基板核心供應商",
+        upstream: "台積電 CoWoS 晶片、台光電超高階 CCL、金像電高多層電路板。",
+        downstream: "運算基板交付廣達、戴爾或緯穎等進行系統整合，最終出貨北美 CSP。",
+        highlights: "成功轉型高毛利 AI 伺服器領域，牢牢卡位輝達 GPU 加速運算板（UBB）關鍵製造，營運獲利爆發力強。"
+      },
+      wiwynn: {
+        name: "緯穎 (6669)",
+        role: "中游系統代工 · 白牌雲端伺服器直供 CSP 股王",
+        margin: "9.5% ~ 11.0% (伺服器 ODM 中毛利率最高)",
+        scale: "伺服器純度 100%，台股高價股代表",
+        upstream: "向緯創採購運算基板、向奇鋐/雙鴻買水冷、川湖買滑軌、光寶科買電源。",
+        downstream: "核心大客戶為微軟 Azure (佔營收約 50%) 與 Meta (佔約 35%)。",
+        highlights: "專攻 hyperscale 超大規模資料中心，不透過品牌商直接對接 CSP 客戶，毛利率與純益率居代工群之首。"
+      },
+      inventec: {
+        name: "英業達 (2356)",
+        role: "中游系統代工 · 伺服器主機板與邊緣運算老牌代工五哥",
+        margin: "5.0% ~ 5.5%",
+        scale: "全球伺服器主機板主要代工大廠",
+        upstream: "採購各類主機板晶片組、記憶體模組與被動元件。",
+        downstream: "出貨北美 CSP 雲端業者與全球企業級伺服器客戶。",
+        highlights: "台灣伺服器代工元老，在主機板設計與代工經驗豐富，近年跨足自研邊緣 AI 晶片與多元伺服器市場。"
+      },
+      gigabyte: {
+        name: "技嘉 (2376)",
+        role: "中游系統代工 · AI 伺服器與高階板卡準系統大將",
+        margin: "13.0% ~ 15.0%",
+        scale: "AI 伺服器自有品牌與客製化專案出貨",
+        upstream: "輝達/AMD 晶片、散熱零組件、高階 PCB 與電源。",
+        downstream: "歐美中小型 CSP、企業 AI 算力中心、全球電競消費者。",
+        highlights: "由主機板與電競顯卡跨入 AI 伺服器，對輝達最新晶片平台響應速度居同業之冠，產品線彈性高。"
       },
       kingslide: {
         name: "川湖 (2059)",
@@ -733,7 +816,7 @@
         margin: "53% ~ 55%+",
         scale: "全球先進製程市占超過 90%",
         upstream: "矽晶圓、極紫外光 (EUV) 光刻機。",
-        downstream: "代工輝達 GPU、AMD CPU，交付廣達做主機板貼裝 (L6)。",
+        downstream: "代工輝達 GPU、AMD CPU，交付廣達、鴻海做主機板貼裝 (L6)。",
         highlights: "掌握 3nm/4nm 先進製程與 CoWoS 3D 封裝，為全球所有 AI 晶片的唯一代工源頭。"
       },
       nvidia: {
@@ -742,7 +825,7 @@
         margin: "75% ~ 78%",
         scale: "市值突破 3 兆美元",
         upstream: "由台積電代工晶圓製造與 CoWoS 封裝。",
-        downstream: "晶片由廣達組裝為 GB200/H100 伺服器，出貨予四大 CSP。",
+        downstream: "晶片由廣達、鴻海組裝為 GB200/H100 伺服器，出貨予四大 CSP。",
         highlights: "CUDA 軟硬體生態圈壟斷全球 AI 訓練與推論算力，單一機櫃成本中晶片即佔近 70%。"
       },
       msft: {
@@ -750,9 +833,9 @@
         role: "下游終端客戶 · 全球公有雲與 OpenAI 算力大本營",
         margin: "雲端服務毛利率 70%+",
         scale: "年資本支出逾 500 億美元",
-        upstream: "向廣達、緯穎大舉採購 AI 伺服器整機機櫃。",
+        upstream: "向廣達、緯穎、鴻海大舉採購 AI 伺服器整機機櫃。",
         downstream: "提供全球企業與消費者 ChatGPT 與 Copilot AI 服務。",
-        highlights: "全球對 AI 算力需求最飢渴的買家，其每季法說會資本支出為廣達出貨的先行指標。"
+        highlights: "全球對 AI 算力需求最飢渴的買家，其每季法說會資本支出為伺服器代工廠出貨的先行指標。"
       }
     };
 
@@ -769,17 +852,19 @@
       g.setAttribute("id", "tree-canvas-group");
       g.setAttribute("transform", `translate(0, 0) scale(${currentZoom})`);
 
-      // 1. 繪製所有連線（Bezier Curves）
+      // 1. 繪製所有連線（平滑貝茲曲線）
       treeData.links.forEach((link, idx) => {
         const sNode = treeData.nodes.find(n => n.id === link.source);
         const tNode = treeData.nodes.find(n => n.id === link.target);
 
-        const x1 = sNode.x + sNode.w / 2;
+        if (!sNode || !tNode) return;
+
+        const x1 = sNode.x + sNode.w;
         const y1 = sNode.y + sNode.h / 2;
-        const x2 = tNode.x + tNode.w / 2;
+        const x2 = tNode.x;
         const y2 = tNode.y + tNode.h / 2;
 
-        const dx = (x2 - x1) * 0.5;
+        const dx = Math.abs(x2 - x1) * 0.5;
         const pathData = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
 
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -802,15 +887,15 @@
         rect.setAttribute("width", node.w);
         rect.setAttribute("height", node.h);
         rect.setAttribute("class", "node-box");
-        rect.setAttribute("fill", node.level === "mid" ? "#ffffff" : "#ffffff");
-        rect.setAttribute("stroke", node.color);
+        rect.setAttribute("fill", node.id === "quanta" ? "#eff6ff" : "#ffffff");
+        rect.setAttribute("stroke", node.id === "quanta" ? "#1e60d5" : node.color);
         group.appendChild(rect);
 
-        // 文字圖標與名稱
+        // 文字標題 (加寬後排版舒適防溢出)
         const textTitle = document.createElementNS("http://www.w3.org/2000/svg", "text");
         textTitle.setAttribute("x", 12);
-        textTitle.setAttribute("y", node.level === "mid" ? 22 : (node.h > 40 ? 18 : 22));
-        textTitle.setAttribute("font-size", node.level === "mid" ? "14px" : "12px");
+        textTitle.setAttribute("y", node.h > 42 ? 20 : 24);
+        textTitle.setAttribute("font-size", node.h > 44 ? "13px" : "12px");
         textTitle.setAttribute("font-weight", "700");
         textTitle.setAttribute("fill", "#0f2c4d");
         textTitle.textContent = `${node.icon || ''} ${node.name}`;
@@ -820,7 +905,7 @@
         if (node.h > 40) {
           const textSub = document.createElementNS("http://www.w3.org/2000/svg", "text");
           textSub.setAttribute("x", 12);
-          textSub.setAttribute("y", node.level === "mid" ? 40 : 34);
+          textSub.setAttribute("y", 37);
           textSub.setAttribute("font-size", "10px");
           textSub.setAttribute("font-weight", "600");
           textSub.setAttribute("fill", node.color);
@@ -847,16 +932,49 @@
     function focusNode(nodeId) {
       selectedNodeId = nodeId;
 
-      // 找出與該節點連通的所有相關節點與線路
+      // 更新過濾標籤 active 狀態
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        if (btn.getAttribute("onclick")?.includes(`'${nodeId}'`)) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+
       const connectedNodes = new Set([nodeId]);
       const connectedLinks = new Set();
 
-      // 如果點的是廣達，則點亮全鏈
-      if (nodeId === "quanta") {
-        treeData.nodes.forEach(n => connectedNodes.add(n.id));
-        treeData.links.forEach(l => connectedLinks.add(`link-${l.source}-${l.target}`));
+      // 如果點擊的是中游代工群（如廣達、鴻海、緯穎等）
+      const midNodes = ["quanta", "foxconn", "wistron", "wiwynn", "inventec", "gigabyte"];
+      if (midNodes.includes(nodeId)) {
+        // 點亮所有連入該中游節點的上游分支
+        treeData.links.forEach(l => {
+          if (l.target === nodeId) {
+            connectedNodes.add(l.source);
+            connectedLinks.add(`link-${l.source}-${l.target}`);
+            // 追溯上游葉子
+            treeData.links.forEach(l2 => {
+              if (l2.target === l.source) {
+                connectedNodes.add(l2.source);
+                connectedLinks.add(`link-${l2.source}-${l2.target}`);
+              }
+            });
+          }
+          // 點亮所有從該中游節點連出的下游分支
+          if (l.source === nodeId) {
+            connectedNodes.add(l.target);
+            connectedLinks.add(`link-${l.source}-${l.target}`);
+            // 延展至下游終端
+            treeData.links.forEach(l3 => {
+              if (l3.source === l.target) {
+                connectedNodes.add(l3.target);
+                connectedLinks.add(`link-${l3.source}-${l3.target}`);
+              }
+            });
+          }
+        });
       } else {
-        // 向上或向下遞迴查找關聯
+        // 點擊上游或下游單一節點，串聯至中游與終端
         treeData.links.forEach(l => {
           if (l.source === nodeId || l.target === nodeId) {
             connectedNodes.add(l.source);
@@ -865,7 +983,7 @@
           }
         });
 
-        // 串聯到廣達核心與終端
+        // 串聯廣達等中游
         connectedNodes.add("quanta");
         treeData.links.forEach(l => {
           if (connectedNodes.has(l.source) && connectedNodes.has(l.target)) {
@@ -874,7 +992,7 @@
         });
       }
 
-      // 更新節點外觀
+      // 更新節點外觀（無抖動）
       document.querySelectorAll(".node-group").forEach(el => {
         const id = el.id.replace("node-", "");
         if (connectedNodes.has(id)) {
@@ -909,11 +1027,11 @@
       const details = companyDetails[nodeId] || {
         name: treeData.nodes.find(n => n.id === nodeId)?.name || nodeId,
         role: "產業鏈關鍵環節節點",
-        margin: "依產品規格而定",
-        scale: "國際一線硬體供應鏈成員",
-        upstream: "各項電子原物料與半導體封裝。",
-        downstream: "直供中游廣達 (2382) 進行伺服器整機機櫃整合。",
-        highlights: "透過精密製造工藝與嚴苛認證，確保 AI 伺服器在 1000W+ 高功耗環境下穩定運行。"
+        margin: "依產品規格與出貨而定",
+        scale: "國際一線硬體供應鏈核心成員",
+        upstream: "各項電子原物料、PCB材料與半導體晶圓。",
+        downstream: "直供中游代工廠進行 AI 伺服器整機機櫃整合。",
+        highlights: "具備嚴格製造認證，在 AI 伺服器 1000W+ 高功耗環境下扮演不可或缺的關鍵角色。"
       };
 
       let html = `
@@ -959,6 +1077,7 @@
     function resetHighlight() {
       document.querySelectorAll(".node-group").forEach(el => el.classList.remove("faded", "active"));
       document.querySelectorAll(".tree-link").forEach(el => el.classList.remove("faded", "highlighted"));
+      document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
       closeInspector();
     }
 
