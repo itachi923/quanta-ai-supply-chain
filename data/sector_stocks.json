@@ -883,7 +883,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "odm",
+    "subGroupName": "AI伺服器整機與系統代工",
+    "groupBadge": "算力系統核心",
+    "isLeader": true,
+    "leaderWhy": "單季合併營收衝破 1.1 兆元，NVIDIA GB200 NVL72 首發戰略代工廠，微軟、Google、AWS、Meta 四大 CSP 白牌直供市占全球第一。"
   },
   {
     "id": "6669",
@@ -1736,7 +1741,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "odm",
+    "subGroupName": "AI伺服器整機與系統代工",
+    "groupBadge": "算力系統核心",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "3231",
@@ -2582,7 +2592,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "odm",
+    "subGroupName": "AI伺服器整機與系統代工",
+    "groupBadge": "算力系統核心",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "2356",
@@ -3421,7 +3436,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "odm",
+    "subGroupName": "AI伺服器整機與系統代工",
+    "groupBadge": "算力系統核心",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "2376",
@@ -4260,7 +4280,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "odm",
+    "subGroupName": "AI伺服器整機與系統代工",
+    "groupBadge": "算力系統核心",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "2357",
@@ -5113,7 +5138,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "brand_pc",
+    "subGroupName": "電腦品牌與電競旗艦",
+    "groupBadge": "全球終端品牌",
+    "isLeader": true,
+    "leaderWhy": "全球主機板與電競 ROG 第一品牌，近四季 EPS 高達 42.5 元，手握國家級 AI 超級電腦大型伺服器標案，跨界展現強大系統實力。"
   },
   {
     "id": "2377",
@@ -5952,7 +5982,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "brand_pc",
+    "subGroupName": "電腦品牌與電競旗艦",
+    "groupBadge": "全球終端品牌",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "2059",
@@ -6791,7 +6826,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "components",
+    "subGroupName": "關鍵零組件與水冷散熱",
+    "groupBadge": "高專利高毛利",
+    "isLeader": true,
+    "leaderWhy": "手握全球逾 3,000 項專利，毛利率高達 68.2% 冠絕台股硬體族群，全球唯一量產通過 GB200 1.3 噸抗震認證之重型導軌獨占龍頭。"
   },
   {
     "id": "3017",
@@ -7630,7 +7670,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "components",
+    "subGroupName": "關鍵零組件與水冷散熱",
+    "groupBadge": "高專利高毛利",
+    "isLeader": true,
+    "leaderWhy": "水冷板、分流管 (Manifold)、CDU 冷卻分配單元一條龍全自製，通過 NVIDIA 官方嚴苛驗證，伺服器散熱營收規模與水冷出貨居台廠第一。"
   },
   {
     "id": "3324",
@@ -8462,7 +8507,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "components",
+    "subGroupName": "關鍵零組件與水冷散熱",
+    "groupBadge": "高專利高毛利",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "8210",
@@ -9294,7 +9344,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "components",
+    "subGroupName": "關鍵零組件與水冷散熱",
+    "groupBadge": "高專利高毛利",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "2395",
@@ -10133,7 +10188,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "ipc_iot",
+    "subGroupName": "工業電腦與邊緣物聯網",
+    "groupBadge": "工業AI與自動化",
+    "isLeader": true,
+    "leaderWhy": "全球工業電腦 (IPC) 市占率逾 35% 稱霸全球超過二十年，毛利率長年穩健維持 40% 以上，為全球智慧工廠與邊緣 AI 推論標準制定者。"
   },
   {
     "id": "6414",
@@ -10965,7 +11025,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "ipc_iot",
+    "subGroupName": "工業電腦與邊緣物聯網",
+    "groupBadge": "工業AI與自動化",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "3706",
@@ -11797,13 +11862,18 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "odm",
+    "subGroupName": "AI伺服器整機與系統代工",
+    "groupBadge": "算力系統核心",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "2352",
     "name": "佳世達",
     "fullName": "佳世達科技股份有限公司",
-    "category": "brand_pc",
+    "category": "peripherals",
     "categoryName": "顯示器/智慧醫療",
     "leaderRole": "顯示技術先驅 · 大艦隊智慧醫療佈局",
     "description": "明基佳世達集團核心旗艦，為全球液晶顯示器與投影機領導製造商。近年推動「價值轉型大艦隊」，高附加價值事業涵蓋智慧醫療(明基醫院)、智慧解決方案及網通事業。",
@@ -12629,7 +12699,12 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "peripherals",
+    "subGroupName": "週邊設備與智慧顯示",
+    "groupBadge": "視覺聲學與光學",
+    "isLeader": false,
+    "leaderWhy": ""
   },
   {
     "id": "4915",
@@ -13468,6 +13543,11 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "subGroup": "peripherals",
+    "subGroupName": "週邊設備與智慧顯示",
+    "groupBadge": "視覺聲學與光學",
+    "isLeader": true,
+    "leaderWhy": "電腦高階週邊、車載 ADAS 鏡頭模組與頂級電競聲學領導大廠，高附加價值產品比重攀升，兼具穩定高殖利率。"
   }
 ]

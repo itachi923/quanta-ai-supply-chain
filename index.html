@@ -703,10 +703,349 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ========================================================
+       類股全景深度導航與戰略地位看板
+       ======================================================== */
+    .sector-deep-dive {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .deep-dive-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+      border-bottom: 1.5px solid #f1f5f9;
+      padding-bottom: 16px;
+    }
+    .deep-dive-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--blue-navy);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dominance-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .dom-card {
+      background: linear-gradient(145deg, #f8fafc 0%, #eff6ff 100%);
+      border: 1px solid #dbeafe;
+      border-radius: var(--radius-md);
+      padding: 18px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .dom-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #0284c7, #2563eb);
+    }
+    .dom-card .num {
+      font-family: var(--font-mono);
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #1e40af;
+      margin: 4px 0;
+    }
+    .dom-card .lbl {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #0f2c4d;
+    }
+    .dom-card .sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .narrative-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+    }
+    .narrative-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+    .narrative-box h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--blue-navy);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .timeline-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .timeline-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 0.86rem;
+      line-height: 1.6;
+    }
+    .timeline-step .badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 800;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    /* ========================================================
+       族群龍頭焦點分析卡片 (Leader Spotlight Cards)
+       ======================================================== */
+    .leader-section {
+      background: #ffffff;
+      border: 1.5px solid #bae6fd;
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .leader-section-header {
+      margin-bottom: 18px;
+      border-bottom: 1.5px solid #f1f5f9;
+      padding-bottom: 14px;
+    }
+    .leader-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+    .leader-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      position: relative;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .leader-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(2, 132, 199, 0.16);
+      border-color: #0284c7;
+    }
+    .leader-card.primary {
+      border: 2px solid #2563eb;
+      background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 50%);
+    }
+    .leader-crown-tag {
+      position: absolute;
+      top: -11px;
+      right: 14px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 900;
+      padding: 3px 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .leader-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      margin-top: 4px;
+    }
+    .leader-card-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--blue-navy);
+    }
+    .leader-group-name {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #0284c7;
+      background: #e0f2fe;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .leader-why-text {
+      font-size: 0.84rem;
+      color: var(--text-body);
+      line-height: 1.6;
+      margin-bottom: 14px;
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 8px;
+      padding: 10px 12px;
+      min-height: 4.8em;
+    }
+    .leader-card-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .leader-stat-box {
+      background: #f1f5f9;
+      border-radius: 6px;
+      padding: 6px 8px;
+    }
+    .leader-stat-box .l { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; }
+    .leader-stat-box .v { font-size: 0.95rem; font-family: var(--font-mono); font-weight: 900; color: var(--blue-navy); }
+
+    /* ========================================================
+       互動式財務指標綜合比較大表 (Comparative Matrix Table)
+       ======================================================== */
+    .comparison-section {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .comp-table-container {
+      overflow-x: auto;
+      margin-top: 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #e2e8f0;
+    }
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      min-width: 980px;
+    }
+    .comp-table th {
+      background: #0f2c4d;
+      color: #ffffff;
+      padding: 12px 14px;
+      font-weight: 700;
+      text-align: right;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .comp-table th:first-child, .comp-table th:nth-child(2), .comp-table th:nth-child(3) {
+      text-align: left;
+    }
+    .comp-table th:hover {
+      background: #1e40af;
+    }
+    .comp-table th.active-sort {
+      background: #0284c7;
+    }
+    .comp-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+    .comp-table td:first-child, .comp-table td:nth-child(2), .comp-table td:nth-child(3) {
+      text-align: left;
+      font-family: var(--font-main);
+    }
+    .comp-table tr:hover {
+      background: #f8fafc;
+    }
+    .comp-table tr.leader-row {
+      background: #fffdf5;
+    }
+    .comp-table tr.leader-row:hover {
+      background: #fef3c7;
+    }
+    .comp-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .comp-tag.odm { background: #dbeafe; color: #1e40af; }
+    .comp-tag.components { background: #fef3c7; color: #b45309; }
+    .comp-tag.ipc_iot { background: #e0e7ff; color: #4338ca; }
+    .comp-tag.brand_pc { background: #fce7f3; color: #be185d; }
+    .comp-tag.peripherals { background: #ccfbf1; color: #0f766e; }
+
+    /* 族群分區塊標題 */
+    .subgroup-header-banner {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 5px solid #0284c7;
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin: 28px 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .subgroup-header-banner h3 {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--blue-navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .subgroup-header-banner .desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+    .card-leader-crown {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(217, 119, 6, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-left: 6px;
+    }
+
     @media (max-width: 900px) {
+      .dominance-grid { grid-template-columns: 1fr 1fr; }
+      .narrative-grid { grid-template-columns: 1fr; }
       .modal-body-grid { grid-template-columns: 1fr; }
       .stocks-grid { grid-template-columns: 1fr; }
       .tree-viewport-modal { height: 380px; }
+    }
+    @media (max-width: 600px) {
+      .dominance-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -764,7 +1103,7 @@
       </div>
       <div class="summary-item">
         <span class="label">千金股代表</span>
-        <span class="val">川湖 (2059)、奇鋐 (3017)、緯穎 (6669)</span>
+        <span class="val">川湖 (2059)、緯穎 (6669)、奇鋐 (3017)</span>
       </div>
       <div class="summary-item">
         <span class="label">兆元權值旗艦</span>
@@ -776,15 +1115,203 @@
       </div>
     </div>
 
+    <!-- ========================================================
+         深度導航 1：電腦及週邊設備類股 · 全球戰略地位與產業深度剖析
+         ======================================================== -->
+    <section class="sector-deep-dive">
+      <div class="deep-dive-title-row">
+        <div>
+          <div class="deep-dive-title">
+            <span>🌐 台灣電腦及週邊設備類股 · 全球運算命脈的不可替代戰略霸權</span>
+          </div>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-top:4px;">
+            台灣加權指數「電腦及週邊設備類股 (TWSE 04)」不僅是台股僅次於半導體的第二大電子權值聚落，更是全世界 AI 革命與雲端資料中心得以運轉的最核心底座。
+          </p>
+        </div>
+        <span style="font-family:var(--font-mono); font-size:0.8rem; font-weight:800; background:#e0f2fe; color:#0369a1; padding:6px 14px; border-radius:20px;">
+          TWSE 04 SECTOR MATRIX
+        </span>
+      </div>
+
+      <!-- 四大全球制霸數據看板 -->
+      <div class="dominance-grid">
+        <div class="dom-card">
+          <div class="lbl">全球 AI 伺服器代工</div>
+          <div class="num">> 90%</div>
+          <div class="sub">廣達、緯穎、緯創、鴻海壟斷全球超大規模 CSP 整機櫃代工</div>
+        </div>
+        <div class="dom-card">
+          <div class="lbl">全球筆記型電腦研發製造</div>
+          <div class="num">> 80%</div>
+          <div class="sub">全球每 10 台筆電就有 8 台由台灣代工廠研發、生產與品管交付</div>
+        </div>
+        <div class="dom-card">
+          <div class="lbl">伺服器專利重型滑軌</div>
+          <div class="num">> 80%</div>
+          <div class="sub">川湖 (2059) 獨占全球 AI 伺服器導軌，毛利率近 70% 坐擁 3000+ 專利</div>
+        </div>
+        <div class="dom-card">
+          <div class="lbl">水冷散熱關鍵配件自製</div>
+          <div class="num">全球首位</div>
+          <div class="sub">奇鋐、雙鴻具備水冷板、分流管、CDU 一條龍全套認證與量產能力</div>
+        </div>
+      </div>
+
+      <!-- 產業演進與護城河解密 -->
+      <div class="narrative-grid">
+        <div class="narrative-box">
+          <h4>🚀 產業三十年三次巨大典範轉移</h4>
+          <div class="timeline-steps">
+            <div class="timeline-step">
+              <span class="badge">1990-2000s</span>
+              <div>
+                <strong>PC / 筆電組裝時代（代工五哥崛起）：</strong>
+                廣達、英業達、緯創建立「台灣接單、全球交付」的極致供應鏈管理能力，將生產良率與組裝成本控制到極致，奠定世界工廠製造實力。
+              </div>
+            </div>
+            <div class="timeline-step">
+              <span class="badge">2010-2020s</span>
+              <div>
+                <strong>雲端運算與白牌直供（ODM Direct 革命）：</strong>
+                打破 HP、Dell 傳統品牌商壟斷，廣達、緯穎直接對接北美微軟、Google、AWS、Meta 四大 CSP，客製化高密度伺服器，毛利率正式質變翻倍。
+              </div>
+            </div>
+            <div class="timeline-step">
+              <span class="badge">2023-2026+</span>
+              <div>
+                <strong>生成式 AI 革命與液冷機櫃世紀：</strong>
+                GB200 NVL72 單一機櫃功耗破 120kW、重達 1.3 噸。硬體製造已不再是單純組裝，而是考驗水冷管路、電力分流、耐震結構與超大型系統整機交付的高門檻工程！
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="narrative-box">
+          <h4>🏰 台灣供應鏈全球無法複製的三大護城河</h4>
+          <div style="font-size:0.88rem; line-height:1.7; color:var(--text-body);">
+            <p style="margin-bottom:10px;">
+              <strong>1. 50 公里極致供應鏈聚落：</strong>
+              從台積電先進封裝晶片、川湖導軌、奇鋐水冷板到廣達林口機櫃組裝，所有關鍵組件可在 1 小時車程內快速打樣、送測並解決熱工程問題，反應速度無人能及。
+            </p>
+            <p style="margin-bottom:10px;">
+              <strong>2. 晶片巨頭深度共研綑綁：</strong>
+              NVIDIA、AMD 與 Intel 在新一代架構設計之初，便將台灣系統廠納入深度設計夥伴（JDM/ODM），共同制定散熱、電力規範。
+            </p>
+            <p>
+              <strong>3. 鉅額資本支出與龐大金流護城河：</strong>
+              單一 AI 伺服器機櫃造價高達上億新台幣，廣達、緯穎等具備千億級別的穩健財務信貸，非一般中小型廠商所能承擔。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         深度導航 2：五大子族群龍頭 (Bellwether) 焦點解析
+         ======================================================== -->
+    <section class="leader-section">
+      <div class="leader-section-header">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h2 style="font-size:1.25rem; font-weight:900; color:var(--blue-navy); display:flex; align-items:center; gap:8px;">
+              <span>👑 電腦及週邊 5 大子族群 · 領軍龍頭 (Bellwether) 深度指引</span>
+            </h2>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">
+              各子族群的領軍龍頭皆具備「市場份額最大、專利壁壘最高、獲利能力最強」之不可替代性：
+            </p>
+          </div>
+          <span style="font-size:0.82rem; font-weight:700; color:#0369a1; background:#f0f9ff; border:1px solid #bae6fd; padding:4px 12px; border-radius:20px;">
+            點擊任一張龍頭卡片可立即展開專屬產業鏈
+          </span>
+        </div>
+      </div>
+
+      <div class="leader-grid" id="leaderSpotlightGrid">
+        <!-- 由 JavaScript 動態生成 5 大子族群龍頭卡片 -->
+      </div>
+    </section>
+
+    <!-- ========================================================
+         深度導航 3：16 檔精選巨頭 · 財務獲利三率與經營規模綜合比較大表
+         ======================================================== -->
+    <section class="comparison-section">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+        <div>
+          <h2 style="font-size:1.25rem; font-weight:900; color:var(--blue-navy); display:flex; align-items:center; gap:8px;">
+            <span>📊 族群跨股多維度財務比對矩陣 (Interactive Comparative Matrix)</span>
+          </h2>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">
+            💡 <strong>點選表頭欄位</strong>可立即依「最新股價、近四季EPS、營收規模、毛利率、營業利益率」重新排序；點選公司名稱可直接開啟專屬產業鏈抽屜！
+          </p>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:0.82rem; font-weight:700; color:var(--text-muted);">族群快篩：</span>
+          <select id="tableGroupFilter" onchange="filterTableGroup()" style="padding:6px 12px; border-radius:8px; border:1.5px solid #cbd5e1; font-size:0.85rem; font-weight:700; color:var(--blue-navy); background:#ffffff; outline:none; cursor:pointer;">
+            <option value="all">全部子族群 (16檔)</option>
+            <option value="odm">AI伺服器整機代工 (6檔)</option>
+            <option value="components">關鍵零組件與散熱 (4檔)</option>
+            <option value="ipc_iot">工業電腦與邊緣物聯 (2檔)</option>
+            <option value="brand_pc">電腦品牌與電競旗艦 (2檔)</option>
+            <option value="peripherals">週邊設備與智慧顯示 (2檔)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="comp-table-container">
+        <table class="comp-table" id="comparisonTable">
+          <thead>
+            <tr>
+              <th onclick="sortTable('id')">股票代號 / 名稱 ↕</th>
+              <th onclick="sortTable('subGroup')">所屬子族群 ↕</th>
+              <th>地位標記</th>
+              <th onclick="sortTable('price')">最新股價 (元) ↕</th>
+              <th onclick="sortTable('pct')">漲跌幅 (%) ↕</th>
+              <th onclick="sortTable('trailingEPS')">近四季 EPS ↕</th>
+              <th onclick="sortTable('q3Revenue')">單季合併營收 ↕</th>
+              <th onclick="sortTable('grossMargin')" class="active-sort" id="th-grossMargin">平均毛利率 ↕</th>
+              <th onclick="sortTable('operatingMargin')" id="th-operatingMargin">營業利益率 ↕</th>
+              <th onclick="sortTable('roe')" id="th-roe">ROE (%) ↕</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="comparisonTableBody">
+            <!-- 由 JavaScript 動態生成 16 檔股票比較列 -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 產業財務結構深解讀：毛利 vs 規模經濟 -->
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px 20px; margin-top:20px; display:flex; align-items:flex-start; gap:14px;">
+        <span style="font-size:1.8rem; line-height:1;">💡</span>
+        <div style="font-size:0.86rem; color:var(--text-body); line-height:1.7;">
+          <strong>【專業操盤洞察】解碼「高毛利零組件」vs「兆元規模整機代工」的互補共生：</strong><br>
+          • <strong>以川湖 (2059) 為代表的高毛利零組件：</strong>單季營收約 28.5 億元，但平均毛利率高達 <strong>68.2%</strong>、營業利益率 57.1%，專利技術形成絕對壟斷定價權，獲利含金量極高。<br>
+          • <strong>以廣達 (2382) 為代表的整機系統代工：</strong>毛利率約 <strong>8.7%</strong>（代工廠中歷史頂峰），但單季營收突破 <strong>1.11 兆元</strong>，以龐大現金流與跨領域硬體系統整合能力，推動千億營業利益。兩者在產業鏈一上一下、分工互補，共同打造台灣科技霸權！
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         深度導航 4：16 檔精選巨頭 · 5 大子族群分門別類卡片專區
+         ======================================================== -->
+    <div style="margin-bottom:14px;">
+      <h2 style="font-size:1.25rem; font-weight:900; color:var(--blue-navy); display:flex; align-items:center; gap:8px;">
+        <span>🌳 16 檔精選龍頭 · 5 大子族群分門別類專區</span>
+      </h2>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;">
+        點選任一子族群標籤可即時過濾；點擊任一檔股票卡片即可展開其專屬雙向拓撲產業鏈圖與 60 日歷史量價圖！
+      </p>
+    </div>
+
     <!-- 篩選標籤分類列與搜尋框 -->
     <div class="filter-section">
       <div class="category-tabs">
         <button class="cat-tab active" onclick="filterCategory('all', event)">🌟 全部精選個股 (16檔)</button>
-        <button class="cat-tab" onclick="filterCategory('odm', event)">🤖 AI 伺服器代工巨頭 (6檔)</button>
-        <button class="cat-tab" onclick="filterCategory('brand_pc', event)">💻 電腦品牌與電競 (3檔)</button>
-        <button class="cat-tab" onclick="filterCategory('components', event)">❄️ 散熱、導軌與機殼 (4檔)</button>
-        <button class="cat-tab" onclick="filterCategory('ipc_iot', event)">🏭 工業電腦與智慧物聯 (2檔)</button>
-        <button class="cat-tab" onclick="filterCategory('peripherals', event)">🖱️ 電腦週邊感測 (1檔)</button>
+        <button class="cat-tab" onclick="filterCategory('odm', event)">🤖 AI 伺服器整機代工 (6檔)</button>
+        <button class="cat-tab" onclick="filterCategory('components', event)">❄️ 關鍵零組件與散熱 (4檔)</button>
+        <button class="cat-tab" onclick="filterCategory('ipc_iot', event)">🏭 工業電腦與邊緣物聯 (2檔)</button>
+        <button class="cat-tab" onclick="filterCategory('brand_pc', event)">💻 電腦品牌與電競旗艦 (2檔)</button>
+        <button class="cat-tab" onclick="filterCategory('peripherals', event)">🖱️ 週邊設備與智慧顯示 (2檔)</button>
       </div>
 
       <div class="search-box">
@@ -793,9 +1320,9 @@
       </div>
     </div>
 
-    <!-- 個股卡片展示網格 -->
-    <div id="stocksGrid" class="stocks-grid">
-      <!-- 由 JavaScript 動態生成 16 檔個股精緻卡片 -->
+    <!-- 個股卡片分區動態容器 -->
+    <div id="stocksContainer">
+      <!-- 由 JavaScript 動態生成分門別類區塊與 16 檔個股精緻卡片 -->
     </div>
 
   </div>
@@ -941,12 +1468,67 @@
     let modalTreeZoom = 1;
     let currentModalTreeData = null;
 
+    let currentTableSort = { field: 'grossMargin', dir: 'desc' };
+    let currentTableGroup = 'all';
+
+    const SUBGROUPS_INFO = {
+      odm: {
+        name: "AI伺服器整機與系統代工",
+        icon: "🤖",
+        desc: "全球 AI 運算算力中樞，涵蓋白牌資料中心 (ODM Direct)、GPU 基板製造、主機板與超大規模整機櫃系統整合。",
+        badge: "算力系統核心"
+      },
+      components: {
+        name: "伺服器關鍵零組件與散熱",
+        icon: "❄️",
+        desc: "掌握高散熱功率微通道、水冷板/CDU 一條龍、超重型導軌抗震與伺服器機殼專利壁壘，享有極高獲利毛利率。",
+        badge: "高專利高毛利"
+      },
+      ipc_iot: {
+        name: "工業電腦與邊緣物聯網",
+        icon: "🏭",
+        desc: "少量多樣高客製化、高耐用度工控硬體，廣泛應用於全球智慧製造工廠、醫療機器人與邊緣 AI 現場推論。",
+        badge: "工業AI與自動化"
+      },
+      brand_pc: {
+        name: "電腦品牌與電競旗艦",
+        icon: "💻",
+        desc: "全球知名消費與電競品牌，具備主機板與顯示卡深厚研發底蘊，近年積極跨界爭取國家級 AI 超算與私有雲訂單。",
+        badge: "全球終端品牌"
+      },
+      peripherals: {
+        name: "週邊設備與智慧顯示",
+        icon: "🖱️",
+        desc: "涵蓋液晶顯示大艦隊、光學 CMOS 影像感測、車載 ADAS 鏡頭與電競音響週邊，布局多元化高利基市場。",
+        badge: "視覺聲學與光學"
+      }
+    };
+
+    function parseRevenue(revStr) {
+      if (!revStr) return 0;
+      const s = String(revStr).replace(/,/g, '');
+      if (s.includes('兆')) {
+        const n = parseFloat(s.replace(/[^0-9.]/g, ''));
+        return (n || 0) * 10000;
+      } else if (s.includes('億')) {
+        return parseFloat(s.replace(/[^0-9.]/g, '')) || 0;
+      }
+      return parseFloat(s) || 0;
+    }
+
+    function parsePercent(pctStr) {
+      if (!pctStr) return 0;
+      return parseFloat(String(pctStr).replace(/[^0-9.-]/g, '')) || 0;
+    }
+
     // 載入資料庫
     async function loadSectorData() {
       try {
         const resp = await fetch('data/sector_stocks.json?t=' + Date.now());
         if (resp.ok) {
           sectorStocksData = await resp.json();
+          renderLeaderSpotlight();
+          renderComparisonTable();
           renderStockCards();
         }
       } catch (err) {
@@ -954,24 +1536,198 @@
       }
     }
 
-    // 渲染卡片
+    // 1. 渲染族群領軍龍頭 (Bellwether) 焦點卡片
+    function renderLeaderSpotlight() {
+      const container = document.getElementById('leaderSpotlightGrid');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const leaders = sectorStocksData.filter(s => s.isLeader);
+
+      leaders.forEach(stock => {
+        const isUp = (stock.spread >= 0);
+        const spreadClass = isUp ? 'up' : 'down';
+        const spreadSymbol = isUp ? '▲ +' : '▼ ';
+        const isQuanta = stock.id === '2382';
+
+        const card = document.createElement('div');
+        card.className = `leader-card ${isQuanta ? 'primary' : ''}`;
+        card.onclick = () => openStockModal(stock.id);
+
+        card.innerHTML = `
+          <div class="leader-crown-tag">👑 族群龍頭</div>
+          <div>
+            <div class="leader-card-head">
+              <div class="leader-card-title">${stock.name} <span style="font-family:var(--font-mono); font-size:0.9rem; color:var(--text-muted);">(${stock.id})</span></div>
+              <span class="leader-group-name">${stock.subGroupName || stock.categoryName}</span>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:0.83rem; font-weight:700; color:#0369a1;">${stock.leaderRole}</span>
+              <span style="font-family:var(--font-mono); font-size:1.05rem; font-weight:900; color:${isUp ? 'var(--stock-red)' : 'var(--stock-green)'};">
+                NT$ ${stock.price ? stock.price.toLocaleString() : '--'}
+              </span>
+            </div>
+
+            <div class="leader-why-text">
+              <strong style="color:var(--blue-navy);">🏆 龍頭關鍵：</strong>${stock.leaderWhy || stock.description}
+            </div>
+
+            <div class="leader-card-stats">
+              <div class="leader-stat-box">
+                <div class="l">近四季 EPS</div>
+                <div class="v">${stock.financials ? stock.financials.trailingEPS : '--'} 元</div>
+              </div>
+              <div class="leader-stat-box">
+                <div class="l">平均毛利率</div>
+                <div class="v" style="color:#059669;">${stock.financials ? stock.financials.grossMargin : '--'}</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="card-btn" style="margin-top:auto;">
+            <span>🌳 查看專屬產業鏈拓撲 ➔</span>
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // 2. 渲染跨股財務指標綜合比較大表 (Interactive Comparative Matrix)
+    function renderComparisonTable() {
+      const tbody = document.getElementById('comparisonTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let list = [...sectorStocksData];
+
+      if (currentTableGroup !== 'all') {
+        list = list.filter(s => (s.subGroup === currentTableGroup || s.category === currentTableGroup));
+      }
+
+      // 排序處理
+      const { field, dir } = currentTableSort;
+      list.sort((a, b) => {
+        let valA = 0, valB = 0;
+        if (field === 'id') {
+          return dir === 'asc' ? a.id.localeCompare(b.id) : b.id.localeCompare(a.id);
+        } else if (field === 'subGroup') {
+          const sgA = a.subGroupName || '';
+          const sgB = b.subGroupName || '';
+          return dir === 'asc' ? sgA.localeCompare(sgB) : sgB.localeCompare(sgA);
+        } else if (field === 'price') {
+          valA = a.price || 0; valB = b.price || 0;
+        } else if (field === 'pct') {
+          valA = a.pct || 0; valB = b.pct || 0;
+        } else if (field === 'trailingEPS') {
+          valA = a.financials ? (a.financials.trailingEPS || 0) : 0;
+          valB = b.financials ? (b.financials.trailingEPS || 0) : 0;
+        } else if (field === 'q3Revenue') {
+          valA = parseRevenue(a.financials ? a.financials.q3Revenue : '');
+          valB = parseRevenue(b.financials ? b.financials.q3Revenue : '');
+        } else if (field === 'grossMargin') {
+          valA = parsePercent(a.financials ? a.financials.grossMargin : '');
+          valB = parsePercent(b.financials ? b.financials.grossMargin : '');
+        } else if (field === 'operatingMargin') {
+          valA = parsePercent(a.financials ? a.financials.operatingMargin : '');
+          valB = parsePercent(b.financials ? b.financials.operatingMargin : '');
+        } else if (field === 'roe') {
+          valA = parsePercent(a.financials ? a.financials.roe : '');
+          valB = parsePercent(b.financials ? b.financials.roe : '');
+        }
+        return dir === 'asc' ? (valA - valB) : (valB - valA);
+      });
+
+      // 更新表頭高亮
+      document.querySelectorAll('#comparisonTable th').forEach(th => th.classList.remove('active-sort'));
+      const activeTh = document.getElementById(`th-${field}`);
+      if (activeTh) activeTh.classList.add('active-sort');
+
+      list.forEach(stock => {
+        const tr = document.createElement('tr');
+        if (stock.isLeader) tr.className = 'leader-row';
+
+        const isUp = (stock.spread >= 0);
+        const fin = stock.financials || {};
+        const gmVal = parsePercent(fin.grossMargin);
+        const gmColor = gmVal >= 40 ? '#b45309' : (gmVal >= 15 ? '#059669' : '#0284c7');
+
+        tr.innerHTML = `
+          <td>
+            <div style="cursor:pointer;" onclick="openStockModal('${stock.id}')">
+              <strong style="color:var(--blue-navy); font-size:0.95rem;">${stock.name}</strong>
+              <span style="font-family:var(--font-mono); color:var(--text-muted); font-size:0.85rem;">(${stock.id})</span>
+            </div>
+          </td>
+          <td>
+            <span class="comp-tag ${stock.subGroup || stock.category}">
+              ${stock.subGroupName || stock.categoryName}
+            </span>
+          </td>
+          <td>
+            ${stock.isLeader 
+              ? '<span style="color:#b45309; font-weight:800; font-size:0.82rem;">👑 族群龍頭</span>' 
+              : '<span style="color:var(--text-muted); font-size:0.8rem;">核心大廠</span>'}
+          </td>
+          <td style="font-weight:800; color:${isUp ? 'var(--stock-red)' : 'var(--stock-green)'}">
+            ${stock.price ? stock.price.toLocaleString() : '--'}
+          </td>
+          <td style="font-weight:700; color:${isUp ? 'var(--stock-red)' : 'var(--stock-green)'}">
+            ${isUp ? '+' : ''}${stock.pct || 0}%
+          </td>
+          <td style="font-weight:800; color:var(--blue-navy);">
+            ${fin.trailingEPS !== undefined ? fin.trailingEPS : '--'}
+          </td>
+          <td style="font-weight:700;">
+            ${fin.q3Revenue || '--'}
+          </td>
+          <td style="font-weight:900; color:${gmColor};">
+            ${fin.grossMargin || '--'}
+          </td>
+          <td style="font-weight:700; color:#0f766e;">
+            ${fin.operatingMargin || '--'}
+          </td>
+          <td style="font-weight:700;">
+            ${fin.roe || '--'}
+          </td>
+          <td>
+            <button onclick="openStockModal('${stock.id}')" style="background:#eff6ff; border:1px solid #bfdbfe; color:#1d4ed8; padding:3px 10px; border-radius:6px; font-size:0.78rem; font-weight:800; cursor:pointer;">
+              查看 ➔
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function sortTable(field) {
+      if (currentTableSort.field === field) {
+        currentTableSort.dir = currentTableSort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentTableSort.field = field;
+        currentTableSort.dir = 'desc';
+      }
+      renderComparisonTable();
+    }
+
+    function filterTableGroup() {
+      const select = document.getElementById('tableGroupFilter');
+      if (select) {
+        currentTableGroup = select.value;
+        renderComparisonTable();
+      }
+    }
+
+    // 3. 渲染個股卡片（支援子族群分門別類展示）
     function renderStockCards() {
-      const container = document.getElementById('stocksGrid');
+      const container = document.getElementById('stocksContainer');
+      if (!container) return;
       container.innerHTML = '';
 
       const query = document.getElementById('searchInput').value.trim().toLowerCase();
 
-      const filtered = sectorStocksData.filter(stock => {
-        const matchCat = (currentCategory === 'all') || (stock.category === currentCategory);
-        const matchQuery = !query || 
-          stock.id.includes(query) || 
-          stock.name.toLowerCase().includes(query) || 
-          stock.fullName.toLowerCase().includes(query) ||
-          stock.leaderRole.toLowerCase().includes(query);
-        return matchCat && matchQuery;
-      });
-
-      filtered.forEach(stock => {
+      // 單張卡片生成器
+      function createCardEl(stock) {
         const card = document.createElement('div');
         const isQuanta = stock.id === '2382';
         card.className = `stock-card ${isQuanta ? 'featured' : ''}`;
@@ -985,7 +1741,10 @@
           <div>
             <div class="card-top">
               <div class="card-identity">
-                <h3>${stock.name} <span class="code">${stock.id}</span></h3>
+                <div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
+                  <h3>${stock.name} <span class="code">${stock.id}</span></h3>
+                  ${stock.isLeader ? '<span class="card-leader-crown">👑 族群龍頭</span>' : ''}
+                </div>
                 <span class="card-role-badge">${stock.categoryName}</span>
               </div>
               <div class="card-price-box">
@@ -1030,9 +1789,74 @@
             <span>🌳 查看專屬樹狀產業鏈圖與線圖</span>
           </button>
         `;
+        return card;
+      }
 
-        container.appendChild(card);
-      });
+      // 如果是「全部」且「無搜尋關鍵字」，依 5 大子族群分門別類呈現
+      if (currentCategory === 'all' && !query) {
+        const order = ['odm', 'components', 'ipc_iot', 'brand_pc', 'peripherals'];
+
+        order.forEach(groupKey => {
+          const groupStocks = sectorStocksData.filter(s => (s.subGroup === groupKey || s.category === groupKey));
+          if (groupStocks.length === 0) return;
+
+          const groupInfo = SUBGROUPS_INFO[groupKey] || { name: groupKey, icon: '📦', desc: '', badge: '' };
+
+          // 族群橫條標題
+          const banner = document.createElement('div');
+          banner.className = 'subgroup-header-banner';
+          banner.innerHTML = `
+            <div>
+              <h3>
+                <span>${groupInfo.icon}</span>
+                <span>${groupInfo.name}</span>
+                <span style="font-size:0.85rem; font-weight:700; color:#0369a1;">(${groupStocks.length} 檔)</span>
+                <span style="font-size:0.72rem; font-weight:800; background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:12px; margin-left:6px;">${groupInfo.badge}</span>
+              </h3>
+              <div class="desc">${groupInfo.desc}</div>
+            </div>
+          `;
+          container.appendChild(banner);
+
+          // 該族群卡片網格
+          const grid = document.createElement('div');
+          grid.className = 'stocks-grid';
+          groupStocks.forEach(stock => {
+            grid.appendChild(createCardEl(stock));
+          });
+          container.appendChild(grid);
+        });
+
+      } else {
+        // 特定類別篩選或搜尋結果
+        const filtered = sectorStocksData.filter(stock => {
+          const matchCat = (currentCategory === 'all') || (stock.subGroup === currentCategory) || (stock.category === currentCategory);
+          const matchQuery = !query || 
+            stock.id.includes(query) || 
+            stock.name.toLowerCase().includes(query) || 
+            stock.fullName.toLowerCase().includes(query) ||
+            stock.leaderRole.toLowerCase().includes(query);
+          return matchCat && matchQuery;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div style="text-align:center; padding:50px 20px; background:#ffffff; border-radius:12px; border:1px solid #e2e8f0;">
+              <div style="font-size:2rem; margin-bottom:8px;">🔍</div>
+              <h3 style="color:var(--blue-navy);">查無符合條件的股票</h3>
+              <p style="color:var(--text-muted); font-size:0.9rem;">請嘗試搜尋不同關鍵字（如：廣達、2382、水冷等）。</p>
+            </div>
+          `;
+          return;
+        }
+
+        const grid = document.createElement('div');
+        grid.className = 'stocks-grid';
+        filtered.forEach(stock => {
+          grid.appendChild(createCardEl(stock));
+        });
+        container.appendChild(grid);
+      }
     }
 
     // 分類篩選
