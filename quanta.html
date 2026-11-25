@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>廣達 (2382) 即時股價與每日自動更新線圖 · 最新財報基本面與 AI 伺服器產業鏈全景圖</title>
+  <meta name="description" content="廣達電腦 (2382) 深度即時投資儀表板：即時每日自動同步股價與量價K線圖、2026 最新季度財報與獲利三率、以及互動式雙向 AI 伺服器樹狀支鏈產業鏈拓撲圖。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js 專業財務與走勢圖表庫 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --bg-main: #f0f6fc;
+      --bg-gradient: linear-gradient(135deg, #eaf3fb 0%, #d8ecf8 50%, #eef6fd 100%);
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --card-border: #cfe5f8;
+      
+      --text-title: #0a2540;
+      --text-body: #2d4156;
+      --text-muted: #5e768d;
+      
+      --blue-quanta: #0284c7;
+      --blue-navy: #0f2c4d;
+      --blue-soft: #e0effe;
+      --blue-primary: #1e60d5;
+      --stock-red: #dc2626; /* 台股漲紅 */
+      --stock-green: #16a34a; /* 台股跌綠 */
+      
+      --font-main: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "IBM Plex Mono", Consolas, monospace;
+      
+      --shadow-sm: 0 2px 8px rgba(15, 44, 77, 0.05);
+      --shadow-md: 0 8px 24px rgba(15, 44, 77, 0.08);
+      --shadow-lg: 0 16px 36px rgba(15, 44, 77, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg-gradient);
+      color: var(--text-body);
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 頂部導航 */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(240, 246, 252, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(195, 222, 245, 0.85);
+      box-shadow: 0 2px 10px rgba(15, 44, 77, 0.04);
+    }
+    .nav-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--blue-navy);
+      font-weight: 800;
+      font-size: 1.25rem;
+    }
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    }
+    .brand-badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      margin-left: 6px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 14px;
+      list-style: none;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-body);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover {
+      background: #e0f2fe;
+      color: var(--blue-quanta);
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* 連線狀態與更新提醒列 */
+    .sync-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 8px 16px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      font-size: 0.84rem;
+    }
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: #1e40af;
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.5);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    .refresh-btn {
+      background: #ffffff;
+      border: 1px solid #93c5fd;
+      color: #1d4ed8;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .refresh-btn:hover {
+      background: #1d4ed8;
+      color: #ffffff;
+    }
+    .refresh-btn.spinning .spin-icon {
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* 頂部速報 Ticker Bar */
+    .stock-ticker-bar {
+      background: #ffffff;
+      border: 1px solid #bae6fd;
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .ticker-main {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .ticker-name {
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: var(--blue-navy);
+    }
+    .ticker-code {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .ticker-price {
+      font-family: var(--font-mono);
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--stock-red);
+      transition: color 0.3s;
+    }
+    .ticker-change {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    .ticker-change.up {
+      color: var(--stock-red);
+      background: #fef2f2;
+    }
+    .ticker-change.down {
+      color: var(--stock-green);
+      background: #f0fdf4;
+    }
+    .ticker-stats {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      display: flex;
+      flex-direction: column;
+      border-left: 2px solid #e2e8f0;
+      padding-left: 12px;
+    }
+    .stat-pill .label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .stat-pill .val {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--blue-navy);
+    }
+
+    /* 區塊卡片共通樣式 */
+    .section-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      padding: 30px 26px;
+      margin-bottom: 35px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .section-header {
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--blue-quanta);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .section-title {
+      font-size: 1.6rem;
+      color: var(--blue-navy);
+      font-weight: 900;
+    }
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* 1. 基本資料與產品結構網格 */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 26px;
+    }
+    .info-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .info-item {
+      background: #f8fbff;
+      border: 1px solid #e2e8f0;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+    }
+    .info-item strong {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+    .info-item span {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--blue-navy);
+    }
+
+    /* 產品營收比重進度條 */
+    .product-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .product-row {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--blue-navy);
+    }
+    .product-bar {
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .product-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.6s ease;
+    }
+
+    /* 2. 股價走勢圖與財務圖表 */
+    .chart-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 15px;
+      position: relative;
+    }
+    .chart-controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .chart-btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chart-btn.active, .chart-btn:hover {
+      background: var(--blue-primary);
+      color: #fff;
+      border-color: var(--blue-primary);
+    }
+
+    .financials-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* 財務指標核心卡片 */
+    .metric-cards-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 16px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .metric-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+      border-color: #93c5fd;
+    }
+    .metric-card .title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .metric-card .value {
+      font-family: var(--font-mono);
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--blue-navy);
+    }
+    .metric-card .sub {
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 4px;
+      color: #059669;
+    }
+
+    /* 3. 樹狀拓撲圖畫布專屬樣式 */
+    .tree-viewport {
+      width: 100%;
+      height: 760px;
+      background: radial-gradient(circle at center, #ffffff 0%, #f8fbff 100%);
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+    .canvas-tools {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+    .tool-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .tool-btn:hover {
+      background: #f0f8ff;
+      border-color: #3b82f6;
+    }
+
+    /* 快捷篩選標籤 */
+    .tree-quick-filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .filter-btn {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      padding: 5px 12px;
+      border-radius: 18px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+    }
+    .filter-btn.reset-btn {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-color: #93c5fd;
+    }
+
+    /* 互動透視側欄 / 彈窗卡 (Inspector Panel) */
+    .inspector-panel {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 350px;
+      max-height: calc(100% - 28px);
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 2px solid #38bdf8;
+      box-shadow: 0 12px 32px rgba(15, 44, 77, 0.18);
+      padding: 20px;
+      z-index: 20;
+      overflow-y: auto;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .inspector-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #f1f5f9;
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inspector-close:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* SVG 節點與連接線樣式 */
+    .tree-link {
+      fill: none;
+      stroke: #cbd5e1;
+      stroke-width: 2.2px;
+      transition: stroke 0.3s, stroke-width 0.3s, opacity 0.3s;
+    }
+    .tree-link.highlighted {
+      stroke: #0284c7;
+      stroke-width: 4px;
+      stroke-dasharray: 8, 4;
+      animation: flowStroke 1s linear infinite;
+    }
+    .tree-link.faded {
+      opacity: 0.15;
+    }
+
+    @keyframes flowStroke {
+      from { stroke-dashoffset: 24; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    .node-group {
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+    .node-group text {
+      pointer-events: none;
+      user-select: none;
+    }
+    .node-group.faded {
+      opacity: 0.18;
+    }
+    .node-box {
+      rx: 8px;
+      ry: 8px;
+      stroke-width: 1.8px;
+      transition: stroke-width 0.15s, stroke 0.15s, filter 0.15s;
+    }
+    .node-group:hover .node-box {
+      stroke-width: 3.5px;
+      filter: drop-shadow(0 3px 10px rgba(2, 132, 199, 0.45));
+    }
+    .node-group.active .node-box {
+      stroke-width: 3.8px;
+      stroke: #f59e0b !important;
+      filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.6));
+    }
+
+    /* 4. 機櫃 BOM 表成本結構 */
+    .bom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+      margin-top: 15px;
+    }
+    .bom-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .bom-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .bom-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--blue-navy);
+    }
+    .bom-progress {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .bom-fill {
+      height: 100%;
+      border-radius: 5px;
+    }
+
+    /* 5. 投資觀點與評估卡片 */
+    .verdict-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .verdict-card {
+      background: #f8fbff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .verdict-card h4 {
+      font-size: 1.05rem;
+      color: var(--blue-navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .verdict-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* 頁尾 */
+    footer {
+      background: #0f2c4d;
+      color: #94a3b8;
+      padding: 40px 24px 30px;
+      margin-top: 50px;
+    }
+    .footer-content {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 0.9rem;
+    }
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 992px) {
+      .profile-grid, .financials-grid, .bom-grid { grid-template-columns: 1fr; }
+      .metric-cards-row { grid-template-columns: repeat(2, 1fr); }
+      .verdict-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .tree-viewport { height: 600px; }
+      .inspector-panel { width: 92%; left: 4%; right: 4%; }
+      .ticker-stats { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部導航 -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <div class="brand-icon">🤖</div>
+        <div>
+          <span>廣達 (2382) 投資基本面與產業鏈全景</span>
+          <span class="brand-badge">LIVE DAILY SYNC</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" style="background: #0284c7; color: #ffffff; border-radius: 8px; padding: 6px 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">⬅️ 電腦週邊類股全景中樞</a></li>
+        <li><a href="#company-profile">公司簡介與商品</a></li>
+        <li><a href="#stock-chart-section">即時股價與線圖</a></li>
+        <li><a href="#financial-metrics">財務與獲利三率</a></li>
+        <li><a href="#tree-area">AI 產業鏈樹狀圖</a></li>
+        <li><a href="#bom-area">機櫃 BOM 成本</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- 即時連線狀態與每日同步條 -->
+    <div class="sync-status-bar">
+      <div class="sync-badge">
+        <span class="pulse-dot"></span>
+        <span id="sync-status-text">連線正常 · 股價與線圖每日自動連線更新</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span id="sync-time-text" style="color:var(--text-muted); font-family:var(--font-mono); font-size:0.8rem;">
+          資料日期：2026-11-24
+        </span>
+        <button id="refresh-btn" class="refresh-btn" onclick="fetchLiveStockData(true)">
+          <span class="spin-icon">🔄</span>
+          <span>手動更新行情</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 即時行情報價卡片 (Stock Ticker Bar) -->
+    <div class="stock-ticker-bar">
+      <div class="ticker-main">
+        <span class="ticker-name">廣達電腦</span>
+        <span class="ticker-code">2382.TW</span>
+        <span class="ticker-price" id="val-price">NT$ 282.5</span>
+        <span class="ticker-change up" id="val-change">▲ +25.5 (+9.92%)</span>
+      </div>
+      <div class="ticker-stats">
+        <div class="stat-pill">
+          <span class="label">本益比 (PER)</span>
+          <span class="val" id="val-per">10.96 倍</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">當日成交量</span>
+          <span class="val" id="val-volume">25,024 張</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">當日成交金額</span>
+          <span class="val" id="val-money">70.27 億元</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">總市值 (兆元)</span>
+          <span class="val" id="val-cap">NT$ 1.09 兆</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">當日振幅區間</span>
+          <span class="val" id="val-range">276.0 ~ 282.5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         章節 1：廣達 (2382) 基本資料與主要商品介紹
+         ======================================================== -->
+    <section id="company-profile" class="section-card">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">COMPANY PROFILE & PRODUCT LINE</span>
+          <h2 class="section-title">🏢 廣達電腦 (2382) 是做什麼的？核心商品與營運佈局</h2>
+          <p class="section-desc">從全球「筆電代工皇帝」華麗蛻變為全球「AI 與雲端伺服器算力霸主」！</p>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+        <!-- 左欄：基本資料簡介 -->
+        <div>
+          <h3 style="font-size:1.15rem; color:var(--blue-navy); margin-bottom:10px;">🌟 公司簡介與歷史沿革</h3>
+          <p style="font-size:0.92rem; line-height:1.75; color:var(--text-body);">
+            <strong>廣達電腦股份有限公司（Quanta Computer Inc.）</strong>創立於 1988 年，由董事長<strong>林百里</strong>與副董事長<strong>梁次震</strong>共同創辦，總部位於台灣桃園華亞科技園區。廣達長年位居<strong>全球第一大筆記型電腦研發製造商</strong>，並名列《Fortune》全球 500 大企業。<br><br>
+            更重要的是，廣達早在 2011 年便創立全資子公司<strong>「雲達科技（QCT）」</strong>，首創 <strong>ODM Direct（白牌伺服器直供模式）</strong>，繞過傳統品牌經銷商直接與北美科技巨頭合作。隨著 2023 年生成式 AI 爆發，廣達憑藉強大的水冷散熱、電力工程與高頻軟硬體整機櫃垂直整合能力，成為 <strong>NVIDIA 黃仁勳最核心的首發戰略夥伴</strong>。
+          </p>
+
+          <div class="info-list">
+            <div class="info-item">
+              <strong>創辦人兼董事長</strong>
+              <span>林百里 (Barry Lam)</span>
+            </div>
+            <div class="info-item">
+              <strong>副董事長兼總裁</strong>
+              <span>梁次震 (C.C. Leung)</span>
+            </div>
+            <div class="info-item">
+              <strong>成立日期 / 資本額</strong>
+              <span>1988 年 5 月 / 386.3 億元</span>
+            </div>
+            <div class="info-item">
+              <strong>總部所在地</strong>
+              <span>台灣桃園市龜山區華亞科技園區</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右欄：主力商品與營收結構佔比 -->
+        <div>
+          <h3 style="font-size:1.15rem; color:var(--blue-navy); margin-bottom:10px;">📦 核心商品項目與營收比重拆解</h3>
+          <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:14px;">
+            AI 伺服器營收佔比已正式突破 50%，成為驅動廣達獲利三率跳升的最強引擎：
+          </p>
+
+          <div class="product-breakdown">
+            <div class="product-row">
+              <div class="product-header">
+                <span>🤖 AI 伺服器與雲端資料中心整機櫃 (QCT)</span>
+                <span style="color:#0284c7;">55% (成長主力)</span>
+              </div>
+              <div class="product-bar"><div class="product-bar-fill" style="width:55%; background:#0284c7;"></div></div>
+              <small style="font-size:0.8rem; color:var(--text-muted);">包含 NVIDIA HGX/GB200 NVL72 水冷整機櫃，主要直供微軟、Google、AWS、Meta。</small>
+            </div>
+
+            <div class="product-row">
+              <div class="product-header">
+                <span>💻 筆記型電腦與消費性運算 (NB)</span>
+                <span style="color:#2563eb;">32% (現金牛)</span>
+              </div>
+              <div class="product-bar"><div class="product-bar-fill" style="width:32%; background:#2563eb;"></div></div>
+              <small style="font-size:0.8rem; color:var(--text-muted);">全球高階商用筆電與蘋果 MacBook 主要代工廠，出貨量穩居全球龍頭。</small>
+            </div>
+
+            <div class="product-row">
+              <div class="product-header">
+                <span>🚗 車用電子與 ADAS 自駕電腦</span>
+                <span style="color:#0d9488;">9% (高毛利成長期)</span>
+              </div>
+              <div class="product-bar"><div class="product-bar-fill" style="width:9%; background:#0d9488;"></div></div>
+              <small style="font-size:0.8rem; color:var(--text-muted);">供應北美電動車巨頭（特斯拉 Tesla）中控電腦 ECU 與歐美一線車廠自駕運算模組。</small>
+            </div>
+
+            <div class="product-row">
+              <div class="product-header">
+                <span>🌐 智慧醫療、5G 專網與邊緣 AI</span>
+                <span style="color:#d97706;">4% (前瞻佈局)</span>
+              </div>
+              <div class="product-bar"><div class="product-bar-fill" style="width:4%; background:#d97706;"></div></div>
+              <small style="font-size:0.8rem; color:var(--text-muted);">智慧醫療影像平台、智慧工廠邊緣運算及 5G Open RAN 網路設備。</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         章節 2：即時股價行情與每日自動更新歷史線圖
+         ======================================================== -->
+    <section id="stock-chart-section" class="section-card">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">LIVE DYNAMIC PRICE & VOLUME</span>
+          <h2 class="section-title">📈 廣達 (2382) 股價歷史走勢與量價線圖</h2>
+          <p class="section-desc">即時連線台灣證券資料庫，收錄 700+ 個交易日歷史量價，每日收盤自動更新：</p>
+        </div>
+        <div class="chart-controls">
+          <button class="chart-btn" onclick="filterChartDays(30, event)">近 1 個月</button>
+          <button class="chart-btn" onclick="filterChartDays(90, event)">近 3 個月</button>
+          <button class="chart-btn" onclick="filterChartDays(180, event)">近 6 個月</button>
+          <button class="chart-btn active" onclick="filterChartDays(250, event)">近 1 年日走勢</button>
+          <button class="chart-btn" onclick="filterChartDays(9999, event)">全週期 (2024至今)</button>
+        </div>
+      </div>
+
+      <!-- 股價 Chart.js 畫布 -->
+      <div class="chart-box">
+        <canvas id="stockPriceChart" height="95"></canvas>
+      </div>
+
+      <!-- 均線與技術面解讀備忘 -->
+      <div style="display:flex; justify-content:space-between; margin-top:14px; font-size:0.86rem; color:var(--text-muted); flex-wrap:wrap; gap:10px;">
+        <div>
+          <span style="display:inline-block; width:12px; height:12px; background:#0284c7; border-radius:2px; margin-right:4px;"></span> 收盤價 (Close)
+          <span style="display:inline-block; width:12px; height:12px; background:#f59e0b; border-radius:2px; margin:0 4px 0 14px;"></span> 20日月均線 (MA20)
+          <span style="display:inline-block; width:12px; height:12px; background:#8b5cf6; border-radius:2px; margin:0 4px 0 14px;"></span> 60日季均線 (MA60)
+        </div>
+        <div style="font-weight:700; color:var(--blue-navy);">
+          💡 均線動態計算：每日收盤後自動重算 MA20 與 MA60，長多架構清晰可見。
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         章節 3：最新財報基本面數據與獲利三率趨勢
+         ======================================================== -->
+    <section id="financial-metrics" class="section-card">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">ACTUAL FINANCIAL STATEMENTS</span>
+          <h2 class="section-title">📊 廣達財報核心指標：營收、EPS 與「獲利三率三升」</h2>
+          <p class="section-desc">更新至 2026 最新季度財務報告！單季營收衝破 1.1 兆元，累計四季度 EPS 突破 25 元大關：</p>
+        </div>
+      </div>
+
+      <!-- 四大核心體質指標卡 -->
+      <div class="metric-cards-row">
+        <div class="metric-card">
+          <div class="title">近四季累計 EPS (實際)</div>
+          <div class="value">25.76 元</div>
+          <div class="sub">▲ 連四季暴衝 (26Q3: 7.08元)</div>
+        </div>
+        <div class="metric-card">
+          <div class="title">2026 Q3 單季合併營收</div>
+          <div class="value">1.11 兆元</div>
+          <div class="sub">▲ 單季正式突破兆元天花板</div>
+        </div>
+        <div class="metric-card">
+          <div class="title">最新單月營收 (2026/10)</div>
+          <div class="value">3,532.5 億元</div>
+          <div class="sub">🔥 歷史同期最強出貨量</div>
+        </div>
+        <div class="metric-card">
+          <div class="title">動態本益比 (PE Ratio)</div>
+          <div class="value">約 10.9 倍</div>
+          <div class="sub">💰 估值相對歷史區間仍具吸引力</div>
+        </div>
+      </div>
+
+      <!-- 雙圖表：左側歷年營收/EPS + 右側獲利三率趨勢 -->
+      <div class="financials-grid" style="margin-top:24px;">
+        <div class="chart-box">
+          <div style="font-weight:800; color:var(--blue-navy); margin-bottom:8px; font-size:1.02rem;">
+            📈 歷年營收與每股盈餘 (EPS) 爆發增長
+          </div>
+          <canvas id="revenueEpsChart" height="150"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <div style="font-weight:800; color:var(--blue-navy); margin-bottom:8px; font-size:1.02rem;">
+            🎯 獲利三率走勢 (毛利率 / 營業利益率 / 淨利率)
+          </div>
+          <canvas id="marginsChart" height="150"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         章節 4：核心樹狀支鏈產業鏈圖 (Supply Chain Tree)
+         ======================================================== -->
+    <section id="tree-area" class="section-card" style="border: 2px solid #bae6fd;">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">SUPPLY CHAIN TOPOLOGY ATLAS</span>
+          <h2 class="section-title">🌳 廣達與 AI 伺服器產業鏈 · 樹狀互動支鏈全景圖</h2>
+          <p class="section-desc">點擊任何一家公司，即時串聯並高亮其在全產業鏈中的上下游供需脈絡：</p>
+        </div>
+
+        <div class="tree-quick-filters">
+          <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted);">一鍵聚焦：</span>
+          <button class="filter-btn active" onclick="focusNode('quanta')">🤖 廣達 (2382)</button>
+          <button class="filter-btn" onclick="focusNode('foxconn')">🦊 鴻海 (2317)</button>
+          <button class="filter-btn" onclick="focusNode('wistron')">🧩 緯創 (3231)</button>
+          <button class="filter-btn" onclick="focusNode('wiwynn')">☁️ 緯穎 (6669)</button>
+          <button class="filter-btn" onclick="focusNode('kingslide')">🗄️ 川湖 (2059)</button>
+          <button class="filter-btn" onclick="focusNode('auras')">❄️ 奇鋐 (3017)</button>
+          <button class="filter-btn" onclick="focusNode('msft')">☁️ 微軟 (Azure)</button>
+          <button class="filter-btn reset-btn" onclick="resetHighlight()">🔄 顯示全產業鏈</button>
+        </div>
+      </div>
+
+      <!-- 樹狀圖可視區域 -->
+      <div class="tree-viewport" id="tree-viewport">
+        <!-- 畫布控制按鈕 -->
+        <div class="canvas-tools">
+          <button class="tool-btn" onclick="zoomTree(1.15)">🔍 放大 (+)</button>
+          <button class="tool-btn" onclick="zoomTree(0.85)">🔎 縮小 (-)</button>
+          <button class="tool-btn" onclick="resetZoom()">⚡ 復原置中</button>
+        </div>
+
+        <!-- 樹狀 SVG 畫布 -->
+        <svg id="tree-svg" width="100%" height="100%" viewBox="0 0 1340 760"></svg>
+
+        <!-- 點擊透視面板 (Inspector Panel) -->
+        <div id="inspector" class="inspector-panel">
+          <button class="inspector-close" onclick="closeInspector()">✕</button>
+          <div id="inspector-content">
+            <!-- 動態填入 -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         章節 5：機櫃 BOM 表成本結構拆解
+         ======================================================== -->
+    <section id="bom-area" class="section-card">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">COST ARCHITECTURE</span>
+          <h2 class="section-title">💰 一台一億元 AI 機櫃（GB200 NVL72）的產值分配</h2>
+          <p class="section-desc">拆解整機櫃各零組件成本比重，理解廣達與上下游廠商的獲利分配：</p>
+        </div>
+      </div>
+
+      <div class="bom-grid">
+        <div class="bom-bars">
+          <div class="bom-item">
+            <div class="bom-meta">
+              <span>🧠 核心運算晶片 (NVIDIA GPU + Grace CPU)</span>
+              <span>68% ($6,800 萬)</span>
+            </div>
+            <div class="bom-progress"><div class="bom-fill" style="width:68%; background:#0284c7;"></div></div>
+          </div>
+          <div class="bom-item">
+            <div class="bom-meta">
+              <span>💾 高頻寬記憶體 (HBM3e / DDR5)</span>
+              <span>11% ($1,100 萬)</span>
+            </div>
+            <div class="bom-progress"><div class="bom-fill" style="width:11%; background:#3b82f6;"></div></div>
+          </div>
+          <div class="bom-item">
+            <div class="bom-meta">
+              <span>🤖 中游伺服器代工組裝與軟硬體整合 (廣達等)</span>
+              <span>6% ($600 萬)</span>
+            </div>
+            <div class="bom-progress"><div class="bom-fill" style="width:6%; background:#2563eb;"></div></div>
+          </div>
+          <div class="bom-item">
+            <div class="bom-meta">
+              <span>❄️ 水冷散熱系統 (奇鋐/雙鴻 冷板/CDU分流管)</span>
+              <span>5% ($500 萬)</span>
+            </div>
+            <div class="bom-progress"><div class="bom-fill" style="width:5%; background:#0d9488;"></div></div>
+          </div>
+          <div class="bom-item">
+            <div class="bom-meta">
+              <span>🧬 高階 PCB 載板與高速線束 (台光電/金像電/貿聯)</span>
+              <span>4% ($400 萬)</span>
+            </div>
+            <div class="bom-progress"><div class="bom-fill" style="width:4%; background:#7c3aed;"></div></div>
+          </div>
+          <div class="bom-item">
+            <div class="bom-meta">
+              <span>🗄️ 超重型專利導軌與伺服器機箱 (川湖/勤誠)</span>
+              <span>3% ($300 萬)</span>
+            </div>
+            <div class="bom-progress"><div class="bom-fill" style="width:3%; background:#f59e0b;"></div></div>
+          </div>
+          <div class="bom-item">
+            <div class="bom-meta">
+              <span>⚡ 電源電力系統機箱 (光寶科/台達電)</span>
+              <span>3% ($300 萬)</span>
+            </div>
+            <div class="bom-progress"><div class="bom-fill" style="width:3%; background:#10b981;"></div></div>
+          </div>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:22px; font-size:0.92rem; line-height:1.75;">
+          <h4 style="color:var(--blue-navy); margin-bottom:10px; font-size:1.08rem;">💡 樹狀支鏈圖的投資觀察總結：</h4>
+          <p>
+            • <strong>中游代工龍頭（廣達）：</strong>雖然在整機價值中佔比約 6%，但因 1 櫃單價高達 1 億元台幣，<strong>單櫃毛利即可貢獻 500~600 萬元！</strong>只要出貨數千櫃即可帶動數千億營收與百億純益跳升。<br>
+            • <strong>上游專利材料（川湖、奇鋐）：</strong>雖然成本佔比僅 3%~5%，但因手握 3,000 項國際專利與嚴苛耐震認證，享有 <strong>25% ~ 68% 的神級毛利率</strong>！<br>
+            • <strong>下游終端（四大 CSP）：</strong>微軟、Google、AWS、Meta 買走這台一億元機櫃後，透過雲端 AI API 與廣告獲利，年產值達數千億美元。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         章節 6：投資價值評估與法人觀點
+         ======================================================== -->
+    <section id="investment-verdict" class="section-card">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">INVESTMENT THESIS & RISKS</span>
+          <h2 class="section-title">🎯 廣達 (2382) 投資價值總評與催化劑</h2>
+          <p class="section-desc">外資與法人機構聚焦的四大上行催化劑與風險防範指引：</p>
+        </div>
+      </div>
+
+      <div class="verdict-grid">
+        <div class="verdict-card">
+          <h4>🚀 催化劑一：NVIDIA 首發霸主</h4>
+          <p>
+            廣達為輝達最高階 GB200 NVL72 水冷機櫃的首批出貨認證廠商，具備自家軟體調校與大規模組裝產能，在北美 CSP 頂級客群中穩佔 30%+ 份額。
+          </p>
+        </div>
+        <div class="verdict-card">
+          <h4>🚗 催化劑二：車用電子第三隻腳</h4>
+          <p>
+            深度耕耘特斯拉（Tesla）車載 ECU 中控與全球 Tier-1 ADAS 自駕運算平台，車用板塊維持雙位數高速成長，毛利率顯著優於傳統組裝業務。
+          </p>
+        </div>
+        <div class="verdict-card">
+          <h4>💰 催化劑三：高 ROE 與優質股利</h4>
+          <p>
+            長期 ROE 維持在 25%~28% 之極高水準，且長期現金股利發放率高達 80%~85%，兼具 AI 成長股的資本利得爆發力與高股息防禦特質。
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 頁尾 -->
+  <footer>
+    <div class="footer-content">
+      <div>
+        <div style="font-size:1.15rem; font-weight:700; color:#fff;">廣達電腦 (2382) 即時個股基本面與 AI 產業鏈全景圖</div>
+        <div style="font-size:0.82rem; margin-top:4px;">即時每日自動同步 · 2026最新財報 · 動態量價線圖 · 樹狀支鏈拓撲圖</div>
+      </div>
+      <div class="footer-links">
+        <a href="#company-profile">公司簡介</a>
+        <a href="#stock-chart-section">股價走勢</a>
+        <a href="#financial-metrics">財務指標</a>
+        <a href="#tree-area">產業鏈樹狀圖</a>
+        <a href="#bom-area">機櫃BOM成本</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       腳本：即時連線 API + Chart.js 股價走勢 + 樹狀拓撲引擎
+       ======================================================== -->
+  <script>
+    // 全域走勢資料快取與圖表實例
+    let rawDailyPrices = [];
+    let stockPriceChart = null;
+
+    // 計算移動平均線 (Moving Average)
+    function calculateMA(data, period) {
+      let result = [];
+      for (let i = 0; i < data.length; i++) {
+        if (i < period - 1) {
+          result.push(null);
+        } else {
+          let sum = 0;
+          for (let j = 0; j < period; j++) {
+            sum += data[i - j];
+          }
+          result.push(Number((sum / period).toFixed(2)));
+        }
+      }
+      return result;
+    }
+
+    // 建立/更新股價圖表
+    function renderStockChart(slicedItems) {
+      const dates = slicedItems.map(d => d.date.slice(5)); // 取 MM-DD
+      const closes = slicedItems.map(d => d.close);
+      const volumes = slicedItems.map(d => Math.round(d.Trading_Volume / 1000)); // 換算成張數
+      
+      const ma20 = calculateMA(closes, 20);
+      const ma60 = calculateMA(closes, 60);
+
+      const ctx = document.getElementById('stockPriceChart').getContext('2d');
+
+      if (stockPriceChart) {
+        stockPriceChart.data.labels = dates;
+        stockPriceChart.data.datasets[0].data = closes;
+        stockPriceChart.data.datasets[1].data = ma20;
+        stockPriceChart.data.datasets[2].data = ma60;
+        stockPriceChart.data.datasets[3].data = volumes;
+        stockPriceChart.update();
+        return;
+      }
+
+      stockPriceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [
+            {
+              label: '收盤價 (NT$)',
+              data: closes,
+              borderColor: '#0284c7',
+              backgroundColor: 'rgba(2, 132, 199, 0.12)',
+              fill: true,
+              borderWidth: 2.8,
+              tension: 0.15,
+              pointRadius: dates.length > 100 ? 0 : 3,
+              pointHoverRadius: 6,
+              pointBackgroundColor: '#0284c7',
+              yAxisID: 'y'
+            },
+            {
+              label: 'MA20 (月均線)',
+              data: ma20,
+              borderColor: '#f59e0b',
+              borderWidth: 1.8,
+              borderDash: [4, 4],
+              pointRadius: 0,
+              fill: false,
+              tension: 0.2,
+              yAxisID: 'y'
+            },
+            {
+              label: 'MA60 (季均線)',
+              data: ma60,
+              borderColor: '#8b5cf6',
+              borderWidth: 1.8,
+              borderDash: [6, 4],
+              pointRadius: 0,
+              fill: false,
+              tension: 0.2,
+              yAxisID: 'y'
+            },
+            {
+              label: '成交量 (張)',
+              data: volumes,
+              type: 'bar',
+              backgroundColor: 'rgba(148, 163, 184, 0.35)',
+              yAxisID: 'yVolume'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { position: 'top', labels: { font: { family: 'Noto Sans TC', weight: '700' } } },
+            tooltip: {
+              padding: 12,
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label.includes('成交量')) {
+                    return `${label}: ${context.parsed.y.toLocaleString()} 張`;
+                  }
+                  if (context.parsed.y === null) return `${label}: 計算中`;
+                  return `${label}: NT$ ${context.parsed.y}`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              position: 'left',
+              title: { display: true, text: '股價 (新台幣元)' },
+              grid: { color: '#f1f5f9' }
+            },
+            yVolume: {
+              type: 'linear',
+              position: 'right',
+              title: { display: false },
+              grid: { drawOnChartArea: false },
+              suggestedMax: Math.max(...volumes) * 3
+            },
+            x: {
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    // 切換時間區間過濾
+    function filterChartDays(days, event) {
+      if (event) {
+        document.querySelectorAll('.chart-controls .chart-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+      }
+
+      if (!rawDailyPrices || rawDailyPrices.length === 0) return;
+      const count = Math.min(days, rawDailyPrices.length);
+      const sliced = rawDailyPrices.slice(rawDailyPrices.length - count);
+      renderStockChart(sliced);
+    }
+
+    // 更新頂部速報 Ticker Bar
+    function updateTickerUI(latest, prev) {
+      if (!latest) return;
+      
+      const priceEl = document.getElementById('val-price');
+      const changeEl = document.getElementById('val-change');
+      const perEl = document.getElementById('val-per');
+      const volEl = document.getElementById('val-volume');
+      const moneyEl = document.getElementById('val-money');
+      const capEl = document.getElementById('val-cap');
+      const rangeEl = document.getElementById('val-range');
+      const syncTimeEl = document.getElementById('sync-time-text');
+
+      const closePrice = latest.close;
+      const spread = latest.spread || (prev ? (closePrice - prev.close) : 0);
+      const prevClose = prev ? prev.close : (closePrice - spread);
+      const pct = prevClose ? ((spread / prevClose) * 100).toFixed(2) : '0.00';
+
+      priceEl.textContent = `NT$ ${closePrice.toFixed(1)}`;
+      
+      if (spread >= 0) {
+        changeEl.className = 'ticker-change up';
+        changeEl.textContent = `▲ +${spread.toFixed(1)} (+${pct}%)`;
+        priceEl.style.color = 'var(--stock-red)';
+      } else {
+        changeEl.className = 'ticker-change down';
+        changeEl.textContent = `▼ ${spread.toFixed(1)} (${pct}%)`;
+        priceEl.style.color = 'var(--stock-green)';
+      }
+
+      // 近四季 EPS 約 25.76 元
+      const trailingEPS = 25.76;
+      const pe = (closePrice / trailingEPS).toFixed(2);
+      perEl.textContent = `${pe} 倍`;
+
+      // 成交量與金額
+      const volumeShares = latest.Trading_Volume || 0;
+      volEl.textContent = `${Math.round(volumeShares / 1000).toLocaleString()} 張`;
+      
+      const moneyNTD = latest.Trading_money || (closePrice * volumeShares);
+      moneyEl.textContent = `${(moneyNTD / 1e8).toFixed(2)} 億元`;
+
+      // 市值 (股數 3,863,000,000)
+      const marketCapNTD = (closePrice * 3863000000) / 1e12;
+      capEl.textContent = `NT$ ${marketCapNTD.toFixed(2)} 兆`;
+
+      rangeEl.textContent = `${latest.min || closePrice} ~ ${latest.max || closePrice}`;
+      syncTimeEl.textContent = `最新交易日：${latest.date} (每日收盤自動更新)`;
+    }
+
+    // 取得最新股價（雙重保險機制：本地快取 + 即時 API）
+    async function fetchLiveStockData(isManual = false) {
+      const refreshBtn = document.getElementById('refresh-btn');
+      const statusText = document.getElementById('sync-status-text');
+
+      if (isManual) {
+        refreshBtn.classList.add('spinning');
+        statusText.textContent = '正在連線台灣證券資料庫取得最新日線...';
+      }
+
+      try {
+        // 先嘗試抓取本地最新資料庫 (最快且穩定)
+        let localData = null;
+        try {
+          const localResp = await fetch('data/quanta_latest.json?t=' + Date.now());
+          if (localResp.ok) {
+            localData = await localResp.json();
+            if (localData && localData.daily_prices && localData.daily_prices.length > 0) {
+              rawDailyPrices = localData.daily_prices;
+              const latest = rawDailyPrices[rawDailyPrices.length - 1];
+              const prev = rawDailyPrices.length > 1 ? rawDailyPrices[rawDailyPrices.length - 2] : null;
+              updateTickerUI(latest, prev);
+              filterChartDays(250);
+            }
+          }
+        } catch (e) {
+          console.warn('Local cache check:', e);
+        }
+
+        // 接著連線 FinMind 即時 API 查看是否有更新的當日資料
+        const apiUrl = 'https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=2382&start_date=2024-01-01';
+        const apiResp = await fetch(apiUrl);
+        if (apiResp.ok) {
+          const json = await apiResp.json();
+          if (json.data && json.data.length > 0) {
+            rawDailyPrices = json.data;
+            const latest = rawDailyPrices[rawDailyPrices.length - 1];
+            const prev = rawDailyPrices.length > 1 ? rawDailyPrices[rawDailyPrices.length - 2] : null;
+            updateTickerUI(latest, prev);
+            filterChartDays(250);
+            statusText.textContent = `連線成功 · 已同步至最新收盤交易日 (${latest.date})`;
+          }
+        }
+      } catch (err) {
+        console.error('API Sync err:', err);
+        statusText.textContent = '已載入完整歷史數據快取 (連線離線備援啟用)';
+      } finally {
+        if (isManual) {
+          setTimeout(() => refreshBtn.classList.remove('spinning'), 500);
+        }
+      }
+    }
+
+    // 初始化財務核心圖表 (更新至 2026 最新季度)
+    function initFinancialCharts() {
+      // 圖表 A: 歷年營收與每股盈餘 (更新至 2026 最新實績)
+      const ctxRev = document.getElementById('revenueEpsChart').getContext('2d');
+      new Chart(ctxRev, {
+        type: 'bar',
+        data: {
+          labels: ['2022', '2023', '2024', '2025', '2026 (最新年化)'],
+          datasets: [
+            {
+              type: 'bar',
+              label: '合併營收 (億元)',
+              data: [12815, 10856, 14100, 21500, 36000],
+              backgroundColor: '#3b82f6',
+              borderRadius: 6,
+              yAxisID: 'yRev'
+            },
+            {
+              type: 'line',
+              label: '每股盈餘 EPS (元)',
+              data: [7.51, 10.29, 15.54, 21.80, 25.76],
+              borderColor: '#dc2626',
+              backgroundColor: '#dc2626',
+              borderWidth: 3,
+              pointRadius: 5,
+              tension: 0.2,
+              yAxisID: 'yEps'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            yRev: {
+              position: 'left',
+              title: { display: true, text: '營收 (億元)' },
+              grid: { color: '#f1f5f9' }
+            },
+            yEps: {
+              position: 'right',
+              title: { display: true, text: 'EPS (元)' },
+              grid: { drawOnChartArea: false }
+            }
+          }
+        }
+      });
+
+      // 圖表 B: 獲利三率 (實際季報走勢)
+      const ctxMargins = document.getElementById('marginsChart').getContext('2d');
+      new Chart(ctxMargins, {
+        type: 'line',
+        data: {
+          labels: ['25Q1', '25Q2', '25Q3', '25Q4', '26Q1', '26Q2', '26Q3 (最新)'],
+          datasets: [
+            {
+              label: '毛利率 (%)',
+              data: [8.48, 8.58, 8.33, 8.45, 8.20, 8.65, 8.72],
+              borderColor: '#0284c7',
+              backgroundColor: '#0284c7',
+              borderWidth: 3,
+              tension: 0.25,
+              pointRadius: 4
+            },
+            {
+              label: '營業利益率 (%)',
+              data: [4.52, 4.91, 4.60, 4.75, 4.85, 5.12, 5.25],
+              borderColor: '#10b981',
+              backgroundColor: '#10b981',
+              borderWidth: 2.5,
+              tension: 0.25,
+              pointRadius: 4
+            },
+            {
+              label: '稅後淨利率 (%)',
+              data: [4.12, 4.05, 3.92, 4.00, 4.10, 4.35, 4.40],
+              borderColor: '#d97706',
+              backgroundColor: '#d97706',
+              borderWidth: 2,
+              tension: 0.25,
+              pointRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            y: {
+              title: { display: true, text: '比率 (%)' },
+              grid: { color: '#f1f5f9' },
+              min: 0,
+              max: 12
+            }
+          }
+        }
+      });
+    }
+
+    // ==========================================
+    // 樹狀拓撲圖資料定義與互動引擎
+    // ==========================================
+    const treeData = {
+      nodes: [
+        { id: "tsmc", name: "台積電", code: "2330", role: "晶圓代工/CoWoS", level: "up_leaf", x: 80, y: 55, w: 140, h: 42, color: "#0369a1", icon: "🏭" },
+        { id: "nvidia", name: "輝達", code: "NVDA", role: "GPU/CPU晶片核心", level: "up_leaf", x: 80, y: 110, w: 140, h: 42, color: "#0369a1", icon: "⚡" },
+        { id: "auras", name: "奇鋐", code: "3017", role: "水冷板/CDU系統", level: "up_leaf", x: 80, y: 175, w: 140, h: 42, color: "#0284c7", icon: "❄️" },
+        { id: "cci", name: "雙鴻", code: "3324", role: "液冷散熱模組", level: "up_leaf", x: 80, y: 230, w: 140, h: 42, color: "#0284c7", icon: "💧" },
+        { id: "kingslide", name: "川湖", code: "2059", role: "專利導軌(毛利68%)", level: "up_leaf", x: 80, y: 295, w: 140, h: 42, color: "#d97706", icon: "👑" },
+        { id: "chenbro", name: "勤誠", code: "8210", role: "伺服器機箱霸主", level: "up_leaf", x: 80, y: 350, w: 140, h: 42, color: "#0284c7", icon: "📦" },
+        { id: "liteon", name: "光寶科", code: "2301", role: "5.5~33kW電源", level: "up_leaf", x: 80, y: 415, w: 140, h: 42, color: "#0284c7", icon: "⚡" },
+        { id: "delta", name: "台達電", code: "2308", role: "伺服器電源供應", level: "up_leaf", x: 80, y: 470, w: 140, h: 42, color: "#0284c7", icon: "🔋" },
+        { id: "emc", name: "台光電", code: "2383", role: "超高階銅箔基板", level: "up_leaf", x: 80, y: 535, w: 140, h: 42, color: "#0284c7", icon: "🧬" },
+        { id: "gce", name: "金像電", code: "2368", role: "高多層伺服器板", level: "up_leaf", x: 80, y: 590, w: 140, h: 42, color: "#0284c7", icon: "🎛️" },
+        { id: "bizlink", name: "貿聯-KY", code: "3665", role: "內部高速銅纜線束", level: "up_leaf", x: 80, y: 655, w: 140, h: 42, color: "#0284c7", icon: "🔌" },
+
+        { id: "b_chip", name: "運算半導體", code: "STAGE 1-A", level: "up_branch", x: 290, y: 80, w: 160, h: 38, color: "#0284c7", icon: "🧠" },
+        { id: "b_cooling", name: "水冷散熱系統", code: "STAGE 1-B", level: "up_branch", x: 290, y: 200, w: 160, h: 38, color: "#0284c7", icon: "❄️" },
+        { id: "b_rail", name: "重型導軌機殼", code: "STAGE 1-C", level: "up_branch", x: 290, y: 320, w: 160, h: 38, color: "#0284c7", icon: "🗄️" },
+        { id: "b_power", name: "雲端電力機箱", code: "STAGE 1-D", level: "up_branch", x: 290, y: 440, w: 160, h: 38, color: "#0284c7", icon: "⚡" },
+        { id: "b_pcb", name: "高階PCB與材料", code: "STAGE 1-E", level: "up_branch", x: 290, y: 560, w: 160, h: 38, color: "#0284c7", icon: "🧬" },
+        { id: "b_cable", name: "高速傳輸線束", code: "STAGE 1-F", level: "up_branch", x: 290, y: 655, w: 160, h: 38, color: "#0284c7", icon: "🔌" },
+
+        { id: "quanta", name: "廣達 (2382)", code: "2382", role: "中游代工霸主(兆元)", level: "mid", x: 520, y: 95, w: 175, h: 48, color: "#2563eb", icon: "🤖" },
+        { id: "foxconn", name: "鴻海 (2317)", code: "2317", role: "全球EMS電子代工龍頭", level: "mid", x: 520, y: 200, w: 175, h: 46, color: "#2563eb", icon: "🦊" },
+        { id: "wistron", name: "緯創 (3231)", code: "3231", role: "GPU運算基板主力代工", level: "mid", x: 520, y: 305, w: 175, h: 46, color: "#2563eb", icon: "🧩" },
+        { id: "wiwynn", name: "緯穎 (6669)", code: "6669", role: "白牌伺服器直供股王", level: "mid", x: 520, y: 410, w: 175, h: 46, color: "#2563eb", icon: "☁️" },
+        { id: "inventec", name: "英業達 (2356)", code: "2356", role: "主機板與伺服器代工", level: "mid", x: 520, y: 515, w: 175, h: 46, color: "#2563eb", icon: "⚡" },
+        { id: "gigabyte", name: "技嘉 (2376)", code: "2376", role: "AI伺服器與主板準系統", level: "mid", x: 520, y: 620, w: 175, h: 46, color: "#2563eb", icon: "🎮" },
+
+        { id: "b_csp", name: "超大規模CSP", code: "STAGE 3-A", level: "down_branch", x: 770, y: 250, w: 155, h: 38, color: "#0d9488", icon: "☁️" },
+        { id: "b_brand", name: "品牌與車載", code: "STAGE 3-B", level: "down_branch", x: 770, y: 520, w: 155, h: 38, color: "#0d9488", icon: "💻" },
+
+        { id: "msft", name: "微軟 (Azure)", code: "MSFT", role: "OpenAI算力大本營", level: "down_leaf", x: 1000, y: 140, w: 160, h: 44, color: "#0f766e", icon: "☁️" },
+        { id: "goog", name: "Google", code: "GOOGL", role: "Gemini與自研TPU", level: "down_leaf", x: 1000, y: 210, w: 160, h: 44, color: "#0f766e", icon: "🔍" },
+        { id: "aws", name: "亞馬遜 AWS", code: "AMZN", role: "雲端運算市占第一", level: "down_leaf", x: 1000, y: 280, w: 160, h: 44, color: "#0f766e", icon: "📦" },
+        { id: "meta", name: "Meta (臉書)", code: "META", role: "Llama開源大模型", level: "down_leaf", x: 1000, y: 350, w: 160, h: 44, color: "#0f766e", icon: "👥" },
+        { id: "apple", name: "蘋果 Apple", code: "AAPL", role: "MacBook筆電主力", level: "down_leaf", x: 1000, y: 485, w: 160, h: 44, color: "#0f766e", icon: "🍎" },
+        { id: "tesla", name: "特斯拉", code: "TSLA", role: "自駕中控電腦ECU", level: "down_leaf", x: 1000, y: 555, w: 160, h: 44, color: "#0f766e", icon: "🚗" }
+      ],
+
+      links: [
+        { source: "tsmc", target: "b_chip" },
+        { source: "nvidia", target: "b_chip" },
+        { source: "auras", target: "b_cooling" },
+        { source: "cci", target: "b_cooling" },
+        { source: "kingslide", target: "b_rail" },
+        { source: "chenbro", target: "b_rail" },
+        { source: "liteon", target: "b_power" },
+        { source: "delta", target: "b_power" },
+        { source: "emc", target: "b_pcb" },
+        { source: "gce", target: "b_pcb" },
+        { source: "bizlink", target: "b_cable" },
+
+        { source: "b_chip", target: "quanta" },
+        { source: "b_chip", target: "foxconn" },
+        { source: "b_chip", target: "wistron" },
+        { source: "b_cooling", target: "quanta" },
+        { source: "b_cooling", target: "foxconn" },
+        { source: "b_cooling", target: "wiwynn" },
+        { source: "b_rail", target: "quanta" },
+        { source: "b_rail", target: "foxconn" },
+        { source: "b_rail", target: "wistron" },
+        { source: "b_rail", target: "wiwynn" },
+        { source: "b_power", target: "quanta" },
+        { source: "b_power", target: "foxconn" },
+        { source: "b_power", target: "inventec" },
+        { source: "b_pcb", target: "quanta" },
+        { source: "b_pcb", target: "wistron" },
+        { source: "b_pcb", target: "gigabyte" },
+        { source: "b_cable", target: "quanta" },
+        { source: "b_cable", target: "foxconn" },
+
+        { source: "quanta", target: "b_csp" },
+        { source: "quanta", target: "b_brand" },
+        { source: "foxconn", target: "b_csp" },
+        { source: "foxconn", target: "b_brand" },
+        { source: "wistron", target: "b_csp" },
+        { source: "wiwynn", target: "b_csp" },
+        { source: "inventec", target: "b_csp" },
+        { source: "gigabyte", target: "b_csp" },
+
+        { source: "b_csp", target: "msft" },
+        { source: "b_csp", target: "goog" },
+        { source: "b_csp", target: "aws" },
+        { source: "b_csp", target: "meta" },
+        { source: "b_brand", target: "apple" },
+        { source: "b_brand", target: "tesla" }
+      ]
+    };
+
+    const companyDetails = {
+      quanta: {
+        name: "廣達電腦 (2382)",
+        role: "中游代工霸主 · 全球 AI 伺服器與 ODM Direct 開創者",
+        margin: "8.5% ~ 8.7% (創歷史新高)",
+        scale: "單季營收衝破 1.1 兆新台幣，台股市值前三大",
+        upstream: "採購輝達晶片、川湖導軌、奇鋐水冷板、台達電電源、金像電 PCB。",
+        downstream: "直供微軟、Google、AWS、Meta 四大公有雲，兼具 Apple 筆電與 Tesla 車用電腦。",
+        highlights: "【核心地位】NVIDIA 最緊密整機櫃戰略夥伴！率先出貨 GB200 NVL72，技術跨越散熱、電源、機構、軟硬體整合一站式交付能力。"
+      },
+      foxconn: {
+        name: "鴻海科技集團 (2317)",
+        role: "中游代工龍頭 · 全球 EMS 最大電子代工製造商",
+        margin: "6.1% ~ 6.5%",
+        scale: "年營收超過 6.6 兆新台幣",
+        upstream: "具備垂直整合能力，自製高速線束、機構件，外購 GPU 與水冷板。",
+        downstream: "NVIDIA 原廠、微軟、亞馬遜，以及 Apple iPhone/iPad。",
+        highlights: "【核心地位】垂直整合能力全球最強，掌握從零組件、機構、散熱到伺服器整機櫃製造，GB200 NVL72 機櫃市占高達 40% 以上。"
+      },
+      wistron: {
+        name: "緯創資通 (3231)",
+        role: "中游關鍵代工 · GPU 運算基板 (Baseboard) 獨家/主要供應商",
+        margin: "7.8% ~ 8.2%",
+        scale: "全球伺服器 GPU 加速模組與主板主力廠商",
+        upstream: "採購台積電 CoWoS 封裝之輝達晶片、高階 PCB 載板。",
+        downstream: "出貨基板予 Dell、HP、廣達及北美雲端客戶組裝整機。",
+        highlights: "【核心地位】NVIDIA H100/H200/B200 之 OAM/Baseboard 運算基板主要製造商，毛利率在代工廠中名列前茅。"
+      },
+      wiwynn: {
+        name: "緯穎科技 (6669)",
+        role: "中游代工股王 · 100% 純白牌雲端資料中心伺服器",
+        margin: "10.5% ~ 11.2% (同業最高純度)",
+        scale: "無消費性產品包袱，專注頂級雲端 CSP",
+        upstream: "向川湖、奇鋐、雙鴻、台光電大舉採購水冷與板卡。",
+        downstream: "極度集中於 Meta、微軟、AWS 三大客戶。",
+        highlights: "【核心地位】純度最高的資料中心直供廠，長年專注浸沒式與水冷先進技術，每股獲利超過百元，為伺服器族群股王。"
+      },
+      inventec: {
+        name: "英業達 (2356)",
+        role: "中游老牌大廠 · 伺服器主機板 (L6) 出貨全球第一",
+        margin: "5.1% ~ 5.4%",
+        scale: "伺服器主機板年出貨逾數百萬片",
+        upstream: "採購各類電源、記憶體與處理器。",
+        downstream: "出貨北美 CSP（如 Google、微軟）與品牌客戶（HP、Dell）。",
+        highlights: "【核心地位】在伺服器 L6 主機板製造實力深厚，積極搶進邊緣運算與客製化 ASIC 伺服器。"
+      },
+      gigabyte: {
+        name: "技嘉科技 (2376)",
+        role: "中游靈活黑馬 · AI 伺服器與主板準系統高彈性客製",
+        margin: "11.0% ~ 11.5%",
+        scale: "AI 伺服器營收比重迅速躍升至 50%+",
+        upstream: "採購 GPU 模組與自製高階主機板、散熱系統。",
+        downstream: "主攻歐美二線 Tier-2 CSP、研究機構及企業私有雲。",
+        highlights: "【核心地位】以彈性快攻見長，在第一線滿足中型雲端客戶對 AI 伺服器的急單需求，獲利動能爆發力極強。"
+      },
+      kingslide: {
+        name: "川湖 (2059)",
+        role: "上游專利霸主 · 全球伺服器重型滑軌獨占龍頭",
+        margin: "65% ~ 68% (神級毛利率)",
+        scale: "全球伺服器導軌市占超過 50%，AI 伺服器市占 80%+",
+        upstream: "高強度鋼材與精密滾珠部件。",
+        downstream: "出貨予廣達、鴻海、緯創，最終裝入微軟、Google、Meta 伺服器機櫃。",
+        highlights: "手握全球逾 3,000 項專利壁壘。輝達 GB200 機櫃重達 1.3 噸，全球僅川湖能量產通過耐重抗震認證，享有神級毛利率與獨占定價權。"
+      },
+      auras: {
+        name: "奇鋐 (3017)",
+        role: "上游關鍵零組件 · 伺服器水冷散熱總冠軍",
+        margin: "23% ~ 25% (逐季持續跳升)",
+        scale: "水冷板、分流管、CDU 一條龍全自製",
+        upstream: "銅、鋁散熱材料與精密微型泵浦。",
+        downstream: "水冷散熱模組直供廣達組裝機櫃，交付北美 CSP 機房。",
+        highlights: "AI 晶片功耗衝破 1000W 使得氣冷達到物理極限，水冷成為必選題！水冷系統單價為傳統風扇 5~10 倍，營收獲利雙爆發。"
+      },
+      tsmc: {
+        name: "台積電 (2330)",
+        role: "最上游半導體製造 · 全球晶圓代工與先進封裝獨霸",
+        margin: "53% ~ 55%+",
+        scale: "全球先進製程市占超過 90%",
+        upstream: "矽晶圓、極紫外光 (EUV) 光刻機。",
+        downstream: "代工輝達 GPU、AMD CPU，交付廣達、鴻海做主機板貼裝 (L6)。",
+        highlights: "掌握 3nm/4nm 先進製程與 CoWoS 3D 封裝，為全球所有 AI 晶片的唯一代工源頭。"
+      },
+      nvidia: {
+        name: "輝達 (NVIDIA)",
+        role: "最上游算力大腦 · 全球 AI 運算晶片霸主",
+        margin: "75% ~ 78%",
+        scale: "市值突破 3 兆美元",
+        upstream: "由台積電代工晶圓製造與 CoWoS 封裝。",
+        downstream: "晶片由廣達、鴻海組裝為 GB200/H100 伺服器，出貨予四大 CSP。",
+        highlights: "CUDA 軟硬體生態圈壟斷全球 AI 訓練與推論算力，單一機櫃成本中晶片即佔近 70%。"
+      },
+      msft: {
+        name: "微軟 (Microsoft Azure)",
+        role: "下游終端客戶 · 全球公有雲與 OpenAI 算力大本營",
+        margin: "雲端服務毛利率 70%+",
+        scale: "年資本支出逾 500 億美元",
+        upstream: "向廣達、緯穎、鴻海大舉採購 AI 伺服器整機機櫃。",
+        downstream: "提供全球企業與消費者 ChatGPT 與 Copilot AI 服務。",
+        highlights: "全球對 AI 算力需求最飢渴的買家，其每季法說會資本支出為伺服器代工廠出貨的先行指標。"
+      }
+    };
+
+    let currentZoom = 1;
+    let selectedNodeId = "quanta";
+
+    function initTree() {
+      const svg = document.getElementById("tree-svg");
+      svg.innerHTML = "";
+
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.setAttribute("id", "tree-canvas-group");
+      g.setAttribute("transform", `translate(0, 0) scale(${currentZoom})`);
+
+      treeData.links.forEach(link => {
+        const sNode = treeData.nodes.find(n => n.id === link.source);
+        const tNode = treeData.nodes.find(n => n.id === link.target);
+        if (!sNode || !tNode) return;
+
+        const x1 = sNode.x + sNode.w;
+        const y1 = sNode.y + sNode.h / 2;
+        const x2 = tNode.x;
+        const y2 = tNode.y + tNode.h / 2;
+
+        const dx = Math.abs(x2 - x1) * 0.5;
+        const pathData = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", pathData);
+        path.setAttribute("class", "tree-link");
+        path.setAttribute("id", `link-${link.source}-${link.target}`);
+        g.appendChild(path);
+      });
+
+      treeData.nodes.forEach(node => {
+        const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        group.setAttribute("class", "node-group");
+        group.setAttribute("id", `node-${node.id}`);
+        group.setAttribute("transform", `translate(${node.x}, ${node.y})`);
+        group.setAttribute("onclick", `onNodeClick('${node.id}')`);
+
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.setAttribute("width", node.w);
+        rect.setAttribute("height", node.h);
+        rect.setAttribute("class", "node-box");
+        rect.setAttribute("fill", node.id === "quanta" ? "#eff6ff" : "#ffffff");
+        rect.setAttribute("stroke", node.id === "quanta" ? "#1e60d5" : node.color);
+        group.appendChild(rect);
+
+        const textTitle = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textTitle.setAttribute("x", 12);
+        textTitle.setAttribute("y", node.h > 42 ? 20 : 24);
+        textTitle.setAttribute("font-size", node.h > 44 ? "13px" : "12px");
+        textTitle.setAttribute("font-weight", "700");
+        textTitle.setAttribute("fill", "#0f2c4d");
+        textTitle.textContent = `${node.icon || ''} ${node.name}`;
+        group.appendChild(textTitle);
+
+        if (node.h > 40) {
+          const textSub = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          textSub.setAttribute("x", 12);
+          textSub.setAttribute("y", 37);
+          textSub.setAttribute("font-size", "10px");
+          textSub.setAttribute("font-weight", "600");
+          textSub.setAttribute("fill", node.color);
+          textSub.setAttribute("font-family", "var(--font-mono)");
+          textSub.textContent = node.role || node.code;
+          group.appendChild(textSub);
+        }
+
+        g.appendChild(group);
+      });
+
+      svg.appendChild(g);
+      focusNode("quanta");
+    }
+
+    function onNodeClick(nodeId) {
+      focusNode(nodeId);
+    }
+
+    function focusNode(nodeId) {
+      selectedNodeId = nodeId;
+
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        if (btn.getAttribute("onclick")?.includes(`'${nodeId}'`)) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+
+      const connectedNodes = new Set([nodeId]);
+      const connectedLinks = new Set();
+
+      const midNodes = ["quanta", "foxconn", "wistron", "wiwynn", "inventec", "gigabyte"];
+      if (midNodes.includes(nodeId)) {
+        treeData.links.forEach(l => {
+          if (l.target === nodeId) {
+            connectedNodes.add(l.source);
+            connectedLinks.add(`link-${l.source}-${l.target}`);
+            treeData.links.forEach(l2 => {
+              if (l2.target === l.source) {
+                connectedNodes.add(l2.source);
+                connectedLinks.add(`link-${l2.source}-${l2.target}`);
+              }
+            });
+          }
+          if (l.source === nodeId) {
+            connectedNodes.add(l.target);
+            connectedLinks.add(`link-${l.source}-${l.target}`);
+            treeData.links.forEach(l3 => {
+              if (l3.source === l.target) {
+                connectedNodes.add(l3.target);
+                connectedLinks.add(`link-${l3.source}-${l3.target}`);
+              }
+            });
+          }
+        });
+      } else {
+        treeData.links.forEach(l => {
+          if (l.source === nodeId || l.target === nodeId) {
+            connectedNodes.add(l.source);
+            connectedNodes.add(l.target);
+            connectedLinks.add(`link-${l.source}-${l.target}`);
+          }
+        });
+        connectedNodes.add("quanta");
+        treeData.links.forEach(l => {
+          if (connectedNodes.has(l.source) && connectedNodes.has(l.target)) {
+            connectedLinks.add(`link-${l.source}-${l.target}`);
+          }
+        });
+      }
+
+      document.querySelectorAll(".node-group").forEach(el => {
+        const id = el.id.replace("node-", "");
+        if (connectedNodes.has(id)) {
+          el.classList.remove("faded");
+          if (id === nodeId) el.classList.add("active");
+          else el.classList.remove("active");
+        } else {
+          el.classList.add("faded");
+          el.classList.remove("active");
+        }
+      });
+
+      document.querySelectorAll(".tree-link").forEach(el => {
+        if (connectedLinks.has(el.id)) {
+          el.classList.add("highlighted");
+          el.classList.remove("faded");
+        } else {
+          el.classList.remove("highlighted");
+          el.classList.add("faded");
+        }
+      });
+
+      showInspector(nodeId);
+    }
+
+    function showInspector(nodeId) {
+      const panel = document.getElementById("inspector");
+      const content = document.getElementById("inspector-content");
+      const details = companyDetails[nodeId] || {
+        name: treeData.nodes.find(n => n.id === nodeId)?.name || nodeId,
+        role: "產業鏈關鍵環節節點",
+        margin: "依產品規格與出貨而定",
+        scale: "國際一線硬體供應鏈核心成員",
+        upstream: "各項電子原物料、PCB材料與半導體晶圓。",
+        downstream: "直供中游代工廠進行 AI 伺服器整機機櫃整合。",
+        highlights: "具備嚴格製造認證，在 AI 伺服器 1000W+ 高功耗環境下扮演不可或缺的關鍵角色。"
+      };
+
+      let html = `
+        <div style="font-size:0.8rem; font-weight:800; color:#0284c7; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;">
+          SUPPLY CHAIN INSPECTOR
+        </div>
+        <h3 style="font-size:1.3rem; color:var(--blue-navy); margin-bottom:6px;">${details.name}</h3>
+        <div style="font-size:0.85rem; font-weight:700; color:#2563eb; background:#eff6ff; padding:3px 8px; border-radius:4px; display:inline-block; margin-bottom:14px;">
+          ${details.role}
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:0.88rem; line-height:1.5;">
+          <div style="background:#f8fafc; padding:8px 10px; border-radius:6px; border:1px solid #e2e8f0;">
+            <strong style="color:var(--blue-navy);">📈 毛利率水準：</strong><br>
+            <span style="color:#059669; font-weight:700; font-family:var(--font-mono);">${details.margin}</span>
+          </div>
+
+          <div>
+            <strong style="color:var(--blue-navy);">⬆️ 它的上游是誰？</strong>
+            <p style="color:var(--text-muted); font-size:0.84rem; margin-top:2px;">${details.upstream}</p>
+          </div>
+
+          <div>
+            <strong style="color:var(--blue-navy);">⬇️ 它出貨給誰？</strong>
+            <p style="color:var(--text-muted); font-size:0.84rem; margin-top:2px;">${details.downstream}</p>
+          </div>
+
+          <div style="border-top:1px dashed #cbd5e1; padding-top:8px;">
+            <strong style="color:var(--blue-navy);">💡 產業鏈核心地位解析：</strong>
+            <p style="color:var(--text-body); font-size:0.85rem; margin-top:4px;">${details.highlights}</p>
+          </div>
+        </div>
+      `;
+
+      content.innerHTML = html;
+      panel.style.display = "block";
+    }
+
+    function closeInspector() {
+      document.getElementById("inspector").style.display = "none";
+    }
+
+    function resetHighlight() {
+      document.querySelectorAll(".node-group").forEach(el => el.classList.remove("faded", "active"));
+      document.querySelectorAll(".tree-link").forEach(el => el.classList.remove("faded", "highlighted"));
+      document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+      closeInspector();
+    }
+
+    function zoomTree(factor) {
+      currentZoom *= factor;
+      if (currentZoom < 0.6) currentZoom = 0.6;
+      if (currentZoom > 1.8) currentZoom = 1.8;
+      const g = document.getElementById("tree-canvas-group");
+      if (g) g.setAttribute("transform", `scale(${currentZoom})`);
+    }
+
+    function resetZoom() {
+      currentZoom = 1;
+      const g = document.getElementById("tree-canvas-group");
+      if (g) g.setAttribute("transform", `scale(1)`);
+    }
+
+    // 初始化啟動
+    document.addEventListener("DOMContentLoaded", () => {
+      fetchLiveStockData(false);
+      initFinancialCharts();
+      initTree();
+    });
+  </script>
+</body>
+</html>
