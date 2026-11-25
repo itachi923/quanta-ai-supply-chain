@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>電腦及週邊設備類股 · 投資導航與個股產業鏈中樞 · Taiwan Computer & Peripheral Stocks Hub</title>
-  <meta name="description" content="台股電腦及週邊設備類股深度投資導航：涵蓋廣達、緯穎、華碩、川湖、奇鋐、緯創、技嘉、英業達、雙鴻、研華等16檔核心權值龍頭，提供即時股價、各家公司簡介、產業上下游供應鏈關係、互動量價線圖與基本面財報指標。">
+  <meta name="description" content="台股電腦及週邊設備類股深度投資導航：涵蓋廣達、緯穎、華碩、川湖、奇鋐、緯創、技嘉、英業達、雙鴻、研華等16檔核心權值龍頭，每檔股票皆具備專屬互動式樹狀支鏈產業鏈圖、即時股價、公司簡介、60日量價線圖與基本面財報指標。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -425,7 +425,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(15, 23, 42, 0.7);
       backdrop-filter: blur(8px);
       z-index: 1000;
       display: none;
@@ -438,10 +438,10 @@
       background: #ffffff;
       border-radius: var(--radius-lg);
       width: 100%;
-      max-width: 960px;
-      max-height: 90vh;
+      max-width: 1180px;
+      max-height: 92vh;
       overflow-y: auto;
-      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.3);
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
       border: 2px solid #38bdf8;
       padding: 30px;
       position: relative;
@@ -452,17 +452,18 @@
       right: 20px;
       background: #f1f5f9;
       border: none;
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: bold;
       color: #64748b;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
+      z-index: 20;
     }
     .modal-close-btn:hover {
       background: #e2e8f0;
@@ -507,6 +508,121 @@
       border-radius: 6px;
     }
 
+    /* ========================================================
+       核心：專屬互動樹狀支鏈圖容器 (Tree Branch Atlas in Modal)
+       ======================================================== */
+    .tree-box-modal {
+      background: radial-gradient(circle at center, #ffffff 0%, #f8fbff 100%);
+      border: 1.5px solid #bae6fd;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .tree-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .tree-viewport-modal {
+      width: 100%;
+      height: 440px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+    .canvas-tools-modal {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+    .tool-btn-sm {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .tool-btn-sm:hover {
+      background: #f0f8ff;
+      border-color: #3b82f6;
+    }
+    .tree-alert-bar {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 8px 14px;
+      margin-top: 10px;
+      font-size: 0.86rem;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* SVG 節點與連接線樣式 —— 靜態高亮無抖動 */
+    .modal-tree-link {
+      fill: none;
+      stroke: #cbd5e1;
+      stroke-width: 2.2px;
+      transition: stroke 0.25s, stroke-width 0.25s, opacity 0.25s;
+    }
+    .modal-tree-link.highlighted {
+      stroke: #0284c7;
+      stroke-width: 3.8px;
+      stroke-dasharray: 6, 4;
+      animation: flowStroke 1s linear infinite;
+    }
+    .modal-tree-link.faded {
+      opacity: 0.15;
+    }
+    @keyframes flowStroke {
+      from { stroke-dashoffset: 20; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    .modal-node-group {
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+    .modal-node-group text {
+      pointer-events: none;
+      user-select: none;
+    }
+    .modal-node-group.faded {
+      opacity: 0.18;
+    }
+    .modal-node-box {
+      rx: 7px;
+      ry: 7px;
+      stroke-width: 1.8px;
+      transition: stroke-width 0.15s, stroke 0.15s, filter 0.15s;
+    }
+    .modal-node-group:hover .modal-node-box {
+      stroke-width: 3px;
+      filter: drop-shadow(0 2px 8px rgba(2, 132, 199, 0.45));
+    }
+    .modal-node-group.active .modal-node-box {
+      stroke-width: 3.5px;
+      stroke: #f59e0b !important;
+      filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.6));
+    }
+
     /* 彈窗內容網格 */
     .modal-body-grid {
       display: grid;
@@ -515,26 +631,13 @@
       margin-bottom: 24px;
     }
     .modal-section-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       color: var(--blue-navy);
       margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-    .chain-box {
-      background: #f8fbff;
-      border: 1px solid #bae6fd;
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 12px;
-      font-size: 0.88rem;
-    }
-    .chain-box strong {
-      color: #0369a1;
-      display: block;
-      margin-bottom: 4px;
     }
     .chart-container-modal {
       background: #ffffff;
@@ -603,6 +706,7 @@
     @media (max-width: 900px) {
       .modal-body-grid { grid-template-columns: 1fr; }
       .stocks-grid { grid-template-columns: 1fr; }
+      .tree-viewport-modal { height: 380px; }
     }
   </style>
 </head>
@@ -637,12 +741,13 @@
         <h1>🌟 電腦及週邊設備族群 · 掌握全球 AI 與雲端運算命脈</h1>
         <p>
           台灣「電腦及週邊設備類股」涵蓋全球 90% 以上的 AI 伺服器代工、高毛利專利導軌（川湖）、水冷散熱總冠軍（奇鋐/雙鴻）與工業物聯網（研華）。<br>
-          👉 <strong>若您想專門研究中游代工龍頭：</strong>可直接點選右上角按鈕，進入已建置完成的<strong>「廣達 (2382) 完整樹狀產業鏈與每日量價線圖旗艦專頁」</strong>！
+          👉 <strong>點選下方任一檔個股：</strong>皆會展開<strong>專屬雙向樹狀支鏈產業鏈圖</strong>、最新 60 天量價歷史線圖與財務獲利三率！<br>
+          👉 <strong>若您想專門研究中游代工霸主：</strong>可直接點選右上角按鈕，進入<strong>「廣達 (2382) 完整機櫃樹狀圖與每日量價線圖旗艦專頁」</strong>！
         </p>
       </div>
       <div>
         <a href="quanta.html" class="quanta-portal-btn" style="padding:12px 24px; font-size:1.05rem;">
-          🚀 前往廣達 (2382) 深度專頁
+          🚀 前往廣達 (2382) 旗艦專頁
         </a>
       </div>
     </div>
@@ -666,8 +771,8 @@
         <span class="val">廣達 (2382) 市值突破 1.09 兆</span>
       </div>
       <div class="summary-item">
-        <span class="label">即時連線更新</span>
-        <span class="val" style="color:#059669;">🟢 每日即時自動同步</span>
+        <span class="label">各檔產業鏈架構</span>
+        <span class="val" style="color:#0284c7;">🌳 16檔皆具備專屬樹狀支鏈圖</span>
       </div>
     </div>
 
@@ -696,7 +801,7 @@
   </div>
 
   <!-- ========================================================
-       個股深度抽屜彈窗 (Company Detail Modal)
+       個股深度抽屜彈窗 (Company Detail Modal with Dedicated Tree)
        ======================================================== -->
   <div id="companyModal" class="modal-overlay" onclick="handleOverlayClick(event)">
     <div class="modal-card">
@@ -727,33 +832,50 @@
         </a>
       </div>
 
-      <!-- 彈窗內容：上下游 + 簡介 + 產品結構 -->
-      <div class="modal-body-grid">
-        <!-- 左欄：產業上下游關係 -->
-        <div>
-          <h3 class="modal-section-title">🔗 產業上下游供需脈絡</h3>
-          
-          <div class="chain-box">
-            <strong>⬆️ 它的上游採購（誰賣材料給它？）</strong>
-            <p id="m-upstream" style="color:var(--text-body); font-size:0.88rem; line-height:1.6;"></p>
-          </div>
-
-          <div class="chain-box" style="border-color:#bbf7d0; background:#f0fdf4;">
-            <strong style="color:#166534;">⬇️ 它的下游客戶（它賣產品給誰？）</strong>
-            <p id="m-downstream" style="color:var(--text-body); font-size:0.88rem; line-height:1.6;"></p>
-          </div>
-
-          <div style="margin-top:14px;">
-            <h4 style="font-size:0.95rem; color:var(--blue-navy); margin-bottom:4px;">📦 核心商品與營收結構</h4>
-            <p id="m-products" style="font-size:0.88rem; color:var(--text-body); line-height:1.6;"></p>
+      <!-- ========================================================
+           核心功能：如同廣達的專屬雙向樹狀支鏈產業鏈圖
+           ======================================================== -->
+      <div class="tree-box-modal">
+        <div class="tree-box-header">
+          <div>
+            <h3 style="font-size:1.1rem; font-weight:800; color:var(--blue-navy); display:flex; align-items:center; gap:8px;">
+              <span>🌳 個股專屬產業上下游 · 雙向樹狀拓撲圖</span>
+              <span id="tree-stock-title" style="font-size:0.85rem; color:#0284c7; font-weight:700;"></span>
+            </h3>
+            <p style="font-size:0.82rem; color:var(--text-muted); margin-top:2px;">
+              💡 點擊任一節點立即高亮全鏈；文字加寬絕無抖動，可使用左上方工具放大/縮小：
+            </p>
           </div>
         </div>
 
-        <!-- 右欄：公司詳細簡介與基本面財報指標 -->
+        <div class="tree-viewport-modal" id="tree-viewport-modal">
+          <div class="canvas-tools-modal">
+            <button class="tool-btn-sm" onclick="zoomModalTree(1.15)">🔍 放大 (+)</button>
+            <button class="tool-btn-sm" onclick="zoomModalTree(0.85)">🔎 縮小 (-)</button>
+            <button class="tool-btn-sm" onclick="resetModalTreeZoom()">⚡ 復原置中</button>
+          </div>
+          <svg id="modal-tree-svg" width="100%" height="100%" viewBox="0 0 1060 430"></svg>
+        </div>
+
+        <div id="tree-alert-bar" class="tree-alert-bar">
+          <span>💡</span>
+          <span id="tree-alert-text">點擊上方樹狀圖的任意節點，可即時追溯其專屬供需鏈路。</span>
+        </div>
+      </div>
+
+      <!-- 彈窗內容：產品結構 + 公司做什麼 + 財務指標 -->
+      <div class="modal-body-grid">
+        <!-- 左欄：核心業務與做什麼 -->
         <div>
-          <h3 class="modal-section-title">🏢 公司做什麼？營運概況</h3>
+          <h3 class="modal-section-title">🏢 公司做什麼？核心營運概況</h3>
           <p id="m-description" style="font-size:0.9rem; color:var(--text-body); line-height:1.7; margin-bottom:14px;"></p>
 
+          <h3 class="modal-section-title">📦 主力商品與營收結構</h3>
+          <p id="m-products" style="font-size:0.88rem; color:var(--text-body); line-height:1.6; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px;"></p>
+        </div>
+
+        <!-- 右欄：基本面財報關鍵指標 -->
+        <div>
           <h3 class="modal-section-title">📊 最新基本面與財報關鍵指標</h3>
           <div class="financials-pill-grid">
             <div class="fin-pill">
@@ -800,7 +922,7 @@
     <div class="footer-content">
       <div>
         <div style="font-size:1.15rem; font-weight:700; color:#fff;">電腦及週邊設備類股 · 投資導航與個股產業鏈中樞</div>
-        <div style="font-size:0.82rem; margin-top:4px;">即時每日自動同步 · 產業上下游透視 · 動態量價線圖 · 支援廣達深度專頁</div>
+        <div style="font-size:0.82rem; margin-top:4px;">即時每日自動同步 · 專屬樹狀產業鏈拓撲 · 動態量價線圖 · 支援廣達深度專頁</div>
       </div>
       <div class="footer-links">
         <a href="quanta.html" style="color:#38bdf8; font-weight:800;">🤖 廣達旗艦專頁</a>
@@ -810,12 +932,14 @@
   </footer>
 
   <!-- ========================================================
-       資料載入與互動腳本
+       資料載入與互動腳本 (支援全個股雙向樹狀支鏈拓撲圖)
        ======================================================== -->
   <script>
     let sectorStocksData = [];
     let currentCategory = 'all';
     let modalChartInstance = null;
+    let modalTreeZoom = 1;
+    let currentModalTreeData = null;
 
     // 載入資料庫
     async function loadSectorData() {
@@ -903,7 +1027,7 @@
           </div>
 
           <button class="card-btn">
-            <span>🔍 查看上下游產業鏈與線圖</span>
+            <span>🌳 查看專屬樹狀產業鏈圖與線圖</span>
           </button>
         `;
 
@@ -949,8 +1073,6 @@
       const quantaNotice = document.getElementById('quantaSpecialNotice');
       quantaNotice.style.display = (stockId === '2382') ? 'flex' : 'none';
 
-      document.getElementById('m-upstream').textContent = stock.upstream || '無詳細資料';
-      document.getElementById('m-downstream').textContent = stock.downstream || '無詳細資料';
       document.getElementById('m-products').textContent = stock.mainProducts || '無詳細資料';
       document.getElementById('m-description').textContent = stock.description || '';
 
@@ -961,6 +1083,9 @@
       document.getElementById('m-om').textContent = fin.operatingMargin || '--';
       document.getElementById('m-roe').textContent = fin.roe || '--';
       document.getElementById('m-div').textContent = fin.dividendYield || '--';
+
+      // 繪製該股票專屬的雙向樹狀支鏈產業鏈拓撲圖
+      renderModalTree(stock);
 
       // 繪製近 60 天量價走勢圖
       renderModalChart(stock.history || []);
@@ -976,6 +1101,303 @@
     function handleOverlayClick(event) {
       if (event.target.id === 'companyModal') {
         closeModal();
+      }
+    }
+
+    // ========================================================
+    // 繪製個股專屬「雙向樹狀支鏈拓撲圖」核心引擎
+    // ========================================================
+    function renderModalTree(stock) {
+      const tc = stock.treeChain;
+      if (!tc) return;
+
+      document.getElementById('tree-stock-title').textContent = `— ${tc.title || stock.name}`;
+      document.getElementById('tree-alert-text').textContent = `當前聚焦核心：${stock.name} (${stock.id})，向左串接上游供應原料，向右延展至下游客戶。`;
+
+      modalTreeZoom = 1;
+      const svg = document.getElementById('modal-tree-svg');
+      svg.innerHTML = '';
+
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.setAttribute('id', 'modal-tree-group');
+      g.setAttribute('transform', 'translate(0, 0) scale(1)');
+
+      // 建立節點結構
+      const nodes = [];
+      const links = [];
+
+      // 1. 中央核心節點 (當前個股)
+      const centerNode = {
+        id: 'center_core',
+        name: `${stock.name} (${stock.id})`,
+        role: stock.categoryName,
+        price: `NT$ ${stock.price || '--'}`,
+        x: 425,
+        y: 186,
+        w: 210,
+        h: 58,
+        color: '#1e60d5',
+        type: 'core'
+      };
+      nodes.push(centerNode);
+
+      // 2. 上游模組分類 (Column 2: x: 225, w: 145)
+      const ubList = tc.upstreamBranches || [];
+      const ubCount = ubList.length;
+      const ubAvailH = 360;
+      const ubStep = ubCount > 1 ? ubAvailH / ubCount : 0;
+
+      ubList.forEach((ub, i) => {
+        const y = 35 + i * ubStep + (ubStep - 36) / 2;
+        const node = {
+          id: ub.id,
+          name: ub.name,
+          icon: ub.icon || '📦',
+          role: '上游系統類別',
+          x: 225,
+          y: y,
+          w: 145,
+          h: 36,
+          color: '#0284c7',
+          type: 'up_branch'
+        };
+        nodes.push(node);
+        links.push({ source: ub.id, target: 'center_core' });
+      });
+
+      // 3. 上游供應商葉子 (Column 1: x: 25, w: 155)
+      const ulList = tc.upstreamLeaves || [];
+      const ulCount = ulList.length;
+      const ulAvailH = 390;
+      const ulStep = ulCount > 1 ? ulAvailH / ulCount : 0;
+
+      ulList.forEach((ul, i) => {
+        const y = 20 + i * ulStep + (ulStep - 38) / 2;
+        const id = `ul_${i}`;
+        const node = {
+          id: id,
+          name: ul.name,
+          role: ul.role,
+          icon: ul.icon || '🏭',
+          x: 25,
+          y: y,
+          w: 155,
+          h: 38,
+          color: ul.color || '#0369a1',
+          type: 'up_leaf'
+        };
+        nodes.push(node);
+        if (ul.branch) {
+          links.push({ source: id, target: ul.branch });
+        }
+      });
+
+      // 4. 下游應用分類 (Column 4: x: 685, w: 145)
+      const dbList = tc.downstreamBranches || [];
+      const dbCount = dbList.length;
+      const dbAvailH = 340;
+      const dbStep = dbCount > 1 ? dbAvailH / dbCount : 0;
+
+      dbList.forEach((db, i) => {
+        const y = 45 + i * dbStep + (dbStep - 36) / 2;
+        const node = {
+          id: db.id,
+          name: db.name,
+          icon: db.icon || '🌐',
+          role: '下游出貨市場',
+          x: 685,
+          y: y,
+          w: 145,
+          h: 36,
+          color: '#0d9488',
+          type: 'down_branch'
+        };
+        nodes.push(node);
+        links.push({ source: 'center_core', target: db.id });
+      });
+
+      // 5. 下游終端客戶葉子 (Column 5: x: 880, w: 155)
+      const dlList = tc.downstreamLeaves || [];
+      const dlCount = dlList.length;
+      const dlAvailH = 390;
+      const dlStep = dlCount > 1 ? dlAvailH / dlCount : 0;
+
+      dlList.forEach((dl, i) => {
+        const y = 20 + i * dlStep + (dlStep - 38) / 2;
+        const id = `dl_${i}`;
+        const node = {
+          id: id,
+          name: dl.name,
+          role: dl.role,
+          icon: dl.icon || '☁️',
+          x: 880,
+          y: y,
+          w: 155,
+          h: 38,
+          color: dl.color || '#0f766e',
+          type: 'down_leaf'
+        };
+        nodes.push(node);
+        if (dl.branch) {
+          links.push({ source: dl.branch, target: id });
+        }
+      });
+
+      currentModalTreeData = { nodes, links, stock };
+
+      // 繪製平滑貝茲曲線連線 (Smooth Bezier Links)
+      links.forEach(l => {
+        const sNode = nodes.find(n => n.id === l.source);
+        const tNode = nodes.find(n => n.id === l.target);
+        if (!sNode || !tNode) return;
+
+        const x1 = sNode.x + sNode.w;
+        const y1 = sNode.y + sNode.h / 2;
+        const x2 = tNode.x;
+        const y2 = tNode.y + tNode.h / 2;
+        const dx = Math.abs(x2 - x1) * 0.5;
+
+        const pathData = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathData);
+        path.setAttribute('class', 'modal-tree-link');
+        path.setAttribute('id', `mlink-${l.source}-${l.target}`);
+        g.appendChild(path);
+      });
+
+      // 繪製所有節點卡片 (Node Groups)
+      nodes.forEach(node => {
+        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        group.setAttribute('class', 'modal-node-group');
+        group.setAttribute('id', `mnode-${node.id}`);
+        group.setAttribute('transform', `translate(${node.x}, ${node.y})`);
+        group.setAttribute('onclick', `onModalNodeClick('${node.id}')`);
+
+        const isCore = node.type === 'core';
+
+        // 背景卡片矩形
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('width', node.w);
+        rect.setAttribute('height', node.h);
+        rect.setAttribute('class', 'modal-node-box');
+        rect.setAttribute('fill', isCore ? '#eff6ff' : '#ffffff');
+        rect.setAttribute('stroke', isCore ? '#1e60d5' : node.color);
+        if (isCore) {
+          rect.setAttribute('stroke-width', '2.5px');
+          rect.setAttribute('filter', 'drop-shadow(0 4px 14px rgba(30, 96, 213, 0.25))');
+        }
+        group.appendChild(rect);
+
+        // 主標題
+        const textTitle = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        textTitle.setAttribute('x', 12);
+        textTitle.setAttribute('y', isCore ? 23 : 20);
+        textTitle.setAttribute('font-size', isCore ? '14px' : '12px');
+        textTitle.setAttribute('font-weight', '800');
+        textTitle.setAttribute('fill', isCore ? '#1e40af' : '#0f2c4d');
+        textTitle.textContent = `${node.icon || (isCore ? '🎯' : '')} ${node.name}`;
+        group.appendChild(textTitle);
+
+        // 次標題 / 代號 / 角色
+        if (node.h > 36) {
+          const textSub = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          textSub.setAttribute('x', 12);
+          textSub.setAttribute('y', isCore ? 44 : 34);
+          textSub.setAttribute('font-size', isCore ? '11px' : '10px');
+          textSub.setAttribute('font-weight', '700');
+          textSub.setAttribute('fill', isCore ? '#dc2626' : node.color);
+          textSub.setAttribute('font-family', 'var(--font-mono)');
+          textSub.textContent = isCore ? `${node.role} · ${node.price}` : node.role;
+          group.appendChild(textSub);
+        }
+
+        g.appendChild(group);
+      });
+
+      svg.appendChild(g);
+    }
+
+    // 點擊彈窗樹狀圖節點的高亮與連動
+    function onModalNodeClick(nodeId) {
+      if (!currentModalTreeData) return;
+      const { nodes, links, stock } = currentModalTreeData;
+      const clicked = nodes.find(n => n.id === nodeId);
+      if (!clicked) return;
+
+      const alertBar = document.getElementById('tree-alert-text');
+
+      if (nodeId === 'center_core') {
+        alertBar.innerHTML = `聚焦核心：<strong>${stock.name} (${stock.id})</strong>，為產業鏈系統整合中樞！`;
+        resetModalTreeHighlight();
+        return;
+      }
+
+      // 追溯連通網路
+      const connectedNodes = new Set([nodeId, 'center_core']);
+      const connectedLinks = new Set();
+
+      links.forEach(l => {
+        if (l.source === nodeId || l.target === nodeId) {
+          connectedNodes.add(l.source);
+          connectedNodes.add(l.target);
+          connectedLinks.add(`mlink-${l.source}-${l.target}`);
+        }
+      });
+
+      // 追溯上下游
+      links.forEach(l => {
+        if (connectedNodes.has(l.source) && connectedNodes.has(l.target)) {
+          connectedLinks.add(`mlink-${l.source}-${l.target}`);
+        }
+      });
+
+      document.querySelectorAll('.modal-node-group').forEach(el => {
+        const id = el.id.replace('mnode-', '');
+        if (connectedNodes.has(id)) {
+          el.classList.remove('faded');
+          if (id === nodeId) el.classList.add('active');
+          else el.classList.remove('active');
+        } else {
+          el.classList.add('faded');
+          el.classList.remove('active');
+        }
+      });
+
+      document.querySelectorAll('.modal-tree-link').forEach(el => {
+        if (connectedLinks.has(el.id)) {
+          el.classList.add('highlighted');
+          el.classList.remove('faded');
+        } else {
+          el.classList.remove('highlighted');
+          el.classList.add('faded');
+        }
+      });
+
+      const roleType = clicked.type.includes('up') ? '⬆️ 上游環節' : '⬇️ 下游市場';
+      alertBar.innerHTML = `您點選了：<strong>【${clicked.name}】</strong>（${clicked.role}） · ${roleType}，與核心 <strong>${stock.name}</strong> 緊密串聯。`;
+    }
+
+    function resetModalTreeHighlight() {
+      document.querySelectorAll('.modal-node-group').forEach(el => el.classList.remove('faded', 'active'));
+      document.querySelectorAll('.modal-tree-link').forEach(el => el.classList.remove('faded', 'highlighted'));
+    }
+
+    // 縮放彈窗樹狀圖
+    function zoomModalTree(factor) {
+      modalTreeZoom *= factor;
+      if (modalTreeZoom < 0.6) modalTreeZoom = 0.6;
+      if (modalTreeZoom > 1.8) modalTreeZoom = 1.8;
+      const g = document.getElementById('modal-tree-group');
+      if (g) g.setAttribute('transform', `scale(${modalTreeZoom})`);
+    }
+
+    function resetModalTreeZoom() {
+      modalTreeZoom = 1;
+      const g = document.getElementById('modal-tree-group');
+      if (g) g.setAttribute('transform', 'scale(1)');
+      resetModalTreeHighlight();
+      if (currentModalTreeData) {
+        document.getElementById('tree-alert-text').textContent = `已復原置中。點擊任一節點可即時追溯其專屬供需鏈路。`;
       }
     }
 
