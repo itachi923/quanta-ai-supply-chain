@@ -3,7 +3,7 @@ import json
 import time
 import os
 
-from adjust_splits import adjust_rows, summarize
+from adjust_prices import adjust_rows, summarize, events_meta
 
 STOCKS_CONFIG = [
     {
@@ -456,14 +456,12 @@ def build_data():
 
         data = fetch_prices(sid)
         if data:
-            # 還原股價：把股票分割造成的價格斷層抹平，否則 K 線會出現假斷崖
-            data, split_events = adjust_rows(data)
-            if split_events:
-                summarize(split_events, label=sid)
-                s["splits"] = [
-                    {"date": e["date"], "factor": e["factor"], "kind": e["kind"]}
-                    for e in split_events
-                ]
+            # 還原股價：抹平除權息與股票分割造成的價格斷層，否則 K 線會出現假斷崖
+            data, adj_events = adjust_rows(data, stock_id=sid)
+            if adj_events:
+                summarize(adj_events, label=sid)
+                s["priceAdjustments"] = events_meta(adj_events)
+            s.pop("splits", None)
             s["history"] = data[-60:]  # keep recent 60 trading days for interactive chart
             latest = data[-1]
             prev = data[-2] if len(data) > 1 else data[-1]

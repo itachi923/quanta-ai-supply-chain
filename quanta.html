@@ -1441,6 +1441,7 @@
   <script>
     // 全域走勢資料快取與圖表實例
     let rawDailyPrices = [];
+    let quantaPriceAdjustments = [];
     let stockPriceChart = null;
 
     // ========================================================
@@ -1482,6 +1483,42 @@
       const d = snap.marketDate || '';
       const t = snap.marketTime || '';
       return `報價時間 ${d} ${t}（證交所 MIS）`;
+    }
+
+    // ========================================================
+    // 還原股價（前端）
+    // --------------------------------------------------------
+    // 本地 JSON 裡的 history 已由 scripts/adjust_prices.py 還原過，
+    // 但即時同步會用 FinMind 的 **原始未還原** 日線覆寫它，
+    // 若不重新套用一次，除權息與分割造成的假斷崖就會跑回來。
+    // 因子來源：個股資料的 priceAdjustments 欄位。
+    // ========================================================
+    function applyPriceAdjustments(rows, adjustments) {
+      if (!rows || !rows.length || !adjustments || !adjustments.length) return rows;
+      const OHLC = ['open', 'max', 'min', 'close', 'spread'];
+      return rows.map(r => {
+        let priceFactor = 1;
+        let shareFactor = 1;
+        adjustments.forEach(a => {
+          if (r.date < a.date) {
+            priceFactor *= a.factor;
+            // 配股會讓股數變多，成交量需同步放大才能與還原後價格一致
+            const stockDiv = a.stock || 0;
+            shareFactor *= (a.kind === 'dividend') ? (1 + stockDiv / 10) : (1 / a.factor);
+          }
+        });
+        if (priceFactor === 1) return r;
+        const out = Object.assign({}, r);
+        OHLC.forEach(k => {
+          if (out[k] !== null && out[k] !== undefined) {
+            out[k] = Math.round(out[k] * priceFactor * 100) / 100;
+          }
+        });
+        if (out.Trading_Volume) {
+          out.Trading_Volume = Math.round(out.Trading_Volume * shareFactor);
+        }
+        return out;
+      });
     }
 
     // 以盤中即時報價覆寫頂部 Ticker
@@ -1866,6 +1903,8 @@
             localData = await localResp.json();
             if (localData && localData.daily_prices && localData.daily_prices.length > 0) {
               rawDailyPrices = localData.daily_prices;
+              // 記下還原因子，供稍後覆寫 API 原始資料時重新套用
+              quantaPriceAdjustments = localData.priceAdjustments || [];
               const latest = rawDailyPrices[rawDailyPrices.length - 1];
               const prev = rawDailyPrices.length > 1 ? rawDailyPrices[rawDailyPrices.length - 2] : null;
               updateTickerUI(latest, prev);
@@ -1882,7 +1921,8 @@
         if (apiResp.ok) {
           const json = await apiResp.json();
           if (json.data && json.data.length > 0) {
-            rawDailyPrices = json.data;
+            // FinMind 回傳的是未還原股價，必須重新套用還原因子
+            rawDailyPrices = applyPriceAdjustments(json.data, quantaPriceAdjustments);
             const latest = rawDailyPrices[rawDailyPrices.length - 1];
             const prev = rawDailyPrices.length > 1 ? rawDailyPrices[rawDailyPrices.length - 2] : null;
             updateTickerUI(latest, prev);
