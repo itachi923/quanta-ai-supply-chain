@@ -75,6 +75,43 @@
       flex-wrap: wrap;
       gap: 12px;
     }
+
+    /* ---------------- 頁面切換列（中樞 / 情報 / 廣達專頁） ---------------- */
+    .page-tabs-bar {
+      border-top: 1px solid rgba(195, 222, 245, 0.85);
+      background: rgba(255, 255, 255, 0.55);
+    }
+    .page-tabs {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      gap: 4px;
+      /* 窄螢幕改為橫向捲動，避免撐出整頁的水平捲軸 */
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .page-tabs::-webkit-scrollbar { display: none; }
+    .page-tab {
+      padding: 10px 18px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .page-tab:hover { color: var(--blue-quanta); }
+    .page-tab.active {
+      color: var(--blue-navy);
+      border-bottom-color: var(--blue-quanta);
+      background: rgba(255, 255, 255, 0.9);
+    }
+    @media (max-width: 760px) {
+      .page-tabs { padding: 0 12px; }
+      .page-tab { padding: 9px 13px; font-size: 0.85rem; }
+    }
     .brand {
       display: flex;
       align-items: center;
@@ -959,6 +996,15 @@
         <li><a href="#bom-area">機櫃 BOM 成本</a></li>
         <li><a href="#chips-area">籌碼面法人動向</a></li>
       </ul>
+    </div>
+
+    <!-- 頁面切換列（三頁共用） -->
+    <div class="page-tabs-bar">
+      <nav class="page-tabs">
+        <a href="index.html" class="page-tab">📊 類股中樞</a>
+        <a href="news.html" class="page-tab">📰 新聞與即時情報</a>
+        <a href="quanta.html" class="page-tab active">🤖 廣達 2382 專頁</a>
+      </nav>
     </div>
   </header>
 

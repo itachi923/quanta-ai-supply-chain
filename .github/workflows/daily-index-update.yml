@@ -1,18 +1,21 @@
-name: 每日類股指數更新
+name: 每日情報資料更新
 
-# 類股指數只在收盤後變動，不需要像盤中報價那樣每 5 分鐘跑。
-# 每個交易日收盤後跑一次，把當天的「電腦及週邊設備類指數」與
-# 「發行量加權股價指數」補進 data/index_compare.json。
+# 這些資料都只在收盤後變動，不需要像盤中報價那樣每 5 分鐘跑：
+#   - 類股指數對照（index_compare.json）
+#   - 三大法人買賣超（institutional.json，證交所收盤後才公布）
+#   - 類股新聞（news.json，滾動保留最近 10 天）
 #
-# 與盤中報價快照不同，這份資料直接提交回 main：
+# 與盤中報價快照不同，這些資料直接提交回 main：
 #   - 一天只有一個提交，不會污染歷史
-#   - 腳本是增量更新，需要 main 上既有的資料當基準才不會每次重抓整年
-#   - 前端直接從 GitHub Pages 讀同源的 data/index_compare.json
+#   - 三支腳本都是增量更新，需要 main 上既有的資料當基準才不會每次重抓
+#   - 前端直接從 GitHub Pages 讀同源的 data/*.json
 
 on:
   schedule:
     # UTC 06:10，對應台北時間 14:10（台股 13:30 收盤後）
     - cron: '10 6 * * 1-5'
+    # UTC 09:10，對應台北時間 17:10（三大法人數據約 15:00-16:00 才公布，補跑一次）
+    - cron: '10 9 * * 1-5'
   workflow_dispatch:
 
 permissions:
@@ -39,20 +42,31 @@ jobs:
       - name: 更新類股指數對照資料
         run: python scripts/build_index_compare.py
 
+      # 任一支腳本失敗不應該讓其他資料也停止更新，因此各自獨立並允許失敗
+      - name: 更新三大法人買賣超
+        continue-on-error: true
+        run: python scripts/build_institutional_data.py
+
+      - name: 更新類股新聞
+        continue-on-error: true
+        run: python scripts/build_news.py
+
       - name: 提交更新
         run: |
           set -euo pipefail
 
-          if git diff --quiet -- data/index_compare.json; then
-            echo "指數資料無變動（可能非交易日或尚未收盤），略過提交"
+          FILES="data/index_compare.json data/institutional.json data/news.json"
+
+          if git diff --quiet -- $FILES; then
+            echo "資料無變動（可能非交易日或尚未收盤），略過提交"
             exit 0
           fi
 
-          COUNT=$(python -c "import json;print(json.load(open('data/index_compare.json',encoding='utf-8'))['count'])")
-          echo "目前累積 $COUNT 個交易日"
+          python -c "import json;print('  指數',json.load(open('data/index_compare.json',encoding='utf-8'))['count'],'個交易日')" || true
+          python -c "import json;print('  新聞',json.load(open('data/news.json',encoding='utf-8'))['count'],'則')" || true
 
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/index_compare.json
-          git commit -m "chore: 更新類股指數對照資料 ($(date -u +'%Y-%m-%d'))"
+          git add $FILES
+          git commit -m "chore: 更新每日情報資料 ($(date -u +'%Y-%m-%d'))"
           git push origin HEAD:main

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>電腦及週邊設備類股 · 新聞與即時情報中心</title>
+  <meta name="description" content="電腦及週邊設備類股 16 檔個股的即時盤面、三大法人買賣超動向與相關新聞情報總覽。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #f0f6fc;
+      --bg-gradient: linear-gradient(135deg, #eaf3fb 0%, #dbeefe 50%, #eff6ff 100%);
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --card-border: #cfe5f8;
+
+      --text-title: #0a2540;
+      --text-body: #2d4156;
+      --text-muted: #5e768d;
+
+      --blue-quanta: #0284c7;
+      --blue-navy: #0f2c4d;
+      --blue-soft: #e0effe;
+      --blue-primary: #1e60d5;
+      --stock-red: #dc2626;   /* 台股漲紅 */
+      --stock-green: #16a34a; /* 台股跌綠 */
+
+      --font-main: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "IBM Plex Mono", Consolas, monospace;
+
+      --shadow-sm: 0 2px 8px rgba(15, 44, 77, 0.05);
+      --shadow-md: 0 8px 24px rgba(15, 44, 77, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-body);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ---------------- 頂部導航與頁面切換列 ---------------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(240, 246, 252, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(195, 222, 245, 0.85);
+      box-shadow: 0 2px 10px rgba(15, 44, 77, 0.04);
+    }
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-title);
+    }
+    .brand-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #0284c7, #1e60d5);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .brand span:first-of-type { font-size: 1.05rem; font-weight: 900; }
+    .brand-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      background: var(--blue-soft);
+      color: var(--blue-primary);
+      padding: 2px 8px;
+      border-radius: 5px;
+      margin-left: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .page-tabs-bar {
+      border-top: 1px solid rgba(195, 222, 245, 0.85);
+      background: rgba(255, 255, 255, 0.55);
+    }
+    .page-tabs {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      gap: 4px;
+      /* 窄螢幕改為橫向捲動，避免撐出整頁的水平捲軸 */
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .page-tabs::-webkit-scrollbar { display: none; }
+    .page-tab {
+      padding: 10px 18px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .page-tab:hover { color: var(--blue-quanta); }
+    .page-tab.active {
+      color: var(--blue-navy);
+      border-bottom-color: var(--blue-quanta);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .container { max-width: 1400px; margin: 0 auto; padding: 26px 24px 60px; }
+
+    /* ---------------- 區塊卡片 ---------------- */
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 26px;
+      box-shadow: var(--shadow-sm);
+    }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .panel-title {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--blue-navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.6;
+    }
+    .data-stamp {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 10px 18px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 0.86rem;
+    }
+    .pulse-dot {
+      width: 10px; height: 10px;
+      background: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+      70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* ---------------- 盤面速覽 ---------------- */
+    .quote-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+      gap: 10px;
+    }
+    .quote-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 11px 12px;
+      background: #ffffff;
+      transition: all 0.18s;
+    }
+    .quote-card:hover { border-color: var(--blue-quanta); box-shadow: var(--shadow-sm); }
+    .quote-name {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--blue-navy);
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+    .quote-id {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .quote-price {
+      font-size: 1.22rem;
+      font-weight: 900;
+      margin-top: 4px;
+      white-space: nowrap !important;
+      word-break: keep-all;
+      flex-shrink: 0;
+    }
+    .quote-chg {
+      font-size: 0.82rem;
+      font-weight: 800;
+      white-space: nowrap !important;
+      word-break: keep-all;
+    }
+    .quote-vol {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 2px;
+      white-space: nowrap;
+    }
+
+    /* ---------------- 法人表格 ---------------- */
+    .flow-table-wrap {
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #fff;
+    }
+    .flow-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      font-variant-numeric: tabular-nums;
+      min-width: 620px;
+    }
+    .flow-table th, .flow-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #eef2f6;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .flow-table th:first-child, .flow-table td:first-child {
+      text-align: left;
+    }
+    .flow-table thead th {
+      position: sticky; top: 0;
+      background: #f8fafc;
+      color: var(--blue-navy);
+      font-weight: 800;
+      cursor: pointer;
+      user-select: none;
+      z-index: 2;
+    }
+    .flow-table thead th:hover { background: #eef5fd; }
+    .flow-table tbody tr:hover { background: #f8fbff; }
+    .flow-stock {
+      font-weight: 800;
+      color: var(--blue-navy);
+    }
+    .flow-stock small {
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-left: 4px;
+    }
+
+    /* ---------------- 新聞牆 ---------------- */
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .filter-chip {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: var(--text-body);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .filter-chip:hover { border-color: var(--blue-quanta); color: var(--blue-quanta); }
+    .filter-chip.active {
+      background: var(--blue-navy);
+      border-color: var(--blue-navy);
+      color: #ffffff;
+    }
+    .filter-chip .cnt {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      opacity: 0.75;
+      margin-left: 3px;
+    }
+
+    .news-list { display: flex; flex-direction: column; gap: 2px; }
+    .news-item {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid transparent;
+      border-bottom: 1px solid #eef2f6;
+      border-radius: 10px;
+      padding: 13px 14px;
+      transition: all 0.16s;
+    }
+    .news-item:hover {
+      background: #f8fbff;
+      border-color: #bfdbfe;
+      transform: translateX(2px);
+    }
+    .news-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-title);
+      line-height: 1.55;
+    }
+    .news-item:hover .news-title { color: var(--blue-primary); }
+    .news-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+    .news-source {
+      background: #f1f5f9;
+      border-radius: 5px;
+      padding: 1px 7px;
+      font-weight: 700;
+    }
+    .news-time { font-family: var(--font-mono); }
+    .news-stock-tag {
+      background: var(--blue-soft);
+      color: var(--blue-primary);
+      border-radius: 5px;
+      padding: 1px 7px;
+      font-weight: 800;
+      font-size: 0.73rem;
+    }
+
+    .empty-note {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 34px 16px;
+      font-size: 0.9rem;
+    }
+
+    .load-more-btn {
+      display: block;
+      margin: 16px auto 0;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: var(--text-body);
+      padding: 9px 26px;
+      border-radius: 9px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .load-more-btn:hover { border-color: var(--blue-quanta); color: var(--blue-quanta); }
+
+    footer {
+      background: var(--blue-navy);
+      color: #cbd5e1;
+      padding: 26px 24px;
+      font-size: 0.84rem;
+    }
+    .footer-content {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .footer-links a { color: #93c5fd; text-decoration: none; font-weight: 700; }
+
+    @media (max-width: 760px) {
+      .page-tabs { padding: 0 12px; }
+      .page-tab { padding: 9px 13px; font-size: 0.85rem; }
+      .container { padding: 18px 14px 44px; }
+      .panel { padding: 17px 15px; }
+      .brand span:first-of-type { font-size: 0.92rem; }
+      .quote-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .data-stamp { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部導航 -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">📰</div>
+        <div>
+          <span>電腦及週邊設備類股 · 新聞與即時情報中心</span>
+          <span class="brand-badge">LIVE INTEL</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- 頁面切換列（三頁共用） -->
+    <div class="page-tabs-bar">
+      <nav class="page-tabs">
+        <a href="index.html" class="page-tab">📊 類股中樞</a>
+        <a href="news.html" class="page-tab active">📰 新聞與即時情報</a>
+        <a href="quanta.html" class="page-tab">🤖 廣達 2382 專頁</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <div class="status-bar">
+      <div style="display:inline-flex; align-items:center; gap:8px; font-weight:700; color:#1e40af;">
+        <span class="pulse-dot"></span>
+        <span id="intel-status">載入情報資料中…</span>
+      </div>
+      <span class="data-stamp" id="intel-updated"></span>
+    </div>
+
+    <!-- ========================================================
+         區塊 1：盤面速覽（依漲跌幅排序）
+         ======================================================== -->
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">⚡ 類股盤面速覽 · 16 檔即時報價</h2>
+          <p class="panel-desc">依當日漲跌幅由高至低排序，紅漲綠跌。點擊任一檔可回到中樞頁展開該股的產業鏈與籌碼分析。</p>
+        </div>
+        <span class="data-stamp" id="quoteStamp"></span>
+      </div>
+      <div class="quote-grid" id="quoteGrid"></div>
+    </section>
+
+    <!-- ========================================================
+         區塊 2：三大法人買賣超動向
+         ======================================================== -->
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">🧮 三大法人買賣超動向</h2>
+          <p class="panel-desc">
+            單位為張，正數買超、負數賣超。點擊表頭可切換排序。
+            <strong>三大法人數據由證交所於收盤後公布</strong>，因此這裡呈現的是最新已公布交易日的資料，而非盤中即時。
+          </p>
+        </div>
+        <div class="filter-row" style="margin-bottom:0;">
+          <button class="filter-chip active" data-flow-range="1" onclick="setFlowRange(1)">當日</button>
+          <button class="filter-chip" data-flow-range="5" onclick="setFlowRange(5)">近 5 日</button>
+          <button class="filter-chip" data-flow-range="20" onclick="setFlowRange(20)">近 20 日</button>
+        </div>
+      </div>
+      <div class="flow-table-wrap">
+        <table class="flow-table" id="flowTable">
+          <thead>
+            <tr>
+              <th onclick="sortFlow('name')">個股 ↕</th>
+              <th onclick="sortFlow('foreign')">外資 ↕</th>
+              <th onclick="sortFlow('trust')">投信 ↕</th>
+              <th onclick="sortFlow('dealer')">自營商 ↕</th>
+              <th onclick="sortFlow('total')">三大法人合計 ↕</th>
+              <th onclick="sortFlow('ratio')">外資持股比例 ↕</th>
+            </tr>
+          </thead>
+          <tbody id="flowTableBody"></tbody>
+        </table>
+      </div>
+      <p class="data-stamp" id="flowStamp" style="margin-top:10px;"></p>
+    </section>
+
+    <!-- ========================================================
+         區塊 3：類股新聞牆
+         ======================================================== -->
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">📰 類股新聞牆</h2>
+          <p class="panel-desc">
+            彙整 16 檔個股的相關新聞，依時間由新至舊排列。同一則報導若同時提及多檔個股，會合併為一則並標示所有相關個股。
+          </p>
+        </div>
+        <span class="data-stamp" id="newsStamp"></span>
+      </div>
+
+      <div class="filter-row" id="newsFilterRow"></div>
+      <div class="news-list" id="newsList"></div>
+      <button class="load-more-btn" id="newsMoreBtn" onclick="showMoreNews()" style="display:none;">顯示更多新聞 ▼</button>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div>
+        <div style="font-size:1.05rem; font-weight:700; color:#fff;">電腦及週邊設備類股 · 新聞與即時情報中心</div>
+        <div style="font-size:0.8rem; margin-top:4px;">
+          報價來源：證交所 MIS · 法人數據：FinMind／證交所 · 新聞來源：FinMind TaiwanStockNews
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">📊 類股中樞</a>
+        <a href="quanta.html">🤖 廣達旗艦專頁</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ========================================================
+    // 情報頁資料來源
+    //  - 報價：data-live 分支的盤中快照 -> 專案內快照（與中樞頁同一套三層後備）
+    //  - 法人：institutional.json（證交所收盤後公布，非盤中即時）
+    //  - 新聞：news.json（FinMind TaiwanStockNews，逐檔逐日抓取後去重合併）
+    // ========================================================
+    const REALTIME_SOURCES = [
+      'https://raw.githubusercontent.com/itachi923/quanta-ai-supply-chain/data-live/realtime.json',
+      'data/realtime.json'
+    ];
+
+    const STOCK_ORDER = ['2382','6669','3231','2356','2376','2357','2377','2059',
+                         '3017','3324','8210','2395','6414','3706','2352','4915'];
+
+    let realtimeSnapshot = null;
+    let institutionalData = null;
+    let newsData = null;
+
+    let flowRange = 1;
+    let flowSortKey = 'total';
+    let flowSortAsc = false;
+    let newsFilter = 'all';
+    let newsShown = 30;
+
+    // ---------------- 工具 ----------------
+    function fmtLots(n) {
+      if (n === null || n === undefined || isNaN(n)) return '--';
+      const sign = n > 0 ? '+' : (n < 0 ? '-' : '');
+      return `${sign}${Math.abs(Math.round(n)).toLocaleString()}`;
+    }
+    function lotsColor(n) {
+      if (!n) return 'var(--text-body)';
+      return n > 0 ? 'var(--stock-red)' : 'var(--stock-green)';
+    }
+    function sumKey(rows, key) {
+      return rows.reduce((a, r) => a + (r[key] || 0), 0);
+    }
+    function escapeHtml(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    // ---------------- 載入 ----------------
+    async function loadRealtimeQuotes() {
+      for (const base of REALTIME_SOURCES) {
+        try {
+          const resp = await fetch(base + '?t=' + Date.now(), { cache: 'no-store' });
+          if (!resp.ok) continue;
+          const json = await resp.json();
+          if (json && json.quotes && Object.keys(json.quotes).length > 0) return json;
+        } catch (err) { /* 換下一個來源 */ }
+      }
+      return null;
+    }
+
+    async function loadJson(path) {
+      try {
+        const resp = await fetch(path + '?t=' + Date.now());
+        if (!resp.ok) return null;
+        return await resp.json();
+      } catch (err) {
+        return null;
+      }
+    }
+
+    // ---------------- 區塊 1：盤面速覽 ----------------
+    function renderQuotes() {
+      const grid = document.getElementById('quoteGrid');
+      if (!realtimeSnapshot) {
+        grid.innerHTML = '<div class="empty-note">即時報價暫時無法取得。</div>';
+        return;
+      }
+      const rows = STOCK_ORDER
+        .map(id => Object.assign({ id }, realtimeSnapshot.quotes[id] || {}))
+        .filter(q => q.price !== null && q.price !== undefined)
+        .sort((a, b) => (b.pct || 0) - (a.pct || 0));
+
+      grid.innerHTML = rows.map(q => {
+        const up = (q.spread || 0) >= 0;
+        const color = up ? 'var(--stock-red)' : 'var(--stock-green)';
+        const arrow = up ? '▲&nbsp;+' : '▼&nbsp;';
+        return `
+          <a class="quote-card" href="index.html#${q.id}" style="text-decoration:none;">
+            <div class="quote-name">${escapeHtml(q.name || '')}<span class="quote-id">${q.id}</span></div>
+            <div class="quote-price" style="color:${color};">NT$&nbsp;${Number(q.price).toLocaleString()}</div>
+            <div class="quote-chg" style="color:${color};">${arrow}${Math.abs(q.spread || 0)}&nbsp;(${q.pct > 0 ? '+' : ''}${q.pct}%)</div>
+            <div class="quote-vol">成交 ${(q.volume || 0).toLocaleString()} 張</div>
+          </a>`;
+      }).join('');
+
+      document.getElementById('quoteStamp').textContent =
+        `報價時間 ${realtimeSnapshot.marketDate || ''} ${realtimeSnapshot.marketTime || ''}（證交所 MIS）`;
+    }
+
+    // ---------------- 區塊 2：三大法人 ----------------
+    function setFlowRange(days) {
+      flowRange = days;
+      document.querySelectorAll('.filter-chip[data-flow-range]').forEach(b => {
+        b.classList.toggle('active', Number(b.dataset.flowRange) === days);
+      });
+      renderFlowTable();
+    }
+
+    function sortFlow(key) {
+      if (flowSortKey === key) flowSortAsc = !flowSortAsc;
+      else { flowSortKey = key; flowSortAsc = false; }
+      renderFlowTable();
+    }
+
+    function renderFlowTable() {
+      const body = document.getElementById('flowTableBody');
+      if (!institutionalData || !institutionalData.stocks) {
+        body.innerHTML = '<tr><td colspan="6" class="empty-note">法人資料暫時無法取得。</td></tr>';
+        return;
+      }
+
+      let lastDate = '';
+      const rows = STOCK_ORDER.map(id => {
+        const rec = institutionalData.stocks[id];
+        if (!rec || !rec.daily || !rec.daily.length) return null;
+        const daily = rec.daily.slice(-flowRange);
+        const hold = rec.shareholding || [];
+        const ratio = hold.length ? hold[hold.length - 1].foreignRatio : null;
+        const d = rec.daily[rec.daily.length - 1].date;
+        if (d > lastDate) lastDate = d;
+        return {
+          id,
+          name: rec.name || id,
+          foreign: sumKey(daily, 'foreign'),
+          trust: sumKey(daily, 'trust'),
+          dealer: sumKey(daily, 'dealer'),
+          total: sumKey(daily, 'total'),
+          ratio
+        };
+      }).filter(Boolean);
+
+      rows.sort((a, b) => {
+        let va = a[flowSortKey], vb = b[flowSortKey];
+        if (flowSortKey === 'name') { va = a.id; vb = b.id; }
+        if (va === null || va === undefined) va = -Infinity;
+        if (vb === null || vb === undefined) vb = -Infinity;
+        if (va < vb) return flowSortAsc ? -1 : 1;
+        if (va > vb) return flowSortAsc ? 1 : -1;
+        return 0;
+      });
+
+      body.innerHTML = rows.map(r => `
+        <tr>
+          <td class="flow-stock">${escapeHtml(r.name)}<small>${r.id}</small></td>
+          <td style="color:${lotsColor(r.foreign)}; font-weight:700;">${fmtLots(r.foreign)}</td>
+          <td style="color:${lotsColor(r.trust)}; font-weight:700;">${fmtLots(r.trust)}</td>
+          <td style="color:${lotsColor(r.dealer)}; font-weight:700;">${fmtLots(r.dealer)}</td>
+          <td style="color:${lotsColor(r.total)}; font-weight:800;">${fmtLots(r.total)}</td>
+          <td>${r.ratio !== null && r.ratio !== undefined ? r.ratio.toFixed(2) + '%' : '--'}</td>
+        </tr>`).join('');
+
+      const label = flowRange === 1 ? '當日' : `近 ${flowRange} 日累計`;
+      document.getElementById('flowStamp').textContent =
+        `${label}買賣超 · 資料日期 ${lastDate} · 單位：張（三大法人數據由證交所收盤後公布）`;
+    }
+
+    // ---------------- 區塊 3：新聞牆 ----------------
+    function renderNewsFilters() {
+      const row = document.getElementById('newsFilterRow');
+      if (!newsData) { row.innerHTML = ''; return; }
+      const per = newsData.perStock || {};
+      const names = newsData.stockNames || {};
+
+      const chips = [`<button class="filter-chip ${newsFilter === 'all' ? 'active' : ''}" onclick="setNewsFilter('all')">全部<span class="cnt">${newsData.count}</span></button>`];
+      STOCK_ORDER.forEach(id => {
+        const c = per[id] || 0;
+        if (!c) return;   // 沒有新聞的個股不顯示標籤，避免點了空白
+        chips.push(`<button class="filter-chip ${newsFilter === id ? 'active' : ''}" onclick="setNewsFilter('${id}')">${escapeHtml(names[id] || id)}<span class="cnt">${c}</span></button>`);
+      });
+      row.innerHTML = chips.join('');
+    }
+
+    function setNewsFilter(id) {
+      newsFilter = id;
+      newsShown = 30;
+      renderNewsFilters();
+      renderNewsList();
+    }
+
+    function showMoreNews() {
+      newsShown += 30;
+      renderNewsList();
+    }
+
+    function renderNewsList() {
+      const list = document.getElementById('newsList');
+      const moreBtn = document.getElementById('newsMoreBtn');
+      if (!newsData || !newsData.items || !newsData.items.length) {
+        list.innerHTML = '<div class="empty-note">目前沒有可顯示的新聞。</div>';
+        moreBtn.style.display = 'none';
+        return;
+      }
+
+      const filtered = (newsFilter === 'all')
+        ? newsData.items
+        : newsData.items.filter(it => (it.stocks || []).includes(newsFilter));
+
+      if (!filtered.length) {
+        list.innerHTML = '<div class="empty-note">這檔個股近期沒有相關新聞。</div>';
+        moreBtn.style.display = 'none';
+        return;
+      }
+
+      const shown = filtered.slice(0, newsShown);
+      list.innerHTML = shown.map(it => {
+        const tags = (it.stockNames || []).slice(0, 5)
+          .map(n => `<span class="news-stock-tag">${escapeHtml(n)}</span>`).join('');
+        const time = String(it.date || '').replace('T', ' ').slice(0, 16);
+        const href = it.link ? escapeHtml(it.link) : '#';
+        // 同一則報導常被多家媒體轉載，已在資料端合併，這裡標示「等 N 家」
+        const srcs = it.sources || (it.source ? [it.source] : []);
+        const srcLabel = srcs.length
+          ? srcs[0] + (srcs.length > 1 ? ` 等 ${srcs.length} 家` : '')
+          : '未知來源';
+        return `
+          <a class="news-item" href="${href}" target="_blank" rel="noopener noreferrer">
+            <div class="news-title">${escapeHtml(it.title)}</div>
+            <div class="news-meta">
+              <span class="news-source">${escapeHtml(srcLabel)}</span>
+              <span class="news-time">${escapeHtml(time)}</span>
+              ${tags}
+            </div>
+          </a>`;
+      }).join('');
+
+      moreBtn.style.display = (filtered.length > newsShown) ? 'block' : 'none';
+      moreBtn.textContent = `顯示更多新聞 ▼（還有 ${filtered.length - newsShown} 則）`;
+
+      document.getElementById('newsStamp').textContent =
+        `共 ${newsData.count} 則 · 保留最近 ${newsData.keepDays} 天 · 來源 ${newsData.source}`;
+    }
+
+    // ---------------- 初始化 ----------------
+    async function initIntel() {
+      const [snap, inst, news] = await Promise.all([
+        loadRealtimeQuotes(),
+        loadJson('data/institutional.json'),
+        loadJson('data/news.json')
+      ]);
+
+      realtimeSnapshot = snap;
+      institutionalData = inst;
+      newsData = news;
+
+      renderQuotes();
+      renderFlowTable();
+      renderNewsFilters();
+      renderNewsList();
+
+      const parts = [];
+      if (snap) parts.push(`報價 ${snap.marketTime || ''}`);
+      if (inst) parts.push(`法人 ${inst.updated_at ? inst.updated_at.slice(0, 10) : ''}`);
+      if (news) parts.push(`新聞 ${news.count} 則`);
+      document.getElementById('intel-status').textContent =
+        parts.length ? `🟢 情報已載入 · ${parts.join(' · ')}` : '🟡 部分情報資料暫時無法取得';
+      document.getElementById('intel-updated').textContent =
+        news && news.updated_at ? `新聞更新於 ${news.updated_at}` : '';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initIntel();
+      // 盤中每 60 秒刷新報價區塊（法人與新聞由排程每日更新，不需高頻輪詢）
+      setInterval(async () => {
+        const snap = await loadRealtimeQuotes();
+        if (snap) { realtimeSnapshot = snap; renderQuotes(); }
+      }, 60000);
+    });
+  </script>
+</body>
+</html>
