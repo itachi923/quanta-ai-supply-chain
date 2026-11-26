@@ -3,6 +3,8 @@ import json
 import datetime
 import os
 
+from adjust_splits import adjust_rows, summarize
+
 def update_quanta_data():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     data_dir = os.path.join(base_dir, 'data')
@@ -30,8 +32,17 @@ def update_quanta_data():
     with urllib.request.urlopen(req_fin, timeout=15) as resp:
         fin_data = json.loads(resp.read().decode('utf-8')).get('data', [])
 
+    # 還原股價：把股票分割造成的價格斷層抹平，否則 K 線與均線會全部失真
+    price_data, split_events = adjust_rows(price_data)
+    if split_events:
+        summarize(split_events, label='2382')
+
     bundle = {
         'updated_at': now_str,
+        'splits': [
+            {'date': e['date'], 'factor': e['factor'], 'kind': e['kind']}
+            for e in split_events
+        ],
         'stock_id': '2382',
         'name': '廣達電腦',
         'daily_prices': price_data,

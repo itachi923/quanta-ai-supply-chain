@@ -2816,6 +2816,47 @@
     const GRID_HAIRLINE = '#f1f5f9';
     const ZERO_LINE = '#94a3b8';
 
+    // ========================================================
+    // 盤中即時報價引擎
+    // --------------------------------------------------------
+    // FinMind 的 TaiwanStockPrice 只有「日線收盤」，盤中查當日會回空陣列，
+    // 所以原本畫面上顯示的其實是前一交易日收盤價，而非即時報價。
+    // 證交所 MIS 才有真正的盤中報價，但它不送 CORS 標頭、瀏覽器無法直連，
+    // 因此改由 GitHub Actions 定時抓取並推到 data-live 分支，
+    // 前端再經 raw.githubusercontent.com 讀取（該網域有 CORS 允許標頭）。
+    // ========================================================
+    const REALTIME_SOURCES = [
+      'https://raw.githubusercontent.com/itachi923/quanta-ai-supply-chain/data-live/realtime.json',
+      'data/realtime.json'
+    ];
+
+    let realtimeSnapshot = null;
+
+    async function loadRealtimeQuotes() {
+      for (const base of REALTIME_SOURCES) {
+        try {
+          const resp = await fetch(base + '?t=' + Date.now(), { cache: 'no-store' });
+          if (!resp.ok) continue;
+          const json = await resp.json();
+          if (json && json.quotes && Object.keys(json.quotes).length > 0) {
+            realtimeSnapshot = json;
+            return json;
+          }
+        } catch (err) {
+          // 換下一個來源；全部失敗則沿用日線快取
+        }
+      }
+      return null;
+    }
+
+    // 報價時間標示：誠實說明這筆報價是什麼時候的，而不是一律寫「即時」
+    function realtimeStampText(snap) {
+      if (!snap) return '';
+      const d = snap.marketDate || '';
+      const t = snap.marketTime || '';
+      return `報價時間 ${d} ${t}（證交所 MIS）`;
+    }
+
     // 載入籌碼面快取（首屏秒開；失敗則靜默隱藏籌碼區塊）
     async function loadInstitutionalData() {
       try {
@@ -3289,39 +3330,62 @@
       if (statusText) statusText.textContent = '⏳ 正在連線台灣證券資料庫同步全族群最新價位...';
 
       try {
-        const fetchTasks = sectorStocksData.map(async (stock) => {
-          try {
-            const res = await fetch(`https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=${stock.id}&start_date=2026-11-20`);
-            if (res.ok) {
-              const json = await res.json();
-              if (json.data && json.data.length > 0) {
-                const latest = json.data[json.data.length - 1];
-                const prev = json.data.length > 1 ? json.data[json.data.length - 2] : null;
-                stock.price = latest.close;
-                if (latest.spread !== undefined) {
-                  stock.spread = latest.spread;
-                } else if (prev) {
-                  stock.spread = latest.close - prev.close;
-                }
-                const prevClose = prev ? prev.close : (latest.close - stock.spread);
-                stock.pct = prevClose ? parseFloat(((stock.spread / prevClose) * 100).toFixed(2)) : stock.pct;
-                if (latest.Trading_Volume) {
-                  stock.volume = Math.round(latest.Trading_Volume / 1000);
+        // 優先使用盤中即時快照（證交所 MIS）
+        const snap = await loadRealtimeQuotes();
+        let applied = 0;
+
+        if (snap) {
+          sectorStocksData.forEach((stock) => {
+            const q = snap.quotes[stock.id];
+            if (!q || q.price === null || q.price === undefined) return;
+            stock.price = q.price;
+            if (q.spread !== null && q.spread !== undefined) stock.spread = q.spread;
+            if (q.pct !== null && q.pct !== undefined) stock.pct = q.pct;
+            if (q.volume) stock.volume = q.volume;
+            if (snap.marketDate) stock.date = snap.marketDate;
+            applied++;
+          });
+        }
+
+        // 後備：即時快照取不到時，退回 FinMind 日線收盤
+        if (applied === 0) {
+          const fetchTasks = sectorStocksData.map(async (stock) => {
+            try {
+              const res = await fetch(`https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=${stock.id}&start_date=2026-11-20`);
+              if (res.ok) {
+                const json = await res.json();
+                if (json.data && json.data.length > 0) {
+                  const latest = json.data[json.data.length - 1];
+                  const prev = json.data.length > 1 ? json.data[json.data.length - 2] : null;
+                  stock.price = latest.close;
+                  if (latest.spread !== undefined) {
+                    stock.spread = latest.spread;
+                  } else if (prev) {
+                    stock.spread = latest.close - prev.close;
+                  }
+                  const prevClose = prev ? prev.close : (latest.close - stock.spread);
+                  stock.pct = prevClose ? parseFloat(((stock.spread / prevClose) * 100).toFixed(2)) : stock.pct;
+                  if (latest.Trading_Volume) {
+                    stock.volume = Math.round(latest.Trading_Volume / 1000);
+                  }
                 }
               }
+            } catch (e) {
+              console.warn(`Sync stock ${stock.id} error:`, e);
             }
-          } catch (e) {
-            console.warn(`Sync stock ${stock.id} error:`, e);
-          }
-        });
-
-        await Promise.all(fetchTasks);
+          });
+          await Promise.all(fetchTasks);
+        }
 
         renderLeaderSpotlight();
         renderComparisonTable();
         renderStockCards();
 
-        if (statusText) statusText.textContent = '🟢 即時行情連線正常 · 60秒自動同步全族群最新成交價';
+        if (statusText) {
+          statusText.textContent = applied > 0
+            ? `🟢 ${realtimeStampText(snap)} · 已同步 ${applied} 檔`
+            : '🟡 即時報價暫時無法取得，顯示前一交易日收盤價';
+        }
         if (timeText) timeText.textContent = `最後同步：${new Date().toLocaleTimeString('zh-TW', { hour12: false })}`;
       } catch (err) {
         console.error('All live sync err:', err);

@@ -918,49 +918,49 @@
       {
         "date": "2026-08-27",
         "stock_id": "6669",
-        "Trading_Volume": 1479152,
+        "Trading_Volume": 4437456,
         "Trading_money": 10115738990,
-        "open": 6770.0,
-        "max": 6960.0,
-        "min": 6735.0,
-        "close": 6815.0,
-        "spread": 30.0,
+        "open": 2256.67,
+        "max": 2320.0,
+        "min": 2245.0,
+        "close": 2271.67,
+        "spread": 10.0,
         "Trading_turnover": 12896
       },
       {
         "date": "2026-08-28",
         "stock_id": "6669",
-        "Trading_Volume": 1993578,
+        "Trading_Volume": 5980734,
         "Trading_money": 14128330095,
-        "open": 6965.0,
-        "max": 7245.0,
-        "min": 6835.0,
-        "close": 7200.0,
-        "spread": 385.0,
+        "open": 2321.67,
+        "max": 2415.0,
+        "min": 2278.33,
+        "close": 2400.0,
+        "spread": 128.33,
         "Trading_turnover": 18696
       },
       {
         "date": "2026-08-31",
         "stock_id": "6669",
-        "Trading_Volume": 1921970,
+        "Trading_Volume": 5765910,
         "Trading_money": 13768012635,
-        "open": 7100.0,
-        "max": 7360.0,
-        "min": 7035.0,
-        "close": 7095.0,
-        "spread": -105.0,
+        "open": 2366.67,
+        "max": 2453.33,
+        "min": 2345.0,
+        "close": 2365.0,
+        "spread": -35.0,
         "Trading_turnover": 21443
       },
       {
         "date": "2026-09-01",
         "stock_id": "6669",
-        "Trading_Volume": 2855090,
+        "Trading_Volume": 8565270,
         "Trading_money": 21640964250,
-        "open": 7115.0,
-        "max": 7800.0,
-        "min": 7050.0,
-        "close": 7800.0,
-        "spread": 705.0,
+        "open": 2371.67,
+        "max": 2600.0,
+        "min": 2350.0,
+        "close": 2600.0,
+        "spread": 235.0,
         "Trading_turnover": 25414
       },
       {
@@ -1746,7 +1746,14 @@
           "color": "#0f766e"
         }
       ]
-    }
+    },
+    "splits": [
+      {
+        "date": "2026-09-02",
+        "factor": 3.0,
+        "kind": "split"
+      }
+    ]
   },
   {
     "id": "3231",

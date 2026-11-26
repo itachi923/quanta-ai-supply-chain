@@ -1,7 +1,7 @@
 # 台灣電腦及週邊設備類股與廣達 AI 產業鏈中樞 —— 專案全景交接記憶檔 (Project Memory & Handover)
 
 > **產生時間**：2026-11-26  
-> **最後更新**：2026-11-26（新增籌碼面三大法人分析、K 線圖切換）  
+> **最後更新**：2026-11-26（新增籌碼面三大法人分析、K 線圖切換、盤中即時報價、還原股價）  
 > **專案狀態**：已完成全部核心功能開發並成功部署上線  
 > **適用對象**：接手的 AI 助手（如 Claude）、開發者或專案維護人員
 
@@ -75,13 +75,19 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
 ├── README.md                       # 專案說明文件
 ├── PROJECT_MEMORY.md               # 本交接記憶檔
 ├── .gitignore                      # 忽略 desktop.ini / __pycache__ / .claude
+├── .github/
+│   └── workflows/
+│       └── realtime-quotes.yml     # 每 5 分鐘抓 MIS 盤中報價，推到 data-live 分支
 ├── data/
 │   ├── quanta_latest.json          # 廣達 700+ 筆歷史量價快取 (2024~最新)
 │   ├── sector_stocks.json          # 16 檔精選股票完整資料庫（基本面、產業鏈樹狀節點、60天日線）
-│   └── institutional.json          # 16 檔近 80 個交易日三大法人買賣超 + 外資持股比例 (約 151 KB)
+│   ├── institutional.json          # 16 檔近 80 個交易日三大法人買賣超 + 外資持股比例 (約 151 KB)
+│   └── realtime.json               # 盤中報價快照（後備用；線上主要讀 data-live 分支）
 └── scripts/
     ├── build_sector_data.py        # 建構/更新 16 檔類股資料庫腳本 (串接證券 API，已改為保留 treeChain)
     ├── build_institutional_data.py # 建構/更新 16 檔籌碼面資料庫（三大法人 + 外資持股）
+    ├── fetch_realtime_quotes.py    # 抓證交所 MIS 盤中即時報價，產出 realtime.json
+    ├── adjust_splits.py            # 還原股價：偵測並回溯調整股票分割造成的價格斷層
     ├── enrich_tree_chains.py       # 為 16 檔個股注入精緻專屬產業鏈拓撲資料
     ├── update_sector_subgroups.py  # 更新 5 大子族群分組與龍頭標記
     └── update_stock.py             # 更新廣達最新日線資料
@@ -105,13 +111,52 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
   - 在繪製 SVG text 前，呼叫 `getFittedFontSize(text, maxWidth, defaultSize)` 動態測算文字寬度並調整字號（下限 9px），確保文字永不超出節點外框。
   - 連接線一律使用平滑三次方貝茲曲線（Cubic Bézier Curve: `M x1 y1 C ... x2 y2`），靜態高亮無重繪抖動。
 
-### 3) 即時股價雙重保險架構（FinMind API + 本地快取）
-- **API 端點**：`https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id=${id}&start_date=...`
-- **特性**：
-  - 開放 CORS（`Access-Control-Allow-Origin: *`），前端瀏覽器可直連，不需要後端伺服器。
-  - **首屏秒開**：直接從 `data/sector_stocks.json` 與 `data/quanta_latest.json` 渲染，零等待。
-  - **背景即時同步**：`DOMContentLoaded` 時於背景非同步並行抓取，完成後平滑替換，並設定 `setInterval(..., 60000)` 每 60 秒輪詢一次。
-  - **單股深度同步**：使用者點擊任意股票開啟彈窗時，觸發 `syncSingleStockLive(stockId)` 拉取該股最新 60 天完整走勢並重繪線圖。
+### 3) 報價架構：盤中即時報價 + 日線快取（重要，曾經搞錯過）
+
+> ⚠️ **先釐清一個曾經寫錯的觀念**：FinMind 的 `TaiwanStockPrice` **只有日線收盤資料，不是即時報價**。
+> 盤中以當日日期查詢會回傳 **空陣列**。
+> 2026-11-26 之前的版本到處寫「即時股價」，實際顯示的一直是 **前一交易日收盤價**。
+> 當日 11:50 實測：網站顯示廣達 261.0（11/25 收盤），真實盤中價為 281.0。
+
+- **真正的即時來源**：證交所 MIS `https://mis.twse.com.tw/stock/api/getStockInfo.jsp`
+  - 支援一次批次查詢多檔：`ex_ch=tse_2382.tw|tse_3231.tw|...`
+  - **3324 雙鴻為櫃買股，必須用 `otc_` 前綴**，用 `tse_` 會回傳空白紀錄。
+  - **價格取值順序**：盤中逐筆撮合下頂層 `z` 多半是 `"-"`，必須依序退回
+    `z` → `trade.z`（最近一筆成交價）→ `b` 委買首檔 → `o` 開盤價。
+  - 其他欄位：`y` 昨收、`v` 累積成交張數、`u`/`w` 漲跌停價。MIS **不提供成交金額**，只能估算。
+- **致命限制：MIS 不送 CORS 標頭**，瀏覽器從 GitHub Pages 直接呼叫一定被擋。
+  Yahoo Finance 的 `query1.finance.yahoo.com` 同樣沒有 CORS 標頭；
+  FinMind 的即時快照端點 `taiwan_stock_tick_snapshot` 需付費等級。
+  **結論：沒有任何免費又支援 CORS 的台股即時 API 可供靜態網站直連。**
+- **解法（零後端，繞開 CORS）**：
+  1. GitHub Actions（`.github/workflows/realtime-quotes.yml`）每 5 分鐘執行
+     `scripts/fetch_realtime_quotes.py`，抓 MIS 報價存成 `realtime.json`。
+  2. 快照以 **孤兒分支強制覆蓋** 推到 `data-live` 分支（永遠只有一個提交，
+     不污染 `main` 歷史、也不會觸發 Pages 重新建置）。
+  3. 前端從 `https://raw.githubusercontent.com/.../data-live/realtime.json` 讀取 ——
+     **`raw.githubusercontent.com` 有 `Access-Control-Allow-Origin: *`（已實測）**，可跨域直連。
+- **三層後備**：`data-live` 快照 → 專案內 `data/realtime.json` → FinMind 日線收盤。
+  任何一層失敗都靜默退到下一層，畫面不會壞掉。
+- **誠實標示**：畫面一律顯示快照自帶的 `marketDate` / `marketTime`
+  （例如「報價時間 2026-11-26 11:55:36（證交所 MIS）」），而不是一律寫「即時」。
+  Actions 的 cron 本身有數分鐘誤差，使用者看得到實際報價時間才不會被誤導。
+- **首屏秒開仍然保留**：先用 `data/sector_stocks.json` 與 `data/quanta_latest.json`
+  渲染日線與圖表，再於背景以報價快照覆寫價格欄位。
+
+### 3-1) 還原股價（股票分割回溯調整）
+
+- **痛點**：FinMind 與 TWSE 的原始價格皆為 **未還原**。個股一旦分割，
+  K 線會出現假斷崖，均線與報酬率全部失真。
+- **已知案例**：**緯穎 (6669)** 於 2026-09-02 由 7,800 跳到 2,610
+  （-66.5%、比值 2.989 ≈ 1:3、成交量放大 3.81 倍）→ 判定為 **1:3 股票分割**。
+  調整後最大單日跳動收斂為 9.94%（正常漲停）。
+- **對照組**：**川湖 (2059)** 同期 14,340 → 6,505 **無單日斷點**，
+  屬真實連續下跌，偵測器不會誤判調整。
+- **偵測條件（三者必須同時成立）**：單日變動 > ±25%、價格比值接近常見分割倍數（誤差 4% 內）、
+  成交量同步往相反方向放大／縮小。實作於 `scripts/adjust_splits.py`，
+  已內嵌到 `build_sector_data.py` 與 `update_stock.py`，重跑不會還原回未調整狀態。
+- **可追溯**：調整後會在個股資料寫入 `"splits": [{"date":..., "factor":..., "kind":...}]`。
+- **先 dry-run 再套用**：`python scripts/adjust_splits.py` 只報告，加 `--apply` 才寫檔。
 
 ### 4) 籌碼面資料管線與圖表設計準則
 
@@ -192,7 +237,14 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
    - 將 16 檔股票細分為 5 大子族群分門別類展示。
    - 新增族群領軍龍頭（Bellwether）焦點卡片（標記廣達、川湖、奇鋐、研華、華碩為何是龍頭）。
    - 新增互動式財務指標綜合比較大表（支援排序、篩選、毛利高低顏色高亮）。
-12. **K 線圖切換**（本次新增）：
+13. **盤中即時報價與還原股價**（本次新增）：
+    - 使用者回報股價與自行查詢不符 —— 查證後確認 FinMind 只有日線收盤，
+      網站一直顯示前一交易日收盤價，「即時」是錯誤標示。
+    - 改以證交所 MIS 為真實來源，透過 GitHub Actions + `data-live` 分支繞開 CORS。
+    - 廣達專頁頂部 Ticker 與首頁 16 檔卡片／比較矩陣全部改為盤中報價。
+    - 導入 `adjust_splits.py` 還原股價，修正緯穎 1:3 分割造成的假斷崖。
+
+12. **K 線圖切換**：
     - `quanta.html` 章節 2 與 `index.html` 個股彈窗皆支援「收盤線圖 ⇄ K 線圖」切換。
     - 以 Chart.js 原生浮動長條繪製 K 棒，不引入任何新函式庫。
     - 量價圖由原本的雙軸改為「價格面板 + 成交量面板」上下分離，避免雙軸造成的假相關。
@@ -213,10 +265,9 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
 若使用者後續提出新需求，接手助手可參考以下方向：
 1. ~~**籌碼面分析**：外資、投信三大法人買賣超數據與持股比例圖表。~~ ✅ **已於 2026-11-26 完成**
 2. ~~**K 線型態切換**：在 Chart.js 或引進 Lightweight Charts 支援「蠟燭 K 線圖 + 成交量」。~~ ✅ **已於 2026-11-26 完成**（以 Chart.js 原生浮動長條實作，未引入新函式庫）
-3. **還原股價（除權息／股票分割調整）**：FinMind 的 `TaiwanStockPrice` 為 **未還原** 股價。
-   已知 **緯穎 (6669)** 在 2026-09-02 有一筆單日 -66.5%、比值約 1:3 的跳空（成交量同步放大約 3.8 倍），
-   研判為股票分割而非真實下跌，會讓 60 日 K 線出現假斷崖。
-   （對照組：**川湖 (2059)** 同期 14,340 → 6,505 無單日斷點，屬真實連續下跌。）
-   建議作法：偵測單日比值接近簡單整數倍且成交量同步放大的斷點，對該日之前的 OHLC 統一乘上還原係數。
+3. ~~**還原股價（除權息／股票分割調整）**~~ ✅ **已於 2026-11-26 完成**（`scripts/adjust_splits.py`）
+   - 尚未處理 **除權息** 造成的價格缺口（現金股利與配股）。目前只處理股票分割。
+     除權息缺口通常小於 25%，不會被現行偵測器捕捉，長期報酬率仍會略微失真。
+     若要完整還原，需另接 `TaiwanStockDividend` 資料集計算還原因子。
 4. **匯出功能**：將個股產業鏈拓撲圖匯出為 PNG / SVG 圖片供報告使用。
 5. **類股指數大盤對照**：加入「電腦及週邊設備指數（IX0026）」與大盤加權指數的強弱度對比走勢。

@@ -1,0 +1,66 @@
+name: 盤中即時報價快照
+
+# 為什麼需要這個排程：
+# 證交所 MIS 是唯一免費的台股即時報價來源，但它不送 CORS 標頭，
+# 瀏覽器從 GitHub Pages 直接呼叫會被擋。因此改由 Actions 定時抓取，
+# 把快照推到 data-live 分支，網頁再經 raw.githubusercontent.com 讀取
+# （該網域有 Access-Control-Allow-Origin: *，可直接跨域存取）。
+#
+# 快照推到獨立分支而非 main，有兩個理由：
+#   1. 不讓每 5 分鐘一次的提交污染 main 的歷史
+#   2. 不觸發 GitHub Pages 重新建置
+
+on:
+  schedule:
+    # UTC 00:00–06:55，對應台北時間 08:00–14:55（涵蓋盤前到收盤後）
+    # 僅週一至週五執行
+    - cron: '*/5 0-6 * * 1-5'
+  workflow_dispatch:   # 允許手動觸發
+
+permissions:
+  contents: write
+
+concurrency:
+  group: realtime-quotes
+  cancel-in-progress: true
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: 取出程式碼
+        uses: actions/checkout@v4
+
+      - name: 設定 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 抓取即時報價
+        run: python scripts/fetch_realtime_quotes.py
+
+      - name: 推送快照至 data-live 分支
+        run: |
+          set -euo pipefail
+
+          # 沒抓到任何報價就不要推送，避免用空檔覆蓋掉上一份好的快照
+          COUNT=$(python -c "import json;print(json.load(open('data/realtime.json',encoding='utf-8'))['count'])")
+          if [ "$COUNT" -eq 0 ]; then
+            echo "未取得任何報價，略過本次推送（保留前一份快照）"
+            exit 0
+          fi
+          echo "取得 $COUNT 檔報價"
+
+          cp data/realtime.json "$RUNNER_TEMP/realtime.json"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # 每次都以全新的孤兒分支強制覆蓋，分支永遠只有一個提交，不會無限長大
+          git switch --orphan data-live-tmp
+          cp "$RUNNER_TEMP/realtime.json" realtime.json
+          git add realtime.json
+          git commit -m "chore: 盤中報價快照 $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push -f origin data-live-tmp:data-live
