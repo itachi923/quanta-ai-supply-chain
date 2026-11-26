@@ -312,6 +312,177 @@
       color: var(--blue-navy);
       font-weight: 900;
     }
+
+    /* ========================================================
+       籌碼面：三大法人買賣超與外資持股比例 (Institutional Chips)
+       圖表規範：單一數值軸（絕不雙軸）、類別色固定順序不循環、
+       細線條 + 實線髮絲格線、濾鏡列統一置於所有圖表上方、附數據表格視圖。
+       ======================================================== */
+    .chips-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 4px 0 16px;
+    }
+    .chips-range-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: var(--text-body);
+      padding: 5px 13px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .chips-range-btn:hover { border-color: var(--blue-quanta); color: var(--blue-quanta); }
+    .chips-range-btn.active {
+      background: var(--blue-navy);
+      border-color: var(--blue-navy);
+      color: #ffffff;
+    }
+    .chips-filter-spacer { flex: 1 1 auto; }
+    .chips-data-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .chips-tile-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .chips-tile {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 13px 9px;
+      text-align: center;
+    }
+    .chips-tile .lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    /* 大型獨立數字使用比例數字（非等寬），避免顯示字級下顯得鬆散 */
+    .chips-tile .val {
+      font-family: var(--font-main);
+      font-size: 1.22rem;
+      font-weight: 900;
+      margin-top: 4px;
+      white-space: nowrap !important;
+      word-break: keep-all;
+      flex-shrink: 0;
+    }
+    .chips-tile .sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 2px;
+      white-space: nowrap;
+    }
+
+    .chips-narrative {
+      background: #f0f7ff;
+      border: 1px solid #bfdbfe;
+      border-left: 5px solid var(--blue-quanta);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 0.93rem;
+      line-height: 1.85;
+      color: var(--text-body);
+      margin-bottom: 18px;
+    }
+
+    .chips-chart-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .chips-chart-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .chips-chart-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--blue-navy);
+    }
+    .chips-chart-badge {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #1c5cab;
+      background: #e8f1fd;
+      border: 1px solid #bfd9f7;
+      border-radius: 7px;
+      padding: 3px 11px;
+      white-space: nowrap !important;
+      word-break: keep-all;
+    }
+
+    .chips-table-wrap {
+      max-height: 360px;
+      overflow: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+    .chips-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      /* 表格數字縱向對齊，採用等寬數字 */
+      font-variant-numeric: tabular-nums;
+    }
+    .chips-table th,
+    .chips-table td {
+      padding: 7px 14px;
+      border-bottom: 1px solid #eef2f6;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .chips-table th:first-child,
+    .chips-table td:first-child {
+      text-align: left;
+      font-family: var(--font-mono);
+    }
+    .chips-table thead th {
+      position: sticky;
+      top: 0;
+      background: #f8fafc;
+      color: var(--blue-navy);
+      font-weight: 800;
+      z-index: 2;
+    }
+    .chips-table tbody tr:hover { background: #f8fbff; }
+    .chips-legend-swatch {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      margin-right: 6px;
+      vertical-align: baseline;
+    }
+
+    @media (max-width: 1000px) {
+      .chips-tile-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .chips-tile-grid { grid-template-columns: repeat(2, 1fr); }
+      .chips-table-wrap { max-height: 280px; }
+    }
     .section-desc {
       font-size: 0.95rem;
       color: var(--text-muted);
@@ -737,6 +908,7 @@
         <li><a href="#financial-metrics">財務與獲利三率</a></li>
         <li><a href="#tree-area">AI 產業鏈樹狀圖</a></li>
         <li><a href="#bom-area">機櫃 BOM 成本</a></li>
+        <li><a href="#chips-area">籌碼面法人動向</a></li>
       </ul>
     </div>
   </header>
@@ -1095,7 +1267,61 @@
     </section>
 
     <!-- ========================================================
-         章節 6：投資價值評估與法人觀點
+         章節 6：籌碼面 —— 三大法人動向與外資持股結構
+         濾鏡列置於所有圖表上方，統一切換下方數字卡、解讀、兩張圖與數據表格
+         ======================================================== -->
+    <section id="chips-area" class="section-card">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">INSTITUTIONAL CHIPS & OWNERSHIP</span>
+          <h2 class="section-title">🧮 廣達 (2382) 籌碼面：三大法人動向與外資持股結構</h2>
+          <p class="section-desc">
+            外資、投信、自營商每日買賣超（張）與外資持股比例逐日變化。買賣超以零軸上下與 ▲▼ 標示多空，顏色僅代表法人身分。
+          </p>
+        </div>
+      </div>
+
+      <div class="chips-filter-row">
+        <span style="font-size:0.82rem; font-weight:800; color:var(--text-muted);">統計區間</span>
+        <button class="chips-range-btn" data-chips-range="20" onclick="setChipsRange(20)">近 20 日</button>
+        <button class="chips-range-btn active" data-chips-range="40" onclick="setChipsRange(40)">近 40 日</button>
+        <button class="chips-range-btn" data-chips-range="60" onclick="setChipsRange(60)">近 60 日</button>
+        <button class="chips-range-btn" data-chips-range="80" onclick="setChipsRange(80)">全區間</button>
+        <button class="chips-range-btn" id="chipsTableBtn" onclick="toggleChipsTable()">📋 顯示數據表格</button>
+        <span class="chips-filter-spacer"></span>
+        <span class="chips-data-note" id="chipsDataNote"></span>
+      </div>
+
+      <!-- 摘要數字卡：買超紅、賣超綠，並以 ▲▼ 與文字同時標示，不以顏色單獨承載意義 -->
+      <div class="chips-tile-grid" id="chipsTileGrid"></div>
+
+      <!-- 自動解讀：直接以實際數據敘述法人對作格局 -->
+      <div class="chips-narrative" id="chipsNarrative"></div>
+
+      <!-- 圖一：三大法人每日買賣超（單一數值軸：張） -->
+      <div class="chips-chart-card">
+        <div class="chips-chart-head">
+          <span class="chips-chart-title">三大法人每日買賣超（張，正為買超／負為賣超）</span>
+          <span class="chips-chart-badge" id="chipsTotalBadge"></span>
+        </div>
+        <canvas id="quantaChipsChart" height="95"></canvas>
+      </div>
+
+      <!-- 圖二：外資持股比例（獨立成圖，避免雙軸造成的假相關） -->
+      <div class="chips-chart-card">
+        <div class="chips-chart-head">
+          <span class="chips-chart-title">外資持股比例走勢（%）</span>
+          <span class="chips-chart-badge" id="chipsHoldingBadge"></span>
+        </div>
+        <canvas id="quantaHoldingChart" height="62"></canvas>
+      </div>
+
+      <!-- 數據表格視圖：每個數值都可不靠顏色與游標讀取 -->
+      <div id="chipsTableWrap" class="chips-table-wrap" style="display:none;"></div>
+    </section>
+
+    <!-- ========================================================
+         章節 7：投資價值評估與法人觀點
          ======================================================== -->
     <section id="investment-verdict" class="section-card">
       <div class="section-header">
@@ -1143,6 +1369,7 @@
         <a href="#financial-metrics">財務指標</a>
         <a href="#tree-area">產業鏈樹狀圖</a>
         <a href="#bom-area">機櫃BOM成本</a>
+        <a href="#chips-area">籌碼面法人動向</a>
       </div>
     </div>
   </footer>
@@ -1947,10 +2174,441 @@
     }
 
     // 初始化啟動
+    // ========================================================
+    // 籌碼面引擎：三大法人買賣超 + 外資持股比例（廣達 2382）
+    // 設計準則：
+    //  1. 絕不使用雙數值軸 —— 買賣超（張）與持股比例（%）各自獨立成圖。
+    //  2. 類別色固定順序、永不循環：外資=藍、投信=橘、自營商=碧綠。
+    //  3. 顏色只承載「身分」，多空方向由零軸上下與 ▲▼ 文字承載。
+    //  4. 每張圖都有圖例或標題指名，並提供可切換的數據表格視圖。
+    // ========================================================
+    const QUANTA_ID = '2382';
+    let chipsRecord = null;
+    let chipsRange = 40;
+    let chipsTableOpen = false;
+    let chipsChartInstance = null;
+    let holdingChartInstance = null;
+
+    const CHIP_SERIES = [
+      { key: 'foreign', label: '外資', color: '#2a78d6' },
+      { key: 'trust',   label: '投信', color: '#eb6834' },
+      { key: 'dealer',  label: '自營商', color: '#1baf7a' }
+    ];
+    const CHART_SURFACE = '#ffffff';
+    const GRID_HAIRLINE = '#f1f5f9';
+    const ZERO_LINE = '#94a3b8';
+
+    function fmtLots(n) {
+      if (n === null || n === undefined || isNaN(n)) return '--';
+      const sign = n > 0 ? '+' : (n < 0 ? '-' : '');
+      return `${sign}${Math.abs(Math.round(n)).toLocaleString()}`;
+    }
+
+    function lotsColor(n) {
+      if (!n) return 'var(--text-body)';
+      return n > 0 ? 'var(--stock-red)' : 'var(--stock-green)';
+    }
+
+    function lotsArrow(n) {
+      if (!n) return '';
+      return n > 0 ? '▲&nbsp;' : '▼&nbsp;';
+    }
+
+    function sumKey(rows, key) {
+      return rows.reduce((acc, r) => acc + (r[key] || 0), 0);
+    }
+
+    // 首屏秒開：讀本地快取；再於背景補抓最新交易日
+    async function initChips() {
+      const section = document.getElementById('chips-area');
+      try {
+        const resp = await fetch('data/institutional.json?t=' + Date.now());
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const all = await resp.json();
+        chipsRecord = all.stocks ? all.stocks[QUANTA_ID] : null;
+      } catch (err) {
+        console.warn('籌碼面資料載入失敗，將隱藏籌碼章節：', err);
+      }
+
+      if (!chipsRecord || !chipsRecord.daily || chipsRecord.daily.length === 0) {
+        if (section) section.style.display = 'none';
+        return;
+      }
+
+      renderChipsAll();
+      syncChipsLive();
+    }
+
+    function setChipsRange(days) {
+      chipsRange = days;
+      document.querySelectorAll('.chips-range-btn[data-chips-range]').forEach(btn => {
+        btn.classList.toggle('active', Number(btn.dataset.chipsRange) === days);
+      });
+      renderChipsAll();
+    }
+
+    function toggleChipsTable() {
+      chipsTableOpen = !chipsTableOpen;
+      const wrap = document.getElementById('chipsTableWrap');
+      const btn = document.getElementById('chipsTableBtn');
+      wrap.style.display = chipsTableOpen ? 'block' : 'none';
+      btn.classList.toggle('active', chipsTableOpen);
+      btn.textContent = chipsTableOpen ? '📋 收合數據表格' : '📋 顯示數據表格';
+      if (chipsTableOpen) renderChipsTable();
+    }
+
+    function renderChipsAll() {
+      if (!chipsRecord) return;
+
+      const daily = chipsRecord.daily.slice(-chipsRange);
+      const holding = (chipsRecord.shareholding || []).slice(-chipsRange);
+
+      renderChipsTiles(daily, holding);
+      renderChipsNarrative(daily, holding);
+      renderChipsChart(daily);
+      renderHoldingChart(holding);
+      if (chipsTableOpen) renderChipsTable();
+
+      const lastDate = daily.length ? daily[daily.length - 1].date : '--';
+      document.getElementById('chipsDataNote').textContent =
+        `資料日期 ${lastDate} · 來源 FinMind 開放資料 · 單位：張`;
+    }
+
+    function renderChipsTiles(daily, holding) {
+      const grid = document.getElementById('chipsTileGrid');
+      const n = daily.length;
+
+      const foreign = sumKey(daily, 'foreign');
+      const trust = sumKey(daily, 'trust');
+      const dealer = sumKey(daily, 'dealer');
+      const total = foreign + trust + dealer;
+
+      const latestRatio = holding.length ? holding[holding.length - 1].foreignRatio : null;
+      const firstRatio = holding.length ? holding[0].foreignRatio : null;
+      const ratioChg = (latestRatio !== null && firstRatio !== null)
+        ? Number((latestRatio - firstRatio).toFixed(2)) : null;
+
+      const streak = (chipsRecord.summary && chipsRecord.summary.foreignStreak) || 0;
+      const streakTxt = streak === 0
+        ? '持平'
+        : `${Math.abs(streak)} 日${streak > 0 ? '買超' : '賣超'}`;
+
+      const tiles = [
+        { lbl: `外資近 ${n} 日`, val: fmtLots(foreign), raw: foreign, sub: foreign >= 0 ? '買超' : '賣超' },
+        { lbl: `投信近 ${n} 日`, val: fmtLots(trust), raw: trust, sub: trust >= 0 ? '買超' : '賣超' },
+        { lbl: `自營商近 ${n} 日`, val: fmtLots(dealer), raw: dealer, sub: dealer >= 0 ? '買超' : '賣超' },
+        { lbl: `三大法人近 ${n} 日合計`, val: fmtLots(total), raw: total, sub: total >= 0 ? '合計買超' : '合計賣超' },
+        {
+          lbl: '外資持股比例',
+          val: latestRatio !== null ? `${latestRatio.toFixed(2)}%` : '--',
+          raw: 0,
+          plainColor: 'var(--blue-navy)',
+          sub: ratioChg !== null
+            ? `區間變化 ${ratioChg > 0 ? '+' : ''}${ratioChg.toFixed(2)} 個百分點`
+            : '無申報資料'
+        },
+        {
+          lbl: '外資最新連續動向',
+          val: streakTxt,
+          raw: streak,
+          sub: streak === 0 ? '無連續方向' : '截至最新交易日'
+        }
+      ];
+
+      grid.innerHTML = tiles.map(t => `
+        <div class="chips-tile">
+          <div class="lbl">${t.lbl}</div>
+          <div class="val" style="color:${t.plainColor || lotsColor(t.raw)};">${t.raw ? lotsArrow(t.raw) : ''}${t.val}</div>
+          <div class="sub">${t.sub}</div>
+        </div>
+      `).join('');
+    }
+
+    // 以實際數據自動產生籌碼結構解讀
+    function renderChipsNarrative(daily, holding) {
+      const el = document.getElementById('chipsNarrative');
+      if (!daily.length) { el.textContent = ''; return; }
+
+      const n = daily.length;
+      const foreign = sumKey(daily, 'foreign');
+      const trust = sumKey(daily, 'trust');
+      const dealer = sumKey(daily, 'dealer');
+      const total = foreign + trust + dealer;
+      const word = (v) => v >= 0 ? '買超' : '賣超';
+      const abs = (v) => Math.abs(Math.round(v)).toLocaleString();
+
+      let holdTxt = '';
+      if (holding.length > 1) {
+        const a = holding[0].foreignRatio;
+        const b = holding[holding.length - 1].foreignRatio;
+        const diff = Number((b - a).toFixed(2));
+        holdTxt = `外資持股比例同期由 <strong>${a.toFixed(2)}%</strong> ${diff >= 0 ? '升' : '降'}至 <strong>${b.toFixed(2)}%</strong>（${diff >= 0 ? '+' : ''}${diff.toFixed(2)} 個百分點）。`;
+      }
+
+      // 外資與投信方向相反時，點明「對作」格局
+      let crossTxt = '';
+      if (foreign < 0 && trust > 0) {
+        crossTxt = '呈現 <strong>外資提款、投信逆勢承接</strong> 的對作格局，籌碼由外資手中移往國內法人。';
+      } else if (foreign > 0 && trust < 0) {
+        crossTxt = '呈現 <strong>外資回補、投信調節</strong> 的對作格局。';
+      } else if (foreign > 0 && trust > 0) {
+        crossTxt = '外資與投信 <strong>同步站在買方</strong>，籌碼面偏多且相對集中。';
+      } else if (foreign < 0 && trust < 0) {
+        crossTxt = '外資與投信 <strong>同步調節</strong>，籌碼面偏空，宜留意賣壓延續。';
+      }
+
+      el.innerHTML = `
+        📌 <strong>近 ${n} 個交易日籌碼結構：</strong>
+        外資${word(foreign)} <strong style="color:${lotsColor(foreign)};">${abs(foreign)} 張</strong>、
+        投信${word(trust)} <strong style="color:${lotsColor(trust)};">${abs(trust)} 張</strong>、
+        自營商${word(dealer)} <strong style="color:${lotsColor(dealer)};">${abs(dealer)} 張</strong>，
+        三大法人合計${word(total)} <strong style="color:${lotsColor(total)};">${abs(total)} 張</strong>。
+        ${holdTxt} ${crossTxt}
+      `;
+    }
+
+    // 圖一：三大法人每日買賣超（堆疊柱狀，單一數值軸）
+    function renderChipsChart(daily) {
+      const canvas = document.getElementById('quantaChipsChart');
+      if (!canvas) return;
+
+      if (chipsChartInstance) chipsChartInstance.destroy();
+
+      const totalSum = sumKey(daily, 'total');
+      const badge = document.getElementById('chipsTotalBadge');
+      badge.innerHTML = `區間三大法人合計&nbsp;${fmtLots(totalSum)}&nbsp;張`;
+      badge.style.color = totalSum >= 0 ? '#b91c1c' : '#15803d';
+      badge.style.background = totalSum >= 0 ? '#fef2f2' : '#f0fdf4';
+      badge.style.borderColor = totalSum >= 0 ? '#fecaca' : '#bbf7d0';
+
+      chipsChartInstance = new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: daily.map(d => d.date.slice(5)),
+          datasets: CHIP_SERIES.map(s => ({
+            label: s.label,
+            data: daily.map(d => d[s.key] || 0),
+            backgroundColor: s.color,
+            // 以表面色描邊 = 堆疊段與相鄰柱之間的留白（非對比色外框）
+            borderColor: CHART_SURFACE,
+            borderWidth: 1.5,
+            borderSkipped: false,
+            borderRadius: 2,
+            barPercentage: 0.82,
+            categoryPercentage: 0.9,
+            stack: 'inst'
+          }))
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                usePointStyle: true,
+                pointStyle: 'rectRounded',
+                boxWidth: 11,
+                font: { size: 12, weight: '700' }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.dataset.label} ${fmtLots(ctx.parsed.y)} 張`,
+                footer: (items) => {
+                  const sum = items.reduce((a, i) => a + (i.parsed.y || 0), 0);
+                  return `三大法人合計 ${fmtLots(sum)} 張`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              stacked: true,
+              title: { display: true, text: '買賣超 (張)' },
+              grid: {
+                // 髮絲實線格線；零軸略深以標示多空分界
+                color: (ctx) => (ctx.tick && ctx.tick.value === 0) ? ZERO_LINE : GRID_HAIRLINE
+              },
+              ticks: { callback: (v) => Number(v).toLocaleString() }
+            },
+            x: {
+              stacked: true,
+              grid: { display: false },
+              ticks: { autoSkip: true, maxTicksLimit: 16, maxRotation: 0 }
+            }
+          }
+        }
+      });
+    }
+
+    // 圖二：外資持股比例（單一序列折線；標題已指名，無需圖例方塊）
+    function renderHoldingChart(holding) {
+      const canvas = document.getElementById('quantaHoldingChart');
+      if (!canvas) return;
+
+      if (holdingChartInstance) holdingChartInstance.destroy();
+
+      const badge = document.getElementById('chipsHoldingBadge');
+      if (!holding.length) {
+        badge.textContent = '無外資持股申報資料';
+        badge.style.color = 'var(--text-muted)';
+        badge.style.background = '#f8fafc';
+        badge.style.borderColor = '#e2e8f0';
+        return;
+      }
+
+      const latest = holding[holding.length - 1];
+      // 選擇性直接標註：只標最新值，不在每個資料點放數字
+      badge.innerHTML = `最新&nbsp;${latest.foreignRatio.toFixed(2)}%&nbsp;(${latest.date})`;
+      badge.style.color = '#1c5cab';
+      badge.style.background = '#e8f1fd';
+      badge.style.borderColor = '#bfd9f7';
+
+      holdingChartInstance = new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: holding.map(h => h.date.slice(5)),
+          datasets: [{
+            label: '外資持股比例 (%)',
+            data: holding.map(h => h.foreignRatio),
+            borderColor: '#2a78d6',
+            backgroundColor: 'rgba(42, 120, 214, 0.08)',
+            fill: true,
+            borderWidth: 2,
+            tension: 0.15,
+            pointRadius: 0,
+            pointHoverRadius: 5,
+            pointHitRadius: 12
+          }]
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: { label: (ctx) => `外資持股比例 ${ctx.parsed.y.toFixed(2)}%` }
+            }
+          },
+          scales: {
+            y: {
+              title: { display: true, text: '持股比例 (%)' },
+              grid: { color: GRID_HAIRLINE },
+              ticks: { callback: (v) => `${v}%` }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { autoSkip: true, maxTicksLimit: 16, maxRotation: 0 }
+            }
+          }
+        }
+      });
+    }
+
+    // 數據表格視圖：每個數值都能不靠顏色與游標讀取
+    function renderChipsTable() {
+      if (!chipsRecord) return;
+
+      const daily = chipsRecord.daily.slice(-chipsRange);
+      const holdMap = {};
+      (chipsRecord.shareholding || []).forEach(h => { holdMap[h.date] = h.foreignRatio; });
+
+      const head = `
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th><span class="chips-legend-swatch" style="background:#2a78d6;"></span>外資 (張)</th>
+            <th><span class="chips-legend-swatch" style="background:#eb6834;"></span>投信 (張)</th>
+            <th><span class="chips-legend-swatch" style="background:#1baf7a;"></span>自營商 (張)</th>
+            <th>三大法人合計 (張)</th>
+            <th>外資持股比例</th>
+          </tr>
+        </thead>`;
+
+      const body = daily.slice().reverse().map(d => {
+        const ratio = holdMap[d.date];
+        return `
+          <tr>
+            <td>${d.date}</td>
+            <td style="color:${lotsColor(d.foreign)}; font-weight:700;">${fmtLots(d.foreign)}</td>
+            <td style="color:${lotsColor(d.trust)}; font-weight:700;">${fmtLots(d.trust)}</td>
+            <td style="color:${lotsColor(d.dealer)}; font-weight:700;">${fmtLots(d.dealer)}</td>
+            <td style="color:${lotsColor(d.total)}; font-weight:800;">${fmtLots(d.total)}</td>
+            <td>${ratio !== undefined ? ratio.toFixed(2) + '%' : '--'}</td>
+          </tr>`;
+      }).join('');
+
+      document.getElementById('chipsTableWrap').innerHTML =
+        `<table class="chips-table">${head}<tbody>${body}</tbody></table>`;
+    }
+
+    // 背景補抓最新三大法人資料（僅取近 12 天補尾，節省 API 額度）
+    async function syncChipsLive() {
+      if (!chipsRecord) return;
+
+      const since = new Date();
+      since.setDate(since.getDate() - 12);
+      const startDate = since.toISOString().slice(0, 10);
+
+      try {
+        const url = `https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockInstitutionalInvestorsBuySell&data_id=${QUANTA_ID}&start_date=${startDate}`;
+        const resp = await fetch(url);
+        if (!resp.ok) return;
+        const json = await resp.json();
+        if (json.status !== 200 || !json.data || json.data.length === 0) return;
+
+        const FOREIGN = ['Foreign_Investor', 'Foreign_Dealer_Self'];
+        const DEALER = ['Dealer_self', 'Dealer_Hedging'];
+        const byDate = {};
+        json.data.forEach(r => {
+          if (!r.date) return;
+          const b = byDate[r.date] || (byDate[r.date] = { date: r.date, foreign: 0, trust: 0, dealer: 0 });
+          const net = (r.buy || 0) - (r.sell || 0);
+          if (FOREIGN.includes(r.name)) b.foreign += net;
+          else if (r.name === 'Investment_Trust') b.trust += net;
+          else if (DEALER.includes(r.name)) b.dealer += net;
+        });
+
+        const fresh = Object.keys(byDate).map(k => {
+          const b = byDate[k];
+          const foreign = Math.round(b.foreign / 1000);
+          const trust = Math.round(b.trust / 1000);
+          const dealer = Math.round(b.dealer / 1000);
+          return { date: b.date, foreign, trust, dealer, total: foreign + trust + dealer };
+        });
+
+        const merged = {};
+        chipsRecord.daily.forEach(d => { merged[d.date] = d; });
+        fresh.forEach(d => { merged[d.date] = d; });
+        chipsRecord.daily = Object.keys(merged).sort().map(k => merged[k]).slice(-80);
+
+        let streak = 0;
+        for (let i = chipsRecord.daily.length - 1; i >= 0; i--) {
+          const v = chipsRecord.daily[i].foreign || 0;
+          if (streak === 0) {
+            if (v > 0) streak = 1;
+            else if (v < 0) streak = -1;
+            else break;
+          } else if (streak > 0 && v > 0) streak++;
+          else if (streak < 0 && v < 0) streak--;
+          else break;
+        }
+        chipsRecord.summary = chipsRecord.summary || {};
+        chipsRecord.summary.foreignStreak = streak;
+
+        renderChipsAll();
+      } catch (err) {
+        // 靜默回退本地快取，不影響其他章節
+        console.warn('籌碼面即時補抓失敗，沿用快取資料：', err);
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       fetchLiveStockData(false);
       initFinancialCharts();
       initTree();
+      initChips();
       // 啟用 60 秒背景即時自動行情輪詢
       setInterval(() => fetchLiveStockData(false), 60000);
     });

@@ -406,40 +406,83 @@ STOCKS_CONFIG = [
     }
 ]
 
+def fetch_prices(sid, retries=3):
+    """抓取個股日線；FinMind 免費額度被限流時會回 HTTP 402，採退避重試。"""
+    url = (
+        f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice"
+        f"&data_id={sid}&start_date=2026-08-01"
+    )
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode('utf-8')).get('data', [])
+        except Exception as e:
+            print(f"    [warn] {sid} 第 {attempt + 1} 次失敗：{e}")
+            time.sleep(2 + attempt * 3)
+    return []
+
+
 def build_data():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     target_path = os.path.join(base_dir, 'data', 'sector_stocks.json')
     os.makedirs(os.path.join(base_dir, 'data'), exist_ok=True)
 
+    # 重要：讀回既有 json，保留 enrich_tree_chains.py 等腳本事後注入的欄位
+    # （尤其是 treeChain —— 16 檔個股的專屬樹狀產業鏈圖資料）。
+    # 若直接 dump STOCKS_CONFIG，這些欄位會被整個洗掉。
+    existing = {}
+    if os.path.exists(target_path):
+        try:
+            with open(target_path, 'r', encoding='utf-8') as f:
+                for item in json.load(f):
+                    existing[item.get("id")] = item
+            print(f"已讀入既有資料庫 {len(existing)} 檔，將保留 treeChain 等附加欄位")
+        except Exception as e:
+            print(f"[warn] 既有 sector_stocks.json 讀取失敗，將以設定檔重建：{e}")
+
     print("Fetching live prices for all 16 sector stocks...")
+    failed = []
     for s in STOCKS_CONFIG:
         sid = s["id"]
-        try:
-            url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={sid}&start_date=2026-08-01"
-            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-            with urllib.request.urlopen(req, timeout=8) as resp:
-                data = json.loads(resp.read().decode('utf-8')).get('data', [])
-                if data:
-                    s["history"] = data[-60:] # keep recent 60 trading days for interactive chart
-                    latest = data[-1]
-                    prev = data[-2] if len(data) > 1 else data[-1]
-                    s["price"] = latest["close"]
-                    s["spread"] = latest["spread"]
-                    prev_close = prev["close"]
-                    s["pct"] = round((latest["spread"] / prev_close) * 100, 2) if prev_close else 0.0
-                    s["volume"] = round(latest["Trading_Volume"] / 1000)
-                    s["date"] = latest["date"]
-                    print(f"[{sid}] {s['name']}: {s['price']} (Spread: {s['spread']}, {s['pct']}%)")
-                else:
-                    print(f"[{sid}] No data")
-        except Exception as e:
-            print(f"Error {sid}: {e}")
-        time.sleep(0.1)
+
+        # 先把既有紀錄中、設定檔沒有的欄位補回（treeChain 等）
+        prev_record = existing.get(sid, {})
+        for key, value in prev_record.items():
+            if key not in s:
+                s[key] = value
+
+        data = fetch_prices(sid)
+        if data:
+            s["history"] = data[-60:]  # keep recent 60 trading days for interactive chart
+            latest = data[-1]
+            prev = data[-2] if len(data) > 1 else data[-1]
+            s["price"] = latest["close"]
+            s["spread"] = latest["spread"]
+            prev_close = prev["close"]
+            s["pct"] = round((latest["spread"] / prev_close) * 100, 2) if prev_close else 0.0
+            s["volume"] = round(latest["Trading_Volume"] / 1000)
+            s["date"] = latest["date"]
+            print(f"[{sid}] {s['name']}: {s['price']} (Spread: {s['spread']}, {s['pct']}%)")
+        else:
+            # 抓不到就沿用既有報價，絕不寫入空值
+            failed.append(f"{sid} {s['name']}")
+            print(f"[{sid}] {s['name']}: 抓取失敗，沿用既有報價 {prev_record.get('price', '--')}")
+        time.sleep(1.0)
+
+    # 寫入前自我檢查：treeChain 不得遺失
+    missing_tree = [s["id"] for s in STOCKS_CONFIG if not s.get("treeChain")]
+    if missing_tree and existing:
+        print(f"ABORT: 下列個股缺少 treeChain，已中止寫入以免破壞資料：{missing_tree}")
+        print("       請先執行 python scripts/enrich_tree_chains.py 重新注入。")
+        return
 
     with open(target_path, 'w', encoding='utf-8') as f:
         json.dump(STOCKS_CONFIG, f, ensure_ascii=False, indent=2)
 
     print(f"Successfully wrote {len(STOCKS_CONFIG)} stocks to {target_path}")
+    if failed:
+        print(f"注意：{len(failed)} 檔沿用舊報價 -> {', '.join(failed)}")
 
 if __name__ == '__main__':
     build_data()

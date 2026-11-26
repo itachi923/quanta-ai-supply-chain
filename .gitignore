@@ -1,0 +1,10 @@
+# Windows / OneDrive
+desktop.ini
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# 本機開發設定（Claude Code 預覽伺服器）
+.claude/
