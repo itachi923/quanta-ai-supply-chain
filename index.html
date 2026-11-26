@@ -670,6 +670,61 @@
       margin-top: 10px;
     }
 
+    /* ---- 彈窗內 K 線 / 線圖 切換列與自訂圖例 ---- */
+    .modal-chart-mode-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .modal-chart-mode-group {
+      display: inline-flex;
+      gap: 5px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 3px;
+    }
+    .modal-chart-mode-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-body);
+      padding: 4px 11px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .modal-chart-mode-btn:hover { color: var(--blue-quanta); }
+    .modal-chart-mode-btn.active {
+      background: var(--blue-navy);
+      border-color: var(--blue-navy);
+      color: #ffffff;
+    }
+    /* 面板固定高度：確保繪圖區與 X 軸標籤帶在任何寬度下都放得下 */
+    .chart-pane { position: relative; width: 100%; }
+    .chart-pane-price { height: 260px; }
+    .chart-pane-vol { height: 96px; }
+
+    .modal-chart-legend {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .lg-sw {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border-radius: 2px;
+      margin-right: 4px;
+      vertical-align: baseline;
+    }
+
     /* ========================================================
        籌碼面：三大法人買賣超與外資持股比例 (Institutional Chips)
        圖表規範：單一數值軸（絕不雙軸）、類別色固定順序不循環、
@@ -1231,6 +1286,8 @@
       .modal-body-grid { grid-template-columns: 1fr; }
       .chips-tile-grid { grid-template-columns: repeat(2, 1fr); }
       .chips-table-wrap { max-height: 240px; }
+      .chart-pane-price { height: 220px; }
+      .chart-pane-vol { height: 92px; }
       .stocks-grid { grid-template-columns: 1fr; }
       .tree-viewport-modal { height: 380px; }
     }
@@ -1639,11 +1696,25 @@
         </div>
       </div>
 
-      <!-- 彈窗下方：即時互動量價線圖 -->
+      <!-- 彈窗下方：即時互動量價圖（支援收盤線圖 ⇄ K 線圖切換） -->
       <div>
-        <h3 class="modal-section-title">📈 近 60 個交易日量價走勢圖 (收盤價與成交量)</h3>
+        <h3 class="modal-section-title">📈 近 60 個交易日量價走勢圖 (開高低收與成交量)</h3>
+
+        <div class="modal-chart-mode-row">
+          <div class="modal-chart-mode-group">
+            <button class="modal-chart-mode-btn" onclick="setModalChartMode('line', event)">📈 收盤線圖</button>
+            <button class="modal-chart-mode-btn active" onclick="setModalChartMode('candle', event)">🕯️ K 線圖</button>
+          </div>
+          <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">
+            K 棒實體為開盤↔收盤，上下影線為當日最高／最低價
+          </span>
+        </div>
+
+        <!-- 價格面板 + 成交量面板（各自獨立數值軸，不使用雙軸） -->
         <div class="chart-container-modal">
-          <canvas id="modalStockChart" height="90"></canvas>
+          <div class="chart-pane chart-pane-price"><canvas id="modalStockChart"></canvas></div>
+          <div class="chart-pane chart-pane-vol"><canvas id="modalVolumeChart"></canvas></div>
+          <div class="modal-chart-legend" id="modalChartLegend"></div>
         </div>
       </div>
 
@@ -2156,16 +2227,18 @@
       document.getElementById('m-roe').textContent = fin.roe || '--';
       document.getElementById('m-div').textContent = fin.dividendYield || '--';
 
+      // 必須先顯示彈窗再繪圖：圖表容器在 display:none 時寬度為 0，
+      // Chart.js 會以 0 寬建立畫布，K 棒會縮在左上角一小塊。
+      document.getElementById('companyModal').style.display = 'flex';
+
       // 繪製該股票專屬的雙向樹狀支鏈產業鏈拓撲圖
       renderModalTree(stock);
 
-      // 繪製近 60 天量價走勢圖
+      // 繪製近 60 天量價走勢圖（收盤線圖 / K 線圖）
       renderModalChart(stock.history || []);
 
       // 繪製籌碼面：三大法人買賣超與外資持股比例
       renderChipsSection(stockId);
-
-      document.getElementById('companyModal').style.display = 'flex';
 
       // 連線即時 API，更新個股最新盤面與 60 天走勢
       syncSingleStockLive(stockId);
@@ -2175,6 +2248,7 @@
     function closeModal() {
       document.getElementById('companyModal').style.display = 'none';
       chipsStockId = null;
+      modalHistory = [];
     }
 
     function handleOverlayClick(event) {
@@ -2499,70 +2573,222 @@
       }
     }
 
-    // 繪製彈窗內的 60 天走勢圖
+    // ========================================================
+    // 彈窗量價圖表引擎：收盤線圖 ⇄ K 線圖切換（價格面板 + 成交量面板）
+    // 設計準則：
+    //  1. 價格（元）與成交量（張）各自獨立成面板，不使用雙數值軸。
+    //  2. 兩個面板以 afterFit 固定相同的 Y 軸寬度，確保日期軸對齊。
+    //  3. K 棒以 Chart.js 原生浮動長條繪製（[低,高] 影線 + [開,收] 實體），
+    //     不需額外引入任何圖表函式庫。
+    //  4. 台股慣例：紅 K = 收盤 ≥ 開盤，綠 K = 收盤 < 開盤。
+    // ========================================================
+    let modalVolumeChartInstance = null;
+    let modalChartMode = 'candle';
+    let modalHistory = [];
+
+    const K_UP = '#dc2626';          // 台股：漲為紅
+    const K_DOWN = '#16a34a';        // 台股：跌為綠
+    const MODAL_Y_AXIS_WIDTH = 62;   // 兩個面板共用，確保日期軸對齊
+
+    // 計算移動平均線 (Moving Average)
+    function calculateMA(data, period) {
+      const result = [];
+      for (let i = 0; i < data.length; i++) {
+        if (i < period - 1) {
+          result.push(null);
+        } else {
+          let sum = 0;
+          for (let j = 0; j < period; j++) sum += data[i - j];
+          result.push(Number((sum / period).toFixed(2)));
+        }
+      }
+      return result;
+    }
+
+    function setModalChartMode(mode, event) {
+      modalChartMode = mode;
+      if (event) {
+        document.querySelectorAll('.modal-chart-mode-btn').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+      }
+      if (modalHistory.length) renderModalChart(modalHistory);
+    }
+
+    function updateModalChartLegend(hasMA) {
+      const el = document.getElementById('modalChartLegend');
+      if (!el) return;
+      const sw = (color, label, first) =>
+        `<span class="lg-sw" style="background:${color}; ${first ? '' : 'margin-left:12px;'}"></span> ${label}`;
+      let html = (modalChartMode === 'candle')
+        ? sw(K_UP, '紅K：收盤 ≥ 開盤', true) + sw(K_DOWN, '綠K：收盤 &lt; 開盤')
+        : sw('#0284c7', '收盤價 (Close)', true);
+      if (hasMA) html += sw('#f59e0b', '20日月均線 (MA20)');
+      el.innerHTML = html;
+    }
+
+    // 繪製彈窗內的 60 天量價圖
     function renderModalChart(history) {
       if (!history || history.length === 0) return;
+      modalHistory = history;
 
       const labels = history.map(h => h.date.slice(5)); // MM-DD
       const closes = history.map(h => h.close);
       const volumes = history.map(h => Math.round(h.Trading_Volume / 1000));
+      const volColors = history.map(h =>
+        (h.close >= h.open ? 'rgba(220, 38, 38, 0.55)' : 'rgba(22, 163, 74, 0.55)'));
 
-      const ctx = document.getElementById('modalStockChart').getContext('2d');
+      // 60 天資料不足以計算 MA60，僅在筆數足夠時疊加 MA20
+      const hasMA = history.length >= 25;
+      const maSets = hasMA ? [{
+        label: 'MA20 (月均線)', type: 'line', data: calculateMA(closes, 20),
+        borderColor: '#f59e0b', borderWidth: 1.6, borderDash: [4, 4],
+        pointRadius: 0, fill: false, tension: 0.2, order: 0
+      }] : [];
 
-      if (modalChartInstance) {
-        modalChartInstance.destroy();
+      // 價格軸必須貼合實際價格區間：Chart.js 的 bar 型態預設會把 0 納入軸範圍，
+      // 若不明確指定 min/max，K 棒會被壓縮在圖表上方一小塊、幾乎看不出型態。
+      const priceHi = Math.max(...history.map(h => h.max));
+      const priceLo = Math.min(...history.map(h => h.min));
+      const pricePad = Math.max((priceHi - priceLo) * 0.06, 0.5);
+      const priceRange = priceHi - priceLo;
+      const priceStep = priceRange > 500 ? 50 : priceRange > 100 ? 10
+                      : priceRange > 20 ? 5 : priceRange > 5 ? 1 : 0.5;
+      const priceMin = Math.floor((priceLo - pricePad) / priceStep) * priceStep;
+      const priceMax = Math.ceil((priceHi + pricePad) / priceStep) * priceStep;
+
+      let priceSets;
+      if (modalChartMode === 'line') {
+        priceSets = [{
+          label: '收盤價 (NT$)', type: 'line', data: closes,
+          borderColor: '#0284c7', backgroundColor: 'rgba(2, 132, 199, 0.1)',
+          fill: true, borderWidth: 2.5, tension: 0.15,
+          pointRadius: 2, pointHoverRadius: 5, order: 1
+        }].concat(maSets);
+      } else {
+        // 十字線（開盤 = 收盤）給予極小高度，確保仍能看見一條橫線而非消失
+        const eps = Math.max(priceRange * 0.0008, 0.01);
+        const colors = history.map(h => (h.close >= h.open ? K_UP : K_DOWN));
+        priceSets = [
+          {
+            label: '影線 (最高/最低)', type: 'bar',
+            data: history.map(h => [h.min, h.max]),
+            backgroundColor: colors, barPercentage: 0.16, categoryPercentage: 0.92,
+            grouped: false, borderWidth: 0, order: 3
+          },
+          {
+            label: 'K 棒 (開盤/收盤)', type: 'bar',
+            data: history.map(h => (h.close === h.open ? [h.open - eps, h.close + eps] : [h.open, h.close])),
+            backgroundColor: colors, barPercentage: 0.6, categoryPercentage: 0.92,
+            grouped: false, borderWidth: 0, order: 2
+          }
+        ].concat(maSets);
       }
 
-      modalChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: '收盤價 (NT$)',
-              data: closes,
-              borderColor: '#0284c7',
-              backgroundColor: 'rgba(2, 132, 199, 0.1)',
-              fill: true,
-              borderWidth: 2.5,
-              tension: 0.15,
-              pointRadius: 2,
-              yAxisID: 'y'
-            },
-            {
-              label: '成交量 (張)',
-              data: volumes,
-              type: 'bar',
-              backgroundColor: 'rgba(148, 163, 184, 0.35)',
-              yAxisID: 'yVolume'
-            }
-          ]
-        },
+      if (modalChartInstance) modalChartInstance.destroy();
+      if (modalVolumeChartInstance) modalVolumeChartInstance.destroy();
+
+      const dateTitle = (items) => (items.length ? modalHistory[items[0].dataIndex].date : '');
+
+      // --- 價格面板 ---
+      modalChartInstance = new Chart(document.getElementById('modalStockChart').getContext('2d'), {
+        type: 'bar',
+        data: { labels: labels, datasets: priceSets },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { position: 'top' }
+            legend: { display: false }, // 改用圖表下方的自訂圖例
+            tooltip: {
+              padding: 10,
+              // 影線與實體為同一根 K 棒，提示框只顯示一次
+              filter: (item) => !(modalChartMode === 'candle' && item.datasetIndex === 0),
+              callbacks: {
+                title: dateTitle,
+                label: (ctx) => {
+                  if (modalChartMode === 'candle' && ctx.datasetIndex === 1) {
+                    const h = modalHistory[ctx.dataIndex];
+                    const chg = (h.spread !== undefined && h.spread !== null)
+                      ? h.spread : Number((h.close - h.open).toFixed(2));
+                    const base = h.close - chg;
+                    const pct = base ? ((chg / base) * 100).toFixed(2) : '0.00';
+                    const sign = chg >= 0 ? '+' : '';
+                    return [
+                      `開盤 ${h.open}　最高 ${h.max}`,
+                      `最低 ${h.min}　收盤 ${h.close}`,
+                      `漲跌 ${sign}${chg} (${sign}${pct}%)`
+                    ];
+                  }
+                  if (ctx.parsed.y === null) return `${ctx.dataset.label}: 計算中`;
+                  return `${ctx.dataset.label}: NT$ ${ctx.parsed.y}`;
+                }
+              }
+            }
           },
           scales: {
             y: {
-              type: 'linear',
-              position: 'left',
+              type: 'linear', position: 'left',
               title: { display: true, text: '股價 (元)' },
-              grid: { color: '#f1f5f9' }
-            },
-            yVolume: {
-              type: 'linear',
-              position: 'right',
-              title: { display: false },
-              grid: { drawOnChartArea: false },
-              suggestedMax: Math.max(...volumes) * 3
+              grid: { color: '#f1f5f9' },
+              beginAtZero: false,
+              min: Number(priceMin.toFixed(2)),
+              max: Number(priceMax.toFixed(2)),
+              afterFit: (scale) => { scale.width = MODAL_Y_AXIS_WIDTH; }
             },
             x: {
-              grid: { display: false }
+              grid: { display: false },
+              ticks: { display: false } // 日期軸由下方成交量面板統一顯示
             }
           }
         }
+      });
+
+      // --- 成交量面板（獨立數值軸，顏色與 K 棒同步）---
+      modalVolumeChartInstance = new Chart(document.getElementById('modalVolumeChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '成交量 (張)', data: volumes,
+            backgroundColor: volColors, barPercentage: 0.74,
+            categoryPercentage: 0.92, borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false }, // 單一序列，Y 軸標題已指名
+            tooltip: {
+              padding: 10,
+              callbacks: {
+                title: dateTitle,
+                label: (ctx) => `成交量 ${ctx.parsed.y.toLocaleString()} 張`
+              }
+            }
+          },
+          scales: {
+            y: {
+              title: { display: true, text: '量 (張)' },
+              grid: { color: '#f1f5f9' },
+              ticks: { maxTicksLimit: 3, callback: (v) => Number(v).toLocaleString() },
+              afterFit: (scale) => { scale.width = MODAL_Y_AXIS_WIDTH; }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { autoSkip: true, maxTicksLimit: 12, maxRotation: 0 }
+            }
+          }
+        }
+      });
+
+      updateModalChartLegend(hasMA);
+
+      // 保險：若建立當下容器版面尚未配置完成（寬度為 0），下一影格再校正一次尺寸
+      requestAnimationFrame(() => {
+        if (modalChartInstance) modalChartInstance.resize();
+        if (modalVolumeChartInstance) modalVolumeChartInstance.resize();
       });
     }
 

@@ -582,6 +582,55 @@
       border-color: var(--blue-primary);
     }
 
+    /* ---- K 線 / 線圖 切換列與自訂圖例 ---- */
+    .chart-mode-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .chart-mode-group {
+      display: inline-flex;
+      gap: 6px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 9px;
+      padding: 4px;
+    }
+    .chart-mode-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      box-shadow: none;
+    }
+    .chart-mode-btn.active {
+      background: var(--blue-navy);
+      border-color: var(--blue-navy);
+      color: #ffffff;
+    }
+    .chart-mode-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    /* 價格面板與成交量面板上下排列，共用同一條日期軸。
+       面板固定高度：確保繪圖區與 X 軸標籤帶在任何寬度下都放得下。 */
+    .chart-panel-price { position: relative; width: 100%; height: 300px; margin-bottom: 2px; }
+    .chart-panel-volume { position: relative; width: 100%; height: 118px; margin-top: 0; }
+    @media (max-width: 900px) {
+      .chart-panel-price { height: 230px; }
+      .chart-panel-volume { height: 100px; }
+    }
+    .lg-sw {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      margin-right: 4px;
+      vertical-align: baseline;
+    }
+
     .financials-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1072,18 +1121,30 @@
         </div>
       </div>
 
-      <!-- 股價 Chart.js 畫布 -->
-      <div class="chart-box">
-        <canvas id="stockPriceChart" height="95"></canvas>
+      <!-- 圖表型態切換：收盤線圖 ⇄ K 線圖 -->
+      <div class="chart-mode-row">
+        <div class="chart-mode-group">
+          <button class="chart-btn chart-mode-btn" onclick="setChartMode('line', event)">📈 收盤線圖</button>
+          <button class="chart-btn chart-mode-btn active" onclick="setChartMode('candle', event)">🕯️ K 線圖</button>
+        </div>
+        <span class="chart-mode-hint" id="chartModeHint">
+          🕯️ K 棒實體為當日開盤↔收盤，上下影線為當日最高／最低價；成交量面板與日期軸同步對齊。
+        </span>
       </div>
 
-      <!-- 均線與技術面解讀備忘 -->
-      <div style="display:flex; justify-content:space-between; margin-top:14px; font-size:0.86rem; color:var(--text-muted); flex-wrap:wrap; gap:10px;">
-        <div>
-          <span style="display:inline-block; width:12px; height:12px; background:#0284c7; border-radius:2px; margin-right:4px;"></span> 收盤價 (Close)
-          <span style="display:inline-block; width:12px; height:12px; background:#f59e0b; border-radius:2px; margin:0 4px 0 14px;"></span> 20日月均線 (MA20)
-          <span style="display:inline-block; width:12px; height:12px; background:#8b5cf6; border-radius:2px; margin:0 4px 0 14px;"></span> 60日季均線 (MA60)
+      <!-- 股價 Chart.js 畫布：價格面板 + 成交量面板（各自獨立數值軸，不使用雙軸） -->
+      <div class="chart-box">
+        <div class="chart-panel-price">
+          <canvas id="stockPriceChart"></canvas>
         </div>
+        <div class="chart-panel-volume">
+          <canvas id="stockVolumeChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 均線與技術面解讀備忘（圖例隨型態切換） -->
+      <div style="display:flex; justify-content:space-between; margin-top:14px; font-size:0.86rem; color:var(--text-muted); flex-wrap:wrap; gap:10px;">
+        <div id="chartLegendNote"></div>
         <div style="font-weight:700; color:var(--blue-navy);">
           💡 均線動態計算：每日收盤後自動重算 MA20 與 MA60，長多架構清晰可見。
         </div>
@@ -1399,114 +1460,222 @@
       return result;
     }
 
-    // 建立/更新股價圖表
-    function renderStockChart(slicedItems) {
-      const dates = slicedItems.map(d => d.date.slice(5)); // 取 MM-DD
-      const closes = slicedItems.map(d => d.close);
-      const volumes = slicedItems.map(d => Math.round(d.Trading_Volume / 1000)); // 換算成張數
-      
-      const ma20 = calculateMA(closes, 20);
-      const ma60 = calculateMA(closes, 60);
+    // ========================================================
+    // 股價圖表引擎：收盤線圖 ⇄ K 線圖切換（價格面板 + 成交量面板）
+    // 設計準則：
+    //  1. 價格（元）與成交量（張）各自獨立成面板，不使用雙數值軸——
+    //     兩種尺度疊在同一張圖會製造出資料中不存在的假相關。
+    //  2. 兩個面板以 afterFit 固定相同的 Y 軸寬度，確保 X 軸逐日對齊。
+    //  3. K 棒以 Chart.js 原生浮動長條繪製（[低,高] 影線 + [開,收] 實體），
+    //     不需額外引入任何圖表函式庫。
+    //  4. 台股慣例：紅 K = 收盤 ≥ 開盤，綠 K = 收盤 < 開盤。
+    // ========================================================
+    let stockVolumeChart = null;
+    let chartMode = 'candle';
+    let currentSliced = [];
 
-      const ctx = document.getElementById('stockPriceChart').getContext('2d');
+    const K_UP = '#dc2626';    // 台股：漲為紅
+    const K_DOWN = '#16a34a';  // 台股：跌為綠
+    const Y_AXIS_WIDTH = 74;   // 兩個面板共用，確保日期軸對齊
 
-      if (stockPriceChart) {
-        stockPriceChart.data.labels = dates;
-        stockPriceChart.data.datasets[0].data = closes;
-        stockPriceChart.data.datasets[1].data = ma20;
-        stockPriceChart.data.datasets[2].data = ma60;
-        stockPriceChart.data.datasets[3].data = volumes;
-        stockPriceChart.update();
-        return;
+    function setChartMode(mode, event) {
+      chartMode = mode;
+      if (event) {
+        document.querySelectorAll('.chart-mode-btn').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+      }
+      updateChartLegendNote();
+      if (currentSliced.length) renderStockChart(currentSliced);
+    }
+
+    // 自訂圖例：K 線為雙色（紅漲綠跌），Chart.js 內建圖例無法正確表達
+    function updateChartLegendNote() {
+      const el = document.getElementById('chartLegendNote');
+      if (!el) return;
+      const sw = (color, label, first) =>
+        `<span class="lg-sw" style="background:${color}; ${first ? '' : 'margin-left:14px;'}"></span> ${label}`;
+      el.innerHTML = (chartMode === 'candle')
+        ? sw(K_UP, '紅K：收盤 ≥ 開盤', true)
+          + sw(K_DOWN, '綠K：收盤 &lt; 開盤')
+          + sw('#f59e0b', '20日月均線 (MA20)')
+          + sw('#8b5cf6', '60日季均線 (MA60)')
+        : sw('#0284c7', '收盤價 (Close)', true)
+          + sw('#f59e0b', '20日月均線 (MA20)')
+          + sw('#8b5cf6', '60日季均線 (MA60)');
+    }
+
+    function buildPriceDatasets(items) {
+      const closes = items.map(d => d.close);
+      const maSets = [
+        {
+          label: 'MA20 (月均線)', type: 'line', data: calculateMA(closes, 20),
+          borderColor: '#f59e0b', borderWidth: 1.8, borderDash: [4, 4],
+          pointRadius: 0, fill: false, tension: 0.2, order: 1
+        },
+        {
+          label: 'MA60 (季均線)', type: 'line', data: calculateMA(closes, 60),
+          borderColor: '#8b5cf6', borderWidth: 1.8, borderDash: [6, 4],
+          pointRadius: 0, fill: false, tension: 0.2, order: 0
+        }
+      ];
+
+      if (chartMode === 'line') {
+        return [{
+          label: '收盤價 (NT$)', type: 'line', data: closes,
+          borderColor: '#0284c7', backgroundColor: 'rgba(2, 132, 199, 0.12)',
+          fill: true, borderWidth: 2.8, tension: 0.15,
+          pointRadius: items.length > 100 ? 0 : 3, pointHoverRadius: 6,
+          pointBackgroundColor: '#0284c7', order: 2
+        }].concat(maSets);
       }
 
-      stockPriceChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: dates,
-          datasets: [
-            {
-              label: '收盤價 (NT$)',
-              data: closes,
-              borderColor: '#0284c7',
-              backgroundColor: 'rgba(2, 132, 199, 0.12)',
-              fill: true,
-              borderWidth: 2.8,
-              tension: 0.15,
-              pointRadius: dates.length > 100 ? 0 : 3,
-              pointHoverRadius: 6,
-              pointBackgroundColor: '#0284c7',
-              yAxisID: 'y'
-            },
-            {
-              label: 'MA20 (月均線)',
-              data: ma20,
-              borderColor: '#f59e0b',
-              borderWidth: 1.8,
-              borderDash: [4, 4],
-              pointRadius: 0,
-              fill: false,
-              tension: 0.2,
-              yAxisID: 'y'
-            },
-            {
-              label: 'MA60 (季均線)',
-              data: ma60,
-              borderColor: '#8b5cf6',
-              borderWidth: 1.8,
-              borderDash: [6, 4],
-              pointRadius: 0,
-              fill: false,
-              tension: 0.2,
-              yAxisID: 'y'
-            },
-            {
-              label: '成交量 (張)',
-              data: volumes,
-              type: 'bar',
-              backgroundColor: 'rgba(148, 163, 184, 0.35)',
-              yAxisID: 'yVolume'
-            }
-          ]
+      // 十字線（開盤 = 收盤）給予極小高度，確保仍能看見一條橫線而非消失
+      const hi = Math.max(...items.map(d => d.max));
+      const lo = Math.min(...items.map(d => d.min));
+      const eps = Math.max((hi - lo) * 0.0008, 0.01);
+      const colors = items.map(d => (d.close >= d.open ? K_UP : K_DOWN));
+
+      return [
+        {
+          label: '影線 (最高/最低)', type: 'bar',
+          data: items.map(d => [d.min, d.max]),
+          backgroundColor: colors, barPercentage: 0.14, categoryPercentage: 0.92,
+          grouped: false, borderWidth: 0, order: 3
         },
+        {
+          label: 'K 棒 (開盤/收盤)', type: 'bar',
+          data: items.map(d => (d.close === d.open ? [d.open - eps, d.close + eps] : [d.open, d.close])),
+          backgroundColor: colors, barPercentage: 0.62, categoryPercentage: 0.92,
+          grouped: false, borderWidth: 0, order: 2
+        }
+      ].concat(maSets);
+    }
+
+    // 建立/更新股價圖表（價格面板 + 成交量面板）
+    function renderStockChart(slicedItems) {
+      if (!slicedItems || slicedItems.length === 0) return;
+      currentSliced = slicedItems;
+
+      const dates = slicedItems.map(d => d.date.slice(5)); // 取 MM-DD
+      const volumes = slicedItems.map(d => Math.round(d.Trading_Volume / 1000)); // 換算成張數
+      const volColors = slicedItems.map(d =>
+        d.close >= d.open ? 'rgba(220, 38, 38, 0.55)' : 'rgba(22, 163, 74, 0.55)');
+
+      // 價格軸必須貼合實際價格區間：Chart.js 的 bar 型態預設會把 0 納入軸範圍，
+      // 若不明確指定 min/max，K 棒會被壓縮在圖表上方一小塊、幾乎看不出型態。
+      const priceHi = Math.max(...slicedItems.map(d => d.max));
+      const priceLo = Math.min(...slicedItems.map(d => d.min));
+      const pricePad = Math.max((priceHi - priceLo) * 0.06, 0.5);
+      // 取整到合適級距，讓座標軸刻度是整齊的數字（高價股用大級距、低價股用小級距）
+      const priceRange = priceHi - priceLo;
+      const priceStep = priceRange > 500 ? 50 : priceRange > 100 ? 10
+                      : priceRange > 20 ? 5 : priceRange > 5 ? 1 : 0.5;
+      const priceMin = Math.floor((priceLo - pricePad) / priceStep) * priceStep;
+      const priceMax = Math.ceil((priceHi + pricePad) / priceStep) * priceStep;
+
+      if (stockPriceChart) stockPriceChart.destroy();
+      if (stockVolumeChart) stockVolumeChart.destroy();
+
+      const dateTitle = (items) => (items.length ? currentSliced[items[0].dataIndex].date : '');
+
+      // --- 價格面板（K 棒或收盤線 + 均線）---
+      stockPriceChart = new Chart(document.getElementById('stockPriceChart').getContext('2d'), {
+        type: 'bar',
+        data: { labels: dates, datasets: buildPriceDatasets(slicedItems) },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { position: 'top', labels: { font: { family: 'Noto Sans TC', weight: '700' } } },
+            legend: { display: false }, // 改用圖表下方的自訂圖例
             tooltip: {
               padding: 12,
+              // 影線與實體為同一根 K 棒，提示框只顯示一次
+              filter: (item) => !(chartMode === 'candle' && item.datasetIndex === 0),
               callbacks: {
-                label: function(context) {
-                  let label = context.dataset.label || '';
-                  if (label.includes('成交量')) {
-                    return `${label}: ${context.parsed.y.toLocaleString()} 張`;
+                title: dateTitle,
+                label: (ctx) => {
+                  if (chartMode === 'candle' && ctx.datasetIndex === 1) {
+                    const d = currentSliced[ctx.dataIndex];
+                    const chg = (d.spread !== undefined && d.spread !== null)
+                      ? d.spread : Number((d.close - d.open).toFixed(2));
+                    const base = d.close - chg;
+                    const pct = base ? ((chg / base) * 100).toFixed(2) : '0.00';
+                    const sign = chg >= 0 ? '+' : '';
+                    return [
+                      `開盤 ${d.open}　最高 ${d.max}`,
+                      `最低 ${d.min}　收盤 ${d.close}`,
+                      `漲跌 ${sign}${chg} (${sign}${pct}%)`
+                    ];
                   }
-                  if (context.parsed.y === null) return `${label}: 計算中`;
-                  return `${label}: NT$ ${context.parsed.y}`;
+                  if (ctx.parsed.y === null) return `${ctx.dataset.label}: 計算中`;
+                  return `${ctx.dataset.label}: NT$ ${ctx.parsed.y}`;
                 }
               }
             }
           },
           scales: {
             y: {
-              type: 'linear',
-              position: 'left',
+              type: 'linear', position: 'left',
               title: { display: true, text: '股價 (新台幣元)' },
-              grid: { color: '#f1f5f9' }
-            },
-            yVolume: {
-              type: 'linear',
-              position: 'right',
-              title: { display: false },
-              grid: { drawOnChartArea: false },
-              suggestedMax: Math.max(...volumes) * 3
+              grid: { color: '#f1f5f9' },
+              beginAtZero: false,
+              min: Number(priceMin.toFixed(2)),
+              max: Number(priceMax.toFixed(2)),
+              afterFit: (scale) => { scale.width = Y_AXIS_WIDTH; }
             },
             x: {
-              grid: { display: false }
+              grid: { display: false },
+              ticks: { display: false } // 日期軸由下方成交量面板統一顯示
             }
           }
         }
+      });
+
+      // --- 成交量面板（獨立數值軸，顏色與 K 棒同步）---
+      stockVolumeChart = new Chart(document.getElementById('stockVolumeChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: dates,
+          datasets: [{
+            label: '成交量 (張)', data: volumes,
+            backgroundColor: volColors, barPercentage: 0.76,
+            categoryPercentage: 0.92, borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false }, // 單一序列，Y 軸標題已指名
+            tooltip: {
+              padding: 10,
+              callbacks: {
+                title: dateTitle,
+                label: (ctx) => `成交量 ${ctx.parsed.y.toLocaleString()} 張`
+              }
+            }
+          },
+          scales: {
+            y: {
+              title: { display: true, text: '成交量 (張)' },
+              grid: { color: '#f1f5f9' },
+              ticks: { maxTicksLimit: 4, callback: (v) => Number(v).toLocaleString() },
+              afterFit: (scale) => { scale.width = Y_AXIS_WIDTH; }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { autoSkip: true, maxTicksLimit: 14, maxRotation: 0 }
+            }
+          }
+        }
+      });
+
+      // 保險：若建立當下容器版面尚未配置完成（寬度為 0），下一影格再校正一次尺寸
+      requestAnimationFrame(() => {
+        if (stockPriceChart) stockPriceChart.resize();
+        if (stockVolumeChart) stockVolumeChart.resize();
       });
     }
 
@@ -2605,6 +2774,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      updateChartLegendNote();
       fetchLiveStockData(false);
       initFinancialCharts();
       initTree();
