@@ -58,6 +58,11 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          # 抓取腳本覆寫了被 git 追蹤的 data/realtime.json，工作區因此變髒，
+          # git switch --orphan 會以「本地變更將被覆蓋」為由拒絕切換。
+          # 快照已複製到 RUNNER_TEMP，這裡還原工作區是安全的。
+          git checkout -- .
+
           # 每次都以全新的孤兒分支強制覆蓋，分支永遠只有一個提交，不會無限長大
           git switch --orphan data-live-tmp
           cp "$RUNNER_TEMP/realtime.json" realtime.json
