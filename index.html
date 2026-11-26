@@ -768,6 +768,8 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
     }
+    /* 指數對照區為 4 張卡，獨立設 4 欄避免排成 3+1 */
+    .chips-tile-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
     .chips-tile {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -1284,7 +1286,9 @@
       .dominance-grid { grid-template-columns: 1fr 1fr; }
       .narrative-grid { grid-template-columns: 1fr; }
       .modal-body-grid { grid-template-columns: 1fr; }
-      .chips-tile-grid { grid-template-columns: repeat(2, 1fr); }
+      .chips-tile-grid, .chips-tile-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+      /* nowrap 的長說明在窄螢幕會撐出水平捲軸，這裡放行換行 */
+      .chips-data-note { white-space: normal; }
       .chips-table-wrap { max-height: 240px; }
       .chart-pane-price { height: 220px; }
       .chart-pane-vol { height: 92px; }
@@ -1469,7 +1473,62 @@
     </section>
 
     <!-- ========================================================
-         深度導航 2：五大子族群龍頭 (Bellwether) 焦點解析
+         深度導航 2：類股指數 vs 大盤強弱對照（資金輪動）
+         兩個指數的絕對點數尺度差異極大（類股約 345 點、大盤約 38,000 點），
+         若各用一個 Y 軸會製造出資料中不存在的相關性，
+         因此一律「指數化到區間起點 = 100」後畫在同一個軸上。
+         ======================================================== -->
+    <section class="comparison-section" id="indexCompareSection" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:6px;">
+        <div>
+          <h2 style="font-size:1.25rem; font-weight:900; color:var(--blue-navy); display:flex; align-items:center; gap:8px;">
+            <span>⚖️ 電腦及週邊設備類指數 vs 大盤加權指數 · 資金輪動強弱對照</span>
+          </h2>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-top:4px; line-height:1.6;">
+            兩者點數尺度相差百倍，直接疊圖毫無意義。這裡一律 <strong>指數化到區間起點 = 100</strong> 再比較，
+            斜率高者即為資金流入方向。資料來源：證交所每日收盤類股指數。
+          </p>
+        </div>
+      </div>
+
+      <div class="chips-filter-row">
+        <span style="font-size:0.78rem; font-weight:800; color:var(--text-muted);">對照區間</span>
+        <button class="chips-range-btn" data-idx-range="20" onclick="setIdxRange(20)">近 1 個月</button>
+        <button class="chips-range-btn" data-idx-range="60" onclick="setIdxRange(60)">近 3 個月</button>
+        <button class="chips-range-btn active" data-idx-range="120" onclick="setIdxRange(120)">近 6 個月</button>
+        <button class="chips-range-btn" data-idx-range="9999" onclick="setIdxRange(9999)">全區間</button>
+        <button class="chips-range-btn" id="idxTableBtn" onclick="toggleIdxTable()">📋 顯示數據表格</button>
+        <span class="chips-filter-spacer"></span>
+        <span class="chips-data-note" id="idxDataNote"></span>
+      </div>
+
+      <div class="chips-tile-grid cols-4" id="idxTileGrid"></div>
+
+      <div class="chips-narrative" id="idxNarrative" style="margin-top:14px;"></div>
+
+      <!-- 圖一：兩指數指數化對照（單一數值軸） -->
+      <div class="chart-container-modal">
+        <div class="chips-chart-head">
+          <span class="chips-chart-title">指數化走勢對照（區間起點 = 100）</span>
+          <span class="chips-chart-badge" id="idxCompareBadge"></span>
+        </div>
+        <div class="chart-pane chart-pane-price"><canvas id="indexCompareChart"></canvas></div>
+      </div>
+
+      <!-- 圖二：相對強度（類股 ÷ 大盤） -->
+      <div class="chart-container-modal">
+        <div class="chips-chart-head">
+          <span class="chips-chart-title">相對強度 RS：類股 ÷ 大盤（區間起點 = 100，100 以上代表強於大盤）</span>
+          <span class="chips-chart-badge" id="idxRsBadge"></span>
+        </div>
+        <div class="chart-pane chart-pane-vol" style="height:150px;"><canvas id="indexRsChart"></canvas></div>
+      </div>
+
+      <div id="idxTableWrap" class="chips-table-wrap" style="display:none;"></div>
+    </section>
+
+    <!-- ========================================================
+         深度導航 3：五大子族群龍頭 (Bellwether) 焦點解析
          ======================================================== -->
     <section class="leader-section">
       <div class="leader-section-header">
@@ -1494,7 +1553,7 @@
     </section>
 
     <!-- ========================================================
-         深度導航 3：16 檔精選巨頭 · 財務獲利三率與經營規模綜合比較大表
+         深度導航 4：16 檔精選巨頭 · 財務獲利三率與經營規模綜合比較大表
          ======================================================== -->
     <section class="comparison-section">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
@@ -1554,7 +1613,7 @@
     </section>
 
     <!-- ========================================================
-         深度導航 4：16 檔精選巨頭 · 5 大子族群分門別類卡片專區
+         深度導航 5：16 檔精選巨頭 · 5 大子族群分門別類卡片專區
          ======================================================== -->
     <div style="margin-bottom:14px;">
       <h2 style="font-size:1.25rem; font-weight:900; color:var(--blue-navy); display:flex; align-items:center; gap:8px;">
@@ -2793,6 +2852,309 @@
     }
 
     // ========================================================
+    // 類股指數 vs 大盤強弱對照引擎
+    // 設計準則：
+    //  1. 絕不雙軸 —— 類股約 345 點、大盤約 38,000 點，尺度差百倍，
+    //     兩個 Y 軸的對齊位置是任意的，會做出資料裡不存在的相關性。
+    //     一律指數化到「區間起點 = 100」後畫在同一個軸上。
+    //  2. 相對強度另外成圖，因為它回答的是不同的問題（相對 vs 絕對）。
+    //  3. 類別色固定順序：類股=藍（slot 1）、大盤=橘（slot 2）。
+    // ========================================================
+    let indexCompareData = null;
+    let idxRange = 120;
+    let idxTableOpen = false;
+    let idxChartInstance = null;
+    let idxRsChartInstance = null;
+
+    const IDX_SECTOR_COLOR = '#2a78d6';
+    const IDX_MARKET_COLOR = '#eb6834';
+
+    async function loadIndexCompare() {
+      try {
+        const resp = await fetch('data/index_compare.json?t=' + Date.now());
+        if (!resp.ok) return;
+        const json = await resp.json();
+        if (json && json.series && json.series.length > 1) {
+          indexCompareData = json;
+          document.getElementById('indexCompareSection').style.display = 'block';
+          renderIndexCompareAll();
+        }
+      } catch (err) {
+        console.warn('類股指數對照資料載入失敗，將隱藏該區塊：', err);
+      }
+    }
+
+    function setIdxRange(days) {
+      idxRange = days;
+      document.querySelectorAll('.chips-range-btn[data-idx-range]').forEach(btn => {
+        btn.classList.toggle('active', Number(btn.dataset.idxRange) === days);
+      });
+      renderIndexCompareAll();
+    }
+
+    function toggleIdxTable() {
+      idxTableOpen = !idxTableOpen;
+      const wrap = document.getElementById('idxTableWrap');
+      const btn = document.getElementById('idxTableBtn');
+      wrap.style.display = idxTableOpen ? 'block' : 'none';
+      btn.classList.toggle('active', idxTableOpen);
+      btn.textContent = idxTableOpen ? '\u{1F4CB} 收合數據表格' : '\u{1F4CB} 顯示數據表格';
+      if (idxTableOpen) renderIdxTable();
+    }
+
+    function idxSlice() {
+      const all = indexCompareData.series;
+      return (idxRange >= all.length) ? all.slice() : all.slice(-idxRange);
+    }
+
+    function pctColor(v) {
+      if (!v) return 'var(--text-body)';
+      return v > 0 ? 'var(--stock-red)' : 'var(--stock-green)';
+    }
+
+    function fmtPct(v) {
+      const sign = v > 0 ? '+' : '';
+      return `${sign}${v.toFixed(2)}%`;
+    }
+
+    function renderIndexCompareAll() {
+      if (!indexCompareData) return;
+      const rows = idxSlice();
+      if (rows.length < 2) return;
+
+      const base = rows[0];
+      const last = rows[rows.length - 1];
+      const sectorPct = (last.sector / base.sector - 1) * 100;
+      const marketPct = (last.market / base.market - 1) * 100;
+      const excess = sectorPct - marketPct;
+
+      renderIdxTiles(rows, sectorPct, marketPct, excess);
+      renderIdxNarrative(rows, sectorPct, marketPct, excess);
+      renderIdxChart(rows, base, sectorPct, marketPct);
+      renderIdxRsChart(rows, base);
+      if (idxTableOpen) renderIdxTable();
+
+      document.getElementById('idxDataNote').textContent =
+        `${rows[0].date} ~ ${last.date}（${rows.length} 個交易日）· 來源 證交所`;
+    }
+
+    function renderIdxTiles(rows, sectorPct, marketPct, excess) {
+      const last = rows[rows.length - 1];
+      // 區間內相對強度的高低，用來判斷輪動是持續還是剛反轉
+      const rsSeries = rows.map(r => (r.sector / r.market));
+      const rsBase = rsSeries[0];
+      const rsNow = rsSeries[rsSeries.length - 1] / rsBase * 100;
+      const rsMax = Math.max(...rsSeries) / rsBase * 100;
+      const rsMin = Math.min(...rsSeries) / rsBase * 100;
+
+      const tiles = [
+        { lbl: '類股指數區間漲跌', val: fmtPct(sectorPct), raw: sectorPct,
+          sub: `${rows[0].sector.toFixed(2)} → ${last.sector.toFixed(2)}` },
+        { lbl: '大盤指數區間漲跌', val: fmtPct(marketPct), raw: marketPct,
+          sub: `${rows[0].market.toLocaleString()} → ${last.market.toLocaleString()}` },
+        { lbl: '超額報酬（類股 − 大盤）', val: `${excess > 0 ? '+' : ''}${excess.toFixed(2)} pp`, raw: excess,
+          sub: excess >= 0 ? '類股強於大盤' : '類股弱於大盤' },
+        { lbl: '相對強度 RS（起點 100）', val: rsNow.toFixed(2), raw: rsNow - 100,
+          sub: `區間高 ${rsMax.toFixed(1)} · 低 ${rsMin.toFixed(1)}` }
+      ];
+
+      document.getElementById('idxTileGrid').innerHTML = tiles.map(t => `
+        <div class="chips-tile">
+          <div class="lbl">${t.lbl}</div>
+          <div class="val" style="color:${pctColor(t.raw)};">${t.raw ? (t.raw > 0 ? '▲&nbsp;' : '▼&nbsp;') : ''}${t.val}</div>
+          <div class="sub">${t.sub}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderIdxNarrative(rows, sectorPct, marketPct, excess) {
+      const el = document.getElementById('idxNarrative');
+      const n = rows.length;
+      let verdict;
+      if (excess > 5) {
+        verdict = '資金明顯向本類股集中，<strong>電腦及週邊設備類股是帶動大盤的主流</strong>。';
+      } else if (excess > 0) {
+        verdict = '本類股<strong>小幅強於大盤</strong>，資金溫和流入。';
+      } else if (excess > -5) {
+        verdict = '本類股<strong>略微落後大盤</strong>，資金暫時分散到其他族群。';
+      } else {
+        verdict = '本類股<strong>明顯弱於大盤</strong>，資金正從本族群流出，宜留意輪動風險。';
+      }
+
+      el.innerHTML = `
+        📌 <strong>近 ${n} 個交易日：</strong>
+        電腦及週邊設備類指數 <strong style="color:${pctColor(sectorPct)};">${fmtPct(sectorPct)}</strong>、
+        大盤加權指數 <strong style="color:${pctColor(marketPct)};">${fmtPct(marketPct)}</strong>，
+        超額報酬 <strong style="color:${pctColor(excess)};">${excess > 0 ? '+' : ''}${excess.toFixed(2)} 個百分點</strong>。
+        ${verdict}
+      `;
+    }
+
+    function renderIdxChart(rows, base, sectorPct, marketPct) {
+      const canvas = document.getElementById('indexCompareChart');
+      if (!canvas) return;
+      if (idxChartInstance) idxChartInstance.destroy();
+
+      const badge = document.getElementById('idxCompareBadge');
+      // 選擇性直接標註：只標區間終點，不在每個點放數字
+      badge.innerHTML = `終點&nbsp;類股&nbsp;${(100 + sectorPct).toFixed(1)}&nbsp;/&nbsp;大盤&nbsp;${(100 + marketPct).toFixed(1)}`;
+
+      idxChartInstance = new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: rows.map(r => r.date.slice(5)),
+          datasets: [
+            {
+              label: '電腦及週邊設備類指數',
+              data: rows.map(r => Number((r.sector / base.sector * 100).toFixed(2))),
+              borderColor: IDX_SECTOR_COLOR,
+              backgroundColor: 'rgba(42, 120, 214, 0.08)',
+              fill: true, borderWidth: 2, tension: 0.15,
+              pointRadius: 0, pointHoverRadius: 5, pointHitRadius: 12
+            },
+            {
+              label: '大盤加權指數',
+              data: rows.map(r => Number((r.market / base.market * 100).toFixed(2))),
+              borderColor: IDX_MARKET_COLOR,
+              backgroundColor: 'transparent',
+              fill: false, borderWidth: 2, tension: 0.15,
+              pointRadius: 0, pointHoverRadius: 5, pointHitRadius: 12
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { usePointStyle: true, pointStyle: 'line', boxWidth: 24,
+                        font: { size: 11, weight: '700' } }
+            },
+            tooltip: {
+              callbacks: {
+                title: (items) => items.length ? rows[items[0].dataIndex].date : '',
+                label: (ctx) => {
+                  const r = rows[ctx.dataIndex];
+                  const raw = ctx.datasetIndex === 0 ? r.sector : r.market;
+                  return `${ctx.dataset.label} ${ctx.parsed.y.toFixed(2)}（實際 ${raw.toLocaleString()}）`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              title: { display: true, text: '指數化（區間起點 = 100）' },
+              grid: {
+                // 100 為基準線，略深以凸顯漲跌分界
+                color: (ctx) => (ctx.tick && ctx.tick.value === 100) ? '#94a3b8' : '#f1f5f9'
+              }
+            },
+            x: { grid: { display: false },
+                 // autoSkipPadding 確保窄螢幕下日期標籤不會黏在一起
+                 ticks: { autoSkip: true, autoSkipPadding: 14, maxTicksLimit: 14, maxRotation: 0 } }
+          }
+        }
+      });
+    }
+
+    function renderIdxRsChart(rows, base) {
+      const canvas = document.getElementById('indexRsChart');
+      if (!canvas) return;
+      if (idxRsChartInstance) idxRsChartInstance.destroy();
+
+      const rsBase = base.sector / base.market;
+      const rs = rows.map(r => Number(((r.sector / r.market) / rsBase * 100).toFixed(2)));
+      const latest = rs[rs.length - 1];
+
+      const badge = document.getElementById('idxRsBadge');
+      badge.innerHTML = `最新&nbsp;${latest.toFixed(2)}`;
+      badge.style.color = latest >= 100 ? '#b91c1c' : '#15803d';
+      badge.style.background = latest >= 100 ? '#fef2f2' : '#f0fdf4';
+      badge.style.borderColor = latest >= 100 ? '#fecaca' : '#bbf7d0';
+
+      idxRsChartInstance = new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: rows.map(r => r.date.slice(5)),
+          datasets: [{
+            label: '相對強度 RS',
+            data: rs,
+            borderColor: '#7c3aed',
+            backgroundColor: 'rgba(124, 58, 237, 0.08)',
+            fill: true, borderWidth: 2, tension: 0.15,
+            pointRadius: 0, pointHoverRadius: 5, pointHitRadius: 12
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },  // 單一序列，標題已指名
+            tooltip: {
+              callbacks: {
+                title: (items) => items.length ? rows[items[0].dataIndex].date : '',
+                label: (ctx) => `相對強度 ${ctx.parsed.y.toFixed(2)}` +
+                  (ctx.parsed.y >= 100 ? '（強於大盤）' : '（弱於大盤）')
+              }
+            }
+          },
+          scales: {
+            y: {
+              title: { display: true, text: 'RS（起點 = 100）' },
+              grid: {
+                color: (ctx) => (ctx.tick && ctx.tick.value === 100) ? '#94a3b8' : '#f1f5f9'
+              },
+              ticks: { maxTicksLimit: 5 }
+            },
+            x: { grid: { display: false },
+                 // autoSkipPadding 確保窄螢幕下日期標籤不會黏在一起
+                 ticks: { autoSkip: true, autoSkipPadding: 14, maxTicksLimit: 14, maxRotation: 0 } }
+          }
+        }
+      });
+    }
+
+    function renderIdxTable() {
+      if (!indexCompareData) return;
+      const rows = idxSlice();
+      const base = rows[0];
+      const rsBase = base.sector / base.market;
+
+      const head = `
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th><span class="chips-legend-swatch" style="background:${IDX_SECTOR_COLOR};"></span>類股指數</th>
+            <th>類股指數化</th>
+            <th><span class="chips-legend-swatch" style="background:${IDX_MARKET_COLOR};"></span>大盤指數</th>
+            <th>大盤指數化</th>
+            <th>相對強度 RS</th>
+          </tr>
+        </thead>`;
+
+      const body = rows.slice().reverse().map(r => {
+        const si = r.sector / base.sector * 100;
+        const mi = r.market / base.market * 100;
+        const rs = (r.sector / r.market) / rsBase * 100;
+        return `
+          <tr>
+            <td>${r.date}</td>
+            <td>${r.sector.toFixed(2)}</td>
+            <td style="color:${pctColor(si - 100)}; font-weight:700;">${si.toFixed(2)}</td>
+            <td>${r.market.toLocaleString()}</td>
+            <td style="color:${pctColor(mi - 100)}; font-weight:700;">${mi.toFixed(2)}</td>
+            <td style="color:${pctColor(rs - 100)}; font-weight:800;">${rs.toFixed(2)}</td>
+          </tr>`;
+      }).join('');
+
+      document.getElementById('idxTableWrap').innerHTML =
+        `<table class="chips-table">${head}<tbody>${body}</tbody></table>`;
+    }
+
+    // ========================================================
     // 籌碼面引擎：三大法人買賣超 + 外資持股比例
     // 設計準則：
     //  1. 絕不使用雙數值軸 —— 買賣超（張）與持股比例（%）各自獨立成圖。
@@ -3443,7 +3805,7 @@
 
     // 初始載入
     document.addEventListener('DOMContentLoaded', async () => {
-      await Promise.all([loadSectorData(), loadInstitutionalData()]);
+      await Promise.all([loadSectorData(), loadInstitutionalData(), loadIndexCompare()]);
       // 背景自動同步全族群最新實時行情
       syncAllLivePrices(false);
       // 每 60 秒定時自動刷新

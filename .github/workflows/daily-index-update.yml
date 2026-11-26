@@ -1,0 +1,58 @@
+name: 每日類股指數更新
+
+# 類股指數只在收盤後變動，不需要像盤中報價那樣每 5 分鐘跑。
+# 每個交易日收盤後跑一次，把當天的「電腦及週邊設備類指數」與
+# 「發行量加權股價指數」補進 data/index_compare.json。
+#
+# 與盤中報價快照不同，這份資料直接提交回 main：
+#   - 一天只有一個提交，不會污染歷史
+#   - 腳本是增量更新，需要 main 上既有的資料當基準才不會每次重抓整年
+#   - 前端直接從 GitHub Pages 讀同源的 data/index_compare.json
+
+on:
+  schedule:
+    # UTC 06:10，對應台北時間 14:10（台股 13:30 收盤後）
+    - cron: '10 6 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-index-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 取出程式碼
+        uses: actions/checkout@v4
+
+      - name: 設定 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 更新類股指數對照資料
+        run: python scripts/build_index_compare.py
+
+      - name: 提交更新
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet -- data/index_compare.json; then
+            echo "指數資料無變動（可能非交易日或尚未收盤），略過提交"
+            exit 0
+          fi
+
+          COUNT=$(python -c "import json;print(json.load(open('data/index_compare.json',encoding='utf-8'))['count'])")
+          echo "目前累積 $COUNT 個交易日"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/index_compare.json
+          git commit -m "chore: 更新類股指數對照資料 ($(date -u +'%Y-%m-%d'))"
+          git push origin HEAD:main
