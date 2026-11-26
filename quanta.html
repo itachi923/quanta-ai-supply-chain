@@ -229,6 +229,9 @@
       font-weight: 900;
       color: var(--stock-red);
       transition: color 0.3s;
+      white-space: nowrap !important;
+      flex-shrink: 0;
+      word-break: keep-all;
     }
     .ticker-change {
       font-family: var(--font-mono);
@@ -237,6 +240,9 @@
       padding: 4px 10px;
       border-radius: 6px;
       transition: all 0.3s;
+      white-space: nowrap !important;
+      flex-shrink: 0;
+      word-break: keep-all;
     }
     .ticker-change.up {
       color: var(--stock-red);
@@ -261,12 +267,15 @@
       font-size: 0.76rem;
       font-weight: 700;
       color: var(--text-muted);
+      white-space: nowrap;
     }
     .stat-pill .val {
       font-family: var(--font-mono);
       font-size: 1.05rem;
       font-weight: 800;
       color: var(--blue-navy);
+      white-space: nowrap !important;
+      word-break: keep-all;
     }
 
     /* 區塊卡片共通樣式 */
@@ -439,6 +448,8 @@
       font-size: 1.55rem;
       font-weight: 900;
       color: var(--blue-navy);
+      white-space: nowrap !important;
+      word-break: keep-all;
     }
     .metric-card .sub {
       font-size: 0.78rem;
@@ -1303,16 +1314,22 @@
       const prevClose = prev ? prev.close : (closePrice - spread);
       const pct = prevClose ? ((spread / prevClose) * 100).toFixed(2) : '0.00';
 
-      priceEl.textContent = `NT$ ${closePrice.toFixed(1)}`;
+      priceEl.innerHTML = `NT$&nbsp;${closePrice.toFixed(1)}`;
       
       if (spread >= 0) {
         changeEl.className = 'ticker-change up';
-        changeEl.textContent = `▲ +${spread.toFixed(1)} (+${pct}%)`;
+        changeEl.innerHTML = `▲&nbsp;+${spread.toFixed(1)}&nbsp;(+${pct}%)`;
         priceEl.style.color = 'var(--stock-red)';
       } else {
         changeEl.className = 'ticker-change down';
-        changeEl.textContent = `▼ ${spread.toFixed(1)} (${pct}%)`;
+        changeEl.innerHTML = `▼&nbsp;${spread.toFixed(1)}&nbsp;(${pct}%)`;
         priceEl.style.color = 'var(--stock-green)';
+      }
+
+      // 同步即時更新拓撲圖上的廣達核心節點
+      const quantaNodeSub = document.querySelector('#node-quanta text:nth-of-type(2)');
+      if (quantaNodeSub) {
+        quantaNodeSub.textContent = `中游代工霸主 · NT$ ${closePrice.toFixed(1)}`;
       }
 
       // 近四季 EPS 約 25.76 元
@@ -1934,6 +1951,8 @@
       fetchLiveStockData(false);
       initFinancialCharts();
       initTree();
+      // 啟用 60 秒背景即時自動行情輪詢
+      setInterval(() => fetchLiveStockData(false), 60000);
     });
   </script>
 </body>
