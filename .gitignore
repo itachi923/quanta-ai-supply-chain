@@ -11,3 +11,7 @@ __pycache__/
 
 # 本機排程產生的執行紀錄
 logs/
+
+# 回測專用的長期歷史資料（約 2.4 MB，前端不讀取）
+# 可用 python scripts\fetch_long_history.py 在兩分鐘內重新產生，因此不進版控
+data/history_long.json
