@@ -25,18 +25,6 @@
     },
     "history": [
       {
-        "date": "2026-08-28",
-        "stock_id": "2382",
-        "Trading_Volume": 10708500,
-        "Trading_money": 3563969361,
-        "open": 336.5,
-        "max": 338.5,
-        "min": 330.0,
-        "close": 332.5,
-        "spread": -1.0,
-        "Trading_turnover": 12683
-      },
-      {
         "date": "2026-08-31",
         "stock_id": "2382",
         "Trading_Volume": 18306869,
@@ -735,21 +723,33 @@
       {
         "date": "2026-11-26",
         "stock_id": "2382",
-        "Trading_Volume": 17180471,
-        "Trading_money": 4776281796,
+        "Trading_Volume": 17868471,
+        "Trading_money": 4961009796,
         "open": 268.5,
         "max": 284.0,
         "min": 266.0,
         "close": 281.0,
         "spread": 20.0,
-        "Trading_turnover": 16307
+        "Trading_turnover": 16308
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "2382",
+        "Trading_Volume": 9190000,
+        "Trading_money": 2568770500,
+        "open": 278.0,
+        "max": 281.5,
+        "min": 276.0,
+        "close": 278.0,
+        "spread": -3.0,
+        "Trading_turnover": 5639
       }
     ],
-    "price": 281.0,
-    "spread": 20.0,
-    "pct": 7.66,
-    "volume": 17180,
-    "date": "2026-11-26",
+    "price": 278.0,
+    "spread": -3.0,
+    "pct": -1.07,
+    "volume": 9190,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "廣達 (2382) AI 伺服器與雲端產業鏈",
       "upstreamBranches": [
@@ -915,18 +915,6 @@
       "dividendYield": "3.2%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "6669",
-        "Trading_Volume": 5946434,
-        "Trading_money": 14128330095,
-        "open": 2335.06,
-        "max": 2428.93,
-        "min": 2291.47,
-        "close": 2413.84,
-        "spread": 129.07,
-        "Trading_turnover": 18696
-      },
       {
         "date": "2026-08-31",
         "stock_id": "6669",
@@ -1634,13 +1622,25 @@
         "close": 1570.0,
         "spread": 140.0,
         "Trading_turnover": 11202
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "6669",
+        "Trading_Volume": 7029000,
+        "Trading_money": 11617240000,
+        "open": 1545.0,
+        "max": 1720.0,
+        "min": 1535.0,
+        "close": 1670.0,
+        "spread": 100.0,
+        "Trading_turnover": 5433
       }
     ],
-    "price": 1570.0,
-    "spread": 140.0,
-    "pct": 9.79,
-    "volume": 3856,
-    "date": "2026-11-26",
+    "price": 1670.0,
+    "spread": 100.0,
+    "pct": 6.37,
+    "volume": 7029,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "緯穎 (6669) 純白牌雲端伺服器直供產業鏈",
       "upstreamBranches": [
@@ -1782,18 +1782,6 @@
       "dividendYield": "3.5%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "3231",
-        "Trading_Volume": 26484639,
-        "Trading_money": 4750106370,
-        "open": 182.5,
-        "max": 183.5,
-        "min": 178.0,
-        "close": 178.0,
-        "spread": -1.5,
-        "Trading_turnover": 22055
-      },
       {
         "date": "2026-08-31",
         "stock_id": "3231",
@@ -2501,13 +2489,25 @@
         "close": 167.0,
         "spread": 15.0,
         "Trading_turnover": 19103
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "3231",
+        "Trading_Volume": 17459000,
+        "Trading_money": 2849676500,
+        "open": 163.0,
+        "max": 165.0,
+        "min": 162.0,
+        "close": 162.0,
+        "spread": -5.0,
+        "Trading_turnover": 8897
       }
     ],
-    "price": 167.0,
-    "spread": 15.0,
-    "pct": 9.87,
-    "volume": 35672,
-    "date": "2026-11-26",
+    "price": 162.0,
+    "spread": -5.0,
+    "pct": -2.99,
+    "volume": 17459,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "緯創 (3231) GPU 運算基板與代工產業鏈",
       "upstreamBranches": [
@@ -2633,18 +2633,6 @@
       "dividendYield": "4.0%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "2356",
-        "Trading_Volume": 12171652,
-        "Trading_money": 793327671,
-        "open": 65.6,
-        "max": 66.3,
-        "min": 64.8,
-        "close": 64.9,
-        "spread": -0.7,
-        "Trading_turnover": 9258
-      },
       {
         "date": "2026-08-31",
         "stock_id": "2356",
@@ -3352,13 +3340,25 @@
         "close": 41.9,
         "spread": 2.6,
         "Trading_turnover": 9754
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "2356",
+        "Trading_Volume": 23989000,
+        "Trading_money": 997485300,
+        "open": 41.45,
+        "max": 42.0,
+        "min": 40.8,
+        "close": 41.9,
+        "spread": 0.0,
+        "Trading_turnover": 8932
       }
     ],
     "price": 41.9,
-    "spread": 2.6,
-    "pct": 6.62,
-    "volume": 18542,
-    "date": "2026-11-26",
+    "spread": 0.0,
+    "pct": 0.0,
+    "volume": 23989,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "英業達 (2356) 伺服器主機板與筆電產業鏈",
       "upstreamBranches": [
@@ -3477,18 +3477,6 @@
       "dividendYield": "3.3%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "2376",
-        "Trading_Volume": 3524293,
-        "Trading_money": 1231930307,
-        "open": 348.5,
-        "max": 353.0,
-        "min": 347.0,
-        "close": 349.0,
-        "spread": 4.0,
-        "Trading_turnover": 4117
-      },
       {
         "date": "2026-08-31",
         "stock_id": "2376",
@@ -4188,21 +4176,33 @@
       {
         "date": "2026-11-26",
         "stock_id": "2376",
-        "Trading_Volume": 6426931,
-        "Trading_money": 1728752588,
+        "Trading_Volume": 6818931,
+        "Trading_money": 1835964588,
         "open": 263.0,
         "max": 274.0,
         "min": 261.0,
         "close": 273.5,
         "spread": 12.5,
-        "Trading_turnover": 6204
+        "Trading_turnover": 6205
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "2376",
+        "Trading_Volume": 5536000,
+        "Trading_money": 1494890500,
+        "open": 270.0,
+        "max": 273.5,
+        "min": 266.0,
+        "close": 273.5,
+        "spread": 0.0,
+        "Trading_turnover": 2904
       }
     ],
     "price": 273.5,
-    "spread": 12.5,
-    "pct": 4.79,
-    "volume": 6427,
-    "date": "2026-11-26",
+    "spread": 0.0,
+    "pct": 0.0,
+    "volume": 5536,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "技嘉 (2376) AI 伺服器與主機板產業鏈",
       "upstreamBranches": [
@@ -4321,18 +4321,6 @@
       "dividendYield": "3.6%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "2357",
-        "Trading_Volume": 1844300,
-        "Trading_money": 1780589776,
-        "open": 975.0,
-        "max": 981.0,
-        "min": 955.0,
-        "close": 965.0,
-        "spread": -3.0,
-        "Trading_turnover": 5975
-      },
       {
         "date": "2026-08-31",
         "stock_id": "2357",
@@ -5040,13 +5028,25 @@
         "close": 799.0,
         "spread": 30.0,
         "Trading_turnover": 4600
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "2357",
+        "Trading_Volume": 2959000,
+        "Trading_money": 2365306000,
+        "open": 789.0,
+        "max": 807.0,
+        "min": 787.0,
+        "close": 799.0,
+        "spread": 0.0,
+        "Trading_turnover": 1635
       }
     ],
     "price": 799.0,
-    "spread": 30.0,
-    "pct": 3.9,
-    "volume": 3696,
-    "date": "2026-11-26",
+    "spread": 0.0,
+    "pct": 0.0,
+    "volume": 2959,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "華碩 (2357) 主機板、筆電與 AI 超級電腦產業鏈",
       "upstreamBranches": [
@@ -5179,18 +5179,6 @@
       "dividendYield": "4.1%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "2377",
-        "Trading_Volume": 5427942,
-        "Trading_money": 787192702,
-        "open": 146.0,
-        "max": 146.5,
-        "min": 144.0,
-        "close": 145.0,
-        "spread": 0.0,
-        "Trading_turnover": 4989
-      },
       {
         "date": "2026-08-31",
         "stock_id": "2377",
@@ -5898,13 +5886,25 @@
         "close": 128.5,
         "spread": 4.5,
         "Trading_turnover": 3082
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "2377",
+        "Trading_Volume": 2341000,
+        "Trading_money": 302415000,
+        "open": 128.5,
+        "max": 130.5,
+        "min": 127.0,
+        "close": 130.5,
+        "spread": 2.0,
+        "Trading_turnover": 1591
       }
     ],
-    "price": 128.5,
-    "spread": 4.5,
-    "pct": 3.63,
-    "volume": 3288,
-    "date": "2026-11-26",
+    "price": 130.5,
+    "spread": 2.0,
+    "pct": 1.56,
+    "volume": 2341,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "微星 (2377) 電競硬體與邊緣運算產業鏈",
       "upstreamBranches": [
@@ -6032,18 +6032,6 @@
       "dividendYield": "2.8%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "2059",
-        "Trading_Volume": 433751,
-        "Trading_money": 6187081035,
-        "open": 14500.0,
-        "max": 14595.0,
-        "min": 14005.0,
-        "close": 14300.0,
-        "spread": -40.0,
-        "Trading_turnover": 8029
-      },
       {
         "date": "2026-08-31",
         "stock_id": "2059",
@@ -6751,13 +6739,25 @@
         "close": 7155.0,
         "spread": 650.0,
         "Trading_turnover": 5461
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "2059",
+        "Trading_Volume": 949000,
+        "Trading_money": 6817760000,
+        "open": 7250.0,
+        "max": 7385.0,
+        "min": 6940.0,
+        "close": 7025.0,
+        "spread": -130.0,
+        "Trading_turnover": 889
       }
     ],
-    "price": 7155.0,
-    "spread": 650.0,
-    "pct": 9.99,
-    "volume": 559,
-    "date": "2026-11-26",
+    "price": 7025.0,
+    "spread": -130.0,
+    "pct": -1.82,
+    "volume": 949,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "川湖 (2059) 伺服器重型專利導軌產業鏈",
       "upstreamBranches": [
@@ -6885,18 +6885,6 @@
       "dividendYield": "2.5%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "3017",
-        "Trading_Volume": 4035280,
-        "Trading_money": 13676448040,
-        "open": 3360.0,
-        "max": 3450.0,
-        "min": 3320.0,
-        "close": 3360.0,
-        "spread": 20.0,
-        "Trading_turnover": 14384
-      },
       {
         "date": "2026-08-31",
         "stock_id": "3017",
@@ -7604,13 +7592,25 @@
         "close": 2795.0,
         "spread": 250.0,
         "Trading_turnover": 8066
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "3017",
+        "Trading_Volume": 4520000,
+        "Trading_money": 12875085000,
+        "open": 2850.0,
+        "max": 2910.0,
+        "min": 2770.0,
+        "close": 2805.0,
+        "spread": 10.0,
+        "Trading_turnover": 4173
       }
     ],
-    "price": 2795.0,
-    "spread": 250.0,
-    "pct": 9.82,
-    "volume": 2640,
-    "date": "2026-11-26",
+    "price": 2805.0,
+    "spread": 10.0,
+    "pct": 0.36,
+    "volume": 4520,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "奇鋐 (3017) 伺服器水冷散熱產業鏈",
       "upstreamBranches": [
@@ -8576,18 +8576,6 @@
     },
     "history": [
       {
-        "date": "2026-08-28",
-        "stock_id": "8210",
-        "Trading_Volume": 2248304,
-        "Trading_money": 2231192556,
-        "open": 967.0,
-        "max": 1010.0,
-        "min": 967.0,
-        "close": 990.0,
-        "spread": 30.0,
-        "Trading_turnover": 4756
-      },
-      {
         "date": "2026-08-31",
         "stock_id": "8210",
         "Trading_Volume": 1151105,
@@ -9294,13 +9282,25 @@
         "close": 482.5,
         "spread": 43.5,
         "Trading_turnover": 2058
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "8210",
+        "Trading_Volume": 907000,
+        "Trading_money": 434775500,
+        "open": 483.0,
+        "max": 496.0,
+        "min": 472.0,
+        "close": 474.0,
+        "spread": -8.5,
+        "Trading_turnover": 825
       }
     ],
-    "price": 482.5,
-    "spread": 43.5,
-    "pct": 9.91,
-    "volume": 820,
-    "date": "2026-11-26",
+    "price": 474.0,
+    "spread": -8.5,
+    "pct": -1.76,
+    "volume": 907,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "勤誠 (8210) 伺服器機殼與機構件產業鏈",
       "upstreamBranches": [
@@ -9412,18 +9412,6 @@
       "dividendYield": "3.2%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "2395",
-        "Trading_Volume": 1322160,
-        "Trading_money": 891998689,
-        "open": 680.0,
-        "max": 685.0,
-        "min": 667.0,
-        "close": 669.0,
-        "spread": -6.0,
-        "Trading_turnover": 3034
-      },
       {
         "date": "2026-08-31",
         "stock_id": "2395",
@@ -10131,13 +10119,25 @@
         "close": 589.0,
         "spread": 34.0,
         "Trading_turnover": 2920
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "2395",
+        "Trading_Volume": 1594000,
+        "Trading_money": 953729000,
+        "open": 588.0,
+        "max": 607.0,
+        "min": 581.0,
+        "close": 601.0,
+        "spread": 12.0,
+        "Trading_turnover": 1208
       }
     ],
-    "price": 589.0,
-    "spread": 34.0,
-    "pct": 6.13,
-    "volume": 2206,
-    "date": "2026-11-26",
+    "price": 601.0,
+    "spread": 12.0,
+    "pct": 2.04,
+    "volume": 1594,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "研華 (2395) 全球工業電腦與物聯網產業鏈",
       "upstreamBranches": [
@@ -10256,18 +10256,6 @@
       "dividendYield": "3.9%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "6414",
-        "Trading_Volume": 1101127,
-        "Trading_money": 432891941,
-        "open": 396.0,
-        "max": 401.0,
-        "min": 389.0,
-        "close": 390.0,
-        "spread": -3.5,
-        "Trading_turnover": 2483
-      },
       {
         "date": "2026-08-31",
         "stock_id": "6414",
@@ -10975,13 +10963,25 @@
         "close": 315.5,
         "spread": 13.0,
         "Trading_turnover": 1748
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "6414",
+        "Trading_Volume": 298000,
+        "Trading_money": 93500000,
+        "open": 312.0,
+        "max": 317.0,
+        "min": 311.5,
+        "close": 312.5,
+        "spread": -3.0,
+        "Trading_turnover": 253
       }
     ],
-    "price": 315.5,
-    "spread": 13.0,
-    "pct": 4.3,
-    "volume": 408,
-    "date": "2026-11-26",
+    "price": 312.5,
+    "spread": -3.0,
+    "pct": -0.95,
+    "volume": 298,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "樺漢 (6414) 工控系統與邊緣 AI 產業鏈",
       "upstreamBranches": [
@@ -11093,18 +11093,6 @@
       "dividendYield": "3.7%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "3706",
-        "Trading_Volume": 7585849,
-        "Trading_money": 634520316,
-        "open": 80.89,
-        "max": 81.5,
-        "min": 80.1,
-        "close": 80.98,
-        "spread": 0.62,
-        "Trading_turnover": 7054
-      },
       {
         "date": "2026-08-31",
         "stock_id": "3706",
@@ -11812,13 +11800,25 @@
         "close": 60.1,
         "spread": 2.1,
         "Trading_turnover": 9117
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "3706",
+        "Trading_Volume": 5082000,
+        "Trading_money": 302130700,
+        "open": 60.5,
+        "max": 60.6,
+        "min": 58.8,
+        "close": 59.0,
+        "spread": 0.0,
+        "Trading_turnover": 3123
       }
     ],
-    "price": 60.1,
-    "spread": 2.1,
-    "pct": 3.62,
-    "volume": 12944,
-    "date": "2026-11-26",
+    "price": 59.0,
+    "spread": 0.0,
+    "pct": 0.0,
+    "volume": 5082,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "神達 (3706) 伺服器與車載電子產業鏈",
       "upstreamBranches": [
@@ -11939,18 +11939,6 @@
       "dividendYield": "4.5%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "2352",
-        "Trading_Volume": 2871377,
-        "Trading_money": 81079998,
-        "open": 28.3,
-        "max": 28.4,
-        "min": 28.1,
-        "close": 28.2,
-        "spread": 0.2,
-        "Trading_turnover": 1687
-      },
       {
         "date": "2026-08-31",
         "stock_id": "2352",
@@ -12658,13 +12646,25 @@
         "close": 24.6,
         "spread": 0.4,
         "Trading_turnover": 2758
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "2352",
+        "Trading_Volume": 3145000,
+        "Trading_money": 77637000,
+        "open": 24.6,
+        "max": 24.95,
+        "min": 24.45,
+        "close": 24.6,
+        "spread": 0.0,
+        "Trading_turnover": 1708
       }
     ],
     "price": 24.6,
-    "spread": 0.4,
-    "pct": 1.65,
-    "volume": 4790,
-    "date": "2026-11-26",
+    "spread": 0.0,
+    "pct": 0.0,
+    "volume": 3145,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "佳世達 (2352) 液晶顯示與智慧醫療產業鏈",
       "upstreamBranches": [
@@ -12776,18 +12776,6 @@
       "dividendYield": "5.2%"
     },
     "history": [
-      {
-        "date": "2026-08-28",
-        "stock_id": "4915",
-        "Trading_Volume": 1345755,
-        "Trading_money": 80370249,
-        "open": 60.0,
-        "max": 60.1,
-        "min": 59.5,
-        "close": 59.6,
-        "spread": -0.2,
-        "Trading_turnover": 1275
-      },
       {
         "date": "2026-08-31",
         "stock_id": "4915",
@@ -13495,13 +13483,25 @@
         "close": 43.5,
         "spread": 0.3,
         "Trading_turnover": 1982
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "4915",
+        "Trading_Volume": 1454000,
+        "Trading_money": 63051300,
+        "open": 43.2,
+        "max": 43.75,
+        "min": 43.05,
+        "close": 43.65,
+        "spread": 0.15,
+        "Trading_turnover": 1083
       }
     ],
-    "price": 43.5,
-    "spread": 0.3,
-    "pct": 0.69,
-    "volume": 2410,
-    "date": "2026-11-26",
+    "price": 43.65,
+    "spread": 0.15,
+    "pct": 0.34,
+    "volume": 1454,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "致伸 (4915) 電腦週邊、車載與聲學感測產業鏈",
       "upstreamBranches": [

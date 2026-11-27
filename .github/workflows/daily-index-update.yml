@@ -39,6 +39,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      # 順序相依：build_index_compare.py 以 quanta_latest.json 的日線日期當交易日曆，
+      # 若不先更新它，指數腳本會判定「沒有新交易日要抓」而永遠停在舊日期。
+      - name: 更新廣達日線（提供交易日曆）
+        run: python scripts/update_stock.py
+
       - name: 更新類股指數對照資料
         run: python scripts/build_index_compare.py
 
