@@ -280,6 +280,32 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
 **全站沒有任何盤中即時資料。** 盤中時段畫面顯示的是前一交易日收盤價，
 這是刻意的取捨（見章節 3），但必須標示清楚，絕不可寫成「即時」。
 
+### 3-6) 自動更新改用本機排程（GitHub Actions 排程不可用）
+
+- **問題**：本 repo 的 GitHub Actions **排程從未觸發過一次**。
+  `schedule` 事件總數為 0，兩個 workflow 的執行紀錄全部來自手動 `workflow_dispatch`。
+- **已逐項排除**：workflow 檔案格式（純 LF、無 BOM、`on: schedule` 正確）、
+  workflow 註冊狀態（`state=active`）、repo 設定（公開、非 fork、未封存、預設分支 main、
+  Actions permissions 為 Allow all）、GitHub 服務狀態（Actions operational、無進行中事件）、
+  卡住的排隊任務（queued / in_progress / waiting 皆為 0）。
+  研判為 GitHub 端問題，可能與帳號較新（建立於 2026-09-30）有關，無法從外部驗證。
+- **解法**：改由 Windows 工作排程器執行 `scripts/daily_update.ps1`。
+  - 工作名稱：`QuantaSectorSite-DailyUpdate`，每日 17:15
+  - 勾選 **StartWhenAvailable**：關機期間錯過的執行會在下次開機後自動補跑，
+    所以電腦不需要整天開著（收盤價是固定的，晚幾小時抓結果一樣）
+  - 以 **Interactive** 身分執行：git 憑證管理員需要使用者工作階段才能推送
+  - GitHub Actions 的 `daily-data-update.yml` 保留為備援（手動觸發確定可用）
+
+> ⚠️ **兩個 Windows 特有的坑，都實際踩過**
+> 1. **PowerShell 5.1 需要 UTF-8 BOM**。沒有 BOM 時它以 ANSI(cp950) 讀取 .ps1，
+>    中文註解會錯亂到連字串結尾都被打斷，腳本直接語法錯誤、連日誌都產生不出來。
+>    存檔必須用 `utf-8-sig`。
+> 2. **子程序輸出編碼**。要在腳本開頭設 `[Console]::OutputEncoding = [Text.Encoding]::UTF8`，
+>    否則 Python 以 UTF-8 輸出的中文在日誌裡全是亂碼。
+>
+> 執行紀錄寫在 `logs/daily_update_YYYY-MM.log`（已 gitignore）。
+> 手動執行：`powershell -ExecutionPolicy Bypass -File scripts\daily_update.ps1`
+
 ### 4) 籌碼面資料管線與圖表設計準則
 
 - **資料來源**（FinMind，皆免 token、開放 CORS）：

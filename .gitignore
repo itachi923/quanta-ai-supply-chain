@@ -8,3 +8,6 @@ __pycache__/
 
 # 本機開發設定（Claude Code 預覽伺服器）
 .claude/
+
+# 本機排程產生的執行紀錄
+logs/
