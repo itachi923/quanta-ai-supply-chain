@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>電腦及週邊設備類股 · 新聞與即時情報中心</title>
-  <meta name="description" content="電腦及週邊設備類股 16 檔個股的即時盤面、三大法人買賣超動向與相關新聞情報總覽。">
+  <title>電腦及週邊設備類股 · 新聞與市場情報中心</title>
+  <meta name="description" content="電腦及週邊設備類股 16 檔個股的每日收盤行情、三大法人買賣超動向與相關新聞情報總覽。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -423,8 +423,8 @@
       <a href="index.html" class="brand">
         <div class="brand-icon">📰</div>
         <div>
-          <span>電腦及週邊設備類股 · 新聞與即時情報中心</span>
-          <span class="brand-badge">LIVE INTEL</span>
+          <span>電腦及週邊設備類股 · 新聞與市場情報中心</span>
+          <span class="brand-badge">DAILY INTEL</span>
         </div>
       </a>
     </div>
@@ -433,7 +433,7 @@
     <div class="page-tabs-bar">
       <nav class="page-tabs">
         <a href="index.html" class="page-tab">📊 類股中樞</a>
-        <a href="news.html" class="page-tab active">📰 新聞與即時情報</a>
+        <a href="news.html" class="page-tab active">📰 新聞與市場情報</a>
         <a href="quanta.html" class="page-tab">🤖 廣達 2382 專頁</a>
       </nav>
     </div>
@@ -455,8 +455,8 @@
     <section class="panel">
       <div class="panel-head">
         <div>
-          <h2 class="panel-title">⚡ 類股盤面速覽 · 16 檔即時報價</h2>
-          <p class="panel-desc">依當日漲跌幅由高至低排序，紅漲綠跌。點擊任一檔可回到中樞頁展開該股的產業鏈與籌碼分析。</p>
+          <h2 class="panel-title">⚡ 類股盤面速覽 · 16 檔收盤行情</h2>
+          <p class="panel-desc">依最新交易日漲跌幅由高至低排序，紅漲綠跌。點擊任一檔可回到中樞頁展開該股的產業鏈與籌碼分析。</p>
         </div>
         <span class="data-stamp" id="quoteStamp"></span>
       </div>
@@ -538,14 +538,14 @@
   <script>
     // ========================================================
     // 情報頁資料來源
-    //  - 報價：data-live 分支的盤中快照 -> 專案內快照（與中樞頁同一套三層後備）
+    //  - 報價：收盤後抓取的 data/realtime.json（與中樞頁同一份）
     //  - 法人：institutional.json（證交所收盤後公布，非盤中即時）
     //  - 新聞：news.json（FinMind TaiwanStockNews，逐檔逐日抓取後去重合併）
     // ========================================================
-    const REALTIME_SOURCES = [
-      'https://raw.githubusercontent.com/itachi923/quanta-ai-supply-chain/data-live/realtime.json',
-      'data/realtime.json'
-    ];
+    // 報價為「每日收盤後更新一次」，直接讀同源的靜態檔即可。
+    // （先前曾用 data-live 分支做盤中 5 分鐘更新，但 GitHub 排程不穩定、
+    //   且本站其餘資料本來就都是每日的，維持盤中更新反而造成不一致與大量提交。）
+    const QUOTE_SOURCE = 'data/realtime.json';
 
     const STOCK_ORDER = ['2382','6669','3231','2356','2376','2357','2377','2059',
                          '3017','3324','8210','2395','6414','3706','2352','4915'];
@@ -580,28 +580,16 @@
     }
 
     // ---------------- 載入 ----------------
-    async function loadRealtimeQuotes() {
-      // 兩個來源都抓，取「報價時間較新」的那份。
-      // 不能單純讓 data-live 優先：排程若沒跑或推送失敗，data-live 會停在舊日期，
-      // 反而蓋掉專案內較新的快照（實測發生過，畫面顯示前一天的報價）。
-      const results = await Promise.all(REALTIME_SOURCES.map(async (base) => {
-        try {
-          const resp = await fetch(base + '?t=' + Date.now(), { cache: 'no-store' });
-          if (!resp.ok) return null;
-          const json = await resp.json();
-          if (json && json.quotes && Object.keys(json.quotes).length > 0) return json;
-        } catch (err) {
-          // 忽略這個來源，改用另一個
-        }
-        return null;
-      }));
-
-      const valid = results.filter(Boolean);
-      if (!valid.length) return null;
-
-      const stamp = (j) => `${j.marketDate || ''} ${j.marketTime || ''}`;
-      valid.sort((a, b) => stamp(b).localeCompare(stamp(a)));
-      return valid[0];
+    async function loadCloseQuotes() {
+      try {
+        const resp = await fetch(QUOTE_SOURCE + '?t=' + Date.now(), { cache: 'no-store' });
+        if (!resp.ok) return null;
+        const json = await resp.json();
+        if (json && json.quotes && Object.keys(json.quotes).length > 0) return json;
+      } catch (err) {
+        // 取不到就讓畫面維持原狀
+      }
+      return null;
     }
 
     async function loadJson(path) {
@@ -640,7 +628,7 @@
       }).join('');
 
       document.getElementById('quoteStamp').textContent =
-        `報價時間 ${realtimeSnapshot.marketDate || ''} ${realtimeSnapshot.marketTime || ''}（證交所 MIS）`;
+        `收盤價 ${realtimeSnapshot.marketDate || ''} ${realtimeSnapshot.marketTime || ''}（證交所 MIS）`;
     }
 
     // ---------------- 區塊 2：三大法人 ----------------
@@ -789,7 +777,7 @@
     // ---------------- 初始化 ----------------
     async function initIntel() {
       const [snap, inst, news] = await Promise.all([
-        loadRealtimeQuotes(),
+        loadCloseQuotes(),
         loadJson('data/institutional.json'),
         loadJson('data/news.json')
       ]);
@@ -804,7 +792,7 @@
       renderNewsList();
 
       const parts = [];
-      if (snap) parts.push(`報價 ${snap.marketTime || ''}`);
+      if (snap) parts.push(`收盤 ${snap.marketDate || ''}`);
       if (inst) parts.push(`法人 ${inst.updated_at ? inst.updated_at.slice(0, 10) : ''}`);
       if (news) parts.push(`新聞 ${news.count} 則`);
       document.getElementById('intel-status').textContent =
@@ -815,11 +803,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       initIntel();
-      // 盤中每 60 秒刷新報價區塊（法人與新聞由排程每日更新，不需高頻輪詢）
-      setInterval(async () => {
-        const snap = await loadRealtimeQuotes();
-        if (snap) { realtimeSnapshot = snap; renderQuotes(); }
-      }, 60000);
     });
   </script>
 </body>

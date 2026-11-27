@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>廣達 (2382) 即時股價與每日自動更新線圖 · 最新財報基本面與 AI 伺服器產業鏈全景圖</title>
-  <meta name="description" content="廣達電腦 (2382) 深度即時投資儀表板：即時每日自動同步股價與量價K線圖、2026 最新季度財報與獲利三率、以及互動式雙向 AI 伺服器樹狀支鏈產業鏈拓撲圖。">
+  <title>廣達 (2382) 股價走勢與每日更新線圖 · 最新財報基本面與 AI 伺服器產業鏈全景圖</title>
+  <meta name="description" content="廣達電腦 (2382) 深度投資儀表板：每日收盤後自動更新股價與量價K線圖、2026 最新季度財報與獲利三率、以及互動式雙向 AI 伺服器樹狀支鏈產業鏈拓撲圖。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -984,13 +984,13 @@
         <div class="brand-icon">🤖</div>
         <div>
           <span>廣達 (2382) 投資基本面與產業鏈全景</span>
-          <span class="brand-badge">LIVE DAILY SYNC</span>
+          <span class="brand-badge">DAILY CLOSE SYNC</span>
         </div>
       </a>
       <ul class="nav-links">
         <li><a href="index.html" style="background: #0284c7; color: #ffffff; border-radius: 8px; padding: 6px 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">⬅️ 電腦週邊類股全景中樞</a></li>
         <li><a href="#company-profile">公司簡介與商品</a></li>
-        <li><a href="#stock-chart-section">即時股價與線圖</a></li>
+        <li><a href="#stock-chart-section">股價與量價線圖</a></li>
         <li><a href="#financial-metrics">財務與獲利三率</a></li>
         <li><a href="#tree-area">AI 產業鏈樹狀圖</a></li>
         <li><a href="#bom-area">機櫃 BOM 成本</a></li>
@@ -1002,7 +1002,7 @@
     <div class="page-tabs-bar">
       <nav class="page-tabs">
         <a href="index.html" class="page-tab">📊 類股中樞</a>
-        <a href="news.html" class="page-tab">📰 新聞與即時情報</a>
+        <a href="news.html" class="page-tab">📰 新聞與市場情報</a>
         <a href="quanta.html" class="page-tab active">🤖 廣達 2382 專頁</a>
       </nav>
     </div>
@@ -1491,44 +1491,33 @@
     let stockPriceChart = null;
 
     // ========================================================
-    // 盤中即時報價引擎
+    // 每日收盤報價引擎
     // --------------------------------------------------------
     // FinMind 的 TaiwanStockPrice 只有「日線收盤」，盤中查當日會回空陣列，
     // 所以原本畫面上顯示的其實是前一交易日收盤價，而非即時報價。
-    // 證交所 MIS 才有真正的盤中報價，但它不送 CORS 標頭、瀏覽器無法直連，
-    // 因此改由 GitHub Actions 定時抓取並推到 data-live 分支，
-    // 前端再經 raw.githubusercontent.com 讀取（該網域有 CORS 允許標頭）。
+    // 證交所 MIS 有當日收盤價，但它不送 CORS 標頭、瀏覽器無法直連，
+    // 因此由排程在收盤後抓好寫成 data/realtime.json，前端讀同源靜態檔。
     // ========================================================
-    const REALTIME_SOURCES = [
-      'https://raw.githubusercontent.com/itachi923/quanta-ai-supply-chain/data-live/realtime.json',
-      'data/realtime.json'
-    ];
+    // 報價為「每日收盤後更新一次」，直接讀同源的靜態檔即可。
+    // （先前曾用 data-live 分支做盤中 5 分鐘更新，但 GitHub 排程不穩定、
+    //   且本站其餘資料本來就都是每日的，維持盤中更新反而造成不一致與大量提交。）
+    const QUOTE_SOURCE = 'data/realtime.json';
 
     let realtimeSnapshot = null;
 
-    async function loadRealtimeQuotes() {
-      // 兩個來源都抓，取「報價時間較新」的那份。
-      // 不能單純讓 data-live 優先：排程若沒跑或推送失敗，data-live 會停在舊日期，
-      // 反而蓋掉專案內較新的快照（實測發生過，畫面顯示前一天的報價）。
-      const results = await Promise.all(REALTIME_SOURCES.map(async (base) => {
-        try {
-          const resp = await fetch(base + '?t=' + Date.now(), { cache: 'no-store' });
-          if (!resp.ok) return null;
-          const json = await resp.json();
-          if (json && json.quotes && Object.keys(json.quotes).length > 0) return json;
-        } catch (err) {
-          // 忽略這個來源，改用另一個
+    async function loadCloseQuotes() {
+      try {
+        const resp = await fetch(QUOTE_SOURCE + '?t=' + Date.now(), { cache: 'no-store' });
+        if (!resp.ok) return null;
+        const json = await resp.json();
+        if (json && json.quotes && Object.keys(json.quotes).length > 0) {
+          realtimeSnapshot = json;
+          return json;
         }
-        return null;
-      }));
-
-      const valid = results.filter(Boolean);
-      if (!valid.length) return null;
-
-      const stamp = (j) => `${j.marketDate || ''} ${j.marketTime || ''}`;
-      valid.sort((a, b) => stamp(b).localeCompare(stamp(a)));
-      realtimeSnapshot = valid[0];
-      return valid[0];
+      } catch (err) {
+        // 取不到就沿用個股資料檔裡的日線收盤價
+      }
+      return null;
     }
 
     // 報價時間標示：誠實說明這筆報價是什麼時候的，而不是一律寫「即時」
@@ -1536,7 +1525,7 @@
       if (!snap) return '';
       const d = snap.marketDate || '';
       const t = snap.marketTime || '';
-      return `報價時間 ${d} ${t}（證交所 MIS）`;
+      return `收盤價 ${d} ${t}（證交所 MIS）`;
     }
 
     // ========================================================
@@ -1623,12 +1612,12 @@
     // 載入即時報價並套用（失敗則保留日線收盤的顯示）
     async function syncRealtimeTicker() {
       const statusText = document.getElementById('sync-status-text');
-      const snap = await loadRealtimeQuotes();
+      const snap = await loadCloseQuotes();
       const ok = applyRealtimeTicker(snap);
       if (statusText) {
         statusText.textContent = ok
-          ? `盤中報價連線正常 · ${realtimeStampText(snap)}`
-          : '即時報價暫時無法取得 · 目前顯示前一交易日收盤價';
+          ? `${realtimeStampText(snap)}`
+          : '收盤報價暫時無法取得 · 目前顯示日線快取';
       }
       return ok;
     }
@@ -2973,10 +2962,6 @@
       initFinancialCharts();
       initTree();
       initChips();
-      // 盤中每 60 秒重新讀取一次報價快照
-      setInterval(syncRealtimeTicker, 60000);
-      // 啟用 60 秒背景即時自動行情輪詢
-      setInterval(() => fetchLiveStockData(false), 60000);
     });
   </script>
 </body>

@@ -1,14 +1,21 @@
 name: 每日情報資料更新
 
-# 這些資料都只在收盤後變動，不需要像盤中報價那樣每 5 分鐘跑：
+# 本站所有資料一律「每日收盤後更新一次」：
+#   - 個股收盤報價（realtime.json，證交所 MIS 13:30 收盤即有）
+#   - 廣達日線（quanta_latest.json，同時提供交易日曆）
 #   - 類股指數對照（index_compare.json）
 #   - 三大法人買賣超（institutional.json，證交所收盤後才公布）
 #   - 類股新聞（news.json，滾動保留最近 10 天）
 #
-# 與盤中報價快照不同，這些資料直接提交回 main：
+# 曾經有一支每 5 分鐘跑的盤中報價排程，已移除，理由：
+#   1. 高頻 cron 最容易被 GitHub 降級或直接丟棄（實測該 repo 排程從未觸發過）
+#   2. 本站其餘資料本來就都是每日的，只有報價宣稱盤中會造成不一致的預期
+#   3. 一天 80+ 次強制推送，為了 5 分鐘延遲的報價並不划算
+#
+# 全部資料直接提交回 main：
 #   - 一天只有一個提交，不會污染歷史
-#   - 三支腳本都是增量更新，需要 main 上既有的資料當基準才不會每次重抓
-#   - 前端直接從 GitHub Pages 讀同源的 data/*.json
+#   - 腳本都是增量更新，需要 main 上既有的資料當基準才不會每次重抓
+#   - 前端直接從 GitHub Pages 讀同源的 data/*.json，不需要 CORS 繞道
 
 on:
   schedule:
@@ -22,7 +29,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: daily-index-update
+  group: daily-data-update
   cancel-in-progress: false
 
 jobs:
@@ -39,10 +46,19 @@ jobs:
         with:
           python-version: '3.12'
 
+      # 收盤報價取自證交所 MIS，13:30 一收盤就有；
+      # FinMind 日線有延遲（實測收盤後一小時仍有半數個股沒當日資料），不適合當報價來源。
+      - name: 更新個股收盤報價
+        run: python scripts/fetch_realtime_quotes.py
+
       # 順序相依：build_index_compare.py 以 quanta_latest.json 的日線日期當交易日曆，
       # 若不先更新它，指數腳本會判定「沒有新交易日要抓」而永遠停在舊日期。
       - name: 更新廣達日線（提供交易日曆）
         run: python scripts/update_stock.py
+
+      - name: 更新 16 檔類股資料
+        continue-on-error: true
+        run: python scripts/build_sector_data.py
 
       - name: 更新類股指數對照資料
         run: python scripts/build_index_compare.py
@@ -60,15 +76,16 @@ jobs:
         run: |
           set -euo pipefail
 
-          FILES="data/index_compare.json data/institutional.json data/news.json"
+          FILES="data/realtime.json data/quanta_latest.json data/sector_stocks.json data/index_compare.json data/institutional.json data/news.json"
 
           if git diff --quiet -- $FILES; then
             echo "資料無變動（可能非交易日或尚未收盤），略過提交"
             exit 0
           fi
 
+          python -c "import json;d=json.load(open('data/realtime.json',encoding='utf-8'));print('  報價',d['marketDate'],d['marketTime'],d['count'],'檔')" || true
           python -c "import json;print('  指數',json.load(open('data/index_compare.json',encoding='utf-8'))['count'],'個交易日')" || true
-          python -c "import json;print('  新聞',json.load(open('data/news.json',encoding='utf-8'))['count'],'則')" || true
+          python -c "import json;d=json.load(open('data/news.json',encoding='utf-8'));print('  新聞',d['count'],'則 /',len(d['perStock']),'檔')" || true
 
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

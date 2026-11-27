@@ -1,7 +1,7 @@
 # 台灣電腦及週邊設備類股與廣達 AI 產業鏈中樞 —— 專案全景交接記憶檔 (Project Memory & Handover)
 
 > **產生時間**：2026-11-26  
-> **最後更新**：2026-11-26（新增籌碼面三大法人分析、K 線圖切換、盤中即時報價、還原股價含除權息、類股指數對照、新聞情報頁）  
+> **最後更新**：2026-11-27（新聞情報頁；報價改為每日收盤制，移除盤中排程與 data-live 分支）  
 > **專案狀態**：已完成全部核心功能開發並成功部署上線  
 > **適用對象**：接手的 AI 助手（如 Claude）、開發者或專案維護人員
 
@@ -26,9 +26,9 @@
 
 ```mermaid
 flowchart TD
-    A["電腦及週邊設備類股中樞 (index.html)"] -->|頁首切換列| N["新聞與即時情報中心 (news.html)"]
+    A["電腦及週邊設備類股中樞 (index.html)"] -->|頁首切換列| N["新聞與市場情報中心 (news.html)"]
     A -->|頁首切換列/彩蛋通道| B["廣達 2382 專屬全景旗艦專頁 (quanta.html)"]
-    N --> N1["盤面速覽 16 檔即時報價"]
+    N --> N1["盤面速覽 16 檔收盤行情"]
     N --> N2["三大法人買賣超動向 (可切當日/5日/20日)"]
     N --> N3["類股新聞牆 (可依個股篩選)"]
     A --> C["全族群 16 檔精選個股"]
@@ -78,26 +78,25 @@ flowchart TD
 ```
 c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
 ├── index.html                      # 主頁：電腦及週邊設備類股中樞
-├── news.html                       # 新聞與即時情報中心（盤面速覽 + 三大法人 + 新聞牆）
+├── news.html                       # 新聞與市場情報中心（盤面速覽 + 三大法人 + 新聞牆）
 ├── quanta.html                     # 旗艦專頁：廣達 (2382) 深度基本面與拓撲圖 (約 77 KB)
 ├── README.md                       # 專案說明文件
 ├── PROJECT_MEMORY.md               # 本交接記憶檔
 ├── .gitignore                      # 忽略 desktop.ini / __pycache__ / .claude
 ├── .github/
 │   └── workflows/
-│       ├── realtime-quotes.yml     # 每 5 分鐘抓 MIS 盤中報價，推到 data-live 分支
-│       └── daily-index-update.yml  # 平日 14:10 與 17:10 更新指數、三大法人與新聞
+│       └── daily-data-update.yml   # 平日 14:10 與 17:10 更新全部資料（唯一的排程）
 ├── data/
 │   ├── quanta_latest.json          # 廣達 700+ 筆歷史量價快取 (2024~最新)
 │   ├── sector_stocks.json          # 16 檔精選股票完整資料庫（基本面、產業鏈樹狀節點、60天日線）
 │   ├── institutional.json          # 16 檔近 80 個交易日三大法人買賣超 + 外資持股比例 (約 151 KB)
-│   ├── realtime.json               # 盤中報價快照（後備用；線上主要讀 data-live 分支）
+│   ├── realtime.json               # 16 檔每日收盤報價（證交所 MIS 13:30 收盤快照）
 │   ├── index_compare.json          # 類股指數與大盤指數每日收盤（約 12 KB / 217 個交易日）
 │   └── news.json                   # 類股新聞滾動封存（最近 10 天，已跨個股與跨媒體去重）
 └── scripts/
     ├── build_sector_data.py        # 建構/更新 16 檔類股資料庫腳本 (串接證券 API，已改為保留 treeChain)
     ├── build_institutional_data.py # 建構/更新 16 檔籌碼面資料庫（三大法人 + 外資持股）
-    ├── fetch_realtime_quotes.py    # 抓證交所 MIS 盤中即時報價，產出 realtime.json
+    ├── fetch_realtime_quotes.py    # 抓證交所 MIS 收盤報價，產出 realtime.json
     ├── build_index_compare.py      # 抓類股指數與大盤指數（增量更新，產出 index_compare.json）
     ├── build_news.py               # 抓 16 檔相關新聞（滾動封存 + 兩層去重，產出 news.json）
     ├── adjust_prices.py            # 還原股價：除權息（精確）+ 股票分割（啟發式後備）
@@ -124,7 +123,7 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
   - 在繪製 SVG text 前，呼叫 `getFittedFontSize(text, maxWidth, defaultSize)` 動態測算文字寬度並調整字號（下限 9px），確保文字永不超出節點外框。
   - 連接線一律使用平滑三次方貝茲曲線（Cubic Bézier Curve: `M x1 y1 C ... x2 y2`），靜態高亮無重繪抖動。
 
-### 3) 報價架構：盤中即時報價 + 日線快取（重要，曾經搞錯過）
+### 3) 報價架構：每日收盤制（重要，演進過兩次，都踩過坑）
 
 > ⚠️ **先釐清一個曾經寫錯的觀念**：FinMind 的 `TaiwanStockPrice` **只有日線收盤資料，不是即時報價**。
 > 盤中以當日日期查詢會回傳 **空陣列**。
@@ -141,20 +140,28 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
   Yahoo Finance 的 `query1.finance.yahoo.com` 同樣沒有 CORS 標頭；
   FinMind 的即時快照端點 `taiwan_stock_tick_snapshot` 需付費等級。
   **結論：沒有任何免費又支援 CORS 的台股即時 API 可供靜態網站直連。**
-- **解法（零後端，繞開 CORS）**：
-  1. GitHub Actions（`.github/workflows/realtime-quotes.yml`）每 5 分鐘執行
-     `scripts/fetch_realtime_quotes.py`，抓 MIS 報價存成 `realtime.json`。
-  2. 快照以 **孤兒分支強制覆蓋** 推到 `data-live` 分支（永遠只有一個提交，
-     不污染 `main` 歷史、也不會觸發 Pages 重新建置）。
-  3. 前端從 `https://raw.githubusercontent.com/.../data-live/realtime.json` 讀取 ——
-     **`raw.githubusercontent.com` 有 `Access-Control-Allow-Origin: *`（已實測）**，可跨域直連。
-- **三層後備**：`data-live` 快照 → 專案內 `data/realtime.json` → FinMind 日線收盤。
-  任何一層失敗都靜默退到下一層，畫面不會壞掉。
-- **誠實標示**：畫面一律顯示快照自帶的 `marketDate` / `marketTime`
-  （例如「報價時間 2026-11-26 11:55:36（證交所 MIS）」），而不是一律寫「即時」。
-  Actions 的 cron 本身有數分鐘誤差，使用者看得到實際報價時間才不會被誤導。
+- **現行作法（2026-11-27 起）：每日收盤後更新一次，讀同源靜態檔**
+  1. 排程（`.github/workflows/daily-data-update.yml`）在收盤後執行
+     `scripts/fetch_realtime_quotes.py`，抓 MIS 的 13:30 收盤快照寫成 `data/realtime.json`。
+  2. 連同其他資料一起提交回 `main`，前端直接讀 **同源** 的 `data/realtime.json`，
+     完全不需要 CORS 繞道。
+- **為什麼放棄盤中 5 分鐘更新**（曾經實作過，已移除）：
+  1. 高頻 cron 最容易被 GitHub 降級或直接丟棄 —— 實測本 repo 的排程 **從未觸發過一次**
+     （`schedule` 事件總數為 0，兩個 workflow 的執行紀錄全來自手動 `workflow_dispatch`）。
+  2. 本站其餘資料（三大法人、指數、新聞、財報）本來就都是每日的，
+     只有報價宣稱盤中，反而製造不一致的預期。
+  3. 一天 80+ 次強制推送，為了 5 分鐘延遲的報價並不划算。
+- **曾經的 `data-live` 分支作法已廢止**：原本用孤兒分支強制覆蓋推送快照，
+  前端經 `raw.githubusercontent.com` 讀取（該網域確實有 `Access-Control-Allow-Origin: *`）。
+  > ⚠️ **這個設計踩過一個無聲的坑**：前端無條件 **優先** 讀 `data-live`，
+  > 一旦排程沒跑或推送失敗，停在舊日期的 `data-live` 會 **蓋掉 `main` 上較新的資料**。
+  > 實測發生過：`data-live` 停在 11-26 13:30、`main` 已是 11-27 13:30，
+  > 但三個頁面顯示的全是前一天的報價，且沒有任何錯誤提示。
+  > 教訓：**多來源後備不能用固定優先序，要比較資料本身的時間戳**（或像現在這樣只留單一來源）。
+- **誠實標示**：畫面顯示快照自帶的 `marketDate` / `marketTime`，
+  文案寫「收盤價 2026-11-27 13:30:00（證交所 MIS）」，不寫「即時」。
 - **首屏秒開仍然保留**：先用 `data/sector_stocks.json` 與 `data/quanta_latest.json`
-  渲染日線與圖表，再於背景以報價快照覆寫價格欄位。
+  渲染日線與圖表，再以收盤快照覆寫價格欄位。
 
 ### 3-1) 還原股價（除權息 + 股票分割回溯調整）
 
@@ -217,9 +224,8 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
 - **增量更新**：`scripts/build_index_compare.py` 會先讀既有 JSON，只補抓缺少的交易日；
   交易日曆直接取自 `quanta_latest.json` 的日線日期，不會把週末與休市日也打一遍。
   首次建立 217 個交易日約需 3 分鐘，之後每天只多抓一天。
-- **自動更新**：`.github/workflows/daily-index-update.yml`，平日 UTC 06:10（台北 14:10，收盤後）
-  執行一次並直接提交回 `main`。與盤中報價不同，這份資料一天只變動一次，
-  提交回 main 既不會污染歷史，也讓增量更新有基準可用。
+- **自動更新**：`.github/workflows/daily-data-update.yml`，平日 UTC 06:10 與 09:10
+  （台北 14:10、17:10）各執行一次並直接提交回 `main`。
 
 - **圖表設計準則（這個功能的核心判斷）**：
   1. **絕不雙軸**。類股指數約 345 點、大盤約 38,000 點，尺度差了百倍。
@@ -266,10 +272,13 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
 
 | 資料 | 實際頻率 | 頁面標示方式 |
 |---|---|---|
-| 個股報價 | 盤中約 5 分鐘（Actions 排程） | 顯示快照自帶的報價時間 |
+| 個股報價 | **每日收盤後一次** | 寫「收盤價 YYYY-MM-DD 13:30:00（證交所 MIS）」 |
 | 三大法人 | **收盤後才公布**（約 15:00-16:00） | 明寫「由證交所收盤後公布」並標資料日期 |
 | 類股指數 | 每日收盤後 | 標示區間起訖日 |
 | 新聞 | 每日排程（可手動補跑） | 標示更新時間與保留天數 |
+
+**全站沒有任何盤中即時資料。** 盤中時段畫面顯示的是前一交易日收盤價，
+這是刻意的取捨（見章節 3），但必須標示清楚，絕不可寫成「即時」。
 
 ### 4) 籌碼面資料管線與圖表設計準則
 
