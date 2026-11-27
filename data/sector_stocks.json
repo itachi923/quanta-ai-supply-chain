@@ -1626,20 +1626,20 @@
       {
         "date": "2026-11-27",
         "stock_id": "6669",
-        "Trading_Volume": 7323979,
-        "Trading_money": 12108325265,
+        "Trading_Volume": 7372979,
+        "Trading_money": 12188710255,
         "open": 1545.0,
         "max": 1720.0,
         "min": 1535.0,
         "close": 1670.0,
         "spread": 100.0,
-        "Trading_turnover": 19090
+        "Trading_turnover": 19091
       }
     ],
     "price": 1670.0,
     "spread": 100.0,
     "pct": 6.37,
-    "volume": 7324,
+    "volume": 7373,
     "date": "2026-11-27",
     "treeChain": {
       "title": "緯穎 (6669) 純白牌雲端伺服器直供產業鏈",
@@ -2493,20 +2493,20 @@
       {
         "date": "2026-11-27",
         "stock_id": "3231",
-        "Trading_Volume": 17652991,
-        "Trading_money": 2881348651,
+        "Trading_Volume": 19902991,
+        "Trading_money": 3245848651,
         "open": 163.0,
         "max": 165.0,
         "min": 162.0,
         "close": 162.0,
         "spread": -5.0,
-        "Trading_turnover": 12377
+        "Trading_turnover": 12378
       }
     ],
     "price": 162.0,
     "spread": -5.0,
     "pct": -2.99,
-    "volume": 17653,
+    "volume": 19903,
     "date": "2026-11-27",
     "treeChain": {
       "title": "緯創 (3231) GPU 運算基板與代工產業鏈",
@@ -4188,20 +4188,20 @@
       {
         "date": "2026-11-27",
         "stock_id": "2376",
-        "Trading_Volume": 5603258,
-        "Trading_money": 1512982758,
+        "Trading_Volume": 5754258,
+        "Trading_money": 1554281258,
         "open": 270.0,
         "max": 273.5,
         "min": 266.0,
         "close": 273.5,
         "spread": 0.0,
-        "Trading_turnover": 6452
+        "Trading_turnover": 6453
       }
     ],
     "price": 273.5,
     "spread": 0.0,
     "pct": 0.0,
-    "volume": 5603,
+    "volume": 5754,
     "date": "2026-11-27",
     "treeChain": {
       "title": "技嘉 (2376) AI 伺服器與主機板產業鏈",
@@ -6743,20 +6743,20 @@
       {
         "date": "2026-11-27",
         "stock_id": "2059",
-        "Trading_Volume": 949000,
-        "Trading_money": 6817760000,
+        "Trading_Volume": 1035089,
+        "Trading_money": 7428744730,
         "open": 7250.0,
         "max": 7385.0,
         "min": 6940.0,
         "close": 7025.0,
         "spread": -130.0,
-        "Trading_turnover": 889
+        "Trading_turnover": 6843
       }
     ],
     "price": 7025.0,
     "spread": -130.0,
     "pct": -1.82,
-    "volume": 949,
+    "volume": 1035,
     "date": "2026-11-27",
     "treeChain": {
       "title": "川湖 (2059) 伺服器重型專利導軌產業鏈",
@@ -7739,18 +7739,6 @@
     },
     "history": [
       {
-        "date": "2026-08-28",
-        "stock_id": "3324",
-        "Trading_Volume": 6469042,
-        "Trading_money": 7283633200,
-        "open": 1075.0,
-        "max": 1155.0,
-        "min": 1075.0,
-        "close": 1140.0,
-        "spread": 80.0,
-        "Trading_turnover": 16769
-      },
-      {
         "date": "2026-08-31",
         "stock_id": "3324",
         "Trading_Volume": 9673341,
@@ -8457,13 +8445,25 @@
         "close": 858.0,
         "spread": 60.0,
         "Trading_turnover": 7807
+      },
+      {
+        "date": "2026-11-27",
+        "stock_id": "3324",
+        "Trading_Volume": 3925823,
+        "Trading_money": 3216919184,
+        "open": 855.0,
+        "max": 861.0,
+        "min": 794.0,
+        "close": 801.0,
+        "spread": -57.0,
+        "Trading_turnover": 8924
       }
     ],
-    "price": 858.0,
-    "spread": 60.0,
-    "pct": 7.52,
-    "volume": 5417,
-    "date": "2026-11-26",
+    "price": 801.0,
+    "spread": -57.0,
+    "pct": -6.64,
+    "volume": 3926,
+    "date": "2026-11-27",
     "treeChain": {
       "title": "雙鴻 (3324) 水冷板與散熱模組產業鏈",
       "upstreamBranches": [
@@ -10123,20 +10123,20 @@
       {
         "date": "2026-11-27",
         "stock_id": "2395",
-        "Trading_Volume": 1594000,
-        "Trading_money": 953729000,
+        "Trading_Volume": 1628295,
+        "Trading_money": 974211803,
         "open": 588.0,
         "max": 607.0,
         "min": 581.0,
         "close": 601.0,
         "spread": 12.0,
-        "Trading_turnover": 1208
+        "Trading_turnover": 2652
       }
     ],
     "price": 601.0,
     "spread": 12.0,
     "pct": 2.04,
-    "volume": 1594,
+    "volume": 1628,
     "date": "2026-11-27",
     "treeChain": {
       "title": "研華 (2395) 全球工業電腦與物聯網產業鏈",
@@ -13487,20 +13487,20 @@
       {
         "date": "2026-11-27",
         "stock_id": "4915",
-        "Trading_Volume": 1454000,
-        "Trading_money": 63051300,
+        "Trading_Volume": 1463307,
+        "Trading_money": 63454962,
         "open": 43.2,
         "max": 43.75,
         "min": 43.05,
         "close": 43.65,
         "spread": 0.15,
-        "Trading_turnover": 1083
+        "Trading_turnover": 1317
       }
     ],
     "price": 43.65,
     "spread": 0.15,
     "pct": 0.34,
-    "volume": 1454,
+    "volume": 1463,
     "date": "2026-11-27",
     "treeChain": {
       "title": "致伸 (4915) 電腦週邊、車載與聲學感測產業鏈",
