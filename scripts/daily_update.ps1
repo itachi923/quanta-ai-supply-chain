@@ -74,7 +74,10 @@ $Steps = @(
     @{ Name = '16 檔類股資料';           Script = 'scripts\build_sector_data.py' },
     @{ Name = '類股指數對照';             Script = 'scripts\build_index_compare.py' },
     @{ Name = '三大法人買賣超';           Script = 'scripts\build_institutional_data.py' },
-    @{ Name = '類股新聞';                 Script = 'scripts\build_news.py' }
+    @{ Name = '類股新聞';                 Script = 'scripts\build_news.py' },
+    # 訊號必須排最後：build_signals.py 不連網，它是把上面五份 JSON 換算成
+    # 評分與進出場價位，任何一份沒更新到，算出來的訊號就是舊的。
+    @{ Name = '投資策略訊號';             Script = 'scripts\build_signals.py' }
 )
 
 $Failed = @()
@@ -94,7 +97,8 @@ $DataFiles = @(
     'data/sector_stocks.json',
     'data/index_compare.json',
     'data/institutional.json',
-    'data/news.json'
+    'data/news.json',
+    'data/signals.json'
 )
 
 git diff --quiet -- $DataFiles

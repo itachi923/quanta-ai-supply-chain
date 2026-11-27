@@ -1,0 +1,6139 @@
+{
+ "updated_at": "2026-11-27 16:57:50",
+ "updated_at_tz": "+08:00",
+ "dataDate": "2026-11-27",
+ "instDate": "2026-11-26",
+ "newsUpdatedAt": "2026-11-27 15:15:40",
+ "quoteDate": "2026-11-27",
+ "quoteTime": "13:30:00",
+ "weights": {
+  "trend": 0.35,
+  "momentum": 0.25,
+  "chips": 0.25,
+  "strength": 0.15
+ },
+ "grades": [
+  {
+   "min": 72,
+   "key": "strong",
+   "label": "強勢偏多",
+   "action": "優先觀察進場"
+  },
+  {
+   "min": 60,
+   "key": "good",
+   "label": "中性偏多",
+   "action": "可分批布局"
+  },
+  {
+   "min": 48,
+   "key": "neutral",
+   "label": "中性整理",
+   "action": "觀望為宜"
+  },
+  {
+   "min": 36,
+   "key": "weak",
+   "label": "中性偏弱",
+   "action": "減碼或暫避"
+  },
+  {
+   "min": 0,
+   "key": "bad",
+   "label": "弱勢",
+   "action": "建議回避"
+  }
+ ],
+ "profiles": {
+  "steady": {
+   "key": "steady",
+   "name": "穩健型",
+   "desc": "只取高分且不追高，停損寬、目標近",
+   "minScore": 65,
+   "maxPicks": 3,
+   "stopAtr": 2.0,
+   "t1Atr": 2.0,
+   "t2Atr": 3.0,
+   "maxBias": 8.0
+  },
+  "balanced": {
+   "key": "balanced",
+   "name": "平衡型",
+   "desc": "分數與位階兼顧，標準停損停利",
+   "minScore": 58,
+   "maxPicks": 5,
+   "stopAtr": 1.6,
+   "t1Atr": 2.2,
+   "t2Atr": 3.6,
+   "maxBias": 12.0
+  },
+  "aggressive": {
+   "key": "aggressive",
+   "name": "積極型",
+   "desc": "容許較高位階與較緊停損，目標較遠",
+   "minScore": 50,
+   "maxPicks": 7,
+   "stopAtr": 1.3,
+   "t1Atr": 2.5,
+   "t2Atr": 4.2,
+   "maxBias": 18.0
+  }
+ },
+ "profileOrder": [
+  "steady",
+  "balanced",
+  "aggressive"
+ ],
+ "sector": {
+  "name": "電腦及週邊設備類指數",
+  "marketName": "發行量加權股價指數",
+  "date": "2026-11-27",
+  "sectorClose": 372.21,
+  "marketClose": 39308.08,
+  "sectorMa20": 377.7,
+  "sectorMa60": 434.7,
+  "sectorRet20": -13.69,
+  "marketRet20": -13.06,
+  "sectorRet60": -21.26,
+  "marketRet60": -15.16,
+  "rs20": -0.63,
+  "rs60": -6.1,
+  "breadth": 3,
+  "breadthTotal": 16,
+  "breadthPct": 18.8,
+  "phase": "收縮期",
+  "phaseKey": "contract",
+  "reasons": [
+   {
+    "tone": "bear",
+    "text": "類股指數跌破自身 MA20"
+   },
+   {
+    "tone": "bear",
+    "text": "MA20 在 MA60 之下（中期空頭排列）"
+   },
+   {
+    "tone": "bear",
+    "text": "近 20 日輸大盤 -0.6 個百分點（資金流出本類股）"
+   },
+   {
+    "tone": "bear",
+    "text": "16 檔中有 3 檔站上 MA20（市場廣度 19%）"
+   }
+  ],
+  "outlook": "類股指數跌破月線，且站上月線的個股不到四成 —— 屬於資金撤出的收縮格局。這種環境下任何個股訊號的可靠度都會下降，建議降低持股比重、縮小單筆部位，等指數重新站回月線且廣度回到五成以上再談加碼。"
+ },
+ "stocks": [
+  {
+   "id": "6669",
+   "name": "緯穎",
+   "fullName": "緯穎科技服務股份有限公司",
+   "subGroup": "odm",
+   "subGroupName": "AI伺服器整機與系統代工",
+   "isLeader": false,
+   "leaderRole": "純度最高白牌伺服器股王 · 千金高價股",
+   "description": "緯創集團旗下子公司，專注於超大型雲端資料中心客製化白牌伺服器(ODM Direct)。客戶結構集中於Meta、微軟、AWS，長年投入液冷與先進浸沒式冷卻技術，無消費性電子負擔。",
+   "date": "2026-11-27",
+   "close": 1670.0,
+   "pct": 6.37,
+   "volume": 7323979,
+   "financials": {
+    "trailingEPS": 118.5,
+    "q3Revenue": "970 億元",
+    "grossMargin": "10.8%",
+    "operatingMargin": "7.9%",
+    "roe": "34.2%",
+    "dividendYield": "3.2%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 1670.0,
+    "prevClose": 1570.0,
+    "pct": 6.37,
+    "volume": 7323979.0,
+    "ma5": 1511.0,
+    "ma10": 1473.0,
+    "ma20": 1576.0,
+    "ma60": 1970.81,
+    "ma20Slope": -94.0,
+    "rsi14": 51.16,
+    "macd": -110.6,
+    "macdSignal": -138.77,
+    "macdHist": 28.16,
+    "macdHistPrev": 12.96,
+    "kdK": 62.58,
+    "kdD": 43.35,
+    "atr14": 123.57,
+    "atrPct": 7.4,
+    "bias20": 5.96,
+    "volRatio": 1.62,
+    "avgVol20": 4534060,
+    "high60": 2615.0,
+    "low60": 1325.0,
+    "low10": 1325.0,
+    "pricePos60": 0.27,
+    "ret5": 26.04,
+    "ret20": -7.73,
+    "ret60": -29.79,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": -599,
+    "foreign5": -1672,
+    "foreign20": 4175,
+    "trust1": 724,
+    "trust5": 1955,
+    "trust20": -279,
+    "dealer1": 71,
+    "dealer5": -33,
+    "dealer20": 254,
+    "total1": 196,
+    "total5": 250,
+    "total20": 4150,
+    "foreignRatio": 26.96,
+    "foreignRatioChg20": 0.21,
+    "foreignStreak": -4,
+    "trustStreak": 5,
+    "foreignAbsAvg20": 541.6,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 26.96
+    }
+   },
+   "score": {
+    "total": 62.8,
+    "trend": 40,
+    "momentum": 100,
+    "chips": 65,
+    "strength": 50,
+    "key": "good",
+    "label": "中性偏多",
+    "action": "可分批布局"
+   },
+   "reasons": [
+    {
+     "tone": "bull",
+     "text": "收盤站上 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MA5 在 MA10 之上",
+     "weight": 15,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體為正（多方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "RSI 51 位於 50~70 健康多方區",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 63 / D 43）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +26.0%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "外資近 5 日賣超 1,672 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 1,955 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "三大法人近 20 日合計買超 4,150 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資持股比 20 日增加 +0.21 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信連 5 日買超",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "近 20 日贏類股指數 +6.0 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 27% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -7.7%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bull",
+     "text": "成交量為 20 日均量 1.62 倍（量能有承接）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 1576.0,
+     "entryHigh": 1674.9,
+     "entryMid": 1625.4,
+     "trigger": "股價回測 NT$ 1576.0~1674.9 區間、且回測當日成交量縮小至 20 日均量以下時分批進場；若直接跳空向上不回測，則不追價。",
+     "stop": 1430.4,
+     "stopPct": -12.0,
+     "target1": 1872.6,
+     "target1Pct": 15.2,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 2693.5,
+     "target2Pct": 65.7,
+     "rr": 1.27,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 123.57,
+     "atrPct": 7.6,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": false,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 1430.4 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 1872.6 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 2693.5 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 1576.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 1576.0,
+     "entryHigh": 1674.9,
+     "entryMid": 1625.4,
+     "trigger": "股價回測 NT$ 1576.0~1674.9 區間、且回測當日成交量縮小至 20 日均量以下時分批進場；若直接跳空向上不回測，則不追價。",
+     "stop": 1430.4,
+     "stopPct": -12.0,
+     "target1": 1897.3,
+     "target1Pct": 16.7,
+     "target1Basis": "進場中值加 2.2 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 2693.5,
+     "target2Pct": 65.7,
+     "rr": 1.39,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 123.57,
+     "atrPct": 7.6,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": false,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 1430.4 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 1897.3 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 2693.5 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 1576.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 1576.0,
+     "entryHigh": 1674.9,
+     "entryMid": 1625.4,
+     "trigger": "股價回測 NT$ 1576.0~1674.9 區間、且回測當日成交量縮小至 20 日均量以下時分批進場；若直接跳空向上不回測，則不追價。",
+     "stop": 1430.4,
+     "stopPct": -12.0,
+     "target1": 1934.4,
+     "target1Pct": 19.0,
+     "target1Basis": "進場中值加 2.5 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 2693.5,
+     "target2Pct": 65.7,
+     "rr": 1.58,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 123.57,
+     "atrPct": 7.6,
+     "volatile": true,
+     "holdDaysMin": 7,
+     "holdDaysMax": 15,
+     "reviewBy": "2026-12-18",
+     "needsConfirm": false,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 1430.4 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 1934.4 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 2693.5 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 1576.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 15 個交易日（約至 2026-12-18）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 5.63,
+    "sigma20": 25.17,
+    "band68Low": 1249.7,
+    "band68High": 2090.3,
+    "band90Low": 978.6,
+    "band90High": 2361.4,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "high",
+     "direction": "bullish",
+     "title": "單日大漲 +6.37%",
+     "detail": "出現明顯買盤。需確認是否伴隨放量與法人買超，若只有價漲量縮，追高容易套在短線高點。"
+    },
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "今日站回 MA20 月線",
+     "detail": "重新站上月線，短線轉強的第一步。須連續 2 個交易日守住才算確立，單日假突破很常見。"
+    },
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "今日正面消息",
+     "detail": "【11/27 產業即時新聞】電子中游-EMS族群漲幅2.56%：緯穎大漲帶頭衝，AI伺服器供應鏈買盤回神"
+    },
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "今日正面消息",
+     "detail": "【10:16 即時新聞】緯穎(6669)股價走強，AI伺服器成長動能受關注"
+    },
+    {
+     "severity": "low",
+     "direction": "bullish",
+     "title": "投信連 5 日買超",
+     "detail": "投信具有作帳與追蹤績效的動機，連續買超常見於中期看好的標的，但月底季底也可能出現調節。"
+    }
+   ],
+   "news": [
+    {
+     "title": "緯穎從眾多 ODM 廠脫穎而出 早盤一度逼近漲停",
+     "link": "https://udn.com/news/story/7252/9905796",
+     "date": "2026-11-27 05:52:28",
+     "sources": [
+      "UDN"
+     ]
+    },
+    {
+     "title": "6669 緯穎- 今天終於大漲！2535買了就一直跌一直跌_還好沒有一直買- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/190103428",
+     "date": "2026-11-27 04:58:26",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "《台北股市》雙王撐盤 千金股健策、緯穎、昇達科突圍",
+     "link": "https://ww2.money-link.com.tw/realtimenews/NewsContent.aspx?SN=6373590001&PU=1002",
+     "date": "2026-11-27 03:34:00",
+     "sources": [
+      "富聯網"
+     ]
+    },
+    {
+     "title": "【即時新聞】緯穎(6669)大漲逾7%點燃行情！這「3檔概念股」大戶買盤同步卡位",
+     "link": "https://cmnews.com.tw/article/newsyoudeservetoknow-4dbadba8-ea12-11f1-9dbf-55fe1c089011",
+     "date": "2026-11-27 03:26:15",
+     "sources": [
+      "CMoney投資網誌"
+     ]
+    },
+    {
+     "title": "【即時新聞】緯穎有望納0056盤中飆漲逾7%，主力積極卡位還能追？",
+     "link": "https://cmnews.com.tw/article/newsyoudeservetoknow-0e62e29c-ea0c-11f1-8cf1-b1d133ce551c",
+     "date": "2026-11-27 02:41:32",
+     "sources": [
+      "CMoney投資網誌"
+     ]
+    }
+   ],
+   "rs20": 5.96
+  },
+  {
+   "id": "3017",
+   "name": "奇鋐",
+   "fullName": "奇鋐科技股份有限公司",
+   "subGroup": "components",
+   "subGroupName": "關鍵零組件與水冷散熱",
+   "isLeader": true,
+   "leaderRole": "AI伺服器水冷散熱系統一條龍總冠軍",
+   "description": "全球散熱解決方案巨擘。針對AI伺服器晶片超過1000W之高熱量，奇鋐成功開發水冷板(Cold Plate)、分流管(Manifold)、冷卻分配單元(CDU)，具備全套一條龍自製能力，通過NVIDIA認證。",
+   "date": "2026-11-27",
+   "close": 2805.0,
+   "pct": 0.36,
+   "volume": 4647052,
+   "financials": {
+    "trailingEPS": 22.4,
+    "q3Revenue": "191 億元",
+    "grossMargin": "24.2%",
+    "operatingMargin": "13.8%",
+    "roe": "26.5%",
+    "dividendYield": "2.5%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 2805.0,
+    "prevClose": 2795.0,
+    "pct": 0.36,
+    "volume": 4647052.0,
+    "ma5": 2622.0,
+    "ma10": 2568.5,
+    "ma20": 2678.0,
+    "ma60": 3125.42,
+    "ma20Slope": -129.0,
+    "rsi14": 54.32,
+    "macd": -130.98,
+    "macdSignal": -166.36,
+    "macdHist": 35.39,
+    "macdHistPrev": 18.61,
+    "kdK": 65.98,
+    "kdD": 51.62,
+    "atr14": 274.29,
+    "atrPct": 9.78,
+    "bias20": 4.74,
+    "volRatio": 1.17,
+    "avgVol20": 3958075,
+    "high60": 3685.0,
+    "low60": 2205.0,
+    "low10": 2205.0,
+    "pricePos60": 0.41,
+    "ret5": 27.21,
+    "ret20": -9.37,
+    "ret60": -18.1,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": 53,
+    "foreign5": -1540,
+    "foreign20": -6634,
+    "trust1": 476,
+    "trust5": 1837,
+    "trust20": 6906,
+    "dealer1": -26,
+    "dealer5": -79,
+    "dealer20": 172,
+    "total1": 503,
+    "total5": 218,
+    "total20": 444,
+    "foreignRatio": 50.7,
+    "foreignRatioChg20": -1.77,
+    "foreignStreak": 1,
+    "trustStreak": 2,
+    "foreignAbsAvg20": 424.2,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 50.7
+    }
+   },
+   "score": {
+    "total": 60.5,
+    "trend": 40,
+    "momentum": 100,
+    "chips": 50,
+    "strength": 60,
+    "key": "good",
+    "label": "中性偏多",
+    "action": "可分批布局"
+   },
+   "reasons": [
+    {
+     "tone": "bull",
+     "text": "收盤站上 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MA5 在 MA10 之上",
+     "weight": 15,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體為正（多方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "RSI 54 位於 50~70 健康多方區",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 66 / D 52）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +27.2%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "外資近 5 日賣超 1,540 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 1,837 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "三大法人近 20 日合計買超 444 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -1.77 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資最新交易日買超 53 張",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "近 20 日贏類股指數 +4.3 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "股價位於 60 日區間 41% 中下",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -9.4%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bull",
+     "text": "成交量為 20 日均量 1.17 倍（量能有承接）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 2678.0,
+     "entryHigh": 2833.1,
+     "entryMid": 2755.5,
+     "trigger": "股價回測 NT$ 2678.0~2833.1 區間、且回測當日成交量縮小至 20 日均量以下時分批進場；若直接跳空向上不回測，則不追價。",
+     "stop": 2424.9,
+     "stopPct": -12.0,
+     "target1": 3125.4,
+     "target1Pct": 13.4,
+     "target1Basis": "MA60 季線 NT$ 3125.4 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 3795.6,
+     "target2Pct": 37.7,
+     "rr": 1.12,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 274.29,
+     "atrPct": 9.95,
+     "volatile": true,
+     "holdDaysMin": 4,
+     "holdDaysMax": 9,
+     "reviewBy": "2026-12-10",
+     "needsConfirm": false,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 2424.9 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 3125.4 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 3795.6 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 2678.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 9 個交易日（約至 2026-12-10）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 2678.0,
+     "entryHigh": 2833.1,
+     "entryMid": 2755.5,
+     "trigger": "股價回測 NT$ 2678.0~2833.1 區間、且回測當日成交量縮小至 20 日均量以下時分批進場；若直接跳空向上不回測，則不追價。",
+     "stop": 2424.9,
+     "stopPct": -12.0,
+     "target1": 3125.4,
+     "target1Pct": 13.4,
+     "target1Basis": "MA60 季線 NT$ 3125.4 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 3795.6,
+     "target2Pct": 37.7,
+     "rr": 1.12,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 274.29,
+     "atrPct": 9.95,
+     "volatile": true,
+     "holdDaysMin": 4,
+     "holdDaysMax": 9,
+     "reviewBy": "2026-12-10",
+     "needsConfirm": false,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 2424.9 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 3125.4 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 3795.6 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 2678.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 9 個交易日（約至 2026-12-10）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 2678.0,
+     "entryHigh": 2833.1,
+     "entryMid": 2755.5,
+     "trigger": "股價回測 NT$ 2678.0~2833.1 區間、且回測當日成交量縮小至 20 日均量以下時分批進場；若直接跳空向上不回測，則不追價。",
+     "stop": 2424.9,
+     "stopPct": -12.0,
+     "target1": 3125.4,
+     "target1Pct": 13.4,
+     "target1Basis": "MA60 季線 NT$ 3125.4 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 3907.5,
+     "target2Pct": 41.8,
+     "rr": 1.12,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 274.29,
+     "atrPct": 9.95,
+     "volatile": true,
+     "holdDaysMin": 4,
+     "holdDaysMax": 9,
+     "reviewBy": "2026-12-10",
+     "needsConfirm": false,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 2424.9 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 3125.4 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 3907.5 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 2678.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 9 個交易日（約至 2026-12-10）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 8.58,
+    "sigma20": 38.36,
+    "band68Low": 1729.1,
+    "band68High": 3880.9,
+    "band90Low": 1035.2,
+    "band90High": 4574.8,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "今日正面消息",
+     "detail": "【12:06 即時新聞】奇鋐(3017)盤中續揚，市場聚焦AI散熱與獲利成長"
+    }
+   ],
+   "news": [
+    {
+     "title": "【12:06 即時新聞】奇鋐(3017)盤中續揚，市場聚焦AI散熱與獲利成長",
+     "link": "https://cmnews.com.tw/article/cmoneyairesearcher-efe63cdb-ea17-11f1-b18d-b7c43902222d",
+     "date": "2026-11-27 04:06:35",
+     "sources": [
+      "CMoney投資網誌",
+      "CMoney"
+     ]
+    },
+    {
+     "title": "低軌衛星起飛！「這檔」累漲近40%牽17檔漲停 華通、國巨、奇鋐、穩懋、昇達科都亮燈",
+     "link": "https://www.ftnn.com.tw/news/599829",
+     "date": "2026-11-26 08:15:00",
+     "sources": [
+      "FTNN 新聞網"
+     ]
+    },
+    {
+     "title": "AI電源散熱8雄全面反攻！奇鋐、健策雙漲停 台達電大漲逾6%",
+     "link": "https://news.wearn.com/c2154689.html",
+     "date": "2026-11-26 04:26:14",
+     "sources": [
+      "聚財網"
+     ]
+    },
+    {
+     "title": "焦點股》奇鋐：明年AI業務正向 股價強攻漲停",
+     "link": "https://ec.ltn.com.tw/article/breakingnews/5653989",
+     "date": "2026-11-26 03:51:19",
+     "sources": [
+      "自由財經",
+      "自由時報"
+     ]
+    },
+    {
+     "title": "【11:06 即時新聞】奇鋐(3017)亮燈漲停，AI水冷散熱題材續成盤中焦點",
+     "link": "https://cmnews.com.tw/article/cmoneyairesearcher-9fe73f10-e946-11f1-b098-e9dd8c89ec87",
+     "date": "2026-11-26 03:08:16",
+     "sources": [
+      "CMoney投資網誌"
+     ]
+    }
+   ],
+   "rs20": 4.32
+  },
+  {
+   "id": "2395",
+   "name": "研華",
+   "fullName": "研華股份有限公司",
+   "subGroup": "ipc_iot",
+   "subGroupName": "工業電腦與邊緣物聯網",
+   "isLeader": true,
+   "leaderRole": "全球工業電腦第一品牌 · 工業物聯網霸主",
+   "description": "創立於1983年，全球工業電腦(IPC)市占率超過35%，長年穩居全球第一。產品廣泛應用於智慧工廠、醫療設備、軌道交通、機器人控制器及邊緣AI推論運算。",
+   "date": "2026-11-27",
+   "close": 601.0,
+   "pct": 2.04,
+   "volume": 1594000,
+   "financials": {
+    "trailingEPS": 11.2,
+    "q3Revenue": "150 億元",
+    "grossMargin": "40.5%",
+    "operatingMargin": "16.8%",
+    "roe": "20.2%",
+    "dividendYield": "3.2%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 601.0,
+    "prevClose": 589.0,
+    "pct": 2.04,
+    "volume": 1594000.0,
+    "ma5": 574.0,
+    "ma10": 567.7,
+    "ma20": 586.4,
+    "ma60": 659.8,
+    "ma20Slope": -26.45,
+    "rsi14": 52.73,
+    "macd": -24.03,
+    "macdSignal": -28.91,
+    "macdHist": 4.88,
+    "macdHistPrev": 2.09,
+    "kdK": 65.58,
+    "kdD": 48.4,
+    "atr14": 38.14,
+    "atrPct": 6.35,
+    "bias20": 2.49,
+    "volRatio": 0.58,
+    "avgVol20": 2767267,
+    "high60": 740.0,
+    "low60": 520.0,
+    "low10": 520.0,
+    "pricePos60": 0.37,
+    "ret5": 15.58,
+    "ret20": -11.62,
+    "ret60": -11.23,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": -678,
+    "foreign5": -1504,
+    "foreign20": -109,
+    "trust1": 380,
+    "trust5": 931,
+    "trust20": 827,
+    "dealer1": 96,
+    "dealer5": 214,
+    "dealer20": 903,
+    "total1": -202,
+    "total5": -359,
+    "total20": 1621,
+    "foreignRatio": 36.06,
+    "foreignRatioChg20": -0.08,
+    "foreignStreak": -2,
+    "trustStreak": 2,
+    "foreignAbsAvg20": 293.4,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 36.06
+    }
+   },
+   "score": {
+    "total": 56.5,
+    "trend": 40,
+    "momentum": 100,
+    "chips": 40,
+    "strength": 50,
+    "key": "neutral",
+    "label": "中性整理",
+    "action": "觀望為宜"
+   },
+   "reasons": [
+    {
+     "tone": "bull",
+     "text": "收盤站上 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MA5 在 MA10 之上",
+     "weight": 15,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體為正（多方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "RSI 53 位於 50~70 健康多方區",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 66 / D 48）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +15.6%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "外資近 5 日賣超 1,504 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 931 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "三大法人近 20 日合計買超 1,621 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -0.08 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "近 20 日贏類股指數 +2.1 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "股價位於 60 日區間 37% 中下",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -11.6%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.58 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 586.4,
+     "entryHigh": 607.0,
+     "entryMid": 596.7,
+     "trigger": "股價回測 NT$ 586.4~607.0 區間、且回測當日成交量縮小至 20 日均量以下時分批進場；若直接跳空向上不回測，則不追價。",
+     "stop": 525.1,
+     "stopPct": -12.0,
+     "target1": 659.8,
+     "target1Pct": 10.6,
+     "target1Basis": "MA60 季線 NT$ 659.8 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 762.2,
+     "target2Pct": 27.7,
+     "rr": 0.88,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 38.14,
+     "atrPct": 6.39,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": false,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 525.1 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 659.8 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 762.2 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 586.4）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 586.4,
+     "entryHigh": 607.0,
+     "entryMid": 596.7,
+     "trigger": "股價回測 NT$ 586.4~607.0 區間、且回測當日成交量縮小至 20 日均量以下時分批進場；若直接跳空向上不回測，則不追價。",
+     "stop": 525.4,
+     "stopPct": -12.0,
+     "target1": 659.8,
+     "target1Pct": 10.6,
+     "target1Basis": "MA60 季線 NT$ 659.8 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 762.2,
+     "target2Pct": 27.7,
+     "rr": 0.88,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 38.14,
+     "atrPct": 6.39,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": false,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 525.4 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 659.8 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 762.2 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 586.4）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 586.4,
+     "entryHigh": 607.0,
+     "entryMid": 596.7,
+     "trigger": "股價回測 NT$ 586.4~607.0 區間、且回測當日成交量縮小至 20 日均量以下時分批進場；若直接跳空向上不回測，則不追價。",
+     "stop": 536.8,
+     "stopPct": -10.0,
+     "target1": 659.8,
+     "target1Pct": 10.6,
+     "target1Basis": "MA60 季線 NT$ 659.8 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 762.2,
+     "target2Pct": 27.7,
+     "rr": 1.05,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 38.14,
+     "atrPct": 6.39,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": false,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 536.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 659.8 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 762.2 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 586.4）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 4.99,
+    "sigma20": 22.3,
+    "band68Low": 467.0,
+    "band68High": 735.0,
+    "band90Low": 380.5,
+    "band90High": 821.5,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "今日正面消息",
+     "detail": "排除漲價因素，研華明年營收仍看增逾兩成- 新聞"
+    }
+   ],
+   "news": [
+    {
+     "title": "【12:09 即時新聞】研華(2395)盤中走強，法人與主力同步偏多布局",
+     "link": "https://cmnews.com.tw/article/cmoneyairesearcher-67f90ad8-ea18-11f1-aaf3-0f4c5cc7fa99",
+     "date": "2026-11-27 04:09:56",
+     "sources": [
+      "CMoney投資網誌"
+     ]
+    },
+    {
+     "title": "排除漲價因素，研華明年營收仍看增逾兩成- 新聞",
+     "link": "https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=0d0ecf16-0b6e-4ea4-97e7-99e013959dfc",
+     "date": "2026-11-27 01:21:00",
+     "sources": [
+      "MoneyDJ"
+     ]
+    },
+    {
+     "title": "研華 (2395) - 半導體設備、資料中心建置、自動化相關需求強勁；2026-2027獲利勁揚｜豐雲學堂2026 年 11 月",
+     "link": "https://www.sinotrade.com.tw/richclub/StockNavigator/%E7%A0%94%E8%8F%AF--2395----%E5%8D%8A%E5%B0%8E%E9%AB%94%E8%A8%AD%E5%82%99-%E8%B3%87%E6%96%99%E4%B8%AD%E5%BF%83%E5%BB%BA%E7%BD%AE-%E8%87%AA%E5%8B%95%E5%8C%96%E7%9B%B8%E9%97%9C%E9%9C%80%E6%B1%82%E5%BC%B7%E5%8B%81-2026-2027%E7%8D%B2%E5%88%A9%E5%8B%81%E6%8F%9A-6b0781a7e03d63013dbeb743",
+     "date": "2026-11-26 01:32:56",
+     "sources": [
+      "永豐金證券"
+     ]
+    },
+    {
+     "title": "工業AI邁向規模化應用 研華三大布局搶商機",
+     "link": "https://stock.ltn.com.tw/article/cfwtkwb948s0",
+     "date": "2026-11-25 11:54:10",
+     "sources": [
+      "自由時報",
+      "自由財經"
+     ]
+    },
+    {
+     "title": "個股：研華(2395)參展德國紐倫堡SPS 2026，攜手生態系加速工業AI落地",
+     "link": "https://ww2.money-link.com.tw/RealtimeNews/NewsContent.aspx?SN=2449865002&PU=0010",
+     "date": "2026-11-25 08:38:00",
+     "sources": [
+      "富聯網"
+     ]
+    }
+   ],
+   "rs20": 2.07
+  },
+  {
+   "id": "2382",
+   "name": "廣達",
+   "fullName": "廣達電腦股份有限公司",
+   "subGroup": "odm",
+   "subGroupName": "AI伺服器整機與系統代工",
+   "isLeader": true,
+   "leaderRole": "全球AI伺服器代工龍頭 · 兆元權值旗艦",
+   "description": "創立於1988年，全球最大筆記型電腦研發製造廠，亦為全球最大雲端資料中心與AI伺服器ODM直供商。深度攜手NVIDIA首發GB200 NVL72整機櫃，直供微軟、Google、AWS、Meta。",
+   "date": "2026-11-27",
+   "close": 278.0,
+   "pct": -1.07,
+   "volume": 9299802,
+   "financials": {
+    "trailingEPS": 25.76,
+    "q3Revenue": "1.11 兆元",
+    "grossMargin": "8.7%",
+    "operatingMargin": "5.2%",
+    "roe": "27.6%",
+    "dividendYield": "3.8%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 278.0,
+    "prevClose": 281.0,
+    "pct": -1.07,
+    "volume": 9299802.0,
+    "ma5": 271.9,
+    "ma10": 266.6,
+    "ma20": 281.82,
+    "ma60": 315.5,
+    "ma20Slope": -12.8,
+    "rsi14": 42.8,
+    "macd": -12.53,
+    "macdSignal": -14.26,
+    "macdHist": 1.73,
+    "macdHistPrev": 0.82,
+    "kdK": 64.2,
+    "kdD": 46.14,
+    "atr14": 14.64,
+    "atrPct": 5.27,
+    "bias20": -1.36,
+    "volRatio": 0.52,
+    "avgVol20": 18005378,
+    "high60": 347.5,
+    "low60": 252.0,
+    "low10": 252.0,
+    "pricePos60": 0.27,
+    "ret5": 10.32,
+    "ret20": -12.58,
+    "ret60": -17.87,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": 2825,
+    "foreign5": -12300,
+    "foreign20": -46305,
+    "trust1": 2,
+    "trust5": 7449,
+    "trust20": 19907,
+    "dealer1": 68,
+    "dealer5": 1895,
+    "dealer20": 11206,
+    "total1": 2895,
+    "total5": -2956,
+    "total20": -15192,
+    "foreignRatio": 21.97,
+    "foreignRatioChg20": -1.16,
+    "foreignStreak": 1,
+    "trustStreak": 8,
+    "foreignAbsAvg20": 3346.2,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 21.97
+    }
+   },
+   "score": {
+    "total": 43.0,
+    "trend": 15,
+    "momentum": 87,
+    "chips": 40,
+    "strength": 40,
+    "key": "weak",
+    "label": "中性偏弱",
+    "action": "減碼或暫避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MA5 在 MA10 之上",
+     "weight": 15,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體為正（多方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 43 位於多空分界，方向未明",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 64 / D 46）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +10.3%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "外資近 5 日賣超 12,300 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 7,449 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "三大法人近 20 日合計賣超 15,192 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -1.16 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資最新交易日買超 2,825 張",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信連 8 日買超",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "近 20 日贏類股指數 +1.1 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 27% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -12.6%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.52 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 279.0,
+     "entryHigh": 286.0,
+     "entryMid": 282.5,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 281.8）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 279.0~286.0 區間分批進場。",
+     "stop": 249.7,
+     "stopPct": -11.6,
+     "target1": 311.8,
+     "target1Pct": 10.4,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 357.9,
+     "target2Pct": 26.7,
+     "rr": 0.89,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 14.64,
+     "atrPct": 5.18,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 249.7 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 311.8 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 357.9 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 281.8）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 279.0,
+     "entryHigh": 286.0,
+     "entryMid": 282.5,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 281.8）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 279.0~286.0 區間分批進場。",
+     "stop": 255.6,
+     "stopPct": -9.5,
+     "target1": 314.7,
+     "target1Pct": 11.4,
+     "target1Basis": "進場中值加 2.2 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 357.9,
+     "target2Pct": 26.7,
+     "rr": 1.2,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 14.64,
+     "atrPct": 5.18,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 255.6 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 314.7 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 357.9 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 281.8）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 279.0,
+     "entryHigh": 286.0,
+     "entryMid": 282.5,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 281.8）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 279.0~286.0 區間分批進場。",
+     "stop": 260.0,
+     "stopPct": -8.0,
+     "target1": 315.5,
+     "target1Pct": 11.7,
+     "target1Basis": "MA60 季線 NT$ 315.5 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 357.9,
+     "target2Pct": 26.7,
+     "rr": 1.46,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 14.64,
+     "atrPct": 5.18,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 260.0 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 315.5 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 357.9 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 281.8）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 4.11,
+    "sigma20": 18.4,
+    "band68Low": 226.8,
+    "band68High": 329.2,
+    "band90Low": 193.8,
+    "band90High": 362.2,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "low",
+     "direction": "bullish",
+     "title": "投信連 8 日買超",
+     "detail": "投信具有作帳與追蹤績效的動機，連續買超常見於中期看好的標的，但月底季底也可能出現調節。"
+    }
+   ],
+   "news": [
+    {
+     "title": "廣達（2382）佈局美國兩地 AI 伺服器產能，砸 3.67 億美元自建微電網",
+     "link": "https://abmedia.io/quanta-bloom-fuel-cell",
+     "date": "2026-11-26 03:13:44",
+     "sources": [
+      "鏈新聞 ABMedia"
+     ]
+    },
+    {
+     "title": "AI伺服器代工｜同樣出貨一櫃，為何盈餘預估會變？從廣達與鴻海的寄售模式看起",
+     "link": "https://uanalyze.com.tw/articles/2476361421",
+     "date": "2026-11-26 02:01:29",
+     "sources": [
+      "優分析 UAnalyze"
+     ]
+    },
+    {
+     "title": "廣達、緯創跌深能撿便宜？戴爾AI訂單飆破4兆元 5家投顧揭估值：這檔本益比不到5倍",
+     "link": "https://wantrich.chinatimes.com/news/20261126900008-420101",
+     "date": "2026-11-25 22:47:52",
+     "sources": [
+      "旺得富理財網"
+     ]
+    },
+    {
+     "title": "廣達、緯創跌深能撿便宜？戴爾AI訂單飆破4兆元5家投顧揭估值：這檔本益比不到5倍 - 上市櫃",
+     "link": "https://wantrich.chinatimes.com/news/20261126900008-420101",
+     "date": "2026-11-25 22:47:52",
+     "sources": [
+      "旺得富理財網"
+     ]
+    },
+    {
+     "title": "廣達(2382)砸3.67億美元買燃料電池微電網 供電布局由加州擴至田納西州",
+     "link": "https://uanalyze.com.tw/articles/6069061244",
+     "date": "2026-11-25 08:13:23",
+     "sources": [
+      "優分析 UAnalyze"
+     ]
+    }
+   ],
+   "rs20": 1.11
+  },
+  {
+   "id": "8210",
+   "name": "勤誠",
+   "fullName": "勤誠興業股份有限公司",
+   "subGroup": "components",
+   "subGroupName": "關鍵零組件與水冷散熱",
+   "isLeader": false,
+   "leaderRole": "全球雲端伺服器機殼與機構件龍頭",
+   "description": "專注於伺服器機殼研發與製造逾40年，全球伺服器機殼市占率第一。從1U/2U/4U標準機箱到GB200龐大的整機櫃機構件，為北美CSP客製化機箱的首選合作夥伴。",
+   "date": "2026-11-27",
+   "close": 474.0,
+   "pct": -1.76,
+   "volume": 949886,
+   "financials": {
+    "trailingEPS": 14.5,
+    "q3Revenue": "42.8 億元",
+    "grossMargin": "25.6%",
+    "operatingMargin": "15.2%",
+    "roe": "28.1%",
+    "dividendYield": "3.1%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 474.0,
+    "prevClose": 482.5,
+    "pct": -1.76,
+    "volume": 949886.0,
+    "ma5": 460.9,
+    "ma10": 477.35,
+    "ma20": 542.48,
+    "ma60": 760.84,
+    "ma20Slope": -74.38,
+    "rsi14": 37.28,
+    "macd": -80.95,
+    "macdSignal": -83.11,
+    "macdHist": 2.16,
+    "macdHistPrev": -1.03,
+    "kdK": 39.51,
+    "kdD": 28.42,
+    "atr14": 45.0,
+    "atrPct": 9.49,
+    "bias20": -12.62,
+    "volRatio": 0.47,
+    "avgVol20": 2035706,
+    "high60": 990.0,
+    "low60": 424.0,
+    "low10": 424.0,
+    "pricePos60": 0.09,
+    "ret5": 11.79,
+    "ret20": -33.8,
+    "ret60": -51.08,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": 107,
+    "foreign5": 935,
+    "foreign20": 1991,
+    "trust1": 1,
+    "trust5": 57,
+    "trust20": 454,
+    "dealer1": 8,
+    "dealer5": 3,
+    "dealer20": -33,
+    "total1": 116,
+    "total5": 995,
+    "total20": 2412,
+    "foreignRatio": 6.97,
+    "foreignRatioChg20": 1.65,
+    "foreignStreak": 1,
+    "trustStreak": 2,
+    "foreignAbsAvg20": 342.4,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 6.97
+    }
+   },
+   "score": {
+    "total": 42.8,
+    "trend": 0,
+    "momentum": 81,
+    "chips": 90,
+    "strength": 0,
+    "key": "weak",
+    "label": "中性偏弱",
+    "action": "減碼或暫避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體為正（多方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "RSI 37 偏弱",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 40 / D 28）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +11.8%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "外資近 5 日買超 935 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 57 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "三大法人近 20 日合計買超 2,412 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資持股比 20 日增加 +1.65 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資最新交易日買超 107 張",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -20.1 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 9% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -33.8%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.47 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 537.1,
+     "entryHigh": 550.6,
+     "entryMid": 543.8,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 542.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 537.1~550.6 區間分批進場。",
+     "stop": 478.6,
+     "stopPct": -12.0,
+     "target1": 633.8,
+     "target1Pct": 16.5,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 1019.7,
+     "target2Pct": 87.5,
+     "rr": 1.38,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 45.0,
+     "atrPct": 8.27,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 478.6 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 633.8 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 1019.7 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 542.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 537.1,
+     "entryHigh": 550.6,
+     "entryMid": 543.8,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 542.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 537.1~550.6 區間分批進場。",
+     "stop": 478.6,
+     "stopPct": -12.0,
+     "target1": 642.8,
+     "target1Pct": 18.2,
+     "target1Basis": "進場中值加 2.2 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 1019.7,
+     "target2Pct": 87.5,
+     "rr": 1.52,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 45.0,
+     "atrPct": 8.27,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 478.6 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 642.8 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 1019.7 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 542.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 537.1,
+     "entryHigh": 550.6,
+     "entryMid": 543.8,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 542.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 537.1~550.6 區間分批進場。",
+     "stop": 478.6,
+     "stopPct": -12.0,
+     "target1": 656.3,
+     "target1Pct": 20.7,
+     "target1Basis": "進場中值加 2.5 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 1019.7,
+     "target2Pct": 87.5,
+     "rr": 1.72,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 45.0,
+     "atrPct": 8.27,
+     "volatile": true,
+     "holdDaysMin": 7,
+     "holdDaysMax": 15,
+     "reviewBy": "2026-12-18",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 478.6 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 656.3 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 1019.7 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 542.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 15 個交易日（約至 2026-12-18）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 6.38,
+    "sigma20": 28.54,
+    "band68Low": 338.7,
+    "band68High": 609.3,
+    "band90Low": 251.5,
+    "band90High": 696.5,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "MACD 翻多（柱狀體由負轉正）",
+     "detail": "中期動能由空轉多，常是波段起漲的早期訊號，但需搭配均線與籌碼確認。"
+    }
+   ],
+   "news": [
+    {
+     "title": "電腦及週邊設備產業鏈／勤誠前三季EPS達29.89元！2027年機櫃營收占比拚兩成",
+     "link": "https://www.technice.com.tw/project/tech-frontline/332275/",
+     "date": "2026-11-26 08:58:12",
+     "sources": [
+      "科技島"
+     ]
+    },
+    {
+     "title": "盤中速報 - 勤誠(8210)股價拉至漲停，漲停價482.5元，成交649張",
+     "link": "https://www.tradingview.com/news/cnyes:cbda6c99eacdf:0/",
+     "date": "2026-11-26 04:29:00",
+     "sources": [
+      "TradingView"
+     ]
+    },
+    {
+     "title": "【12:14 即時新聞】勤誠(8210)盤中走強，AI伺服器機殼題材再受關注",
+     "link": "https://cmnews.com.tw/article/cmoneyairesearcher-ef8d56cd-e94f-11f1-8cec-3fb3b2e811d2",
+     "date": "2026-11-26 04:14:55",
+     "sources": [
+      "CMoney投資網誌"
+     ]
+    },
+    {
+     "title": "勤誠(8210) 個股概覽 | 個股 - 股市",
+     "link": "https://www.cmoney.tw/finance/8210",
+     "date": "2026-11-25 18:36:38",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "勤誠（8210）外資連買投信停損－熱門話題｜股市爆料同學會",
+     "link": "https://mobile.cmoney.tw/forum/stock/8210?s=revenue&trending=4",
+     "date": "2026-11-24 21:04:51",
+     "sources": [
+      "CMoney"
+     ]
+    }
+   ],
+   "rs20": -20.11
+  },
+  {
+   "id": "3231",
+   "name": "緯創",
+   "fullName": "緯創資通股份有限公司",
+   "subGroup": "odm",
+   "subGroupName": "AI伺服器整機與系統代工",
+   "isLeader": false,
+   "leaderRole": "NVIDIA GPU 運算基板獨家/主力製造商",
+   "description": "全球領先的電子代工大廠，近年大舉處分iPhone組裝廠，全面轉型進軍AI伺服器。掌握技術門檻最高的NVIDIA GPU基板(Baseboard/OAM)，為全球AI算力不可或缺的基石。",
+   "date": "2026-11-27",
+   "close": 162.0,
+   "pct": -2.99,
+   "volume": 17652991,
+   "financials": {
+    "trailingEPS": 6.85,
+    "q3Revenue": "2,725 億元",
+    "grossMargin": "8.3%",
+    "operatingMargin": "4.4%",
+    "roe": "18.5%",
+    "dividendYield": "3.5%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 162.0,
+    "prevClose": 167.0,
+    "pct": -2.99,
+    "volume": 17652991.0,
+    "ma5": 158.5,
+    "ma10": 157.35,
+    "ma20": 164.55,
+    "ma60": 179.16,
+    "ma20Slope": -7.72,
+    "rsi14": 46.49,
+    "macd": -6.09,
+    "macdSignal": -6.54,
+    "macdHist": 0.45,
+    "macdHistPrev": -0.0,
+    "kdK": 59.09,
+    "kdD": 43.14,
+    "atr14": 10.21,
+    "atrPct": 6.31,
+    "bias20": -1.55,
+    "volRatio": 0.58,
+    "avgVol20": 30269730,
+    "high60": 198.0,
+    "low60": 147.0,
+    "low10": 147.0,
+    "pricePos60": 0.29,
+    "ret5": 10.2,
+    "ret20": -11.72,
+    "ret60": -8.99,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": -3251,
+    "foreign5": -6288,
+    "foreign20": -81885,
+    "trust1": 3275,
+    "trust5": 4555,
+    "trust20": 20091,
+    "dealer1": 821,
+    "dealer5": 3296,
+    "dealer20": 10105,
+    "total1": 845,
+    "total5": 1563,
+    "total20": -51689,
+    "foreignRatio": 33.39,
+    "foreignRatioChg20": -2.46,
+    "foreignStreak": -3,
+    "trustStreak": 5,
+    "foreignAbsAvg20": 5504.8,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 33.39
+    }
+   },
+   "score": {
+    "total": 40.5,
+    "trend": 15,
+    "momentum": 87,
+    "chips": 30,
+    "strength": 40,
+    "key": "weak",
+    "label": "中性偏弱",
+    "action": "減碼或暫避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MA5 在 MA10 之上",
+     "weight": 15,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體為正（多方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 46 位於多空分界，方向未明",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 59 / D 43）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +10.2%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "外資近 5 日賣超 6,288 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 4,555 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "三大法人近 20 日合計賣超 51,689 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -2.46 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信連 5 日買超",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "近 20 日贏類股指數 +2.0 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 29% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -11.7%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.58 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 162.9,
+     "entryHigh": 167.0,
+     "entryMid": 165.0,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 164.6）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 162.9~167.0 區間分批進場。",
+     "stop": 145.2,
+     "stopPct": -12.0,
+     "target1": 179.2,
+     "target1Pct": 8.6,
+     "target1Basis": "MA60 季線 NT$ 179.2 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 203.9,
+     "target2Pct": 23.6,
+     "rr": 0.72,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 10.21,
+     "atrPct": 6.19,
+     "volatile": true,
+     "holdDaysMin": 4,
+     "holdDaysMax": 9,
+     "reviewBy": "2026-12-10",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 145.2 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 179.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 203.9 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 164.6）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 9 個交易日（約至 2026-12-10）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 162.9,
+     "entryHigh": 167.0,
+     "entryMid": 165.0,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 164.6）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 162.9~167.0 區間分批進場。",
+     "stop": 146.6,
+     "stopPct": -11.1,
+     "target1": 179.2,
+     "target1Pct": 8.6,
+     "target1Basis": "MA60 季線 NT$ 179.2 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 203.9,
+     "target2Pct": 23.6,
+     "rr": 0.77,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 10.21,
+     "atrPct": 6.19,
+     "volatile": true,
+     "holdDaysMin": 4,
+     "holdDaysMax": 9,
+     "reviewBy": "2026-12-10",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 146.6 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 179.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 203.9 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 164.6）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 9 個交易日（約至 2026-12-10）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 162.9,
+     "entryHigh": 167.0,
+     "entryMid": 165.0,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 164.6）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 162.9~167.0 區間分批進場。",
+     "stop": 149.6,
+     "stopPct": -9.3,
+     "target1": 179.2,
+     "target1Pct": 8.6,
+     "target1Basis": "MA60 季線 NT$ 179.2 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 207.8,
+     "target2Pct": 26.0,
+     "rr": 0.93,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 10.21,
+     "atrPct": 6.19,
+     "volatile": true,
+     "holdDaysMin": 4,
+     "holdDaysMax": 9,
+     "reviewBy": "2026-12-10",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 149.6 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 179.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 207.8 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 164.6）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 9 個交易日（約至 2026-12-10）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 4.84,
+    "sigma20": 21.65,
+    "band68Low": 126.9,
+    "band68High": 197.1,
+    "band90Low": 104.3,
+    "band90High": 219.7,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "medium",
+     "direction": "bearish",
+     "title": "今日失守 MA20 月線",
+     "detail": "由月線之上跌到之下，是短線趨勢轉弱的第一個訊號。觀察明日能否立刻收復，連 2 日站不回去就該減碼。"
+    },
+    {
+     "severity": "medium",
+     "direction": "neutral",
+     "title": "今日重要事件消息",
+     "detail": "【即時新聞】緯創(3231)最新營收翻倍，主力大買9千張要轉強了？"
+    },
+    {
+     "severity": "low",
+     "direction": "bullish",
+     "title": "投信連 5 日買超",
+     "detail": "投信具有作帳與追蹤績效的動機，連續買超常見於中期看好的標的，但月底季底也可能出現調節。"
+    }
+   ],
+   "news": [
+    {
+     "title": "瑤池金母最新操作！00981A單日加碼11檔「狂敲緯創、日月光逾4千張」",
+     "link": "http://news.tvbs.com.tw/money/4056880",
+     "date": "2026-11-27 03:39:00",
+     "sources": [
+      "TVBS新聞",
+      "TVBS"
+     ]
+    },
+    {
+     "title": "【即時新聞】美關稅警報解除！緯創拉回整理，這「3檔筆電概念股」大戶積極卡位！",
+     "link": "https://cmnews.com.tw/article/newsyoudeservetoknow-bc53dd7d-ea13-11f1-bfbc-74c92134159f",
+     "date": "2026-11-27 03:36:31",
+     "sources": [
+      "CMoney投資網誌",
+      "CMoney"
+     ]
+    },
+    {
+     "title": "3231 緯創- 昨日漲停沒有賣- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/190088493",
+     "date": "2026-11-27 03:32:57",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "【即時新聞】緯創(3231)最新營收翻倍，主力大買9千張要轉強了？",
+     "link": "https://cmnews.com.tw/article/newsyoudeservetoknow-f6636dfc-ea0c-11f1-8ac2-0e7fab3ef01e",
+     "date": "2026-11-27 02:48:01",
+     "sources": [
+      "CMoney投資網誌",
+      "CMoney"
+     ]
+    },
+    {
+     "title": "3231 緯創- 緯創押寶台灣版「鋼鐵人」！外骨骼機器人早鳥價約4.5萬元搶攻全球銀髮商機- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/190026831",
+     "date": "2026-11-26 11:13:08",
+     "sources": [
+      "CMoney"
+     ]
+    }
+   ],
+   "rs20": 1.97
+  },
+  {
+   "id": "2059",
+   "name": "川湖",
+   "fullName": "川湖科技股份有限公司",
+   "subGroup": "components",
+   "subGroupName": "關鍵零組件與水冷散熱",
+   "isLeader": true,
+   "leaderRole": "全球伺服器導軌獨占霸主 · 毛利近七成千金股",
+   "description": "全球伺服器重型鋼珠滑軌龍頭，全球伺服器市占超過50%，AI伺服器更達80%以上。坐擁逾3,000項全球專利壁壘。面對GB200重達1.3噸的機櫃耐重抗震考驗，為全球唯一成熟量產者。",
+   "date": "2026-11-27",
+   "close": 7025.0,
+   "pct": -1.82,
+   "volume": 949000,
+   "financials": {
+    "trailingEPS": 62.8,
+    "q3Revenue": "28.5 億元",
+    "grossMargin": "68.2%",
+    "operatingMargin": "57.1%",
+    "roe": "29.8%",
+    "dividendYield": "2.8%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 7025.0,
+    "prevClose": 7155.0,
+    "pct": -1.82,
+    "volume": 949000.0,
+    "ma5": 6505.0,
+    "ma10": 6402.5,
+    "ma20": 7409.75,
+    "ma60": 10310.5,
+    "ma20Slope": -836.0,
+    "rsi14": 41.84,
+    "macd": -977.93,
+    "macdSignal": -1093.01,
+    "macdHist": 115.08,
+    "macdHistPrev": 51.92,
+    "kdK": 57.65,
+    "kdD": 37.49,
+    "atr14": 653.57,
+    "atrPct": 9.3,
+    "bias20": -5.19,
+    "volRatio": 1.16,
+    "avgVol20": 819439,
+    "high60": 14180.0,
+    "low60": 5350.0,
+    "low10": 5350.0,
+    "pricePos60": 0.19,
+    "ret5": 31.31,
+    "ret20": -27.2,
+    "ret60": -50.46,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": -161,
+    "foreign5": -645,
+    "foreign20": -639,
+    "trust1": 30,
+    "trust5": 403,
+    "trust20": 894,
+    "dealer1": -5,
+    "dealer5": -17,
+    "dealer20": 21,
+    "total1": -136,
+    "total5": -259,
+    "total20": 276,
+    "foreignRatio": 22.18,
+    "foreignRatioChg20": -0.57,
+    "foreignStreak": -4,
+    "trustStreak": 2,
+    "foreignAbsAvg20": 118.0,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 22.18
+    }
+   },
+   "score": {
+    "total": 38.5,
+    "trend": 15,
+    "momentum": 87,
+    "chips": 40,
+    "strength": 10,
+    "key": "weak",
+    "label": "中性偏弱",
+    "action": "減碼或暫避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MA5 在 MA10 之上",
+     "weight": 15,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體為正（多方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 42 位於多空分界，方向未明",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 58 / D 37）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +31.3%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "外資近 5 日賣超 645 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 403 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "三大法人近 20 日合計買超 276 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -0.57 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -13.5 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 19% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -27.2%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bull",
+     "text": "成交量為 20 日均量 1.16 倍（量能有承接）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 7335.7,
+     "entryHigh": 7520.9,
+     "entryMid": 7428.3,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 7409.8）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 7335.7~7520.9 區間分批進場。",
+     "stop": 6536.9,
+     "stopPct": -12.0,
+     "target1": 8735.4,
+     "target1Pct": 17.6,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 14605.4,
+     "target2Pct": 96.6,
+     "rr": 1.47,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 653.57,
+     "atrPct": 8.8,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 6536.9 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 8735.4 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 14605.4 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 7409.8）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 7335.7,
+     "entryHigh": 7520.9,
+     "entryMid": 7428.3,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 7409.8）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 7335.7~7520.9 區間分批進場。",
+     "stop": 6536.9,
+     "stopPct": -12.0,
+     "target1": 8866.1,
+     "target1Pct": 19.4,
+     "target1Basis": "進場中值加 2.2 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 14605.4,
+     "target2Pct": 96.6,
+     "rr": 1.61,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 653.57,
+     "atrPct": 8.8,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 6536.9 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 8866.1 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 14605.4 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 7409.8）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 7335.7,
+     "entryHigh": 7520.9,
+     "entryMid": 7428.3,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 7409.8）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 7335.7~7520.9 區間分批進場。",
+     "stop": 6536.9,
+     "stopPct": -12.0,
+     "target1": 9062.2,
+     "target1Pct": 22.0,
+     "target1Basis": "進場中值加 2.5 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 14605.4,
+     "target2Pct": 96.6,
+     "rr": 1.83,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 653.57,
+     "atrPct": 8.8,
+     "volatile": true,
+     "holdDaysMin": 7,
+     "holdDaysMax": 15,
+     "reviewBy": "2026-12-18",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 6536.9 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 9062.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 14605.4 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 7409.8）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 15 個交易日（約至 2026-12-18）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 6.59,
+    "sigma20": 29.48,
+    "band68Low": 4953.8,
+    "band68High": 9096.2,
+    "band90Low": 3617.8,
+    "band90High": 10432.2,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "medium",
+     "direction": "neutral",
+     "title": "今日重要事件消息",
+     "detail": "【即時新聞】川湖(2059)近日強攻漲停列注意股，營收暴增191%還能追？"
+    }
+   ],
+   "news": [
+    {
+     "title": "2059 川湖- 本土中小型對川湖按兵不動8815｜今日8份研報- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/190093622",
+     "date": "2026-11-27 04:00:39",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "【即時新聞】川湖(2059)衝天價驚列注意股！這「2檔導軌概念股」震盪還能追嗎？",
+     "link": "https://cmnews.com.tw/article/newsyoudeservetoknow-0669fc66-ea12-11f1-a1d9-32489c0a87a0",
+     "date": "2026-11-27 03:24:16",
+     "sources": [
+      "CMoney投資網誌"
+     ]
+    },
+    {
+     "title": "【即時新聞】川湖(2059)近日強攻漲停列注意股，營收暴增191%還能追？",
+     "link": "https://cmnews.com.tw/article/newsyoudeservetoknow-cf9f1162-ea0b-11f1-bb56-4338d2a7bb22",
+     "date": "2026-11-27 02:39:47",
+     "sources": [
+      "CMoney投資網誌",
+      "CMoney"
+     ]
+    },
+    {
+     "title": "最狂不是川湖！「這檔」90天暴漲478%、金像電、聯鈞全上榜 23檔注意股曝光",
+     "link": "https://tw.stock.yahoo.com/news/%E6%9C%80%E7%8B%82%E4%B8%8D%E6%98%AF%E5%B7%9D%E6%B9%96-%E9%80%99%E6%AA%94-90%E5%A4%A9%E6%9A%B4%E6%BC%B2478-%E9%87%91%E5%83%8F%E9%9B%BB-%E8%81%AF%E9%88%9E%E5%85%A8%E4%B8%8A%E6%A6%9C-002000508.html",
+     "date": "2026-11-27 00:24:42",
+     "sources": [
+      "Yahoo股市"
+     ]
+    },
+    {
+     "title": "漢測等4檔11/27起打入處置 股后川湖等34檔列注意股",
+     "link": "https://stock.ltn.com.tw/article/dmt3ht5qkemr",
+     "date": "2026-11-26 10:12:21",
+     "sources": [
+      "自由時報",
+      "自由財經"
+     ]
+    }
+   ],
+   "rs20": -13.51
+  },
+  {
+   "id": "2376",
+   "name": "技嘉",
+   "fullName": "技嘉科技股份有限公司",
+   "subGroup": "odm",
+   "subGroupName": "AI伺服器整機與系統代工",
+   "isLeader": false,
+   "leaderRole": "企業端與二線CSP AI伺服器爆發黑馬",
+   "description": "早期以主機板與顯示卡聞名，近年藉由子公司技鋼科技(Giga Computing)大展身手。以極高客製化彈性與熱管理技術，快速滿足歐美二線Tier-2 CSP、科研機構及企業生成式AI私有雲訂單。",
+   "date": "2026-11-27",
+   "close": 273.5,
+   "pct": 0.0,
+   "volume": 5603258,
+   "financials": {
+    "trailingEPS": 15.2,
+    "q3Revenue": "704 億元",
+    "grossMargin": "11.1%",
+    "operatingMargin": "5.1%",
+    "roe": "23.4%",
+    "dividendYield": "3.3%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 273.5,
+    "prevClose": 273.5,
+    "pct": 0.0,
+    "volume": 5603258.0,
+    "ma5": 267.8,
+    "ma10": 267.55,
+    "ma20": 288.5,
+    "ma60": 334.76,
+    "ma20Slope": -20.45,
+    "rsi14": 35.71,
+    "macd": -20.06,
+    "macdSignal": -20.8,
+    "macdHist": 0.74,
+    "macdHistPrev": -0.43,
+    "kdK": 52.63,
+    "kdD": 36.92,
+    "atr14": 16.04,
+    "atrPct": 5.86,
+    "bias20": -5.2,
+    "volRatio": 0.7,
+    "avgVol20": 8040907,
+    "high60": 388.5,
+    "low60": 248.0,
+    "low10": 248.0,
+    "pricePos60": 0.18,
+    "ret5": 10.28,
+    "ret20": -18.6,
+    "ret60": -23.6,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": 400,
+    "foreign5": 4023,
+    "foreign20": -8355,
+    "trust1": -377,
+    "trust5": -2493,
+    "trust20": -506,
+    "dealer1": 216,
+    "dealer5": 849,
+    "dealer20": 3905,
+    "total1": 239,
+    "total5": 2379,
+    "total20": -4956,
+    "foreignRatio": 25.41,
+    "foreignRatioChg20": 3.06,
+    "foreignStreak": 2,
+    "trustStreak": -7,
+    "foreignAbsAvg20": 1150.3,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 25.41
+    }
+   },
+   "score": {
+    "total": 38.0,
+    "trend": 15,
+    "momentum": 81,
+    "chips": 50,
+    "strength": 0,
+    "key": "weak",
+    "label": "中性偏弱",
+    "action": "減碼或暫避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MA5 在 MA10 之上",
+     "weight": 15,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體為正（多方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "RSI 36 偏弱",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 53 / D 37）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +10.3%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "外資近 5 日買超 4,023 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "投信近 5 日賣超 2,493 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "三大法人近 20 日合計賣超 4,956 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資持股比 20 日增加 +3.06 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資最新交易日買超 400 張",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "投信連 7 日賣超",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -4.9 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 18% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -18.6%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.70 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 285.6,
+     "entryHigh": 292.8,
+     "entryMid": 289.2,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 288.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 285.6~292.8 區間分批進場。",
+     "stop": 254.5,
+     "stopPct": -12.0,
+     "target1": 321.3,
+     "target1Pct": 11.1,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 400.2,
+     "target2Pct": 38.4,
+     "rr": 0.92,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 16.04,
+     "atrPct": 5.55,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 254.5 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 321.3 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 400.2 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 288.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 285.6,
+     "entryHigh": 292.8,
+     "entryMid": 289.2,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 288.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 285.6~292.8 區間分批進場。",
+     "stop": 260.0,
+     "stopPct": -10.1,
+     "target1": 324.5,
+     "target1Pct": 12.2,
+     "target1Basis": "進場中值加 2.2 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 400.2,
+     "target2Pct": 38.4,
+     "rr": 1.21,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 16.04,
+     "atrPct": 5.55,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 260.0 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 324.5 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 400.2 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 288.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 285.6,
+     "entryHigh": 292.8,
+     "entryMid": 289.2,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 288.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 285.6~292.8 區間分批進場。",
+     "stop": 264.8,
+     "stopPct": -8.5,
+     "target1": 329.3,
+     "target1Pct": 13.9,
+     "target1Basis": "進場中值加 2.5 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 400.2,
+     "target2Pct": 38.4,
+     "rr": 1.64,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 16.04,
+     "atrPct": 5.55,
+     "volatile": true,
+     "holdDaysMin": 7,
+     "holdDaysMax": 15,
+     "reviewBy": "2026-12-18",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 264.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 329.3 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 400.2 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 288.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 15 個交易日（約至 2026-12-18）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 4.01,
+    "sigma20": 17.94,
+    "band68Low": 224.4,
+    "band68High": 322.6,
+    "band90Low": 192.8,
+    "band90High": 354.2,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "MACD 翻多（柱狀體由負轉正）",
+     "detail": "中期動能由空轉多，常是波段起漲的早期訊號，但需搭配均線與籌碼確認。"
+    }
+   ],
+   "news": [
+    {
+     "title": "2376 技嘉 - 戴爾的法說會跟技嘉講的一模一樣華爾街3度調調高財測- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/190053590",
+     "date": "2026-11-26 14:12:59",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "2376 技嘉 - 今天最重要的是量！ - 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189959960",
+     "date": "2026-11-25 11:55:19",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "2376 技嘉 - 品牌AI伺服器大漲價戴爾營收再度創高華爾街分析師3度調高財測- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189869944",
+     "date": "2026-11-25 09:25:05",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "2376 技嘉 - 戴爾AI伺服器品牌廠最新營收創新高3度上修財測代表什麼意思? - 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189867720",
+     "date": "2026-11-25 09:11:17",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "【即時新聞】技嘉受惠AI伺服器機櫃出貨，Q4營收上看1,855億元！",
+     "link": "https://cmnews.com.tw/article/newsyoudeservetoknow-03bf5728-e852-11f1-8339-c40920f8ec5c",
+     "date": "2026-11-24 21:57:17",
+     "sources": [
+      "CMoney投資網誌"
+     ]
+    }
+   ],
+   "rs20": -4.91
+  },
+  {
+   "id": "6414",
+   "name": "樺漢",
+   "fullName": "樺漢科技股份有限公司",
+   "subGroup": "ipc_iot",
+   "subGroupName": "工業電腦與邊緣物聯網",
+   "isLeader": false,
+   "leaderRole": "鴻海集團工業物聯網旗艦 · 軟硬整合",
+   "description": "鴻海集團旗下工業電腦大廠，透過併購歐洲S&T/Kontron具備軟體、韌體與雲端SaaS能力。深度切入智慧零售、智慧工廠、半導體ESG節能監控及邊緣AI機器人領域。",
+   "date": "2026-11-27",
+   "close": 312.5,
+   "pct": -0.95,
+   "volume": 307781,
+   "financials": {
+    "trailingEPS": 19.5,
+    "q3Revenue": "377 億元",
+    "grossMargin": "19.8%",
+    "operatingMargin": "5.6%",
+    "roe": "17.4%",
+    "dividendYield": "3.9%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 312.5,
+    "prevClose": 315.5,
+    "pct": -0.95,
+    "volume": 307781.0,
+    "ma5": 307.4,
+    "ma10": 310.6,
+    "ma20": 325.2,
+    "ma60": 366.16,
+    "ma20Slope": -18.4,
+    "rsi14": 41.99,
+    "macd": -17.41,
+    "macdSignal": -17.95,
+    "macdHist": 0.54,
+    "macdHistPrev": -0.33,
+    "kdK": 46.12,
+    "kdD": 37.53,
+    "atr14": 18.61,
+    "atrPct": 5.95,
+    "bias20": -3.91,
+    "volRatio": 0.37,
+    "avgVol20": 831107,
+    "high60": 407.5,
+    "low60": 287.5,
+    "low10": 287.5,
+    "pricePos60": 0.21,
+    "ret5": 8.7,
+    "ret20": -16.22,
+    "ret60": -19.77,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": 113,
+    "foreign5": 84,
+    "foreign20": -204,
+    "trust1": -10,
+    "trust5": 2,
+    "trust20": 49,
+    "dealer1": 5,
+    "dealer5": -8,
+    "dealer20": -26,
+    "total1": 108,
+    "total5": 78,
+    "total20": -181,
+    "foreignRatio": 44.59,
+    "foreignRatioChg20": -0.09,
+    "foreignStreak": 2,
+    "trustStreak": -2,
+    "foreignAbsAvg20": 111.6,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 44.59
+    }
+   },
+   "score": {
+    "total": 35.5,
+    "trend": 0,
+    "momentum": 87,
+    "chips": 55,
+    "strength": 0,
+    "key": "bad",
+    "label": "弱勢",
+    "action": "建議回避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體為正（多方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 42 位於多空分界，方向未明",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 46 / D 38）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +8.7%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "外資近 5 日買超 84 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 2 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "三大法人近 20 日合計賣超 181 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -0.09 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資最新交易日買超 113 張",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -2.5 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 21% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -16.2%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.37 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 321.9,
+     "entryHigh": 330.1,
+     "entryMid": 326.0,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 325.2）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 321.9~330.1 區間分批進場。",
+     "stop": 286.9,
+     "stopPct": -12.0,
+     "target1": 363.2,
+     "target1Pct": 11.4,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 419.7,
+     "target2Pct": 28.7,
+     "rr": 0.95,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 18.61,
+     "atrPct": 5.71,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 286.9 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 363.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 419.7 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 325.2）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 321.9,
+     "entryHigh": 330.1,
+     "entryMid": 326.0,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 325.2）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 321.9~330.1 區間分批進場。",
+     "stop": 292.2,
+     "stopPct": -10.4,
+     "target1": 366.2,
+     "target1Pct": 12.3,
+     "target1Basis": "MA60 季線 NT$ 366.2 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 419.7,
+     "target2Pct": 28.7,
+     "rr": 1.19,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 18.61,
+     "atrPct": 5.71,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 292.2 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 366.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 419.7 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 325.2）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 321.9,
+     "entryHigh": 330.1,
+     "entryMid": 326.0,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 325.2）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 321.9~330.1 區間分批進場。",
+     "stop": 297.8,
+     "stopPct": -8.7,
+     "target1": 366.2,
+     "target1Pct": 12.3,
+     "target1Basis": "MA60 季線 NT$ 366.2 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 419.7,
+     "target2Pct": 28.7,
+     "rr": 1.42,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 18.61,
+     "atrPct": 5.71,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 297.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 366.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 419.7 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 325.2）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 3.94,
+    "sigma20": 17.62,
+    "band68Low": 257.4,
+    "band68High": 367.6,
+    "band90Low": 221.9,
+    "band90High": 403.1,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "MACD 翻多（柱狀體由負轉正）",
+     "detail": "中期動能由空轉多，常是波段起漲的早期訊號，但需搭配均線與籌碼確認。"
+    }
+   ],
+   "news": [
+    {
+     "title": "超恩為重要股東，博來冀與樺漢集團共拓產品線",
+     "link": "https://tw.stock.yahoo.com/news/%E8%B6%85%E6%81%A9%E7%82%BA%E9%87%8D%E8%A6%81%E8%82%A1%E6%9D%B1-%E5%8D%9A%E4%BE%86%E5%86%80%E8%88%87%E6%A8%BA%E6%BC%A2%E9%9B%86%E5%9C%98%E5%85%B1%E6%8B%93%E7%94%A2%E5%93%81%E7%B7%9A-032200635.html",
+     "date": "2026-11-27 04:29:09",
+     "sources": [
+      "Yahoo股市",
+      "台視全球資訊網"
+     ]
+    },
+    {
+     "title": "△興櫃：博來科技1月中旬轉上櫃，躋身樺漢集團前景俏，明年拚雙位數成長",
+     "link": "https://ww2.money-link.com.tw/realtimenews/NewsContent.aspx?SN=2449350002&PU=0010",
+     "date": "2026-11-24 08:58:00",
+     "sources": [
+      "富聯網"
+     ]
+    },
+    {
+     "title": "樺漢Kontron明年見綜效，AI業務占比續升",
+     "link": "https://www.ttv.com.tw/finance/view/112026241000D9964D5FC42C484CB556A363881ACD27EEB5/587",
+     "date": "2026-11-24 03:46:55",
+     "sources": [
+      "台視全球資訊網"
+     ]
+    },
+    {
+     "title": "討論牆 | 盤中速報 - 樺漢(6414)急拉3.17%報413.0元，成交830張",
+     "link": "https://today.line.me/tw/v3/posts/list/article/1DlB3km",
+     "date": "2026-11-23 15:41:23",
+     "sources": [
+      "LINE TODAY"
+     ]
+    }
+   ],
+   "rs20": -2.53
+  },
+  {
+   "id": "3706",
+   "name": "神達",
+   "fullName": "神達控股股份有限公司",
+   "subGroup": "odm",
+   "subGroupName": "AI伺服器整機與系統代工",
+   "isLeader": false,
+   "leaderRole": "承接英特爾DSG伺服器業務 · 智慧移動",
+   "description": "聯華神通集團成員，旗下神雲科技(MiTAC)於2023年承接Intel資料中心解決方案群(DSG)伺服器業務，在企業伺服器與AI運算大幅成長；神達數位則深耕行車紀錄器與車用導航。",
+   "date": "2026-11-27",
+   "close": 59.0,
+   "pct": -1.83,
+   "volume": 5170199,
+   "financials": {
+    "trailingEPS": 3.85,
+    "q3Revenue": "151 億元",
+    "grossMargin": "12.8%",
+    "operatingMargin": "4.1%",
+    "roe": "9.5%",
+    "dividendYield": "3.7%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 59.0,
+    "prevClose": 60.1,
+    "pct": -1.83,
+    "volume": 5170199.0,
+    "ma5": 57.82,
+    "ma10": 58.43,
+    "ma20": 64.53,
+    "ma60": 75.27,
+    "ma20Slope": -5.45,
+    "rsi14": 28.9,
+    "macd": -5.28,
+    "macdSignal": -5.17,
+    "macdHist": -0.11,
+    "macdHistPrev": -0.38,
+    "kdK": 44.03,
+    "kdD": 31.17,
+    "atr14": 3.68,
+    "atrPct": 6.23,
+    "bias20": -8.58,
+    "volRatio": 0.51,
+    "avgVol20": 10176204,
+    "high60": 84.2,
+    "low60": 53.0,
+    "low10": 53.0,
+    "pricePos60": 0.19,
+    "ret5": 11.32,
+    "ret20": -23.18,
+    "ret60": -27.46,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": 1261,
+    "foreign5": 4500,
+    "foreign20": 15240,
+    "trust1": -2,
+    "trust5": -5214,
+    "trust20": -8627,
+    "dealer1": 310,
+    "dealer5": 763,
+    "dealer20": 1917,
+    "total1": 1569,
+    "total5": 49,
+    "total20": 8530,
+    "foreignRatio": 10.56,
+    "foreignRatioChg20": 0.43,
+    "foreignStreak": 2,
+    "trustStreak": -1,
+    "foreignAbsAvg20": 2614.0,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 10.56
+    }
+   },
+   "score": {
+    "total": 32.5,
+    "trend": 0,
+    "momentum": 60,
+    "chips": 70,
+    "strength": 0,
+    "key": "bad",
+    "label": "弱勢",
+    "action": "建議回避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MACD 柱狀體為負（空方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 29 超賣，屬反彈候選而非趨勢做多",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 44 / D 31）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +11.3%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "外資近 5 日買超 4,500 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "投信近 5 日賣超 5,214 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "三大法人近 20 日合計買超 8,530 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資持股比 20 日增加 +0.43 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資最新交易日買超 1,261 張",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -9.5 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 19% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -23.2%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.51 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 63.9,
+     "entryHigh": 65.5,
+     "entryMid": 64.7,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 64.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 63.9~65.5 區間分批進場。",
+     "stop": 56.9,
+     "stopPct": -12.0,
+     "target1": 72.1,
+     "target1Pct": 11.4,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 86.7,
+     "target2Pct": 34.1,
+     "rr": 0.95,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 3.68,
+     "atrPct": 5.69,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 56.9 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 72.1 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 86.7 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 64.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 63.9,
+     "entryHigh": 65.5,
+     "entryMid": 64.7,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 64.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 63.9~65.5 區間分批進場。",
+     "stop": 58.0,
+     "stopPct": -10.3,
+     "target1": 72.8,
+     "target1Pct": 12.5,
+     "target1Basis": "進場中值加 2.2 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 86.7,
+     "target2Pct": 34.1,
+     "rr": 1.21,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 3.68,
+     "atrPct": 5.69,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 58.0 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 72.8 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 86.7 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 64.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 63.9,
+     "entryHigh": 65.5,
+     "entryMid": 64.7,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 64.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 63.9~65.5 區間分批進場。",
+     "stop": 59.1,
+     "stopPct": -8.6,
+     "target1": 73.9,
+     "target1Pct": 14.2,
+     "target1Basis": "進場中值加 2.5 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 86.7,
+     "target2Pct": 34.1,
+     "rr": 1.65,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 3.68,
+     "atrPct": 5.69,
+     "volatile": true,
+     "holdDaysMin": 7,
+     "holdDaysMax": 15,
+     "reviewBy": "2026-12-18",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 59.1 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 73.9 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 86.7 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 64.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 15 個交易日（約至 2026-12-18）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 3.96,
+    "sigma20": 17.7,
+    "band68Low": 48.6,
+    "band68High": 69.4,
+    "band90Low": 41.8,
+    "band90High": 76.2,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "今日正面消息",
+     "detail": "3706 神達- 法說重點- 股市爆料同學會"
+    },
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "今日正面消息",
+     "detail": "工商證券頭條：神達何繼武稱，明年成長無懸念"
+    }
+   ],
+   "news": [
+    {
+     "title": "3706 神達- 法說重點- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/190093668",
+     "date": "2026-11-27 04:00:54",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "工商證券頭條：神達何繼武稱，明年成長無懸念",
+     "link": "https://ww2.money-link.com.tw/RealtimeNews/NewsContent.aspx?sn=2450538002&pu=News_0009_3",
+     "date": "2026-11-27",
+     "sources": [
+      "富聯網"
+     ]
+    },
+    {
+     "title": "《股市行事曆1-1》神達(3706)除權、光聖(6442)增資股上市",
+     "link": "https://ww2.money-link.com.tw/realtimenews/NewsContent.aspx?SN=6373190001&PU=2002",
+     "date": "2026-11-26 23:36:00",
+     "sources": [
+      "富聯網"
+     ]
+    },
+    {
+     "title": "【即時新聞】神達法說會釋出樂觀展望，未來3年資本支出上看198億元！",
+     "link": "https://cmnews.com.tw/article/newsyoudeservetoknow-530bc27c-e9e5-11f1-8725-d14b71e939e3",
+     "date": "2026-11-26 22:04:17",
+     "sources": [
+      "CMoney投資網誌"
+     ]
+    },
+    {
+     "title": "神達何繼武：明年成長無懸念",
+     "link": "https://www.chinatimes.com/newspapers/20261127000399-260206",
+     "date": "2026-11-26 20:10:00",
+     "sources": [
+      "中時新聞網"
+     ]
+    }
+   ],
+   "rs20": -9.49
+  },
+  {
+   "id": "2357",
+   "name": "華碩",
+   "fullName": "華碩電腦股份有限公司",
+   "subGroup": "brand_pc",
+   "subGroupName": "電腦品牌與電競旗艦",
+   "isLeader": true,
+   "leaderRole": "全球主機板與電競PC龍頭 · 積極搶攻AI超級電腦",
+   "description": "全球主機板第一品牌、全球前三大消費性筆電廠。旗下ROG品牌穩坐全球電競第一把交椅。近年成立伺服器事業群，獲得國家級AI超級電腦與企業級伺服器大單，目標伺服器營收翻倍成長。",
+   "date": "2026-11-27",
+   "close": 799.0,
+   "pct": 0.0,
+   "volume": 3001792,
+   "financials": {
+    "trailingEPS": 42.5,
+    "q3Revenue": "1,665 億元",
+    "grossMargin": "17.2%",
+    "operatingMargin": "7.8%",
+    "roe": "16.8%",
+    "dividendYield": "3.6%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 799.0,
+    "prevClose": 799.0,
+    "pct": 0.0,
+    "volume": 3001792.0,
+    "ma5": 789.2,
+    "ma10": 800.5,
+    "ma20": 841.35,
+    "ma60": 927.38,
+    "ma20Slope": -40.55,
+    "rsi14": 41.64,
+    "macd": -40.74,
+    "macdSignal": -38.51,
+    "macdHist": -2.23,
+    "macdHistPrev": -4.46,
+    "kdK": 34.76,
+    "kdD": 29.61,
+    "atr14": 46.36,
+    "atrPct": 5.8,
+    "bias20": -5.03,
+    "volRatio": 0.82,
+    "avgVol20": 3643136,
+    "high60": 1025.0,
+    "low60": 756.0,
+    "low10": 756.0,
+    "pricePos60": 0.16,
+    "ret5": 5.69,
+    "ret20": -11.81,
+    "ret60": -20.02,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": 1139,
+    "foreign5": 591,
+    "foreign20": -1661,
+    "trust1": -748,
+    "trust5": -2559,
+    "trust20": -2623,
+    "dealer1": 48,
+    "dealer5": 507,
+    "dealer20": 3188,
+    "total1": 439,
+    "total5": -1461,
+    "total20": -1096,
+    "foreignRatio": 39.31,
+    "foreignRatioChg20": -0.43,
+    "foreignStreak": 1,
+    "trustStreak": -2,
+    "foreignAbsAvg20": 441.9,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 39.31
+    }
+   },
+   "score": {
+    "total": 30.2,
+    "trend": 0,
+    "momentum": 62,
+    "chips": 35,
+    "strength": 40,
+    "key": "bad",
+    "label": "弱勢",
+    "action": "建議回避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MACD 柱狀體為負（空方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 42 位於多空分界，方向未明",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 35 / D 30）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +5.7%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "外資近 5 日買超 591 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "投信近 5 日賣超 2,559 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "三大法人近 20 日合計賣超 1,096 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -0.43 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資最新交易日買超 1,139 張",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "近 20 日贏類股指數 +1.9 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 16% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -11.8%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.82 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 832.9,
+     "entryHigh": 854.0,
+     "entryMid": 843.5,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 841.4）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 832.9~854.0 區間分批進場。",
+     "stop": 742.2,
+     "stopPct": -12.0,
+     "target1": 927.4,
+     "target1Pct": 10.0,
+     "target1Basis": "MA60 季線 NT$ 927.4 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 1055.8,
+     "target2Pct": 25.2,
+     "rr": 0.83,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 46.36,
+     "atrPct": 5.5,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 742.2 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 927.4 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 1055.8 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 841.4）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 832.9,
+     "entryHigh": 854.0,
+     "entryMid": 843.5,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 841.4）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 832.9~854.0 區間分批進場。",
+     "stop": 758.8,
+     "stopPct": -10.0,
+     "target1": 927.4,
+     "target1Pct": 10.0,
+     "target1Basis": "MA60 季線 NT$ 927.4 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 1055.8,
+     "target2Pct": 25.2,
+     "rr": 0.99,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 46.36,
+     "atrPct": 5.5,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 758.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 927.4 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 1055.8 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 841.4）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 832.9,
+     "entryHigh": 854.0,
+     "entryMid": 843.5,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 841.4）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 832.9~854.0 區間分批進場。",
+     "stop": 772.7,
+     "stopPct": -8.4,
+     "target1": 927.4,
+     "target1Pct": 10.0,
+     "target1Basis": "MA60 季線 NT$ 927.4 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 1055.8,
+     "target2Pct": 25.2,
+     "rr": 1.19,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 46.36,
+     "atrPct": 5.5,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-12",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 772.7 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 927.4 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 1055.8 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 841.4）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-12）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 3.47,
+    "sigma20": 15.53,
+    "band68Low": 674.9,
+    "band68High": 923.1,
+    "band90Low": 594.8,
+    "band90High": 1003.2,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "medium",
+     "direction": "bullish",
+     "title": "外資異常大買超 1,139 張",
+     "detail": "為近 20 日平均進出量的 2.6 倍，屬於明顯的籌碼異動，通常對應特定消息或法人調整部位。"
+    }
+   ],
+   "news": [
+    {
+     "title": "華碩電競筆電報捷 獲金點「年度最佳設計獎」",
+     "link": "https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=d38a66ea-5bbd-496b-abf3-2298d98783a8",
+     "date": "2026-11-27 04:13:00",
+     "sources": [
+      "MoneyDJ"
+     ]
+    },
+    {
+     "title": "AI Server爆發性成長！華碩、技嘉營運火力全開 法人力挺喊買、目標價一次看",
+     "link": "https://www.ftnn.com.tw/news/599877",
+     "date": "2026-11-26 12:12:00",
+     "sources": [
+      "FTNN 新聞網"
+     ]
+    },
+    {
+     "title": "2357 華碩 - 台股：外資-491.8億，投信+230.5億，自營商+128... - 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189999202",
+     "date": "2026-11-26 08:12:21",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "華碩打造ProArt未來創藝節，體驗AI、生活與創作- 新聞",
+     "link": "https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=761fe342-a3be-46cf-9d81-7fd02b132505",
+     "date": "2026-11-26 07:00:00",
+     "sources": [
+      "MoneyDJ"
+     ]
+    },
+    {
+     "title": "2357 華碩 - 資誠解析SBTi 淨零標準2.0 企業減碳從設備投資做到供應鏈- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189949187",
+     "date": "2026-11-26 02:56:18",
+     "sources": [
+      "CMoney"
+     ]
+    }
+   ],
+   "rs20": 1.88
+  },
+  {
+   "id": "2377",
+   "name": "微星",
+   "fullName": "微星科技股份有限公司",
+   "subGroup": "brand_pc",
+   "subGroupName": "電腦品牌與電競旗艦",
+   "isLeader": false,
+   "leaderRole": "全球高階電競硬體與創作者筆電先鋒",
+   "description": "全球知名的電競筆電、主機板與顯示卡品牌廠。近年以深厚的高頻電路與散熱底蘊，拓展伺服器、邊緣運算、工控電腦及車載充電樁市場。",
+   "date": "2026-11-27",
+   "close": 130.5,
+   "pct": 1.56,
+   "volume": 2371720,
+   "financials": {
+    "trailingEPS": 12.3,
+    "q3Revenue": "520 億元",
+    "grossMargin": "12.5%",
+    "operatingMargin": "4.2%",
+    "roe": "14.5%",
+    "dividendYield": "4.1%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 130.5,
+    "prevClose": 128.5,
+    "pct": 1.56,
+    "volume": 2371720.0,
+    "ma5": 127.5,
+    "ma10": 127.3,
+    "ma20": 135.97,
+    "ma60": 149.24,
+    "ma20Slope": -8.88,
+    "rsi14": 41.13,
+    "macd": -7.23,
+    "macdSignal": -7.07,
+    "macdHist": -0.16,
+    "macdHistPrev": -0.75,
+    "kdK": 51.13,
+    "kdD": 36.17,
+    "atr14": 8.71,
+    "atrPct": 6.68,
+    "bias20": -4.03,
+    "volRatio": 0.35,
+    "avgVol20": 6726449,
+    "high60": 168.5,
+    "low60": 116.0,
+    "low10": 116.0,
+    "pricePos60": 0.28,
+    "ret5": 12.5,
+    "ret20": -17.14,
+    "ret60": -15.81,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": 375,
+    "foreign5": -4165,
+    "foreign20": -7351,
+    "trust1": -167,
+    "trust5": 1391,
+    "trust20": 1855,
+    "dealer1": 204,
+    "dealer5": 302,
+    "dealer20": 992,
+    "total1": 412,
+    "total5": -2472,
+    "total20": -4504,
+    "foreignRatio": 21.09,
+    "foreignRatioChg20": -1.43,
+    "foreignStreak": 1,
+    "trustStreak": -1,
+    "foreignAbsAvg20": 876.5,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 21.09
+    }
+   },
+   "score": {
+    "total": 28.2,
+    "trend": 15,
+    "momentum": 62,
+    "chips": 30,
+    "strength": 0,
+    "key": "bad",
+    "label": "弱勢",
+    "action": "建議回避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bull",
+     "text": "MA5 在 MA10 之上",
+     "weight": 15,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MACD 柱狀體為負（空方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 41 位於多空分界，方向未明",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 51 / D 36）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +12.5%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "外資近 5 日賣超 4,165 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 1,391 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "三大法人近 20 日合計賣超 4,504 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -1.43 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資最新交易日買超 375 張",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -3.5 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 28% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -17.1%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.35 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 134.6,
+     "entryHigh": 138.0,
+     "entryMid": 136.3,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 136.0）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 134.6~138.0 區間分批進場。",
+     "stop": 120.0,
+     "stopPct": -12.0,
+     "target1": 149.2,
+     "target1Pct": 9.5,
+     "target1Basis": "MA60 季線 NT$ 149.2 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 173.6,
+     "target2Pct": 27.3,
+     "rr": 0.79,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 8.71,
+     "atrPct": 6.39,
+     "volatile": true,
+     "holdDaysMin": 4,
+     "holdDaysMax": 9,
+     "reviewBy": "2026-12-10",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 120.0 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 149.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 173.6 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 136.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 9 個交易日（約至 2026-12-10）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 134.6,
+     "entryHigh": 138.0,
+     "entryMid": 136.3,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 136.0）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 134.6~138.0 區間分批進場。",
+     "stop": 120.7,
+     "stopPct": -11.5,
+     "target1": 149.2,
+     "target1Pct": 9.5,
+     "target1Basis": "MA60 季線 NT$ 149.2 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 173.6,
+     "target2Pct": 27.3,
+     "rr": 0.83,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 8.71,
+     "atrPct": 6.39,
+     "volatile": true,
+     "holdDaysMin": 4,
+     "holdDaysMax": 9,
+     "reviewBy": "2026-12-10",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 120.7 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 149.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 173.6 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 136.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 9 個交易日（約至 2026-12-10）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 134.6,
+     "entryHigh": 138.0,
+     "entryMid": 136.3,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 136.0）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 134.6~138.0 區間分批進場。",
+     "stop": 123.3,
+     "stopPct": -9.6,
+     "target1": 149.2,
+     "target1Pct": 9.5,
+     "target1Basis": "MA60 季線 NT$ 149.2 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 173.6,
+     "target2Pct": 27.3,
+     "rr": 0.99,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 8.71,
+     "atrPct": 6.39,
+     "volatile": true,
+     "holdDaysMin": 4,
+     "holdDaysMax": 9,
+     "reviewBy": "2026-12-10",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 123.3 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 149.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 173.6 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 136.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 9 個交易日（約至 2026-12-10）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 4.3,
+    "sigma20": 19.22,
+    "band68Low": 105.4,
+    "band68High": 155.6,
+    "band90Low": 89.2,
+    "band90High": 171.8,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [],
+   "news": [
+    {
+     "title": "2377 微星 - Coupang酷澎黑五3C旗艦手機最高折3000元攜手UCC等國內外品牌祭優惠- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/190067999",
+     "date": "2026-11-27 01:39:21",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "盤中速報 - 微星(2377)股價拉至漲停，漲停價133.5元，成交5,912張",
+     "link": "https://es.tradingview.com/news/cnyes:652f44481acdf:0/",
+     "date": "2026-11-24 04:49:00",
+     "sources": [
+      "TradingView"
+     ]
+    },
+    {
+     "title": "2377 微星 - 微星地端AI產品拉貨勁，看好長期需求- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189661870",
+     "date": "2026-11-24 03:19:17",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "2377 微星 - 夜盤急拉2600點！看來明天穩了- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189620122",
+     "date": "2026-11-23 14:14:41",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "焦點股》微星：低點反彈 收復120元關卡",
+     "link": "https://stock.ltn.com.tw/article/ygr06m4dpbdw",
+     "date": "2026-11-23 02:12:49",
+     "sources": [
+      "自由時報",
+      "自由財經"
+     ]
+    }
+   ],
+   "rs20": -3.45
+  },
+  {
+   "id": "3324",
+   "name": "雙鴻",
+   "fullName": "雙鴻科技股份有限公司",
+   "subGroup": "components",
+   "subGroupName": "關鍵零組件與水冷散熱",
+   "isLeader": false,
+   "leaderRole": "液冷散熱模組核心指標大廠",
+   "description": "台灣散熱技術先驅，產品跨足筆電、顯示卡、車用及AI伺服器。在水冷板與機櫃級散熱迴路布局成熟，為輝達伺服器供應鏈水冷主要供應商之一。",
+   "date": "2026-11-26",
+   "close": 858.0,
+   "pct": 7.52,
+   "volume": 5416683,
+   "financials": {
+    "trailingEPS": 20.8,
+    "q3Revenue": "43.2 億元",
+    "grossMargin": "26.8%",
+    "operatingMargin": "12.5%",
+    "roe": "24.1%",
+    "dividendYield": "2.4%"
+   },
+   "ind": {
+    "date": "2026-11-26",
+    "close": 858.0,
+    "prevClose": 798.0,
+    "pct": 7.52,
+    "volume": 5416683.0,
+    "ma5": 816.2,
+    "ma10": 903.9,
+    "ma20": 1073.2,
+    "ma60": 1317.98,
+    "ma20Slope": -144.45,
+    "rsi14": 40.75,
+    "macd": -147.32,
+    "macdSignal": -124.92,
+    "macdHist": -22.39,
+    "macdHistPrev": -31.3,
+    "kdK": 21.49,
+    "kdD": 16.87,
+    "atr14": 101.43,
+    "atrPct": 11.82,
+    "bias20": -20.05,
+    "volRatio": 1.12,
+    "avgVol20": 4850195,
+    "high60": 1710.0,
+    "low60": 777.0,
+    "low10": 777.0,
+    "pricePos60": 0.09,
+    "ret5": -2.72,
+    "ret20": -41.43,
+    "ret60": -24.74,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": -217,
+    "foreign5": 545,
+    "foreign20": 1406,
+    "trust1": -386,
+    "trust5": -413,
+    "trust20": -437,
+    "dealer1": 136,
+    "dealer5": 236,
+    "dealer20": -217,
+    "total1": -467,
+    "total5": 368,
+    "total20": 752,
+    "foreignRatio": 42.94,
+    "foreignRatioChg20": 2.29,
+    "foreignStreak": -1,
+    "trustStreak": -1,
+    "foreignAbsAvg20": 438.1,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 42.94
+    }
+   },
+   "score": {
+    "total": 28.2,
+    "trend": 0,
+    "momentum": 47,
+    "chips": 60,
+    "strength": 10,
+    "key": "bad",
+    "label": "弱勢",
+    "action": "建議回避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MACD 柱狀體為負（空方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 41 位於多空分界，方向未明",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 21 / D 17）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "近 5 日報酬 -2.7%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "外資近 5 日買超 545 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "投信近 5 日賣超 413 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "三大法人近 20 日合計買超 752 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資持股比 20 日增加 +2.29 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -27.7 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 9% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -41.4%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bull",
+     "text": "成交量為 20 日均量 1.12 倍（量能有承接）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 1062.5,
+     "entryHigh": 1089.3,
+     "entryMid": 1075.9,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 1073.2）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 1062.5~1089.3 區間分批進場。",
+     "stop": 946.8,
+     "stopPct": -12.0,
+     "target1": 1278.7,
+     "target1Pct": 18.9,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 1761.3,
+     "target2Pct": 63.7,
+     "rr": 1.57,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 101.43,
+     "atrPct": 9.43,
+     "volatile": true,
+     "holdDaysMin": 5,
+     "holdDaysMax": 11,
+     "reviewBy": "2026-12-11",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 946.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 1278.7 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 1761.3 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 1073.2）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 11 個交易日（約至 2026-12-11）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 1062.5,
+     "entryHigh": 1089.3,
+     "entryMid": 1075.9,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 1073.2）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 1062.5~1089.3 區間分批進場。",
+     "stop": 946.8,
+     "stopPct": -12.0,
+     "target1": 1299.0,
+     "target1Pct": 20.7,
+     "target1Basis": "進場中值加 2.2 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 1761.3,
+     "target2Pct": 63.7,
+     "rr": 1.73,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 101.43,
+     "atrPct": 9.43,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-14",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 946.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 1299.0 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 1761.3 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 1073.2）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-14）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 1062.5,
+     "entryHigh": 1089.3,
+     "entryMid": 1075.9,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 1073.2）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 1062.5~1089.3 區間分批進場。",
+     "stop": 946.8,
+     "stopPct": -12.0,
+     "target1": 1318.0,
+     "target1Pct": 22.5,
+     "target1Basis": "MA60 季線 NT$ 1318.0 —— 這是上方第一道壓力，先在此停利一半",
+     "target2": 1761.3,
+     "target2Pct": 63.7,
+     "rr": 1.88,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 101.43,
+     "atrPct": 9.43,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-14",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 946.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 1318.0 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 1761.3 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 1073.2）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-14）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 7.68,
+    "sigma20": 34.34,
+    "band68Low": 563.4,
+    "band68High": 1152.6,
+    "band90Low": 373.4,
+    "band90High": 1342.6,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "high",
+     "direction": "bullish",
+     "title": "單日大漲 +7.52%",
+     "detail": "出現明顯買盤。需確認是否伴隨放量與法人買超，若只有價漲量縮，追高容易套在短線高點。"
+    }
+   ],
+   "news": [
+    {
+     "title": "《其他電》雙鴻液冷散熱、ASIC出貨放量 仍遭外資降評至「中立」",
+     "link": "https://ww2.money-link.com.tw/realtimenews/NewsContent.aspx?SN=6373642001&PU=1002",
+     "date": "2026-11-27 04:23:00",
+     "sources": [
+      "富聯網"
+     ]
+    },
+    {
+     "title": "《台北股市》AI雜訊淡化 台達電、雙鴻勁揚",
+     "link": "https://ww2.money-link.com.tw/realtimenews/NewsContent.aspx?SN=6373293001&PU=1002",
+     "date": "2026-11-27 00:04:00",
+     "sources": [
+      "富聯網"
+     ]
+    },
+    {
+     "title": "雙鴻估關稅影響有限，台廠先前多已調整產能 | MoneyDJ理財網",
+     "link": "https://today.line.me/tw/v3/article/Kwv9gKG",
+     "date": "2026-11-26 04:45:25",
+     "sources": [
+      "LINE TODAY"
+     ]
+    },
+    {
+     "title": "3324 雙鴻 - 三雄最弱 你好好洗 我再低接 - 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189951838",
+     "date": "2026-11-25 11:10:36",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "雙鴻10月營收年月雙增 連16月年增",
+     "link": "https://www.taiwanhot.net/news/1155266/%E9%9B%99%E9%B4%BB10%E6%9C%88%E7%87%9F%E6%94%B6%E5%B9%B4%E6%9C%88%E9%9B%99%E5%A2%9E+%E9%80%A316%E6%9C%88%E5%B9%B4%E5%A2%9E",
+     "date": "2026-11-25 06:18:02",
+     "sources": [
+      "台灣好新聞"
+     ]
+    }
+   ],
+   "rs20": -27.74
+  },
+  {
+   "id": "2356",
+   "name": "英業達",
+   "fullName": "英業達股份有限公司",
+   "subGroup": "odm",
+   "subGroupName": "AI伺服器整機與系統代工",
+   "isLeader": false,
+   "leaderRole": "伺服器主機板 (L6) 出貨全球霸主",
+   "description": "台灣老牌電子代工五哥之一，在伺服器主機板(L6)出貨量長期稱冠全球。同時兼具商用筆記型電腦組裝，並積極跨入自研AI加速晶片(VectorMesh)與邊緣AI解決方案。",
+   "date": "2026-11-27",
+   "close": 41.9,
+   "pct": 0.0,
+   "volume": 24085266,
+   "financials": {
+    "trailingEPS": 2.15,
+    "q3Revenue": "1,638 億元",
+    "grossMargin": "5.3%",
+    "operatingMargin": "1.7%",
+    "roe": "11.2%",
+    "dividendYield": "4.0%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 41.9,
+    "prevClose": 41.9,
+    "pct": 0.0,
+    "volume": 24085266.0,
+    "ma5": 40.81,
+    "ma10": 41.19,
+    "ma20": 47.35,
+    "ma60": 56.64,
+    "ma20Slope": -5.21,
+    "rsi14": 23.45,
+    "macd": -4.79,
+    "macdSignal": -4.6,
+    "macdHist": -0.2,
+    "macdHistPrev": -0.48,
+    "kdK": 41.16,
+    "kdD": 26.29,
+    "atr14": 2.99,
+    "atrPct": 7.13,
+    "bias20": -11.51,
+    "volRatio": 1.03,
+    "avgVol20": 23474138,
+    "high60": 67.5,
+    "low60": 38.75,
+    "low10": 38.75,
+    "pricePos60": 0.11,
+    "ret5": 6.75,
+    "ret20": -29.58,
+    "ret60": -37.18,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": 7735,
+    "foreign5": 9008,
+    "foreign20": -27091,
+    "trust1": -4475,
+    "trust5": -25158,
+    "trust20": -42366,
+    "dealer1": 742,
+    "dealer5": 1408,
+    "dealer20": 5799,
+    "total1": 4002,
+    "total5": -14742,
+    "total20": -63658,
+    "foreignRatio": 18.5,
+    "foreignRatioChg20": -0.95,
+    "foreignStreak": 1,
+    "trustStreak": -11,
+    "foreignAbsAvg20": 4197.9,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 18.5
+    }
+   },
+   "score": {
+    "total": 25.2,
+    "trend": 0,
+    "momentum": 60,
+    "chips": 35,
+    "strength": 10,
+    "key": "bad",
+    "label": "弱勢",
+    "action": "建議回避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MACD 柱狀體為負（空方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 23 超賣，屬反彈候選而非趨勢做多",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 41 / D 26）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +6.8%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "外資近 5 日買超 9,008 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "投信近 5 日賣超 25,158 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "三大法人近 20 日合計賣超 63,658 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -0.95 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資最新交易日買超 7,735 張",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "投信連 11 日賣超",
+     "weight": 10,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -15.9 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 11% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -29.6%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bull",
+     "text": "成交量為 20 日均量 1.03 倍（量能有承接）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 46.9,
+     "entryHigh": 48.1,
+     "entryMid": 47.5,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 47.4）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 46.9~48.1 區間分批進場。",
+     "stop": 41.8,
+     "stopPct": -12.0,
+     "target1": 53.4,
+     "target1Pct": 12.6,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 69.5,
+     "target2Pct": 46.5,
+     "rr": 1.05,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 2.99,
+     "atrPct": 6.3,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 41.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 53.4 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 69.5 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 47.4）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 46.9,
+     "entryHigh": 48.1,
+     "entryMid": 47.5,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 47.4）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 46.9~48.1 區間分批進場。",
+     "stop": 42.1,
+     "stopPct": -11.3,
+     "target1": 54.0,
+     "target1Pct": 13.9,
+     "target1Basis": "進場中值加 2.2 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 69.5,
+     "target2Pct": 46.5,
+     "rr": 1.22,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 2.99,
+     "atrPct": 6.3,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 42.1 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 54.0 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 69.5 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 47.4）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 46.9,
+     "entryHigh": 48.1,
+     "entryMid": 47.5,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 47.4）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 46.9~48.1 區間分批進場。",
+     "stop": 43.0,
+     "stopPct": -9.4,
+     "target1": 54.9,
+     "target1Pct": 15.7,
+     "target1Basis": "進場中值加 2.5 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 69.5,
+     "target2Pct": 46.5,
+     "rr": 1.67,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 2.99,
+     "atrPct": 6.3,
+     "volatile": true,
+     "holdDaysMin": 7,
+     "holdDaysMax": 15,
+     "reviewBy": "2026-12-18",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 43.0 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 54.9 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 69.5 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 47.4）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 15 個交易日（約至 2026-12-18）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 4.56,
+    "sigma20": 20.41,
+    "band68Low": 33.3,
+    "band68High": 50.5,
+    "band90Low": 27.8,
+    "band90High": 56.0,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [],
+   "news": [
+    {
+     "title": "英業達（2356）借券未回補法人同賣－熱門話題｜股市爆料同學會",
+     "link": "https://mobile.cmoney.tw/forum/stock/2356?s=cash-flow&trending=2",
+     "date": "2026-11-25 14:20:55",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "英業達（2356）近9%反彈隔日轉弱－熱門話題｜股市爆料同學會",
+     "link": "https://mobile.cmoney.tw/forum/stock/2356?s=cash-flow&trending=1",
+     "date": "2026-11-25 09:16:34",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "盤中速報 - 英業達(2356)股價殺至跌停，跌停價38.0元，成交11,938張",
+     "link": "https://es.tradingview.com/news/cnyes:03c7b3f17acdf:0/",
+     "date": "2026-11-25 01:59:00",
+     "sources": [
+      "TradingView"
+     ]
+    },
+    {
+     "title": "《台北股市》投信24日賣超股：國泰金、華南金、英業達",
+     "link": "https://ww2.money-link.com.tw/realtimenews/NewsContent.aspx?SN=6370708001&PU=1002",
+     "date": "2026-11-24 23:31:00",
+     "sources": [
+      "富聯網"
+     ]
+    },
+    {
+     "title": "英業達（2356）破40反彈仍鎖不住－熱門話題｜股市爆料同學會",
+     "link": "https://mobile.cmoney.tw/forum/stock/2356?s=profile&trending=1",
+     "date": "2026-11-24 19:00:48",
+     "sources": [
+      "CMoney"
+     ]
+    }
+   ],
+   "rs20": -15.89
+  },
+  {
+   "id": "2352",
+   "name": "佳世達",
+   "fullName": "佳世達科技股份有限公司",
+   "subGroup": "peripherals",
+   "subGroupName": "週邊設備與智慧顯示",
+   "isLeader": false,
+   "leaderRole": "顯示技術先驅 · 大艦隊智慧醫療佈局",
+   "description": "明基佳世達集團核心旗艦，為全球液晶顯示器與投影機領導製造商。近年推動「價值轉型大艦隊」，高附加價值事業涵蓋智慧醫療(明基醫院)、智慧解決方案及網通事業。",
+   "date": "2026-11-27",
+   "close": 24.6,
+   "pct": 0.0,
+   "volume": 3179332,
+   "financials": {
+    "trailingEPS": 2.1,
+    "q3Revenue": "508 億元",
+    "grossMargin": "16.5%",
+    "operatingMargin": "2.8%",
+    "roe": "6.8%",
+    "dividendYield": "4.5%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 24.6,
+    "prevClose": 24.6,
+    "pct": 0.0,
+    "volume": 3179332.0,
+    "ma5": 24.63,
+    "ma10": 25.13,
+    "ma20": 26.99,
+    "ma60": 28.49,
+    "ma20Slope": -1.61,
+    "rsi14": 38.13,
+    "macd": -1.31,
+    "macdSignal": -1.04,
+    "macdHist": -0.27,
+    "macdHistPrev": -0.33,
+    "kdK": 31.26,
+    "kdD": 26.49,
+    "atr14": 1.55,
+    "atrPct": 6.3,
+    "bias20": -8.84,
+    "volRatio": 0.26,
+    "avgVol20": 12376866,
+    "high60": 33.8,
+    "low60": 23.6,
+    "low10": 23.6,
+    "pricePos60": 0.1,
+    "ret5": 4.24,
+    "ret20": -27.22,
+    "ret60": -13.23,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": -1141,
+    "foreign5": 99,
+    "foreign20": -17128,
+    "trust1": 1,
+    "trust5": 54,
+    "trust20": 9759,
+    "dealer1": 97,
+    "dealer5": -195,
+    "dealer20": -1477,
+    "total1": -1043,
+    "total5": -42,
+    "total20": -8846,
+    "foreignRatio": 6.85,
+    "foreignRatioChg20": -0.82,
+    "foreignStreak": -2,
+    "trustStreak": 1,
+    "foreignAbsAvg20": 1991.1,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 6.85
+    }
+   },
+   "score": {
+    "total": 25.2,
+    "trend": 0,
+    "momentum": 56,
+    "chips": 45,
+    "strength": 0,
+    "key": "bad",
+    "label": "弱勢",
+    "action": "建議回避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MACD 柱狀體為負（空方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bear",
+     "text": "RSI 38 偏弱",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 31 / D 26）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +4.2%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "外資近 5 日買超 99 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "投信近 5 日買超 54 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "三大法人近 20 日合計賣超 8,846 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "外資持股比 20 日減少 -0.82 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -13.5 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 10% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -27.2%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.26 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 26.7,
+     "entryHigh": 27.4,
+     "entryMid": 27.1,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 27.0）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 26.7~27.4 區間分批進場。",
+     "stop": 23.8,
+     "stopPct": -12.0,
+     "target1": 30.2,
+     "target1Pct": 11.5,
+     "target1Basis": "進場中值加 2.0 倍 ATR；但請注意 MA60 季線 NT$ 28.5 距進場不到 1 個 ATR，上方壓力很近，突破前獲利空間有限。",
+     "target2": 34.8,
+     "target2Pct": 28.7,
+     "rr": 0.95,
+     "rrWarning": true,
+     "tightResistance": "MA60 季線 NT$ 28.5 距進場不到 1 個 ATR，上方壓力很近，突破前獲利空間有限。",
+     "atr": 1.55,
+     "atrPct": 5.73,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 23.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 30.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 34.8 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 27.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 26.7,
+     "entryHigh": 27.4,
+     "entryMid": 27.1,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 27.0）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 26.7~27.4 區間分批進場。",
+     "stop": 24.2,
+     "stopPct": -10.4,
+     "target1": 30.5,
+     "target1Pct": 12.6,
+     "target1Basis": "進場中值加 2.2 倍 ATR；但請注意 MA60 季線 NT$ 28.5 距進場不到 1 個 ATR，上方壓力很近，突破前獲利空間有限。",
+     "target2": 34.8,
+     "target2Pct": 28.7,
+     "rr": 1.21,
+     "rrWarning": true,
+     "tightResistance": "MA60 季線 NT$ 28.5 距進場不到 1 個 ATR，上方壓力很近，突破前獲利空間有限。",
+     "atr": 1.55,
+     "atrPct": 5.73,
+     "volatile": true,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 24.2 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 30.5 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 34.8 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 27.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 26.7,
+     "entryHigh": 27.4,
+     "entryMid": 27.1,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 27.0）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 26.7~27.4 區間分批進場。",
+     "stop": 24.7,
+     "stopPct": -8.7,
+     "target1": 30.9,
+     "target1Pct": 14.3,
+     "target1Basis": "進場中值加 2.5 倍 ATR；但請注意 MA60 季線 NT$ 28.5 距進場不到 1 個 ATR，上方壓力很近，突破前獲利空間有限。",
+     "target2": 34.8,
+     "target2Pct": 28.7,
+     "rr": 1.65,
+     "rrWarning": false,
+     "tightResistance": "MA60 季線 NT$ 28.5 距進場不到 1 個 ATR，上方壓力很近，突破前獲利空間有限。",
+     "atr": 1.55,
+     "atrPct": 5.73,
+     "volatile": true,
+     "holdDaysMin": 7,
+     "holdDaysMax": 15,
+     "reviewBy": "2026-12-18",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 24.7 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 30.9 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 34.8 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 27.0）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 15 個交易日（約至 2026-12-18）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 4.74,
+    "sigma20": 21.18,
+    "band68Low": 19.4,
+    "band68High": 29.8,
+    "band90Low": 16.0,
+    "band90High": 33.2,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [],
+   "news": [
+    {
+     "title": "2352 佳世達- 明泰科技FY2026 Q3 法說會- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/190059299",
+     "date": "2026-11-26 23:14:15",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "個股：佳世達(2352)旗下凱圖發表IQMR平台，導入棒球AI分析攻精準復能商機",
+     "link": "https://ww2.money-link.com.tw/realtimenews/NewsContent.aspx?SN=2450199002&PU=1002",
+     "date": "2026-11-26 04:01:00",
+     "sources": [
+      "富聯網"
+     ]
+    },
+    {
+     "title": "2352 佳世達- 要賺錢就空喇叭大賤隊- 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189924291",
+     "date": "2026-11-25 23:24:24",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "智慧醫療布局延伸至運動科學佳世達凱圖AI 平台導入棒球投球分析- 生活新聞",
+     "link": "https://news.pchome.com.tw/living/leho/20261126/index-79562646939736356009.html",
+     "date": "2026-11-25 11:43:20",
+     "sources": [
+      "PChome Online 新聞"
+     ]
+    },
+    {
+     "title": "〈醫療科技展〉佳世達集團參與醫療科技展 大秀「AI醫療與健康照護」四大看點",
+     "link": "https://news.cnyes.com/news/id/6671710",
+     "date": "2026-11-25 09:45:32",
+     "sources": [
+      "鉅亨網",
+      "TradingView",
+      "CMoney"
+     ]
+    }
+   ],
+   "rs20": -13.53
+  },
+  {
+   "id": "4915",
+   "name": "致伸",
+   "fullName": "致伸科技股份有限公司",
+   "subGroup": "peripherals",
+   "subGroupName": "週邊設備與智慧顯示",
+   "isLeader": true,
+   "leaderRole": "視覺影像與聲學感測週邊領導廠",
+   "description": "跨足電腦週邊、智慧行動影像與頂級聲學領域。提供高階滑鼠鍵盤、車載ADAS鏡頭相機模組、智慧安全監控及專業耳機聲學設備，持續提升高毛利車用與工業應用比重。",
+   "date": "2026-11-27",
+   "close": 43.65,
+   "pct": 0.34,
+   "volume": 1454000,
+   "financials": {
+    "trailingEPS": 5.85,
+    "q3Revenue": "160 億元",
+    "grossMargin": "16.8%",
+    "operatingMargin": "4.6%",
+    "roe": "14.2%",
+    "dividendYield": "5.2%"
+   },
+   "ind": {
+    "date": "2026-11-27",
+    "close": 43.65,
+    "prevClose": 43.5,
+    "pct": 0.34,
+    "volume": 1454000.0,
+    "ma5": 43.43,
+    "ma10": 44.39,
+    "ma20": 48.53,
+    "ma60": 57.92,
+    "ma20Slope": -4.24,
+    "rsi14": 19.71,
+    "macd": -4.25,
+    "macdSignal": -4.11,
+    "macdHist": -0.15,
+    "macdHistPrev": -0.32,
+    "kdK": 25.04,
+    "kdD": 19.52,
+    "atr14": 2.05,
+    "atrPct": 4.7,
+    "bias20": -10.05,
+    "volRatio": 0.42,
+    "avgVol20": 3460561,
+    "high60": 65.6,
+    "low60": 42.45,
+    "low10": 42.45,
+    "pricePos60": 0.05,
+    "ret5": 2.22,
+    "ret20": -22.05,
+    "ret60": -26.52,
+    "bars": 60
+   },
+   "chips": {
+    "date": "2026-11-26",
+    "foreign1": -93,
+    "foreign5": 4163,
+    "foreign20": 5136,
+    "trust1": 2,
+    "trust5": -5444,
+    "trust20": -8755,
+    "dealer1": 0,
+    "dealer5": 3,
+    "dealer20": -514,
+    "total1": -91,
+    "total5": -1278,
+    "total20": -4133,
+    "foreignRatio": 27.5,
+    "foreignRatioChg20": 1.31,
+    "foreignStreak": -1,
+    "trustStreak": 1,
+    "foreignAbsAvg20": 808.3,
+    "shareholdingLast": {
+     "date": "2026-11-26",
+     "foreignRatio": 27.5
+    }
+   },
+   "score": {
+    "total": 25.0,
+    "trend": 0,
+    "momentum": 60,
+    "chips": 40,
+    "strength": 0,
+    "key": "bad",
+    "label": "弱勢",
+    "action": "建議回避"
+   },
+   "reasons": [
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA20 月線",
+     "weight": 25,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA5 跌破 MA20（短空排列）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MA20 近 5 日向下（月線下彎）",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "收盤跌破 MA60 季線",
+     "weight": 20,
+     "facet": "趨勢"
+    },
+    {
+     "tone": "bear",
+     "text": "MACD 柱狀體為負（空方動能）",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "MACD 柱狀體放大（動能增強）",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "watch",
+     "text": "RSI 20 超賣，屬反彈候選而非趨勢做多",
+     "weight": 25,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "KD 多方交叉（K 25 / D 20）",
+     "weight": 20,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "近 5 日報酬 +2.2%",
+     "weight": 15,
+     "facet": "動能"
+    },
+    {
+     "tone": "bull",
+     "text": "外資近 5 日買超 4,163 張",
+     "weight": 25,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "投信近 5 日賣超 5,444 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "三大法人近 20 日合計賣超 4,133 張",
+     "weight": 20,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bull",
+     "text": "外資持股比 20 日增加 +1.31 個百分點",
+     "weight": 15,
+     "facet": "籌碼"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日輸類股指數 -8.4 個百分點",
+     "weight": 40,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "股價位於 60 日區間 5% 低檔",
+     "weight": 30,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "bear",
+     "text": "近 20 日報酬 -22.1%",
+     "weight": 20,
+     "facet": "相對強度"
+    },
+    {
+     "tone": "watch",
+     "text": "成交量僅 20 日均量 0.42 倍（量能偏縮）",
+     "weight": 10,
+     "facet": "相對強度"
+    }
+   ],
+   "plans": {
+    "steady": {
+     "profile": "steady",
+     "entryLow": 48.0,
+     "entryHigh": 49.3,
+     "entryMid": 48.7,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 48.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 48.0~49.3 區間分批進場。",
+     "stop": 43.9,
+     "stopPct": -9.7,
+     "target1": 52.8,
+     "target1Pct": 8.4,
+     "target1Basis": "進場中值加 2.0 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 67.6,
+     "target2Pct": 38.9,
+     "rr": 0.87,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 2.05,
+     "atrPct": 4.21,
+     "volatile": false,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 43.9 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 52.8 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 67.6 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 48.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "balanced": {
+     "profile": "balanced",
+     "entryLow": 48.0,
+     "entryHigh": 49.3,
+     "entryMid": 48.7,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 48.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 48.0~49.3 區間分批進場。",
+     "stop": 44.8,
+     "stopPct": -8.0,
+     "target1": 53.2,
+     "target1Pct": 9.3,
+     "target1Basis": "進場中值加 2.2 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 67.6,
+     "target2Pct": 38.9,
+     "rr": 1.16,
+     "rrWarning": true,
+     "tightResistance": null,
+     "atr": 2.05,
+     "atrPct": 4.21,
+     "volatile": false,
+     "holdDaysMin": 6,
+     "holdDaysMax": 13,
+     "reviewBy": "2026-12-15",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 44.8 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 53.2 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 67.6 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 48.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 13 個交易日（約至 2026-12-15）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    },
+    "aggressive": {
+     "profile": "aggressive",
+     "entryLow": 48.0,
+     "entryHigh": 49.3,
+     "entryMid": 48.7,
+     "trigger": "目前收盤在 MA20 之下，屬於等待訊號轉強的狀態。須等到「收盤站回 MA20（NT$ 48.5）並連續 2 個交易日守住」才視為進場條件成立，在 NT$ 48.0~49.3 區間分批進場。",
+     "stop": 45.4,
+     "stopPct": -6.7,
+     "target1": 53.8,
+     "target1Pct": 10.5,
+     "target1Basis": "進場中值加 2.5 倍 ATR（上方 60 日內無明顯壓力可參考）",
+     "target2": 67.6,
+     "target2Pct": 38.9,
+     "rr": 1.57,
+     "rrWarning": false,
+     "tightResistance": null,
+     "atr": 2.05,
+     "atrPct": 4.21,
+     "volatile": false,
+     "holdDaysMin": 7,
+     "holdDaysMax": 15,
+     "reviewBy": "2026-12-18",
+     "needsConfirm": true,
+     "exitRules": [
+      "收盤跌破停損價 NT$ 45.4 → 當日或隔日開盤無條件出場，不等反彈。",
+      "觸及第一目標 NT$ 53.8 → 先減碼一半，剩餘改用 MA20 當移動停利（跌破就走）。",
+      "觸及第二目標 NT$ 67.6 → 全部了結，不留倉過高位階。",
+      "連續 2 個交易日收盤跌破 MA20（目前 NT$ 48.5）→ 趨勢條件已失效，減碼。",
+      "MACD 柱狀體由正翻負 → 動能轉空，減碼。",
+      "外資連 3 個交易日賣超 → 籌碼條件失效，減碼。",
+      "持有超過 15 個交易日（約至 2026-12-18）仍未觸及第一目標 → 資金效率不佳，換股處理。"
+     ]
+    }
+   },
+   "forecast": {
+    "sigmaDaily": 2.18,
+    "sigma20": 9.74,
+    "band68Low": 39.4,
+    "band68High": 47.9,
+    "band90Low": 36.7,
+    "band90High": 50.6,
+    "note": "以近 20 日實際日波動度年化推算的統計區間（68% / 90% 信賴區間），代表「若波動型態不變」的合理震盪範圍，不是方向預測，也不保證不會超出。"
+   },
+   "events": [
+    {
+     "severity": "low",
+     "direction": "bullish",
+     "title": "RSI 20 進入超賣區",
+     "detail": "短線跌深，可能有技術性反彈。屬於搶反彈性質而非趨勢做多，風險較高。"
+    }
+   ],
+   "news": [
+    {
+     "title": "致伸榮獲台灣十大永續典範企業獎 展現永續競爭力",
+     "link": "https://money.udn.com/money/amp/story/5612/9903981",
+     "date": "2026-11-26 08:51:07",
+     "sources": [
+      "經濟日報",
+      "聚財網"
+     ]
+    },
+    {
+     "title": "致伸榮獲台灣十大永續典範企業獎 深化綠色創新與淨零轉型",
+     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE82aFl5bmJZUGZrQXBuWU5rZ21IdW5VLVNDeVJ0U18waDFPUGdCSnFPV0JoRFZRRDdhSkpmYV8yWUIxRWxwc3BGUDNFRmZ0OUU?oc=5",
+     "date": "2026-11-26 08:10:02",
+     "sources": [
+      "鉅亨網"
+     ]
+    },
+    {
+     "title": "4915 致伸 - 廢渣表示今天沒有跌，就是對你們最大的恩惠 - 股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/article/189949877",
+     "date": "2026-11-26 03:00:33",
+     "sources": [
+      "CMoney"
+     ]
+    },
+    {
+     "title": "致伸榮獲台灣十大永續典範企業獎 展現永續競爭力｜新聞快訊｜豐雲學堂",
+     "link": "https://www.sinotrade.com.tw/richclub/news/6b08032971992d5745e7822f",
+     "date": "2026-11-25 17:21:00",
+     "sources": [
+      "永豐金證券"
+     ]
+    },
+    {
+     "title": "致伸（4915）大國賣出外資承接－熱門話題｜股市爆料同學會",
+     "link": "https://www.cmoney.tw/forum/stock/4915?trending=2",
+     "date": "2026-11-24 04:49:45",
+     "sources": [
+      "CMoney"
+     ]
+    }
+   ],
+   "rs20": -8.36
+  }
+ ],
+ "picks": {
+  "steady": [],
+  "balanced": [
+   "6669",
+   "3017"
+  ],
+  "aggressive": [
+   "6669",
+   "3017",
+   "2395"
+  ]
+ },
+ "alerts": [
+  {
+   "severity": "high",
+   "direction": "bullish",
+   "title": "單日大漲 +7.52%",
+   "detail": "出現明顯買盤。需確認是否伴隨放量與法人買超，若只有價漲量縮，追高容易套在短線高點。",
+   "stockId": "3324",
+   "stockName": "雙鴻"
+  },
+  {
+   "severity": "high",
+   "direction": "bullish",
+   "title": "單日大漲 +6.37%",
+   "detail": "出現明顯買盤。需確認是否伴隨放量與法人買超，若只有價漲量縮，追高容易套在短線高點。",
+   "stockId": "6669",
+   "stockName": "緯穎"
+  },
+  {
+   "severity": "medium",
+   "direction": "neutral",
+   "title": "今日重要事件消息",
+   "detail": "【即時新聞】川湖(2059)近日強攻漲停列注意股，營收暴增191%還能追？",
+   "stockId": "2059",
+   "stockName": "川湖"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "外資異常大買超 1,139 張",
+   "detail": "為近 20 日平均進出量的 2.6 倍，屬於明顯的籌碼異動，通常對應特定消息或法人調整部位。",
+   "stockId": "2357",
+   "stockName": "華碩"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "MACD 翻多（柱狀體由負轉正）",
+   "detail": "中期動能由空轉多，常是波段起漲的早期訊號，但需搭配均線與籌碼確認。",
+   "stockId": "2376",
+   "stockName": "技嘉"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "今日正面消息",
+   "detail": "排除漲價因素，研華明年營收仍看增逾兩成- 新聞",
+   "stockId": "2395",
+   "stockName": "研華"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "今日正面消息",
+   "detail": "【12:06 即時新聞】奇鋐(3017)盤中續揚，市場聚焦AI散熱與獲利成長",
+   "stockId": "3017",
+   "stockName": "奇鋐"
+  },
+  {
+   "severity": "medium",
+   "direction": "bearish",
+   "title": "今日失守 MA20 月線",
+   "detail": "由月線之上跌到之下，是短線趨勢轉弱的第一個訊號。觀察明日能否立刻收復，連 2 日站不回去就該減碼。",
+   "stockId": "3231",
+   "stockName": "緯創"
+  },
+  {
+   "severity": "medium",
+   "direction": "neutral",
+   "title": "今日重要事件消息",
+   "detail": "【即時新聞】緯創(3231)最新營收翻倍，主力大買9千張要轉強了？",
+   "stockId": "3231",
+   "stockName": "緯創"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "今日正面消息",
+   "detail": "3706 神達- 法說重點- 股市爆料同學會",
+   "stockId": "3706",
+   "stockName": "神達"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "今日正面消息",
+   "detail": "工商證券頭條：神達何繼武稱，明年成長無懸念",
+   "stockId": "3706",
+   "stockName": "神達"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "MACD 翻多（柱狀體由負轉正）",
+   "detail": "中期動能由空轉多，常是波段起漲的早期訊號，但需搭配均線與籌碼確認。",
+   "stockId": "6414",
+   "stockName": "樺漢"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "今日站回 MA20 月線",
+   "detail": "重新站上月線，短線轉強的第一步。須連續 2 個交易日守住才算確立，單日假突破很常見。",
+   "stockId": "6669",
+   "stockName": "緯穎"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "今日正面消息",
+   "detail": "【11/27 產業即時新聞】電子中游-EMS族群漲幅2.56%：緯穎大漲帶頭衝，AI伺服器供應鏈買盤回神",
+   "stockId": "6669",
+   "stockName": "緯穎"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "今日正面消息",
+   "detail": "【10:16 即時新聞】緯穎(6669)股價走強，AI伺服器成長動能受關注",
+   "stockId": "6669",
+   "stockName": "緯穎"
+  },
+  {
+   "severity": "medium",
+   "direction": "bullish",
+   "title": "MACD 翻多（柱狀體由負轉正）",
+   "detail": "中期動能由空轉多，常是波段起漲的早期訊號，但需搭配均線與籌碼確認。",
+   "stockId": "8210",
+   "stockName": "勤誠"
+  },
+  {
+   "severity": "low",
+   "direction": "bullish",
+   "title": "投信連 8 日買超",
+   "detail": "投信具有作帳與追蹤績效的動機，連續買超常見於中期看好的標的，但月底季底也可能出現調節。",
+   "stockId": "2382",
+   "stockName": "廣達"
+  },
+  {
+   "severity": "low",
+   "direction": "bullish",
+   "title": "投信連 5 日買超",
+   "detail": "投信具有作帳與追蹤績效的動機，連續買超常見於中期看好的標的，但月底季底也可能出現調節。",
+   "stockId": "3231",
+   "stockName": "緯創"
+  },
+  {
+   "severity": "low",
+   "direction": "bullish",
+   "title": "RSI 20 進入超賣區",
+   "detail": "短線跌深，可能有技術性反彈。屬於搶反彈性質而非趨勢做多，風險較高。",
+   "stockId": "4915",
+   "stockName": "致伸"
+  },
+  {
+   "severity": "low",
+   "direction": "bullish",
+   "title": "投信連 5 日買超",
+   "detail": "投信具有作帳與追蹤績效的動機，連續買超常見於中期看好的標的，但月底季底也可能出現調節。",
+   "stockId": "6669",
+   "stockName": "緯穎"
+  }
+ ],
+ "alertCounts": {
+  "high": 2,
+  "medium": 14,
+  "low": 4
+ },
+ "glossary": {
+  "MA20": "MA20 是「20 日移動平均線」，俗稱月線 —— 把最近 20 個交易日的收盤價平均。它代表近一個月進場者的平均成本：股價在月線之上，多數人賺錢、趨勢偏多；跌破月線，多數人虧損、容易引發賣壓。本站所有進出場規則都以 MA20 當趨勢分界。",
+  "MA60": "MA60 是「60 日移動平均線」，俗稱季線 —— 最近約一季的平均成本，是判斷中期趨勢的分界。站上季線通常代表中期轉強，跌破則代表中期轉弱。",
+  "RSI": "RSI（相對強弱指標）衡量近 14 日「上漲力道占總波動的比例」，數值 0~100。50 以上偏多、50 以下偏空；超過 80 代表短線過熱容易回檔，低於 20 代表超賣可能技術性反彈。注意：強勢股可以在 70 以上待很久，RSI 高不等於要賣。",
+  "KD": "KD（隨機指標）用近 9 日的高低區間判斷目前收盤落在哪個位階。K 線向上穿越 D 線叫「黃金交叉」偏多，向下穿越叫「死亡交叉」偏空。KD 在高檔（80 以上）鈍化時，常代表趨勢非常強而非該賣。",
+  "MACD": "MACD 用兩條不同長度的指數均線的差距判斷中期動能。本站看的是「柱狀體」：柱狀體由負轉正代表動能轉多，由正轉負代表動能轉空，柱子愈長代表動能愈強。",
+  "ATR": "ATR（真實波動幅度均值）是近 14 日的平均單日波動金額。它用來決定停損該設多遠 —— 波動大的股票停損要放寬，否則正常震盪就被洗出場。本站的停損價就是「進場區下緣減去 N 倍 ATR」。",
+  "乖離率": "乖離率是收盤價偏離 MA20 的百分比。正乖離太大（例如超過 15%）代表短線漲多、追高風險高；負乖離太大代表跌深。本站的穩健型會排除乖離率超過 8% 的個股，就是為了避免追高。",
+  "停損": "停損是「事先決定的最大可承受虧損價位」，跌破就無條件出場。它的目的不是預測，而是確保單筆虧損不會大到無法翻身。本站每檔都給明確停損價，紀律上跌破就該走，不要改成「再等反彈」。",
+  "風險報酬比": "風險報酬比（R:R）= 可能賺的距離 ÷ 可能賠的距離。例如目標價距進場 10%、停損距進場 5%，R:R 就是 2.0。長期而言 R:R 低於 1.5 的交易即使勝率不錯也不容易賺，因為一次虧損就吃掉多次獲利。",
+  "外資持股比": "外資持股比例是外資持有的股數占總股本的百分比。它比單日買賣超更能看出長期態度 —— 單日大買但持股比持續下降，代表整體仍在調節。本站看的是 20 日的變化方向。",
+  "投信": "投信是國內的投資信託基金（共同基金）。投信有績效排名與作帳壓力，連續買超常見於中期看好的標的，對中小型股的影響力常大於外資；但月底、季底可能為了作帳而短期進出。",
+  "三大法人": "三大法人指外資、投信、自營商。買賣超單位是「張」（1 張 = 1000 股）。外資資金最大、看中長期；投信看中期績效；自營商常做短線與避險，訊號參考性最低。",
+  "市場廣度": "市場廣度指類股中有多少比例的個股站上 MA20。它用來驗證指數的漲勢是否健康 —— 指數上漲但廣度只有三成，代表只有少數權值股在撐，風險較高。",
+  "相對強度": "相對強度是個股報酬減去類股指數報酬。贏指數代表資金相對集中在這檔；輸指數代表即使上漲也只是跟著大環境，不具選股價值。",
+  "信賴區間": "本站的未來區間是用近 20 日實際波動度算出的統計範圍：68% 區間代表「若波動型態不變，約七成時間會落在此範圍」。它描述震盪幅度，不是方向預測，實際走勢完全可能超出。"
+ },
+ "methodology": {
+  "weights": "總分 = 趨勢面 35% + 動能面 25% + 籌碼面 25% + 相對強度 15%，各面向先換算為 0~100 再加權。",
+  "dataBasis": "技術指標取自還原股價後的日線收盤（除權息已還原，避免假跳空）；籌碼取自證交所三大法人買賣超與外資持股；相對強度對照電腦及週邊設備類指數。",
+  "entry": "進場區以 MA20 與近 10 日低點的較高者為下緣，加上 0.8 倍 ATR 為上緣，刻意不給單一買點。收盤在 MA20 之下者一律標為「需先站回月線」而非直接建議進場。",
+  "exit": "停損為進場區下緣減 N 倍 ATR（上限 12%），第一目標為進場中值加 N 倍 ATR，第二目標取 60 日高點與更遠的 ATR 倍數的較高者。",
+  "holdDays": "預估持有天數以「到第一目標的距離 ÷ 每日 0.5 倍 ATR 的淨推進」估算，是資金效率的檢查點，不是預測。",
+  "limits": "樣本僅 16 檔、60 根日線，不含基本面估值、產業循環與總體經濟變數，亦未做歷史回測驗證。所有訊號均為規則運算結果，不構成投資建議。"
+ },
+ "disclaimer": "本頁所有內容為依公開資料與固定技術規則自動運算的結果，僅供研究參考，不構成任何投資建議、要約或保證。股價走勢受無法事前量化的因素影響，過去的規則表現不代表未來獲利。投資決策與其後果由投資人自行承擔，進行任何交易前請自行查核並評估自身風險承受度，必要時諮詢持照專業人士。"
+}

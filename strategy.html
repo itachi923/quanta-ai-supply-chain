@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>電腦及週邊設備類股 · 投資策略與訊號中心</title>
+  <meta name="description" content="電腦及週邊設備類股 16 檔個股的技術面與籌碼面規則訊號：評分排行、參考進場區間、停損停利價位、預估持有天數、當日事件警示與問答機器人。內容為規則運算結果，僅供研究參考，不構成投資建議。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #f0f6fc;
+      --bg-gradient: linear-gradient(135deg, #eaf3fb 0%, #dbeefe 50%, #eff6ff 100%);
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --card-border: #cfe5f8;
+
+      --text-title: #0a2540;
+      --text-body: #2d4156;
+      --text-muted: #5e768d;
+
+      --blue-quanta: #0284c7;
+      --blue-navy: #0f2c4d;
+      --blue-soft: #e0effe;
+      --blue-primary: #1e60d5;
+      --stock-red: #dc2626;   /* 台股漲紅 */
+      --stock-green: #16a34a; /* 台股跌綠 */
+
+      /* 訊號強弱與事件嚴重度 */
+      --g-strong: #b91c1c;
+      --g-good: #ea580c;
+      --g-neutral: #64748b;
+      --g-weak: #0e7490;
+      --g-bad: #15803d;
+      --sev-high: #dc2626;
+      --sev-med: #d97706;
+      --sev-low: #0284c7;
+      --warn-bg: #fffbeb;
+      --warn-border: #fcd34d;
+      --warn-text: #92400e;
+
+      --font-main: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "IBM Plex Mono", Consolas, monospace;
+
+      --shadow-sm: 0 2px 8px rgba(15, 44, 77, 0.05);
+      --shadow-md: 0 8px 24px rgba(15, 44, 77, 0.08);
+      --shadow-lg: 0 16px 36px rgba(15, 44, 77, 0.14);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-body);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 價格與金額一律不換行（專案通則：NT$ 與數字不可被拆成兩行） */
+    .num, .price, .money {
+      font-family: var(--font-mono);
+      white-space: nowrap !important;
+      word-break: keep-all;
+      flex-shrink: 0;
+    }
+
+    /* ---------------- 頂部導航與頁面切換列 ---------------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(240, 246, 252, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(195, 222, 245, 0.85);
+      box-shadow: 0 2px 10px rgba(15, 44, 77, 0.04);
+    }
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-title);
+    }
+    .brand-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #0284c7, #1e60d5);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .brand span:first-of-type { font-size: 1.05rem; font-weight: 900; }
+    .brand-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      background: var(--blue-soft);
+      color: var(--blue-primary);
+      padding: 2px 8px;
+      border-radius: 5px;
+      margin-left: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .page-tabs-bar {
+      border-top: 1px solid rgba(195, 222, 245, 0.85);
+      background: rgba(255, 255, 255, 0.55);
+    }
+    .page-tabs {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .page-tabs::-webkit-scrollbar { display: none; }
+    .page-tab {
+      padding: 10px 18px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      transition: all 0.18s;
+    }
+    .page-tab:hover { color: var(--blue-quanta); }
+    .page-tab.active {
+      color: var(--blue-navy);
+      border-bottom-color: var(--blue-quanta);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 22px 24px 90px;
+    }
+
+    /* ---------------- 免責聲明（置頂，不可折疊掉重點） ---------------- */
+    .disclaimer-top {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-left: 5px solid #f59e0b;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+      color: var(--warn-text);
+    }
+    .disclaimer-top strong { font-weight: 900; }
+    .disclaimer-top .dt-head {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 900; font-size: 0.95rem; margin-bottom: 6px;
+    }
+
+    /* ---------------- 資料日期狀態列 ---------------- */
+    .status-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 10px 18px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 0.85rem;
+    }
+    .status-bar .sb-dates {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      font-family: var(--font-mono); font-weight: 700; color: var(--blue-navy);
+    }
+    .status-bar .sb-dates span { white-space: nowrap; }
+
+    /* ---------------- 通用卡片與區塊標題 ---------------- */
+    .section { margin-bottom: 26px; }
+    .section-head {
+      display: flex; align-items: baseline; gap: 12px;
+      flex-wrap: wrap; margin-bottom: 12px;
+    }
+    .section-head h2 {
+      font-size: 1.3rem; font-weight: 900; color: var(--text-title);
+      display: flex; align-items: center; gap: 9px;
+    }
+    .section-head .sh-note { font-size: 0.82rem; color: var(--text-muted); }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 18px;
+    }
+
+    /* ---------------- 類股總覽 ---------------- */
+    .sector-wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+    .phase-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 1.5rem; font-weight: 900;
+      padding: 8px 18px; border-radius: 999px;
+    }
+    .phase-expand { background: #fef2f2; color: #b91c1c; border: 2px solid #fecaca; }
+    .phase-range  { background: #f8fafc; color: #475569; border: 2px solid #e2e8f0; }
+    .phase-contract { background: #f0fdf4; color: #15803d; border: 2px solid #bbf7d0; }
+    .sector-metrics {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px;
+    }
+    .metric {
+      background: #f8fbff; border: 1px solid #e2effb;
+      border-radius: var(--radius-sm); padding: 10px 12px;
+    }
+    .metric .m-label { font-size: 0.76rem; color: var(--text-muted); font-weight: 700; }
+    .metric .m-value {
+      font-family: var(--font-mono); font-size: 1.15rem; font-weight: 700;
+      color: var(--text-title); white-space: nowrap;
+    }
+    .breadth-bar {
+      height: 10px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-top: 8px;
+    }
+    .breadth-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0284c7, #1e60d5); }
+    .reason-list { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-top: 12px; }
+    .reason-list li {
+      display: flex; gap: 9px; align-items: flex-start;
+      font-size: 0.87rem; padding: 7px 10px; border-radius: var(--radius-sm);
+    }
+    .tone-bull { background: #fef2f2; color: #991b1b; }
+    .tone-bear { background: #f0fdf4; color: #166534; }
+    .tone-watch { background: #f8fafc; color: #475569; }
+    .reason-list li .r-w {
+      margin-left: auto; font-family: var(--font-mono); font-size: 0.74rem;
+      opacity: 0.75; white-space: nowrap; font-weight: 700;
+    }
+    .outlook-box {
+      background: #f8fbff; border: 1px solid #e2effb; border-left: 4px solid var(--blue-quanta);
+      border-radius: var(--radius-sm); padding: 13px 15px; margin-top: 14px;
+      font-size: 0.9rem; line-height: 1.75;
+    }
+
+    /* ---------------- 事件警示 ---------------- */
+    .alert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
+    .alert {
+      background: #fff; border: 1px solid var(--card-border);
+      border-left: 5px solid var(--sev-low);
+      border-radius: var(--radius-sm); padding: 12px 14px;
+    }
+    .alert.sev-high { border-left-color: var(--sev-high); background: #fffbfb; }
+    .alert.sev-medium { border-left-color: var(--sev-med); background: #fffdf7; }
+    .alert-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 5px; }
+    .alert-stock {
+      font-weight: 900; color: var(--text-title); font-size: 0.95rem;
+      text-decoration: none; white-space: nowrap;
+    }
+    .alert-stock:hover { color: var(--blue-quanta); }
+    .alert-title { font-weight: 800; font-size: 0.9rem; }
+    .alert-detail { font-size: 0.83rem; color: var(--text-body); line-height: 1.65; }
+    .pill {
+      font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;
+      white-space: nowrap; font-family: var(--font-mono);
+    }
+    .pill-high { background: #fee2e2; color: #991b1b; }
+    .pill-medium { background: #fef3c7; color: #92400e; }
+    .pill-low { background: #e0f2fe; color: #075985; }
+    .pill-bullish { background: #fef2f2; color: #b91c1c; }
+    .pill-bearish { background: #f0fdf4; color: #15803d; }
+    .pill-neutral { background: #f1f5f9; color: #475569; }
+
+    /* ---------------- 風險屬性切換 ---------------- */
+    .profile-switch {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;
+    }
+    .profile-btn {
+      background: #fff; border: 2px solid var(--card-border); color: var(--text-muted);
+      padding: 9px 16px; border-radius: 999px; cursor: pointer;
+      font-family: var(--font-main); font-size: 0.88rem; font-weight: 800;
+      transition: all 0.18s; white-space: nowrap;
+    }
+    .profile-btn:hover { border-color: var(--blue-quanta); color: var(--blue-quanta); }
+    .profile-btn.active {
+      background: var(--blue-navy); border-color: var(--blue-navy); color: #fff;
+    }
+    .profile-desc {
+      font-size: 0.85rem; color: var(--text-muted);
+      background: #f8fbff; border: 1px dashed #cfe5f8;
+      padding: 9px 13px; border-radius: var(--radius-sm); margin-bottom: 14px;
+    }
+
+    /* ---------------- 個股策略卡 ---------------- */
+    .pick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 16px; }
+    .pick {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .pick-head {
+      padding: 14px 16px; border-bottom: 1px solid #e8f2fb;
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    }
+    .pick-name { font-size: 1.12rem; font-weight: 900; color: var(--text-title); }
+    .pick-id { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); font-weight: 700; }
+    .pick-sub { font-size: 0.76rem; color: var(--text-muted); margin-top: 2px; }
+    .pick-price { text-align: right; }
+    .pick-price .pp-main {
+      font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700;
+      color: var(--text-title); white-space: nowrap;
+    }
+    .pick-price .pp-chg { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
+    .up { color: var(--stock-red); }
+    .down { color: var(--stock-green); }
+    .flat { color: var(--text-muted); }
+
+    .score-row { padding: 12px 16px; border-bottom: 1px solid #e8f2fb; }
+    .score-total { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .score-num {
+      font-family: var(--font-mono); font-size: 2rem; font-weight: 700; line-height: 1;
+      white-space: nowrap;
+    }
+    .grade-tag { font-size: 0.8rem; font-weight: 900; padding: 3px 10px; border-radius: 6px; white-space: nowrap; }
+    .grade-strong { background: #fee2e2; color: #991b1b; }
+    .grade-good { background: #ffedd5; color: #9a3412; }
+    .grade-neutral { background: #f1f5f9; color: #475569; }
+    .grade-weak { background: #cffafe; color: #155e75; }
+    .grade-bad { background: #dcfce7; color: #166534; }
+    .facet-bars { display: flex; flex-direction: column; gap: 6px; }
+    .facet { display: flex; align-items: center; gap: 9px; font-size: 0.78rem; }
+    .facet-label { width: 76px; color: var(--text-muted); font-weight: 700; flex-shrink: 0; }
+    .facet-track { flex: 1; height: 7px; background: #eef2f7; border-radius: 999px; overflow: hidden; min-width: 40px; }
+    .facet-fill { height: 100%; border-radius: 999px; }
+    .facet-val { width: 34px; text-align: right; font-family: var(--font-mono); font-weight: 700; flex-shrink: 0; }
+
+    .plan-block { padding: 13px 16px; border-bottom: 1px solid #e8f2fb; }
+    .plan-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+    .plan-cell {
+      background: #f8fbff; border: 1px solid #e2effb; border-radius: var(--radius-sm); padding: 9px 11px;
+    }
+    .plan-cell.danger { background: #fef7f7; border-color: #fcdcdc; }
+    .plan-cell.goal { background: #f7fbf8; border-color: #d8eede; }
+    .plan-cell .pc-label { font-size: 0.73rem; color: var(--text-muted); font-weight: 700; }
+    .plan-cell .pc-value {
+      font-family: var(--font-mono); font-size: 1.02rem; font-weight: 700;
+      color: var(--text-title); white-space: nowrap;
+    }
+    .plan-cell .pc-sub { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+    .trigger-box {
+      margin-top: 10px; background: #fffdf5; border: 1px solid #fde9b8;
+      border-radius: var(--radius-sm); padding: 10px 12px; font-size: 0.84rem; line-height: 1.7;
+    }
+    .confirm-flag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;
+      font-size: 0.76rem; font-weight: 800; padding: 3px 9px; border-radius: 6px; margin-bottom: 8px;
+    }
+    .rr-flag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #fff1f2; color: #9f1239; border: 1px solid #fecdd3;
+      font-size: 0.76rem; font-weight: 800; padding: 3px 9px; border-radius: 6px;
+      margin-bottom: 8px; margin-left: 6px;
+    }
+    details.more { padding: 11px 16px; border-bottom: 1px solid #e8f2fb; }
+    details.more > summary {
+      cursor: pointer; font-size: 0.86rem; font-weight: 800; color: var(--blue-primary);
+      list-style: none; display: flex; align-items: center; gap: 7px;
+    }
+    details.more > summary::-webkit-details-marker { display: none; }
+    details.more > summary::before { content: "▸"; transition: transform 0.18s; }
+    details.more[open] > summary::before { transform: rotate(90deg); }
+    details.more > div { margin-top: 10px; }
+    .exit-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .exit-list li {
+      font-size: 0.84rem; line-height: 1.65; padding-left: 20px; position: relative;
+    }
+    .exit-list li::before {
+      content: "✕"; position: absolute; left: 0; top: 0;
+      color: var(--stock-green); font-weight: 900; font-size: 0.8rem;
+    }
+    .fc-band {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700;
+      white-space: nowrap;
+    }
+    .fc-note { font-size: 0.79rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6; font-family: var(--font-main); }
+
+    /* ---------------- 總表 ---------------- */
+    .table-wrap { overflow-x: auto; border-radius: var(--radius-md); border: 1px solid var(--card-border); }
+    table.rank { width: 100%; border-collapse: collapse; background: #fff; font-size: 0.86rem; min-width: 880px; }
+    table.rank th {
+      background: #f1f7fd; color: var(--blue-navy); font-weight: 800; font-size: 0.8rem;
+      padding: 10px 12px; text-align: right; white-space: nowrap; border-bottom: 2px solid #dbeafe;
+      position: sticky; top: 0;
+    }
+    table.rank th:nth-child(1), table.rank th:nth-child(2) { text-align: left; }
+    table.rank td {
+      padding: 9px 12px; text-align: right; white-space: nowrap;
+      border-bottom: 1px solid #eef4fa; font-family: var(--font-mono);
+    }
+    table.rank td:nth-child(1), table.rank td:nth-child(2) { text-align: left; font-family: var(--font-main); }
+    table.rank tbody tr:hover { background: #f8fbff; }
+    table.rank td a { color: var(--text-title); text-decoration: none; font-weight: 800; }
+    table.rank td a:hover { color: var(--blue-quanta); }
+
+    .empty-note {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 5px solid #16a34a;
+      border-radius: var(--radius-md); padding: 16px 18px; font-size: 0.9rem; line-height: 1.75;
+      color: #14532d;
+    }
+    .empty-note strong { font-weight: 900; }
+
+    .method-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+    .method-item {
+      background: #f8fbff; border: 1px solid #e2effb; border-radius: var(--radius-sm); padding: 12px 14px;
+    }
+    .method-item h4 { font-size: 0.88rem; color: var(--blue-navy); font-weight: 900; margin-bottom: 5px; }
+    .method-item p { font-size: 0.83rem; line-height: 1.7; color: var(--text-body); }
+
+    /* ---------------- 問答機器人 ---------------- */
+    .bot-fab {
+      position: fixed; right: 22px; bottom: 22px; z-index: 300;
+      width: 62px; height: 62px; border-radius: 50%; border: none; cursor: pointer;
+      background: linear-gradient(135deg, #0284c7, #1e60d5);
+      color: #fff; font-size: 1.6rem;
+      box-shadow: var(--shadow-lg);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.18s;
+    }
+    .bot-fab:hover { transform: scale(1.07); }
+    .bot-fab .fab-badge {
+      position: absolute; top: -2px; right: -2px;
+      background: var(--stock-red); color: #fff;
+      font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700;
+      min-width: 20px; height: 20px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #fff;
+    }
+    .bot-panel {
+      position: fixed; right: 22px; bottom: 22px; z-index: 301;
+      width: min(430px, calc(100vw - 32px));
+      height: min(640px, calc(100vh - 80px));
+      background: #fff; border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+      display: none; flex-direction: column; overflow: hidden;
+    }
+    .bot-panel.open { display: flex; }
+    .bot-header {
+      background: linear-gradient(135deg, #0f2c4d, #1e60d5);
+      color: #fff; padding: 13px 16px;
+      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+    }
+    .bot-header .bh-icon {
+      width: 34px; height: 34px; border-radius: 9px; background: rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .bot-header .bh-title { font-weight: 900; font-size: 0.95rem; }
+    .bot-header .bh-sub { font-size: 0.72rem; opacity: 0.85; }
+    .bot-close {
+      margin-left: auto; background: rgba(255,255,255,0.15); border: none; color: #fff;
+      width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bot-close:hover { background: rgba(255,255,255,0.3); }
+    .bot-log {
+      flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 11px;
+      background: #f8fbff;
+    }
+    .msg { max-width: 92%; font-size: 0.86rem; line-height: 1.7; }
+    .msg-bot {
+      align-self: flex-start; background: #fff; border: 1px solid var(--card-border);
+      border-radius: 4px 14px 14px 14px; padding: 11px 13px; box-shadow: var(--shadow-sm);
+    }
+    .msg-user {
+      align-self: flex-end; background: var(--blue-navy); color: #fff;
+      border-radius: 14px 4px 14px 14px; padding: 10px 13px; white-space: pre-wrap;
+    }
+    .msg-bot h4 {
+      font-size: 0.9rem; font-weight: 900; color: var(--text-title);
+      margin-bottom: 6px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+    }
+    .msg-bot p { margin-bottom: 7px; }
+    .msg-bot p:last-child { margin-bottom: 0; }
+    .msg-bot ul { margin: 6px 0 7px 0; padding-left: 18px; }
+    .msg-bot li { margin-bottom: 4px; }
+    .msg-bot .kv {
+      display: flex; justify-content: space-between; gap: 10px;
+      padding: 4px 0; border-bottom: 1px dashed #e8f2fb; font-size: 0.84rem;
+    }
+    .msg-bot .kv:last-of-type { border-bottom: none; }
+    .msg-bot .kv .k { color: var(--text-muted); font-weight: 700; white-space: nowrap; }
+    .msg-bot .kv .v { font-family: var(--font-mono); font-weight: 700; white-space: nowrap; text-align: right; }
+    .msg-bot .src {
+      margin-top: 8px; padding-top: 7px; border-top: 1px solid #eef4fa;
+      font-size: 0.73rem; color: var(--text-muted); font-family: var(--font-mono);
+    }
+    .msg-bot a { color: var(--blue-primary); }
+    .bot-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+    .chip {
+      background: var(--blue-soft); color: var(--blue-primary); border: 1px solid #c7e2fb;
+      font-size: 0.76rem; font-weight: 700; padding: 5px 11px; border-radius: 999px;
+      cursor: pointer; font-family: var(--font-main); transition: all 0.15s;
+    }
+    .chip:hover { background: var(--blue-primary); color: #fff; border-color: var(--blue-primary); }
+    .bot-input-row {
+      display: flex; gap: 8px; padding: 11px; border-top: 1px solid var(--card-border);
+      background: #fff; flex-shrink: 0;
+    }
+    .bot-input {
+      flex: 1; border: 1px solid var(--card-border); border-radius: 10px;
+      padding: 10px 12px; font-family: var(--font-main); font-size: 0.88rem;
+      color: var(--text-body); outline: none; min-width: 0;
+    }
+    .bot-input:focus { border-color: var(--blue-quanta); }
+    .bot-send {
+      background: var(--blue-primary); color: #fff; border: none; border-radius: 10px;
+      padding: 0 16px; cursor: pointer; font-weight: 800; font-size: 0.88rem;
+      font-family: var(--font-main); white-space: nowrap;
+    }
+    .bot-send:hover { background: #1a4fb0; }
+    .bot-foot {
+      font-size: 0.68rem; color: var(--text-muted); text-align: center;
+      padding: 0 11px 9px; background: #fff; flex-shrink: 0; line-height: 1.5;
+    }
+
+    .loading { text-align: center; padding: 50px 20px; color: var(--text-muted); font-size: 0.95rem; }
+    .load-error {
+      background: #fef2f2; border: 1px solid #fecaca; border-left: 5px solid #dc2626;
+      border-radius: var(--radius-md); padding: 16px 18px; color: #991b1b; font-size: 0.9rem; line-height: 1.7;
+    }
+
+    /* ---------------- 窄螢幕 ---------------- */
+    @media (max-width: 1000px) {
+      .sector-wrap { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .container { padding: 16px 14px 80px; }
+      .page-tabs { padding: 0 12px; }
+      .page-tab { padding: 9px 13px; font-size: 0.85rem; }
+      .brand span:first-of-type { font-size: 0.92rem; }
+      .pick-grid { grid-template-columns: 1fr; }
+      .alert-grid { grid-template-columns: 1fr; }
+      .plan-grid { grid-template-columns: 1fr; }
+      .sector-metrics { grid-template-columns: 1fr; }
+      .section-head h2 { font-size: 1.12rem; }
+      .bot-panel { right: 8px; bottom: 8px; height: calc(100vh - 70px); }
+      .bot-fab { right: 14px; bottom: 14px; width: 54px; height: 54px; font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部導航 -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">🎯</div>
+        <div>
+          <span>電腦及週邊設備類股 · 投資策略與訊號中心</span>
+          <span class="brand-badge">SIGNALS</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- 頁面切換列（四頁共用：改動時四個檔案都要同步） -->
+    <div class="page-tabs-bar">
+      <nav class="page-tabs">
+        <a href="index.html" class="page-tab">📊 類股中樞</a>
+        <a href="strategy.html" class="page-tab active">🎯 投資策略與訊號</a>
+        <a href="news.html" class="page-tab">📰 新聞與市場情報</a>
+        <a href="quanta.html" class="page-tab">🤖 廣達 2382 專頁</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- 免責聲明：刻意放在最上方且不可折疊 -->
+    <div class="disclaimer-top">
+      <div class="dt-head">⚠️ 請先讀：這一頁是「規則運算結果」，不是投資建議</div>
+      本頁的評分、進場區間、停損停利價位與事件警示，全部由<strong>固定的技術面與籌碼面規則</strong>
+      對公開資料自動運算產生，沒有任何人為選股判斷，也<strong>未經歷史回測驗證</strong>。
+      它能幫你快速看出「目前哪些條件成立、哪些不成立」，但<strong>不預測未來、不保證獲利</strong>。
+      所有價位都是依規則算出的參考值，實際進出請自行判斷並承擔結果；
+      如需個人化建議，請諮詢持照的專業人士。
+    </div>
+
+    <!-- 資料日期狀態列 -->
+    <div class="status-bar">
+      <div style="display:inline-flex; align-items:center; gap:8px; font-weight:700; color:#1e40af;">
+        <span style="width:10px; height:10px; background:#10b981; border-radius:50%; display:inline-block;"></span>
+        <span>每日收盤後更新（本頁無即時報價）</span>
+      </div>
+      <div class="sb-dates" id="status-dates"></div>
+    </div>
+
+    <div id="main-content">
+      <div class="loading">⏳ 正在載入訊號資料…</div>
+    </div>
+
+  </div>
+
+  <!-- 問答機器人 -->
+  <button class="bot-fab" id="bot-fab" aria-label="開啟問答機器人">
+    💬<span class="fab-badge" id="fab-badge" style="display:none;">!</span>
+  </button>
+
+  <section class="bot-panel" id="bot-panel" aria-label="投資問答機器人">
+    <div class="bot-header">
+      <div class="bh-icon">🤖</div>
+      <div>
+        <div class="bh-title">訊號問答機器人</div>
+        <div class="bh-sub">讀本站資料回答 · 不連外部伺服器</div>
+      </div>
+      <button class="bot-close" id="bot-close" aria-label="關閉">✕</button>
+    </div>
+    <div class="bot-log" id="bot-log"></div>
+    <div class="bot-input-row">
+      <input class="bot-input" id="bot-input" type="text" autocomplete="off"
+             placeholder="例如：現在適合買哪幾檔？廣達該在哪進場？">
+      <button class="bot-send" id="bot-send">送出</button>
+    </div>
+    <div class="bot-foot">
+      回答皆依本站資料與固定規則產生，僅供研究參考，不構成投資建議。
+    </div>
+  </section>
+
+  <script>
+  /* =====================================================================
+     投資策略與訊號中心
+     =====================================================================
+     資料來源：data/signals.json（由 scripts/build_signals.py 於每日收盤後產生）
+     本頁不呼叫任何外部 API，也不做即時報價 —— 全站都是每日收盤制。
+
+     刻意不使用 Chart.js：
+       分數與廣度都用純 CSS 長條呈現。本專案踩過「在 display:none 的容器裡
+       建立 Chart.js 圖表會因寬度為 0 而畫不出來」的坑，策略卡又大量使用
+       <details> 折疊，用 CSS 條就完全迴避這個問題。
+     ===================================================================== */
+
+  var DATA = null;
+  var PROFILE = 'balanced';   // 預設風險屬性
+  var SHOW_ALL_ALERTS = false;
+
+  /* ---------------------------------------------------- 格式化小工具 */
+  // NT$ 與數字之間一律用 &nbsp;，否則容器壓縮時會被拆成兩行（專案通則）
+  function nt(v, dp) {
+    if (v === null || v === undefined) return '—';
+    var d = (dp === undefined) ? 1 : dp;
+    return 'NT$&nbsp;' + Number(v).toLocaleString('zh-TW', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function numf(v, dp) {
+    if (v === null || v === undefined) return '—';
+    var d = (dp === undefined) ? 1 : dp;
+    return Number(v).toLocaleString('zh-TW', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function lots(v) {
+    if (v === null || v === undefined) return '—';
+    return Number(v).toLocaleString('zh-TW', { maximumFractionDigits: 0 }) + '&nbsp;張';
+  }
+  function pctf(v, dp) {
+    if (v === null || v === undefined) return '—';
+    var d = (dp === undefined) ? 2 : dp;
+    return (v > 0 ? '+' : '') + Number(v).toFixed(d) + '%';
+  }
+  function dirClass(v) {
+    if (v === null || v === undefined || v === 0) return 'flat';
+    return v > 0 ? 'up' : 'down';
+  }
+  function esc(s) {
+    return String(s === null || s === undefined ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* ---------------------------------------------------- 載入 */
+  function boot() {
+    fetch('data/signals.json?t=' + Date.now())
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        DATA = d;
+        render();
+        botInit();
+      })
+      .catch(function (e) {
+        document.getElementById('main-content').innerHTML =
+          '<div class="load-error"><strong>訊號資料載入失敗：' + esc(e.message) + '</strong><br>' +
+          'data/signals.json 可能尚未產生。請在專案目錄執行 ' +
+          '<code>python scripts\\build_signals.py</code> 後重新整理本頁。</div>';
+      });
+  }
+
+  /* ---------------------------------------------------- 日期狀態列 */
+  function renderDates() {
+    var h = '';
+    h += '<span>📈 股價資料日：' + esc(DATA.dataDate || '—') + '</span>';
+    h += '<span>🏦 籌碼資料日：' + esc(DATA.instDate || '—') + '</span>';
+    h += '<span>🕒 運算時間：' + esc(DATA.updated_at || '—') + '</span>';
+    document.getElementById('status-dates').innerHTML = h;
+  }
+
+  /* ---------------------------------------------------- 類股總覽 */
+  function renderSector() {
+    var s = DATA.sector;
+    if (!s) return '';
+    var phaseCls = s.phaseKey === 'expand' ? 'phase-expand'
+                 : (s.phaseKey === 'contract' ? 'phase-contract' : 'phase-range');
+    var icon = s.phaseKey === 'expand' ? '🔥' : (s.phaseKey === 'contract' ? '🧊' : '⚖️');
+
+    var h = '<div class="section" id="sec-sector">';
+    h += '<div class="section-head"><h2>🧭 第一步：現在整個類股適不適合進場</h2>';
+    h += '<span class="sh-note">個股訊號的可靠度高度取決於類股環境，所以先看這裡再看個股</span></div>';
+    h += '<div class="sector-wrap">';
+
+    // 左：階段判定
+    h += '<div class="card">';
+    h += '<div style="margin-bottom:12px;"><span class="phase-badge ' + phaseCls + '">' + icon + ' 類股目前處於' + esc(s.phase) + '</span></div>';
+    h += '<div class="outlook-box">' + esc(s.outlook) + '</div>';
+    h += '<ul class="reason-list">';
+    (s.reasons || []).forEach(function (r) {
+      h += '<li class="tone-' + esc(r.tone) + '"><span>' + (r.tone === 'bull' ? '▲' : (r.tone === 'bear' ? '▼' : '●')) + '</span><span>' + esc(r.text) + '</span></li>';
+    });
+    h += '</ul>';
+    h += '</div>';
+
+    // 右：數字
+    h += '<div class="card">';
+    h += '<div style="font-weight:900; color:var(--text-title); margin-bottom:4px;">類股 vs 大盤（資料日 ' + esc(s.date) + '）</div>';
+    h += '<div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">' + esc(s.name) + ' 對照 ' + esc(s.marketName) + '</div>';
+    h += '<div class="sector-metrics">';
+    h += metric('類股指數收盤', numf(s.sectorClose, 2), '月線 ' + numf(s.sectorMa20, 2) + ' ／ 季線 ' + numf(s.sectorMa60, 2));
+    h += metric('大盤指數收盤', numf(s.marketClose, 2), '');
+    h += metric('類股近 20 日報酬', pctf(s.sectorRet20), '大盤同期 ' + pctf(s.marketRet20), dirClass(s.sectorRet20));
+    h += metric('近 20 日相對強度', pctf(s.rs20), s.rs20 > 0 ? '資金相對流入本類股' : '資金相對流出本類股', dirClass(s.rs20));
+    h += '</div>';
+    h += '<div style="margin-top:14px;">';
+    h += '<div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:var(--text-muted);">';
+    h += '<span>市場廣度（站上 MA20 的檔數）</span>';
+    h += '<span class="num">' + s.breadth + '&nbsp;/&nbsp;' + s.breadthTotal + '（' + numf(s.breadthPct, 1) + '%）</span>';
+    h += '</div>';
+    h += '<div class="breadth-bar"><div class="breadth-fill" style="width:' + (s.breadthPct || 0) + '%;"></div></div>';
+    h += '<div style="font-size:0.78rem; color:var(--text-muted); margin-top:7px; line-height:1.6;">' +
+         '廣度用來驗證指數漲勢是否健康。五成以上代表多數個股同步走強；' +
+         '不到四成代表只有少數股在撐，此時個股訊號的失敗率會明顯升高。</div>';
+    h += '</div>';
+    h += '</div>';
+
+    h += '</div></div>';
+    return h;
+  }
+
+  function metric(label, value, sub, cls) {
+    var h = '<div class="metric"><div class="m-label">' + esc(label) + '</div>';
+    h += '<div class="m-value ' + (cls || '') + '">' + value + '</div>';
+    if (sub) h += '<div style="font-size:0.72rem; color:var(--text-muted); white-space:nowrap;">' + sub + '</div>';
+    h += '</div>';
+    return h;
+  }
+
+  /* ---------------------------------------------------- 當日事件警示 */
+  function renderAlerts() {
+    var all = DATA.alerts || [];
+    var c = DATA.alertCounts || {};
+    var shown = SHOW_ALL_ALERTS ? all : all.slice(0, 6);
+
+    var h = '<div class="section" id="sec-alerts">';
+    h += '<div class="section-head"><h2>🚨 第二步：' + esc(DATA.dataDate || '') + ' 當日需要立刻注意的事</h2>';
+    h += '<span class="sh-note">只收「當天才成立的變化」，不列長期狀態 · 高 ' + (c.high || 0) + ' 件／中 ' + (c.medium || 0) + ' 件／低 ' + (c.low || 0) + ' 件</span></div>';
+
+    if (!all.length) {
+      h += '<div class="card" style="color:var(--text-muted); font-size:0.9rem;">' +
+           '當日沒有觸發任何事件規則 —— 沒有大漲大跌、沒有爆量、沒有均線突破或跌破、沒有法人異常買賣超，' +
+           '也沒有命中關鍵字的新聞。這通常代表盤面平靜，依既有計畫執行即可。</div>';
+      h += '</div>';
+      return h;
+    }
+
+    h += '<div class="alert-grid">';
+    shown.forEach(function (a) {
+      var dirPill = a.direction === 'bullish' ? '偏多' : (a.direction === 'bearish' ? '偏空' : '中性');
+      h += '<div class="alert sev-' + esc(a.severity) + '">';
+      h += '<div class="alert-top">';
+      h += '<a class="alert-stock" href="#stock-' + esc(a.stockId) + '">' + esc(a.stockName) + '&nbsp;' + esc(a.stockId) + '</a>';
+      h += '<span class="pill pill-' + esc(a.severity) + '">' + (a.severity === 'high' ? '高' : (a.severity === 'medium' ? '中' : '低')) + '</span>';
+      h += '<span class="pill pill-' + esc(a.direction) + '">' + dirPill + '</span>';
+      h += '</div>';
+      h += '<div class="alert-title">' + esc(a.title) + '</div>';
+      h += '<div class="alert-detail">' + esc(a.detail) + '</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+
+    if (all.length > 6) {
+      h += '<div style="margin-top:12px; text-align:center;">';
+      h += '<button class="profile-btn" onclick="toggleAlerts()">' +
+           (SHOW_ALL_ALERTS ? '收合，只看前 6 件' : '展開全部 ' + all.length + ' 件事件') + '</button>';
+      h += '</div>';
+    }
+    h += '</div>';
+    return h;
+  }
+
+  function toggleAlerts() {
+    SHOW_ALL_ALERTS = !SHOW_ALL_ALERTS;
+    render();
+    var el = document.getElementById('sec-alerts');
+    if (el) el.scrollIntoView({ block: 'start' });
+  }
+
+  /* ---------------------------------------------------- 建議名單 */
+  function renderPicks() {
+    var prof = DATA.profiles[PROFILE];
+    var ids = (DATA.picks || {})[PROFILE] || [];
+    var byId = {};
+    DATA.stocks.forEach(function (s) { byId[s.id] = s; });
+
+    var h = '<div class="section" id="sec-picks">';
+    h += '<div class="section-head"><h2>🎯 第三步：依你的風險屬性，目前條件成立的是哪幾檔</h2>';
+    h += '<span class="sh-note">三種屬性的評分完全相同，差別只在入選門檻與停損停利的寬度</span></div>';
+
+    h += '<div class="profile-switch">';
+    (DATA.profileOrder || []).forEach(function (k) {
+      var p = DATA.profiles[k];
+      var n = ((DATA.picks || {})[k] || []).length;
+      h += '<button class="profile-btn ' + (k === PROFILE ? 'active' : '') + '" onclick="setProfile(\'' + k + '\')">' +
+           esc(p.name) + '（' + n + ' 檔）</button>';
+    });
+    h += '</div>';
+
+    h += '<div class="profile-desc"><strong>' + esc(prof.name) + '</strong>：' + esc(prof.desc) +
+         ' —— 入選門檻 總分 ' + prof.minScore + ' 分以上、乖離率不超過 ' + numf(prof.maxBias, 0) +
+         '%、趨勢面不低於 40 分，最多列 ' + prof.maxPicks + ' 檔。' +
+         '停損為進場區下緣減 ' + numf(prof.stopAtr, 1) + ' 倍 ATR，第一目標 ' + numf(prof.t1Atr, 1) +
+         ' 倍 ATR，第二目標 ' + numf(prof.t2Atr, 1) + ' 倍 ATR。</div>';
+
+    if (!ids.length) {
+      h += '<div class="empty-note">';
+      h += '<strong>目前沒有任何個股同時滿足「' + esc(prof.name) + '」的全部條件 —— 這本身就是一個訊號。</strong><br>';
+      h += '在' + esc((DATA.sector || {}).phase || '目前') + '的類股環境下，把門檻放寬去硬湊名單，';
+      h += '等於是在環境最差的時候承擔最大的部位風險。空手也是一種部位，而且是這種盤勢下成本最低的部位。<br><br>';
+      h += '如果你想看目前「相對」最強的標的，可以切到較寬鬆的風險屬性，或直接看下方的全 16 檔評分總表 —— ';
+      h += '但請記得：相對最強不等於適合進場。';
+      h += '</div>';
+      h += '</div>';
+      return h;
+    }
+
+    h += '<div class="pick-grid">';
+    ids.forEach(function (id) {
+      if (byId[id]) h += pickCard(byId[id], true);
+    });
+    h += '</div></div>';
+    return h;
+  }
+
+  function setProfile(k) {
+    PROFILE = k;
+    render();
+    var el = document.getElementById('sec-picks');
+    if (el) el.scrollIntoView({ block: 'start' });
+  }
+
+  /* ---------------------------------------------------- 單檔策略卡 */
+  function pickCard(s, expandDefault) {
+    var p = s.plans ? s.plans[PROFILE] : null;
+    var sc = s.score;
+    var ind = s.ind;
+
+    var h = '<div class="pick" id="stock-' + esc(s.id) + '">';
+
+    // 標題列
+    h += '<div class="pick-head"><div>';
+    h += '<div class="pick-name">' + esc(s.name) + ' <span class="pick-id">' + esc(s.id) + '</span>' +
+         (s.isLeader ? ' <span class="pill pill-low">族群龍頭</span>' : '') + '</div>';
+    h += '<div class="pick-sub">' + esc(s.subGroupName || '') + '</div>';
+    h += '</div><div class="pick-price">';
+    h += '<div class="pp-main">' + nt(s.close) + '</div>';
+    h += '<div class="pp-chg ' + dirClass(s.pct) + '">' + pctf(s.pct) + '</div>';
+    h += '</div></div>';
+
+    // 評分
+    var gradeCls = 'grade-' + sc.key;
+    h += '<div class="score-row">';
+    h += '<div class="score-total">';
+    h += '<span class="score-num ' + dirClass(sc.total - 50) + '">' + numf(sc.total, 1) + '</span>';
+    h += '<div><span class="grade-tag ' + gradeCls + '">' + esc(sc.label) + '</span>';
+    h += '<div style="font-size:0.8rem; color:var(--text-muted); font-weight:700; margin-top:3px;">規則判定：' + esc(sc.action) + '</div></div>';
+    h += '</div>';
+    h += '<div class="facet-bars">';
+    h += facetBar('趨勢面 35%', sc.trend, '#dc2626');
+    h += facetBar('動能面 25%', sc.momentum, '#ea580c');
+    h += facetBar('籌碼面 25%', sc.chips, '#1e60d5');
+    h += facetBar('相對強度 15%', sc.strength, '#0284c7');
+    h += '</div></div>';
+
+    // 進出場計畫
+    if (p) {
+      h += '<div class="plan-block">';
+      if (p.needsConfirm) {
+        h += '<div class="confirm-flag">⚠️ 尚未站上月線，需等條件確立才算進場訊號</div>';
+      }
+      if (p.rrWarning) {
+        h += '<div class="rr-flag">⚠️ 風險報酬比僅 ' + numf(p.rr, 2) + '，賠賺比例不佳</div>';
+      }
+      h += '<div class="plan-grid">';
+      h += planCell('參考進場區', nt(p.entryLow) + '<br>～&nbsp;' + nt(p.entryHigh), 'ATR ' + numf(p.atr, 2) + '（' + numf(p.atrPct, 1) + '%）', '');
+      h += planCell('停損價', nt(p.stop), pctf(p.stopPct, 1) + '（不可放寬）', 'danger');
+      h += planCell('第一目標（減碼一半）', nt(p.target1), pctf(p.target1Pct, 1), 'goal');
+      h += planCell('第二目標（全部了結）', nt(p.target2), pctf(p.target2Pct, 1), 'goal');
+      h += planCell('風險報酬比', numf(p.rr, 2) + '&nbsp;:&nbsp;1', p.rr >= 1.5 ? '可接受' : '偏低，宜縮小部位', '');
+      h += planCell('預估持有期間', p.holdDaysMin + '～' + p.holdDaysMax + '&nbsp;個交易日', '檢討日 ' + esc(p.reviewBy), '');
+      h += '</div>';
+      h += '<div class="trigger-box"><strong>進場觸發條件：</strong>' + esc(p.trigger) + '</div>';
+      h += '<div style="font-size:0.79rem; color:var(--text-muted); margin-top:8px; line-height:1.6;">' +
+           '<strong>第一目標的依據：</strong>' + esc(p.target1Basis) + '</div>';
+      h += '</div>';
+
+      // 出場規則
+      h += '<details class="more"' + (expandDefault ? '' : '') + '><summary>出場與停損紀律（' + p.exitRules.length + ' 條，任一條成立就該動作）</summary><div>';
+      h += '<ul class="exit-list">';
+      p.exitRules.forEach(function (r) { h += '<li>' + esc(r) + '</li>'; });
+      h += '</ul></div></details>';
+    }
+
+    // 加分扣分理由
+    h += '<details class="more"><summary>評分依據明細（' + s.reasons.length + ' 條規則）</summary><div>';
+    h += '<ul class="reason-list">';
+    s.reasons.forEach(function (r) {
+      h += '<li class="tone-' + esc(r.tone) + '"><span>' + (r.tone === 'bull' ? '▲' : (r.tone === 'bear' ? '▼' : '●')) + '</span>' +
+           '<span>' + esc(r.text) + '</span><span class="r-w">' + esc(r.facet) + '&nbsp;' + r.weight + '分</span></li>';
+    });
+    h += '</ul></div></details>';
+
+    // 未來區間
+    if (s.forecast) {
+      var f = s.forecast;
+      h += '<details class="more"><summary>未來 20 個交易日的波動區間推估</summary><div>';
+      h += '<div class="fc-band"><span style="color:var(--text-muted); font-family:var(--font-main); font-size:0.82rem;">68% 區間</span>' +
+           '<span>' + nt(f.band68Low) + '&nbsp;～&nbsp;' + nt(f.band68High) + '</span></div>';
+      h += '<div class="fc-band" style="margin-top:5px;"><span style="color:var(--text-muted); font-family:var(--font-main); font-size:0.82rem;">90% 區間</span>' +
+           '<span>' + nt(f.band90Low) + '&nbsp;～&nbsp;' + nt(f.band90High) + '</span></div>';
+      h += '<div class="fc-note">近 20 日實際日波動度 ' + numf(f.sigmaDaily, 2) + '%，換算 20 日波動度 ' + numf(f.sigma20, 2) + '%。' +
+           esc(f.note) + '</div>';
+      h += '</div></details>';
+    }
+
+    // 相關新聞
+    if (s.news && s.news.length) {
+      h += '<details class="more"><summary>近期相關新聞（' + s.news.length + ' 則）</summary><div>';
+      h += '<ul style="list-style:none; display:flex; flex-direction:column; gap:8px;">';
+      s.news.forEach(function (n) {
+        h += '<li style="font-size:0.84rem; line-height:1.6;">' +
+             '<a href="' + esc(n.link) + '" target="_blank" rel="noopener" style="color:var(--blue-primary); text-decoration:none; font-weight:700;">' + esc(n.title) + '</a>' +
+             '<div style="font-size:0.74rem; color:var(--text-muted); font-family:var(--font-mono);">' + esc((n.date || '').slice(0, 16)) + ' · ' + esc((n.sources || []).join('／')) + '</div></li>';
+      });
+      h += '</ul></div></details>';
+    }
+
+    h += '<div style="padding:10px 16px; display:flex; gap:8px; flex-wrap:wrap;">';
+    h += '<button class="chip" onclick="askBot(\'' + esc(s.name) + '該在哪進場\')">問機器人進場點</button>';
+    h += '<button class="chip" onclick="askBot(\'' + esc(s.name) + '什麼時候該賣\')">問出場時機</button>';
+    h += '<button class="chip" onclick="askBot(\'' + esc(s.name) + '的法人籌碼\')">問籌碼</button>';
+    h += '</div>';
+
+    h += '</div>';
+    return h;
+  }
+
+  function facetBar(label, val, color) {
+    var v = Math.max(0, Math.min(100, val || 0));
+    return '<div class="facet"><span class="facet-label">' + esc(label) + '</span>' +
+           '<span class="facet-track"><span class="facet-fill" style="width:' + v + '%; background:' + color + ';"></span></span>' +
+           '<span class="facet-val">' + Math.round(v) + '</span></div>';
+  }
+
+  function planCell(label, value, sub, cls) {
+    var h = '<div class="plan-cell ' + (cls || '') + '">';
+    h += '<div class="pc-label">' + esc(label) + '</div>';
+    h += '<div class="pc-value">' + value + '</div>';
+    if (sub) h += '<div class="pc-sub">' + sub + '</div>';
+    h += '</div>';
+    return h;
+  }
+
+  /* ---------------------------------------------------- 全 16 檔總表 */
+  function renderTable() {
+    var h = '<div class="section" id="sec-table">';
+    h += '<div class="section-head"><h2>📋 全 16 檔評分總表</h2>';
+    h += '<span class="sh-note">依總分排序 · 低分不代表「該空」，只代表目前多方條件不成立</span></div>';
+    h += '<div class="table-wrap"><table class="rank"><thead><tr>';
+    ['個股', '判定', '總分', '趨勢', '動能', '籌碼', '強度', '收盤', '漲跌', 'MA20 乖離', '外資 5 日', '投信 5 日', '相對類股'].forEach(function (t) {
+      h += '<th>' + t + '</th>';
+    });
+    h += '</tr></thead><tbody>';
+    DATA.stocks.forEach(function (s) {
+      var ch = s.chips || {};
+      h += '<tr>';
+      h += '<td><a href="#stock-' + esc(s.id) + '" onclick="openDetail(\'' + esc(s.id) + '\')">' + esc(s.name) + ' ' + esc(s.id) + '</a></td>';
+      h += '<td><span class="grade-tag grade-' + esc(s.score.key) + '">' + esc(s.score.label) + '</span></td>';
+      h += '<td style="font-weight:700;">' + numf(s.score.total, 1) + '</td>';
+      h += '<td>' + numf(s.score.trend, 0) + '</td>';
+      h += '<td>' + numf(s.score.momentum, 0) + '</td>';
+      h += '<td>' + numf(s.score.chips, 0) + '</td>';
+      h += '<td>' + numf(s.score.strength, 0) + '</td>';
+      h += '<td>' + numf(s.close, 1) + '</td>';
+      h += '<td class="' + dirClass(s.pct) + '">' + pctf(s.pct) + '</td>';
+      h += '<td class="' + dirClass(s.ind.bias20) + '">' + pctf(s.ind.bias20, 1) + '</td>';
+      h += '<td class="' + dirClass(ch.foreign5) + '">' + (ch.foreign5 === null || ch.foreign5 === undefined ? '—' : numf(ch.foreign5, 0)) + '</td>';
+      h += '<td class="' + dirClass(ch.trust5) + '">' + (ch.trust5 === null || ch.trust5 === undefined ? '—' : numf(ch.trust5, 0)) + '</td>';
+      h += '<td class="' + dirClass(s.rs20) + '">' + pctf(s.rs20, 1) + '</td>';
+      h += '</tr>';
+    });
+    h += '</tbody></table></div>';
+    h += '<div style="font-size:0.79rem; color:var(--text-muted); margin-top:9px; line-height:1.6;">' +
+         '外資／投信買賣超單位為張（1 張 = 1000 股），資料日 ' + esc(DATA.instDate || '—') +
+         '（籌碼通常比股價晚一個交易日，因為證交所出表時程如此）。' +
+         '「相對類股」為個股近 20 日報酬減去類股指數近 20 日報酬。</div>';
+    h += '</div>';
+    return h;
+  }
+
+  function openDetail(id) {
+    var el = document.getElementById('stock-' + id);
+    if (el) {
+      el.querySelectorAll('details').forEach(function (d) { d.open = true; });
+      el.scrollIntoView({ block: 'center' });
+    }
+  }
+
+  /* ---------------------------------------------------- 其餘個股（非建議名單） */
+  function renderOthers() {
+    var ids = (DATA.picks || {})[PROFILE] || [];
+    var rest = DATA.stocks.filter(function (s) { return ids.indexOf(s.id) < 0; });
+    if (!rest.length) return '';
+    var h = '<div class="section" id="sec-others">';
+    h += '<div class="section-head"><h2>🔍 其餘個股的完整訊號卡</h2>';
+    h += '<span class="sh-note">未入選不等於看空，點開可看每一條規則的成立與否</span></div>';
+    h += '<div class="pick-grid">';
+    rest.forEach(function (s) { h += pickCard(s, false); });
+    h += '</div></div>';
+    return h;
+  }
+
+  /* ---------------------------------------------------- 方法論 */
+  function renderMethod() {
+    var m = DATA.methodology || {};
+    var h = '<div class="section" id="sec-method">';
+    h += '<div class="section-head"><h2>📐 這些數字怎麼算出來的（含已知限制）</h2>';
+    h += '<span class="sh-note">規則全部公開，你可以自己檢驗，也可以不同意</span></div>';
+    h += '<div class="card"><div class="method-grid">';
+    var items = [
+      ['評分權重', m.weights], ['資料基礎', m.dataBasis], ['進場區間怎麼來', m.entry],
+      ['停損停利怎麼來', m.exit], ['預估持有天數', m.holdDays], ['已知限制（重要）', m.limits]
+    ];
+    items.forEach(function (it) {
+      if (!it[1]) return;
+      h += '<div class="method-item"><h4>' + esc(it[0]) + '</h4><p>' + esc(it[1]) + '</p></div>';
+    });
+    h += '</div>';
+    h += '<div style="margin-top:14px; padding-top:13px; border-top:1px solid #e8f2fb; font-size:0.84rem; color:var(--text-muted); line-height:1.75;">' +
+         esc(DATA.disclaimer || '') + '</div>';
+    h += '</div></div>';
+    return h;
+  }
+
+  /* ---------------------------------------------------- 總渲染 */
+  function render() {
+    renderDates();
+    var h = '';
+    h += renderSector();
+    h += renderAlerts();
+    h += renderPicks();
+    h += renderTable();
+    h += renderOthers();
+    h += renderMethod();
+    document.getElementById('main-content').innerHTML = h;
+  }
+  </script>
+
+  <script>
+  /* =====================================================================
+     訊號問答機器人（本地規則引擎）
+     =====================================================================
+     為什麼不接真 LLM：
+       本站是 GitHub Pages 純靜態託管，任何 API 金鑰寫進前端原始碼就等於公開，
+       會被第三方盜刷。要接真 LLM 必須另外架一個後端代理（例如 Cloudflare
+       Worker）把金鑰留在伺服器端。目前刻意選擇「本地規則引擎」：
+       零成本、零金鑰、斷網可用、回答一定與頁面上的數字一致。
+
+     運作方式：
+       1. 正規化問句（全形轉半形、去空白）
+       2. 解析問句裡提到的個股（股號、股名、俗稱）
+       3. 依「由具體到一般」的順序比對意圖關鍵字
+       4. 從 signals.json 組出答案，並附上資料日期
+
+     擴充方式：
+       要新增題型 → 在 INTENTS 陣列加一筆 {test, run}，順序決定優先權。
+       要新增名詞 → 改 scripts/build_signals.py 的 GLOSSARY（資料與頁面同源）。
+     ===================================================================== */
+
+  var BOT_READY = false;
+  var STOCK_INDEX = {};   // 關鍵字 -> 股票物件
+  var LAST_STOCK = null;  // 支援「它呢？」這類追問
+
+  /* 常見俗稱／簡稱（股名本身會自動建索引，這裡只補充別名） */
+  var ALIASES = {
+    '2382': ['廣達電腦', '廣達'],
+    '6669': ['緯穎科技', '緯穎'],
+    '3231': ['緯創資通', '緯創'],
+    '2356': ['英業達'],
+    '2376': ['技嘉科技', '技嘉'],
+    '2357': ['華碩電腦', '華碩', 'asus'],
+    '2377': ['微星科技', '微星', 'msi'],
+    '2059': ['川湖科技', '川湖'],
+    '3017': ['奇鋐科技', '奇鋐'],
+    '3324': ['雙鴻科技', '雙鴻'],
+    '8210': ['勤誠興業', '勤誠'],
+    '2395': ['研華科技', '研華'],
+    '6414': ['樺漢科技', '樺漢'],
+    '3706': ['神達控股', '神達'],
+    '2352': ['佳世達', '明基'],
+    '4915': ['致伸科技', '致伸']
+  };
+
+  function buildStockIndex() {
+    STOCK_INDEX = {};
+    DATA.stocks.forEach(function (s) {
+      STOCK_INDEX[s.id] = s;
+      if (s.name) STOCK_INDEX[s.name.toLowerCase()] = s;
+      if (s.fullName) STOCK_INDEX[s.fullName.toLowerCase()] = s;
+      (ALIASES[s.id] || []).forEach(function (a) { STOCK_INDEX[a.toLowerCase()] = s; });
+    });
+  }
+
+  /* 全形數字與英文轉半形，方便比對 */
+  function norm(q) {
+    return String(q || '')
+      .replace(/[！-～]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); })
+      .replace(/\s+/g, '')
+      .toLowerCase();
+  }
+
+  /* 從問句找出所有提到的個股（依出現位置排序，支援比較題） */
+  function findStocks(q) {
+    var hits = [];
+    Object.keys(STOCK_INDEX).forEach(function (key) {
+      if (!key) return;
+      var pos = q.indexOf(key);
+      if (pos >= 0) {
+        var s = STOCK_INDEX[key];
+        if (!hits.some(function (h) { return h.s.id === s.id; })) {
+          hits.push({ s: s, pos: pos, len: key.length });
+        }
+      }
+    });
+    hits.sort(function (a, b) { return a.pos - b.pos; });
+    return hits.map(function (h) { return h.s; });
+  }
+
+  function has(q, words) {
+    for (var i = 0; i < words.length; i++) { if (q.indexOf(words[i]) >= 0) return true; }
+    return false;
+  }
+
+  /* ---------------------------------------------------- 回答零件 */
+  function srcLine(extra) {
+    return '<div class="src">資料：股價 ' + esc(DATA.dataDate || '—') +
+           '／籌碼 ' + esc(DATA.instDate || '—') + (extra ? '　' + extra : '') + '</div>';
+  }
+
+  function kv(k, v, cls) {
+    return '<div class="kv"><span class="k">' + k + '</span><span class="v ' + (cls || '') + '">' + v + '</span></div>';
+  }
+
+  function stockHead(s) {
+    return '<h4>' + esc(s.name) + ' ' + esc(s.id) +
+           ' <span class="grade-tag grade-' + esc(s.score.key) + '">' + esc(s.score.label) + ' ' + numf(s.score.total, 1) + ' 分</span></h4>';
+  }
+
+  function planOf(s) { return s.plans ? s.plans[PROFILE] : null; }
+
+  /* ---- 個股總覽 ---- */
+  function ansStock(s) {
+    var p = planOf(s);
+    var h = stockHead(s);
+    h += '<p>' + esc(s.subGroupName || '') + (s.isLeader ? '｜族群龍頭' : '') + '</p>';
+    h += kv('最新收盤', nt(s.close) + ' <span class="' + dirClass(s.pct) + '">' + pctf(s.pct) + '</span>');
+    h += kv('四面向分數', '趨勢 ' + numf(s.score.trend, 0) + '／動能 ' + numf(s.score.momentum, 0) +
+                        '／籌碼 ' + numf(s.score.chips, 0) + '／強度 ' + numf(s.score.strength, 0));
+    h += kv('規則判定', esc(s.score.action));
+    if (p) {
+      h += kv('參考進場區', nt(p.entryLow) + '～' + nt(p.entryHigh));
+      h += kv('停損價', nt(p.stop) + '（' + pctf(p.stopPct, 1) + '）');
+      h += kv('第一目標', nt(p.target1) + '（' + pctf(p.target1Pct, 1) + '）');
+      h += kv('風險報酬比', numf(p.rr, 2) + ' : 1', p.rrWarning ? 'down' : '');
+      if (p.needsConfirm) {
+        h += '<p style="color:#92400e; background:#fffbeb; padding:7px 9px; border-radius:6px; margin-top:7px;">' +
+             '⚠️ 這檔目前收盤<strong>在 MA20 月線之下</strong>，依規則還不算進場訊號成立，' +
+             '要等收盤站回月線並連 2 日守住。上面的進場區是「條件成立後」才適用的價位。</p>';
+      }
+      if (p.rrWarning) {
+        h += '<p style="color:#9f1239; background:#fff1f2; padding:7px 9px; border-radius:6px; margin-top:7px;">' +
+             '⚠️ 風險報酬比只有 ' + numf(p.rr, 2) + '（低於 1.5）。意思是要賺的距離比要賠的距離小，' +
+             '這種交易即使做對幾次，一次停損就可能吃掉多次獲利。</p>';
+      }
+    }
+    var top = s.reasons.filter(function (r) { return r.tone === 'bull'; }).slice(0, 3);
+    var bad = s.reasons.filter(function (r) { return r.tone === 'bear'; }).slice(0, 3);
+    if (top.length) {
+      h += '<p style="margin-top:8px;"><strong>目前成立的多方條件：</strong></p><ul>';
+      top.forEach(function (r) { h += '<li>' + esc(r.text) + '</li>'; });
+      h += '</ul>';
+    }
+    if (bad.length) {
+      h += '<p><strong>目前不利的條件：</strong></p><ul>';
+      bad.forEach(function (r) { h += '<li>' + esc(r.text) + '</li>'; });
+      h += '</ul>';
+    }
+    h += srcLine();
+    return { html: h, chips: [s.name + '該在哪進場', s.name + '什麼時候該賣', s.name + '的法人籌碼', s.name + '的技術指標'] };
+  }
+
+  /* ---- 進場 ---- */
+  function ansEntry(s) {
+    var p = planOf(s);
+    if (!p) return { html: stockHead(s) + '<p>這檔的日線資料不足，無法計算進場區間。</p>' + srcLine(), chips: [] };
+    var h = stockHead(s);
+    h += '<p><strong>依「' + esc(DATA.profiles[PROFILE].name) + '」規則的進場參考：</strong></p>';
+    h += kv('參考進場區', nt(p.entryLow) + '～' + nt(p.entryHigh));
+    h += kv('目前收盤', nt(s.close));
+    h += kv('MA20 月線', nt(s.ind.ma20));
+    h += kv('乖離率', pctf(s.ind.bias20, 1), dirClass(s.ind.bias20));
+    h += kv('停損價', nt(p.stop) + '（' + pctf(p.stopPct, 1) + '）');
+    h += '<p style="margin-top:9px;"><strong>觸發條件：</strong>' + esc(p.trigger) + '</p>';
+    if (p.needsConfirm) {
+      h += '<p style="color:#92400e; background:#fffbeb; padding:8px 10px; border-radius:6px;">' +
+           '⚠️ <strong>現在還不是進場時機。</strong>收盤在月線之下，規則上屬於「等待轉強」，' +
+           '不是「可以買」。在這個狀態下進場，等於是在賭反轉，而不是順勢。</p>';
+    } else if (s.close > p.entryHigh) {
+      h += '<p style="color:#92400e; background:#fffbeb; padding:8px 10px; border-radius:6px;">' +
+           '⚠️ <strong>目前股價 ' + nt(s.close) + ' 已高於進場區上緣 ' + nt(p.entryHigh) + '。</strong>' +
+           '規則上這叫追高 —— 此時進場停損距離會變大，風險報酬比變差。' +
+           '比較好的做法是等它回測到進場區，或是直接換一檔還在區間內的。</p>';
+    } else if (s.close >= p.entryLow) {
+      h += '<p style="color:#166534; background:#f0fdf4; padding:8px 10px; border-radius:6px;">' +
+           '✅ 目前股價 ' + nt(s.close) + ' <strong>正落在參考進場區內</strong>。' +
+           '若要進場，請同時把停損單設在 ' + nt(p.stop) + '，並先決定好要投入多少部位。</p>';
+    }
+    h += '<p style="font-size:0.8rem; color:var(--text-muted);">提醒：進場區是刻意給的「區間」而不是單一價位。' +
+         '台股跳動大，掛單在單一價位常常成交不到，分批進場也比一次壓滿更能控制成本。</p>';
+    h += srcLine();
+    return { html: h, chips: [s.name + '什麼時候該賣', '什麼是乖離率', '為什麼要分批進場', s.name + '風險在哪'] };
+  }
+
+  /* ---- 出場 ---- */
+  function ansExit(s) {
+    var p = planOf(s);
+    if (!p) return { html: stockHead(s) + '<p>這檔的日線資料不足，無法計算出場價位。</p>' + srcLine(), chips: [] };
+    var h = stockHead(s);
+    h += '<p><strong>出場有三個方向：停損、停利、時間到。</strong></p>';
+    h += kv('停損價（最重要）', nt(p.stop) + '（' + pctf(p.stopPct, 1) + '）', 'down');
+    h += kv('第一目標：減碼一半', nt(p.target1) + '（' + pctf(p.target1Pct, 1) + '）', 'up');
+    h += kv('第二目標：全部了結', nt(p.target2) + '（' + pctf(p.target2Pct, 1) + '）', 'up');
+    h += kv('預估持有期間', p.holdDaysMin + '～' + p.holdDaysMax + ' 個交易日');
+    h += kv('最晚檢討日', esc(p.reviewBy));
+    h += '<p style="margin-top:9px;"><strong>第一目標的依據：</strong>' + esc(p.target1Basis) + '</p>';
+    h += '<p><strong>以下任一條成立就該動作：</strong></p><ul>';
+    p.exitRules.forEach(function (r) { h += '<li>' + esc(r) + '</li>'; });
+    h += '</ul>';
+    h += '<p style="font-size:0.8rem; color:var(--text-muted);">「最晚檢討日 ' + esc(p.reviewBy) +
+         '」不是預測那天會到目標，而是一個<strong>資金效率檢查點</strong>：' +
+         '如果持有這麼久都還沒走到第一目標，代表這筆的假設沒有實現，資金壓在這裡的機會成本比帳面虧損更可觀。</p>';
+    h += srcLine();
+    return { html: h, chips: ['什麼是停損', '什麼是風險報酬比', s.name + '該在哪進場', '今天有什麼要注意的'] };
+  }
+
+  /* ---- 籌碼 ---- */
+  function ansChips(s) {
+    var c = s.chips;
+    if (!c) return { html: stockHead(s) + '<p>查無這檔的籌碼資料。</p>' + srcLine(), chips: [] };
+    var h = stockHead(s);
+    h += '<p><strong>三大法人買賣超（單位：張，1 張 = 1000 股）</strong></p>';
+    h += kv('外資　最新交易日', lots(c.foreign1), dirClass(c.foreign1));
+    h += kv('外資　近 5 日', lots(c.foreign5), dirClass(c.foreign5));
+    h += kv('外資　近 20 日', lots(c.foreign20), dirClass(c.foreign20));
+    h += kv('投信　近 5 日', lots(c.trust5), dirClass(c.trust5));
+    h += kv('投信　近 20 日', lots(c.trust20), dirClass(c.trust20));
+    h += kv('自營商 近 5 日', lots(c.dealer5), dirClass(c.dealer5));
+    h += kv('三大法人 近 20 日', lots(c.total20), dirClass(c.total20));
+    h += kv('外資持股比', numf(c.foreignRatio, 2) + '%');
+    h += kv('持股比 20 日變化', pctf(c.foreignRatioChg20, 2).replace('%', ' 個百分點'), dirClass(c.foreignRatioChg20));
+    if (c.foreignStreak) {
+      h += kv('外資連續', Math.abs(c.foreignStreak) + ' 日' + (c.foreignStreak > 0 ? '買超' : '賣超'), dirClass(c.foreignStreak));
+    }
+    if (c.trustStreak) {
+      h += kv('投信連續', Math.abs(c.trustStreak) + ' 日' + (c.trustStreak > 0 ? '買超' : '賣超'), dirClass(c.trustStreak));
+    }
+    // 自動解讀對作格局
+    var f = c.foreign5 || 0, t = c.trust5 || 0;
+    var read;
+    if (f > 0 && t > 0) read = '外資與投信<strong>同步買超</strong>，是籌碼面最乾淨的組合。';
+    else if (f < 0 && t < 0) read = '外資與投信<strong>同步賣超</strong>，籌碼面偏弱，此時技術面轉強的訊號可靠度會下降。';
+    else if (f < 0 && t > 0) read = '<strong>外資提款、投信承接</strong>的對作格局。外資資金量大、看中長期，投信看中期績效；這種分歧通常代表短線會震盪。';
+    else if (f > 0 && t < 0) read = '<strong>外資買、投信調節</strong>的對作格局，常見於投信作帳結束或換股。';
+    else read = '近 5 日法人進出接近平盤，籌碼面沒有明確方向。';
+    h += '<p style="margin-top:9px; background:#f8fbff; padding:8px 10px; border-radius:6px;">📖 <strong>解讀：</strong>' + read +
+         '　另外要分開看：單日買超大但<strong>持股比持續下降</strong>，代表整體仍在調節。本檔持股比 20 日變化為 ' +
+         pctf(c.foreignRatioChg20, 2).replace('%', ' 個百分點') + '。</p>';
+    h += srcLine('（籌碼比股價晚一日為證交所出表時程所致）');
+    return { html: h, chips: ['什麼是外資持股比', '什麼是投信', s.name + '該在哪進場', '哪幾檔法人買最多'] };
+  }
+
+  /* ---- 技術指標 ---- */
+  function ansTech(s) {
+    var i = s.ind;
+    var h = stockHead(s);
+    h += '<p><strong>技術指標（還原股價後的日線）</strong></p>';
+    h += kv('收盤', nt(s.close) + ' <span class="' + dirClass(s.pct) + '">' + pctf(s.pct) + '</span>');
+    h += kv('MA5 / MA10', nt(i.ma5) + ' / ' + nt(i.ma10));
+    h += kv('MA20 月線', nt(i.ma20) + '（乖離 ' + pctf(i.bias20, 1) + '）', dirClass(i.bias20));
+    h += kv('MA60 季線', nt(i.ma60));
+    h += kv('RSI 14', numf(i.rsi14, 1));
+    h += kv('KD', 'K ' + numf(i.kdK, 1) + ' / D ' + numf(i.kdD, 1), dirClass((i.kdK || 0) - (i.kdD || 0)));
+    h += kv('MACD 柱狀體', numf(i.macdHist, 2) + '（前一日 ' + numf(i.macdHistPrev, 2) + '）', dirClass(i.macdHist));
+    h += kv('ATR 14', numf(i.atr14, 2) + '（' + numf(i.atrPct, 1) + '%）');
+    h += kv('60 日高 / 低', nt(i.high60) + ' / ' + nt(i.low60));
+    h += kv('60 日區間位階', numf((i.pricePos60 || 0) * 100, 0) + '%');
+    h += kv('近 5 / 20 日報酬', pctf(i.ret5, 1) + ' / ' + pctf(i.ret20, 1), dirClass(i.ret20));
+    h += kv('量能（對 20 日均量）', numf(i.volRatio, 2) + ' 倍');
+    h += srcLine();
+    return { html: h, chips: ['什麼是 ATR', '什麼是 MACD', '什麼是 KD', s.name + '該在哪進場'] };
+  }
+
+  /* ---- 未來走勢 ---- */
+  function ansForecast(s) {
+    var f = s.forecast;
+    var h = stockHead(s);
+    h += '<p>先把話說清楚：<strong>我無法預測股價</strong>，沒有人可以。我能做的是兩件事 —— ' +
+         '告訴你目前有哪些條件成立，以及依歷史波動度算出合理的震盪範圍。</p>';
+    if (f) {
+      h += '<p><strong>未來 20 個交易日的統計區間</strong></p>';
+      h += kv('68% 區間', nt(f.band68Low) + ' ～ ' + nt(f.band68High));
+      h += kv('90% 區間', nt(f.band90Low) + ' ～ ' + nt(f.band90High));
+      h += kv('近 20 日日波動度', numf(f.sigmaDaily, 2) + '%');
+      h += '<p style="font-size:0.8rem; color:var(--text-muted);">' + esc(f.note) + '</p>';
+    }
+    var bull = s.reasons.filter(function (r) { return r.tone === 'bull'; });
+    var bear = s.reasons.filter(function (r) { return r.tone === 'bear'; });
+    h += '<p style="margin-top:9px;"><strong>目前的條件結構：</strong>' + bull.length + ' 條偏多、' +
+         bear.length + ' 條偏空，總分 ' + numf(s.score.total, 1) + ' 分（' + esc(s.score.label) + '）。</p>';
+    h += '<p>類股環境：<strong>' + esc((DATA.sector || {}).phase || '—') + '</strong>。' +
+         esc((DATA.sector || {}).outlook || '') + '</p>';
+    h += srcLine();
+    return { html: h, chips: ['什麼是信賴區間', s.name + '該在哪進場', s.name + '什麼時候該賣', '現在類股適合進場嗎'] };
+  }
+
+  /* ---- 新聞 ---- */
+  function ansNews(s) {
+    var h = stockHead(s);
+    if (!s.news || !s.news.length) {
+      h += '<p>近 10 天的封存新聞裡沒有抓到這檔的相關報導。</p>' + srcLine();
+      return { html: h, chips: ['今天有什麼要注意的'] };
+    }
+    h += '<p><strong>近期相關新聞（' + s.news.length + ' 則）</strong></p><ul>';
+    s.news.forEach(function (n) {
+      h += '<li><a href="' + esc(n.link) + '" target="_blank" rel="noopener">' + esc(n.title) + '</a>' +
+           '<br><span style="font-size:0.74rem; color:var(--text-muted);">' + esc((n.date || '').slice(0, 16)) +
+           ' · ' + esc((n.sources || []).join('／')) + '</span></li>';
+    });
+    h += '</ul>';
+    h += '<p style="font-size:0.8rem; color:var(--text-muted);">新聞標題只做關鍵字分類，' +
+         '不代表我判斷過內容真偽或影響大小，請自行點進去讀。</p>';
+    h += srcLine('　完整新聞牆請見「新聞與市場情報」頁');
+    return { html: h, chips: [s.name + '該在哪進場', '今天有什麼要注意的'] };
+  }
+
+  /* ---- 建議名單 ---- */
+  function ansPicks() {
+    var prof = DATA.profiles[PROFILE];
+    var ids = (DATA.picks || {})[PROFILE] || [];
+    var byId = {}; DATA.stocks.forEach(function (s) { byId[s.id] = s; });
+    var h = '<h4>🎯 目前條件成立的名單（' + esc(prof.name) + '）</h4>';
+    h += '<p>先講環境：類股目前處於<strong>' + esc((DATA.sector || {}).phase || '—') + '</strong>，' +
+         '16 檔中有 ' + (DATA.sector || {}).breadth + ' 檔站上月線。</p>';
+
+    if (!ids.length) {
+      h += '<p style="background:#f0fdf4; padding:9px 11px; border-radius:6px; color:#14532d;">' +
+           '<strong>依「' + esc(prof.name) + '」的門檻，目前沒有任何一檔同時滿足全部條件。</strong><br>' +
+           '這不是資料出錯，而是規則給出的答案。把門檻放寬去硬湊一份名單，' +
+           '等於在環境最差的時候承擔最大的風險。空手也是一種部位。</p>';
+      var best = DATA.stocks.slice(0, 3);
+      h += '<p style="margin-top:8px;">如果你只是想知道「相對」最強的是哪幾檔（<strong>相對最強 ≠ 適合進場</strong>）：</p><ul>';
+      best.forEach(function (s) {
+        h += '<li><strong>' + esc(s.name) + ' ' + esc(s.id) + '</strong>　' + numf(s.score.total, 1) +
+             ' 分（' + esc(s.score.label) + '）</li>';
+      });
+      h += '</ul>';
+      h += srcLine();
+      return { html: h, chips: ['改用積極型看看', '現在類股適合進場嗎', '為什麼現在沒有建議名單', '今天有什麼要注意的'] };
+    }
+
+    h += '<p><strong>符合條件的 ' + ids.length + ' 檔：</strong></p>';
+    ids.forEach(function (id) {
+      var s = byId[id]; if (!s) return;
+      var p = planOf(s);
+      h += '<div style="border:1px solid var(--card-border); border-radius:8px; padding:9px 11px; margin-bottom:8px;">';
+      h += '<div style="font-weight:900; color:var(--text-title);">' + esc(s.name) + ' ' + esc(s.id) +
+           ' <span class="grade-tag grade-' + esc(s.score.key) + '">' + numf(s.score.total, 1) + ' 分</span></div>';
+      if (p) {
+        h += kv('進場區', nt(p.entryLow) + '～' + nt(p.entryHigh));
+        h += kv('停損', nt(p.stop) + '（' + pctf(p.stopPct, 1) + '）');
+        h += kv('第一目標', nt(p.target1) + '（' + pctf(p.target1Pct, 1) + '）');
+        h += kv('風險報酬比', numf(p.rr, 2) + ' : 1', p.rrWarning ? 'down' : '');
+        if (p.rrWarning) {
+          h += '<div style="font-size:0.78rem; color:#9f1239;">⚠️ 風險報酬比低於 1.5，宜縮小部位</div>';
+        }
+      }
+      h += '</div>';
+    });
+    h += '<p style="font-size:0.8rem; color:var(--text-muted);">這份名單是規則篩出來的「條件成立清單」，' +
+         '不是推薦買進。每一檔都請搭配它自己的停損價使用；沒有停損的進場不是投資，是賭。</p>';
+    h += srcLine();
+    return { html: h, chips: ids.slice(0, 2).map(function (id) { return byId[id].name + '該在哪進場'; })
+             .concat(['現在類股適合進場嗎', '今天有什麼要注意的']) };
+  }
+
+  /* ---- 今日事件 ---- */
+  function ansAlerts() {
+    var all = DATA.alerts || [];
+    var h = '<h4>🚨 ' + esc(DATA.dataDate || '') + ' 當日事件警示</h4>';
+    if (!all.length) {
+      h += '<p>當日沒有觸發任何事件規則 —— 沒有大漲大跌、沒有爆量、沒有均線突破或跌破、' +
+           '沒有法人異常買賣超，也沒有命中關鍵字的新聞。依既有計畫執行即可。</p>' + srcLine();
+      return { html: h, chips: ['現在適合買哪幾檔', '現在類股適合進場嗎'] };
+    }
+    var c = DATA.alertCounts || {};
+    h += '<p>共 ' + all.length + ' 件：高 ' + (c.high || 0) + '／中 ' + (c.medium || 0) + '／低 ' + (c.low || 0) + '。</p>';
+    all.slice(0, 8).forEach(function (a) {
+      var sev = a.severity === 'high' ? '🔴' : (a.severity === 'medium' ? '🟠' : '🔵');
+      var dir = a.direction === 'bullish' ? '偏多' : (a.direction === 'bearish' ? '偏空' : '中性');
+      h += '<div style="border-left:3px solid ' + (a.severity === 'high' ? '#dc2626' : (a.severity === 'medium' ? '#d97706' : '#0284c7')) +
+           '; padding:5px 0 5px 9px; margin-bottom:8px;">';
+      h += '<div style="font-weight:800; font-size:0.85rem;">' + sev + ' ' + esc(a.stockName) + ' ' + esc(a.stockId) +
+           '｜' + esc(a.title) + '（' + dir + '）</div>';
+      h += '<div style="font-size:0.81rem; color:var(--text-body);">' + esc(a.detail) + '</div>';
+      h += '</div>';
+    });
+    if (all.length > 8) h += '<p style="font-size:0.8rem; color:var(--text-muted);">另有 ' + (all.length - 8) + ' 件，請看頁面上的事件區塊。</p>';
+    h += srcLine();
+    return { html: h, chips: ['現在適合買哪幾檔', '現在類股適合進場嗎', '哪幾檔法人買最多'] };
+  }
+
+  /* ---- 類股環境 ---- */
+  function ansSector() {
+    var s = DATA.sector;
+    if (!s) return { html: '<p>查無類股指數資料。</p>', chips: [] };
+    var h = '<h4>🧭 類股目前處於' + esc(s.phase) + '</h4>';
+    h += '<p>' + esc(s.outlook) + '</p>';
+    h += kv('類股指數收盤', numf(s.sectorClose, 2));
+    h += kv('類股月線 / 季線', numf(s.sectorMa20, 2) + ' / ' + numf(s.sectorMa60, 2));
+    h += kv('類股近 20 日', pctf(s.sectorRet20), dirClass(s.sectorRet20));
+    h += kv('大盤近 20 日', pctf(s.marketRet20), dirClass(s.marketRet20));
+    h += kv('相對強度', pctf(s.rs20), dirClass(s.rs20));
+    h += kv('市場廣度', s.breadth + ' / ' + s.breadthTotal + '（' + numf(s.breadthPct, 1) + '%）');
+    h += '<p style="margin-top:8px;"><strong>判定依據：</strong></p><ul>';
+    (s.reasons || []).forEach(function (r) {
+      h += '<li>' + (r.tone === 'bull' ? '▲ ' : (r.tone === 'bear' ? '▼ ' : '● ')) + esc(r.text) + '</li>';
+    });
+    h += '</ul>';
+    h += srcLine();
+    return { html: h, chips: ['現在適合買哪幾檔', '什麼是市場廣度', '今天有什麼要注意的'] };
+  }
+
+  /* ---- 比較兩檔 ---- */
+  function ansCompare(a, b) {
+    var pa = planOf(a), pb = planOf(b);
+    var h = '<h4>⚖️ ' + esc(a.name) + ' ' + esc(a.id) + '　vs　' + esc(b.name) + ' ' + esc(b.id) + '</h4>';
+    function row(label, va, vb) {
+      return '<div class="kv"><span class="k">' + label + '</span>' +
+             '<span class="v">' + va + '　|　' + vb + '</span></div>';
+    }
+    h += row('總分', numf(a.score.total, 1), numf(b.score.total, 1));
+    h += row('判定', esc(a.score.label), esc(b.score.label));
+    h += row('趨勢 / 動能', numf(a.score.trend, 0) + '/' + numf(a.score.momentum, 0), numf(b.score.trend, 0) + '/' + numf(b.score.momentum, 0));
+    h += row('籌碼 / 強度', numf(a.score.chips, 0) + '/' + numf(a.score.strength, 0), numf(b.score.chips, 0) + '/' + numf(b.score.strength, 0));
+    h += row('收盤', numf(a.close, 1), numf(b.close, 1));
+    h += row('MA20 乖離', pctf(a.ind.bias20, 1), pctf(b.ind.bias20, 1));
+    h += row('近 20 日報酬', pctf(a.ind.ret20, 1), pctf(b.ind.ret20, 1));
+    h += row('外資 5 日', numf((a.chips || {}).foreign5, 0), numf((b.chips || {}).foreign5, 0));
+    if (pa && pb) {
+      h += row('風險報酬比', numf(pa.rr, 2), numf(pb.rr, 2));
+      h += row('停損幅度', pctf(pa.stopPct, 1), pctf(pb.stopPct, 1));
+    }
+    var win = a.score.total >= b.score.total ? a : b;
+    var lose = win === a ? b : a;
+    h += '<p style="margin-top:9px;">依規則總分，<strong>' + esc(win.name) + '</strong>（' + numf(win.score.total, 1) +
+         ' 分）高於 ' + esc(lose.name) + '（' + numf(lose.score.total, 1) + ' 分）。' +
+         '但分數高只代表<strong>目前成立的條件比較多</strong>，不代表報酬會比較好 —— ' +
+         '兩檔的波動度、停損幅度與風險報酬比都不同，請一併看上面的數字。</p>';
+    h += srcLine();
+    return { html: h, chips: [a.name + '該在哪進場', b.name + '該在哪進場', '現在適合買哪幾檔'] };
+  }
+
+  /* ---- 排行類問題 ---- */
+  function ansRank(kind) {
+    var list = DATA.stocks.slice();
+    var title, fmt;
+    if (kind === 'foreign') {
+      list.sort(function (x, y) { return ((y.chips || {}).foreign5 || 0) - ((x.chips || {}).foreign5 || 0); });
+      title = '外資近 5 日買超排行';
+      fmt = function (s) { return lots((s.chips || {}).foreign5); };
+    } else if (kind === 'trust') {
+      list.sort(function (x, y) { return ((y.chips || {}).trust5 || 0) - ((x.chips || {}).trust5 || 0); });
+      title = '投信近 5 日買超排行';
+      fmt = function (s) { return lots((s.chips || {}).trust5); };
+    } else if (kind === 'weak') {
+      list.sort(function (x, y) { return x.score.total - y.score.total; });
+      title = '規則分數最低（多方條件最不成立）';
+      fmt = function (s) { return numf(s.score.total, 1) + ' 分'; };
+    } else {
+      title = '規則總分排行';
+      fmt = function (s) { return numf(s.score.total, 1) + ' 分（' + s.score.label + '）'; };
+    }
+    var h = '<h4>🏆 ' + title + '</h4><ul>';
+    list.slice(0, 5).forEach(function (s, i) {
+      h += '<li><strong>' + (i + 1) + '. ' + esc(s.name) + ' ' + esc(s.id) + '</strong>　' + fmt(s) + '</li>';
+    });
+    h += '</ul>';
+    if (kind === 'weak') {
+      h += '<p style="font-size:0.8rem; color:var(--text-muted);">分數低只代表「目前多方條件不成立」，' +
+           '不是建議做空。台股個股放空成本與風險都高，本站不產生任何做空訊號。</p>';
+    }
+    h += srcLine();
+    return { html: h, chips: ['現在適合買哪幾檔', '哪幾檔法人買最多', '現在類股適合進場嗎'] };
+  }
+
+  /* ---- 名詞解釋 ---- */
+  function ansGlossary(term) {
+    var g = DATA.glossary || {};
+    var h = '<h4>📖 ' + esc(term) + '</h4><p>' + esc(g[term]) + '</p>';
+    return { html: h, chips: ['什麼是停損', '什麼是風險報酬比', '什麼是 ATR', '現在適合買哪幾檔'] };
+  }
+
+  /* ---- 風險類問題（保證獲利、借錢、全押） ---- */
+  function ansRisk(kind) {
+    var h = '<h4>⚠️ 這個問題我必須直接回答你</h4>';
+    if (kind === 'guarantee') {
+      h += '<p><strong>沒有任何方法能保證股票獲利，包含這一頁。</strong></p>';
+      h += '<p>本頁的分數、進場區、目標價，全部是用固定規則對歷史資料算出來的。' +
+           '規則描述的是「過去 60 天發生了什麼」，而不是「未來會發生什麼」。' +
+           '而且這套規則<strong>沒有經過歷史回測驗證</strong>，我不知道它的勝率是多少 —— 這點我不會假裝知道。</p>';
+      h += '<p>如果有人（或任何網站、群組、老師）告訴你某檔股票「保證」或「一定會」漲，' +
+           '那是明確的警訊，不是機會。</p>';
+    } else if (kind === 'leverage') {
+      h += '<p><strong>借錢、融資、質押或動用生活必要資金來買股票，我不會給你任何支持這麼做的理由。</strong></p>';
+      h += '<p>原因很具體：槓桿會同時放大獲利與虧損，但它<strong>還會讓你失去等待的能力</strong>。' +
+           '融資有維持率，跌到一定程度會被強制賣出 —— 即使你的判斷最後是對的，' +
+           '你也已經在最低點被迫出場了。本頁最高分的個股停損幅度都在 10% 以上，' +
+           '這種波動對槓桿部位是致命的。</p>';
+      h += '<p>投入股市的錢，應該是「全部虧光也不影響生活」的閒置資金。</p>';
+    } else {
+      h += '<p><strong>把資金集中在單一檔股票，是散戶最常見也最昂貴的錯誤。</strong></p>';
+      h += '<p>本頁所有訊號都有失效的可能，每一張策略卡都附了停損價正是因為這個前提。' +
+           '單檔押滿的問題是：一次判斷錯誤就會造成無法用其他部位彌補的損失，' +
+           '而且會讓你在該停損的時候因為金額太大而下不了手。</p>';
+      h += '<p>部位大小該怎麼配，取決於你的總資產、收入穩定度與可承受的最大回撤 —— ' +
+           '這些我不知道，所以我不會給你一個數字。這部分請諮詢持照的專業人士。</p>';
+    }
+    h += '<div class="src">本頁內容為規則運算結果，不構成投資建議。</div>';
+    return { html: h, chips: ['什麼是停損', '什麼是風險報酬比', '這些分數怎麼算的', '現在類股適合進場嗎'] };
+  }
+
+  /* ---- 方法論 ---- */
+  function ansMethod() {
+    var m = DATA.methodology || {};
+    var h = '<h4>📐 這些分數怎麼算出來的</h4>';
+    h += '<p>' + esc(m.weights || '') + '</p>';
+    h += '<p><strong>資料基礎：</strong>' + esc(m.dataBasis || '') + '</p>';
+    h += '<p><strong>進場區：</strong>' + esc(m.entry || '') + '</p>';
+    h += '<p><strong>停損停利：</strong>' + esc(m.exit || '') + '</p>';
+    h += '<p style="background:#fffbeb; padding:8px 10px; border-radius:6px; color:#92400e;">' +
+         '<strong>已知限制：</strong>' + esc(m.limits || '') + '</p>';
+    return { html: h, chips: ['為什麼不能保證獲利', '什麼是停損', '現在適合買哪幾檔'] };
+  }
+
+  function ansHelp() {
+    var h = '<h4>👋 我可以回答這些</h4>';
+    h += '<p>我是讀這個網站資料的規則型機器人，不連外部伺服器，所以回答一定跟頁面上的數字一致。</p>';
+    h += '<ul>';
+    h += '<li><strong>選股</strong>：現在適合買哪幾檔？最強的是哪幾檔？</li>';
+    h += '<li><strong>進出場</strong>：廣達該在哪進場？奇鋐什麼時候該賣？</li>';
+    h += '<li><strong>籌碼</strong>：緯穎的法人籌碼？哪幾檔外資買最多？</li>';
+    h += '<li><strong>技術面</strong>：川湖的技術指標？研華的 KD 多少？</li>';
+    h += '<li><strong>環境</strong>：現在類股適合進場嗎？今天有什麼要注意的？</li>';
+    h += '<li><strong>比較</strong>：廣達和緯穎比哪個好？</li>';
+    h += '<li><strong>名詞</strong>：什麼是 ATR？什麼是停損？什麼是外資持股比？</li>';
+    h += '</ul>';
+    h += '<p style="font-size:0.8rem; color:var(--text-muted);">我不會預測股價，也不會告訴你「一定會漲」。' +
+         '我能做的是把規則的運算結果和它的依據完整攤開給你看。</p>';
+    return { html: h, chips: ['現在適合買哪幾檔', '今天有什麼要注意的', '現在類股適合進場嗎', '這些分數怎麼算的'] };
+  }
+
+  function ansFallback(q) {
+    var h = '<h4>🤔 這個問題我接不起來</h4>';
+    h += '<p>我是規則型機器人，只能回答「本站資料算得出來」的題目。' +
+         '你的問題我沒有對應的規則，所以我不會瞎掰一個答案給你。</p>';
+    h += '<p>可以試試改成這些問法：</p>';
+    h += '<ul><li>「現在適合買哪幾檔」</li><li>「廣達該在哪進場」</li>' +
+         '<li>「奇鋐什麼時候該賣」</li><li>「今天有什麼要注意的」</li>' +
+         '<li>「什麼是 ATR」</li></ul>';
+    return { html: h, chips: ['現在適合買哪幾檔', '今天有什麼要注意的', '我可以問什麼'] };
+  }
+
+  /* ---------------------------------------------------- 意圖路由 */
+  function answer(raw) {
+    var q = norm(raw);
+    if (!q) return ansHelp();
+
+    var stocks = findStocks(q);
+    // 代名詞追問：「它呢」「這檔」
+    if (!stocks.length && LAST_STOCK && has(q, ['它', '他', '這檔', '這支', '那檔', '同一檔'])) {
+      stocks = [LAST_STOCK];
+    }
+    if (stocks.length) LAST_STOCK = stocks[0];
+
+    /* 1) 風險類問題最優先 —— 不管有沒有提到個股 */
+    if (has(q, ['保證', '一定會', '穩賺', '穩賠', '必漲', '包贏', '報明牌', '明牌', '不會賠', '穩定獲利'])) {
+      return ansRisk('guarantee');
+    }
+    if (has(q, ['借錢', '融資', '槓桿', '質押', '信貸', '借貸', '當沖', '抵押', '房貸'])) {
+      return ansRisk('leverage');
+    }
+    if (has(q, ['全押', '全部資金', '所有錢', '身家', '壓身家', '單押', '重壓', 'all in', 'allin', '梭哈'])) {
+      return ansRisk('position');
+    }
+
+    /* 2) 名詞解釋 */
+    var g = DATA.glossary || {};
+    var askDef = has(q, ['什麼是', '是什麼', '何謂', '解釋', '意思', '定義', '怎麼看', '代表什麼']);
+    var terms = Object.keys(g);
+    // 長詞優先，避免「MA20」被「MA2」之類的誤判
+    terms.sort(function (a, b) { return b.length - a.length; });
+    for (var i = 0; i < terms.length; i++) {
+      var t = terms[i].toLowerCase();
+      if (q.indexOf(t) >= 0 && (askDef || q.length <= t.length + 3)) {
+        return ansGlossary(terms[i]);
+      }
+    }
+
+    /* 3) 說明與方法論 */
+    if (has(q, ['可以問什麼', '你會什麼', '能問什麼', '怎麼用', '你是誰', '幫助', '說明', 'help', '哈囉', '你好', '嗨'])) {
+      return ansHelp();
+    }
+    if (has(q, ['怎麼算', '如何計算', '方法', '規則是什麼', '依據', '可靠嗎', '準嗎', '回測', '權重'])) {
+      return ansMethod();
+    }
+
+    /* 4) 當日事件
+       「今天」「今日」這類日期詞單獨出現時不能直接判成事件查詢 ——
+       「今天天氣如何」會被誤收。日期詞必須搭配股市相關詞才算數，
+       至於「發生什麼」「警示」這類本身就夠明確的詞則可以單獨觸發。 */
+    var strongEvent = ['發生什麼', '有什麼事', '事件', '警示', '要注意', '快進', '快出', '異常', '需要注意'];
+    var dateWord = ['今天', '今日', '當日', '剛剛', '盤中', '收盤後'];
+    var marketWord = ['股', '盤', '行情', '消息', '進場', '出場', '買', '賣', '注意', '事',
+                      '漲', '跌', '法人', '外資', '投信', '量', '訊號', '警', '動作'];
+    if (has(q, strongEvent) || (has(q, dateWord) && has(q, marketWord))) {
+      return ansAlerts();
+    }
+
+    /* 5) 排行 */
+    if (has(q, ['外資買', '外資最', '哪幾檔法人', '法人買最', '外資排行'])) return ansRank('foreign');
+    if (has(q, ['投信買', '投信最', '投信排行'])) return ansRank('trust');
+    if (has(q, ['最弱', '最差', '最不好', '該避開', '要避開', '避開哪'])) return ansRank('weak');
+
+    /* 6) 選股名單（沒有指定個股時） */
+    if (!stocks.length && has(q, ['哪幾檔', '哪幾支', '哪一檔', '哪些', '推薦', '建議', '買什麼', '選股', '適合買',
+                                  '最強', '最好', '前三', '前幾', '名單', '可以買', '該買'])) {
+      return ansPicks();
+    }
+
+    /* 7) 風險屬性切換 */
+    if (has(q, ['穩健', '保守'])) { setProfile('steady'); return withSwitch('steady'); }
+    if (has(q, ['積極', '激進', '冒險'])) { setProfile('aggressive'); return withSwitch('aggressive'); }
+    if (has(q, ['平衡', '標準', '預設'])) { setProfile('balanced'); return withSwitch('balanced'); }
+
+    /* 8) 類股／大盤環境 */
+    if (has(q, ['類股', '族群', '大盤', '整體', '環境', '現在能不能', '現在適合進場', '盤勢', '廣度'])
+        && !stocks.length) {
+      return ansSector();
+    }
+
+    /* 9) 比較兩檔 */
+    if (stocks.length >= 2 && has(q, ['比', '跟', '和', '還是', 'vs', '哪個', '哪一個', '對照'])) {
+      return ansCompare(stocks[0], stocks[1]);
+    }
+
+    /* 10) 指定個股 + 子意圖 */
+    if (stocks.length) {
+      var s = stocks[0];
+      if (has(q, ['進場', '買點', '何時買', '什麼時候買', '怎麼買', '可以進', '該進', '進去', '布局', '切入'])) return ansEntry(s);
+      if (has(q, ['出場', '賣出', '何時賣', '什麼時候賣', '該賣', '停損', '停利', '目標價', '獲利了結', '抱多久', '持有多久', '賣掉'])) return ansExit(s);
+      if (has(q, ['法人', '外資', '投信', '自營', '籌碼', '持股', '買賣超'])) return ansChips(s);
+      if (has(q, ['新聞', '消息', '報導', '利多', '利空'])) return ansNews(s);
+      if (has(q, ['技術', '均線', 'ma', 'kd', 'rsi', 'macd', 'atr', '指標', '乖離', '量能', '成交量'])) return ansTech(s);
+      if (has(q, ['未來', '預測', '走勢', '會漲', '會跌', '看法', '展望', '前景', '區間'])) return ansForecast(s);
+      return ansStock(s);
+    }
+
+    /* 11) 沒提到個股但問「可以買嗎 / 現在怎麼辦」 */
+    if (has(q, ['怎麼辦', '該怎麼做', '現在', '進場', '買', '賣'])) return ansPicks();
+
+    return ansFallback(raw);
+  }
+
+  function withSwitch(k) {
+    var r = ansPicks();
+    r.html = '<p>已切換為<strong>' + esc(DATA.profiles[k].name) + '</strong>，頁面上的名單也同步更新了。</p>' + r.html;
+    return r;
+  }
+
+  /* ---------------------------------------------------- 聊天介面 */
+  function botAppend(cls, html) {
+    var log = document.getElementById('bot-log');
+    var d = document.createElement('div');
+    d.className = 'msg ' + cls;
+    d.innerHTML = html;
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function botChips(list) {
+    if (!list || !list.length) return;
+    var log = document.getElementById('bot-log');
+    var d = document.createElement('div');
+    d.className = 'bot-chips';
+    list.forEach(function (c) {
+      var b = document.createElement('button');
+      b.className = 'chip';
+      b.textContent = c;
+      b.onclick = function () { botSubmit(c); };
+      d.appendChild(b);
+    });
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function botSubmit(text) {
+    var q = String(text || '').trim();
+    if (!q) return;
+    botAppend('msg-user', esc(q));
+    // 清掉上一輪的快捷按鈕，避免越堆越長
+    var log = document.getElementById('bot-log');
+    log.querySelectorAll('.bot-chips').forEach(function (el) { el.remove(); });
+    var r;
+    try {
+      r = answer(q);
+    } catch (e) {
+      r = { html: '<p>處理這個問題時出錯了：' + esc(e.message) + '。請換個問法再試。</p>', chips: ['我可以問什麼'] };
+    }
+    botAppend('msg-bot', r.html);
+    botChips(r.chips);
+    document.getElementById('bot-input').value = '';
+  }
+
+  function askBot(text) {
+    openBot();
+    botSubmit(text);
+  }
+
+  function openBot() {
+    document.getElementById('bot-panel').classList.add('open');
+    document.getElementById('bot-fab').style.display = 'none';
+    document.getElementById('bot-input').focus();
+  }
+
+  function closeBot() {
+    document.getElementById('bot-panel').classList.remove('open');
+    document.getElementById('bot-fab').style.display = 'flex';
+  }
+
+  function botInit() {
+    if (BOT_READY) return;
+    buildStockIndex();
+    BOT_READY = true;
+
+    var high = (DATA.alertCounts || {}).high || 0;
+    if (high > 0) {
+      var b = document.getElementById('fab-badge');
+      b.textContent = high;
+      b.style.display = 'flex';
+    }
+
+    var greet = '<h4>👋 我是訊號問答機器人</h4>';
+    greet += '<p>我讀的是這一頁的同一份資料（股價 ' + esc(DATA.dataDate || '—') +
+             '、籌碼 ' + esc(DATA.instDate || '—') + '），所以我的回答一定跟頁面上的數字一致。</p>';
+    if (high > 0) {
+      greet += '<p style="background:#fef2f2; padding:8px 10px; border-radius:6px; color:#991b1b;">' +
+               '🔴 當日有 <strong>' + high + ' 件高嚴重度事件</strong>，建議先問我「今天有什麼要注意的」。</p>';
+    }
+    greet += '<p style="font-size:0.8rem; color:var(--text-muted);">我不預測股價、不報明牌。' +
+             '我做的是把規則算出來的結果和依據攤開給你看。</p>';
+    botAppend('msg-bot', greet);
+    botChips(['現在適合買哪幾檔', '今天有什麼要注意的', '現在類股適合進場嗎', '我可以問什麼']);
+
+    document.getElementById('bot-fab').onclick = openBot;
+    document.getElementById('bot-close').onclick = closeBot;
+    document.getElementById('bot-send').onclick = function () {
+      botSubmit(document.getElementById('bot-input').value);
+    };
+    document.getElementById('bot-input').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); botSubmit(this.value); }
+    });
+  }
+
+  boot();
+  </script>
+</body>
+</html>

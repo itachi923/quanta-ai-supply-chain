@@ -72,11 +72,17 @@ jobs:
         continue-on-error: true
         run: python scripts/build_news.py
 
+      # 訊號必須排在所有資料之後：build_signals.py 不連網，
+      # 只是把上面幾份 JSON 換算成評分與進出場價位。
+      - name: 產生投資策略訊號
+        continue-on-error: true
+        run: python scripts/build_signals.py
+
       - name: 提交更新
         run: |
           set -euo pipefail
 
-          FILES="data/realtime.json data/quanta_latest.json data/sector_stocks.json data/index_compare.json data/institutional.json data/news.json"
+          FILES="data/realtime.json data/quanta_latest.json data/sector_stocks.json data/index_compare.json data/institutional.json data/news.json data/signals.json"
 
           if git diff --quiet -- $FILES; then
             echo "資料無變動（可能非交易日或尚未收盤），略過提交"
@@ -86,6 +92,7 @@ jobs:
           python -c "import json;d=json.load(open('data/realtime.json',encoding='utf-8'));print('  報價',d['marketDate'],d['marketTime'],d['count'],'檔')" || true
           python -c "import json;print('  指數',json.load(open('data/index_compare.json',encoding='utf-8'))['count'],'個交易日')" || true
           python -c "import json;d=json.load(open('data/news.json',encoding='utf-8'));print('  新聞',d['count'],'則 /',len(d['perStock']),'檔')" || true
+          python -c "import json;d=json.load(open('data/signals.json',encoding='utf-8'));print('  訊號',d['dataDate'],'/ 類股',d['sector']['phase'],'/ 事件',len(d['alerts']),'件')" || true
 
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
