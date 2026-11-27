@@ -1,9 +1,70 @@
 # 台灣電腦及週邊設備類股與廣達 AI 產業鏈中樞 —— 專案全景交接記憶檔 (Project Memory & Handover)
 
 > **產生時間**：2026-11-26  
-> **最後更新**：2026-11-27（新聞情報頁；報價改為每日收盤制，移除盤中排程與 data-live 分支）  
+> **最後更新**：2026-11-27（新聞情報頁、報價改每日收盤制、本機排程接手自動更新）  
 > **專案狀態**：已完成全部核心功能開發並成功部署上線  
 > **適用對象**：接手的 AI 助手（如 Claude）、開發者或專案維護人員
+
+---
+
+## 0. 給接手的 AI：先讀這 3 分鐘
+
+### 這是什麼
+
+台股「電腦及週邊設備類股（TWSE 04）」的產業鏈與投資分析網站。
+**純前端**（HTML + 原生 JS + Chart.js + SVG），**零後端**，部署在 GitHub Pages。
+資料以靜態 JSON 存在 repo 裡，由排程腳本每日更新後提交。
+
+| 頁面 | 檔案 | 網址 |
+|---|---|---|
+| 類股中樞 | `index.html` | https://itachi923.github.io/quanta-ai-supply-chain/ |
+| 新聞與市場情報 | `news.html` | https://itachi923.github.io/quanta-ai-supply-chain/news.html |
+| 廣達 2382 專頁 | `quanta.html` | https://itachi923.github.io/quanta-ai-supply-chain/quanta.html |
+
+三頁以頁首切換列互通（`.page-tabs` / `.page-tab`，三個檔案各有一份，改動要同步）。
+
+### 現在的狀態（2026-11-27）
+
+- 功能全部完成：產業鏈樹狀圖、K 線切換、籌碼面三大法人、類股指數對照、新聞牆、還原股價
+- 資料更新由 **Windows 本機排程** 負責（`QuantaSectorSite-DailyUpdate`，每日 17:15）
+- GitHub Actions 的排程 **不可用**（見 3-6），workflow 保留為手動備援
+
+### 更新全部資料（最常用的一行）
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\daily_update.ps1
+```
+
+會依相依順序跑完六支腳本、只在有變動時提交推送，紀錄寫在 `logs/`（已 gitignore）。
+
+### 最重要的五個坑（全部實際踩過，細節見對應章節）
+
+| # | 坑 | 後果 | 章節 |
+|---|---|---|---|
+| 1 | **FinMind 沒有即時報價** —— `TaiwanStockPrice` 只有日線收盤，盤中查當日回空陣列 | 網站曾長期顯示前一日收盤卻標成「即時」 | 3 |
+| 2 | **原始股價未還原**，且前端即時同步會用原始資料**覆蓋**已還原的 history | K 線出現 -66% 假跳空；資料層修好了顯示層又還原回去 | 3-1, 3-2 |
+| 3 | **腳本整份覆寫 JSON 會洗掉事後注入的欄位** —— `treeChain` 不在 `STOCKS_CONFIG` 裡 | 跑一次更新，16 檔樹狀圖**無聲消失** | 6 |
+| 4 | **抓取失敗被記成「已抓過」** —— 空清單無法區分「沒資料」與「被限流」 | 被限流的個股新聞**永久遺失**，且無任何徵兆 | 3-4 |
+| 5 | **PowerShell 5.1 需要 UTF-8 BOM** | 中文錯亂導致 .ps1 語法錯誤，**連日誌都產生不出來** | 3-6 |
+
+共通教訓：**這個專案最危險的錯誤都是「無聲」的** —— 不會報錯，只會顯示錯的東西。
+改完任何資料管線，一定要實際開瀏覽器看畫面，不要只看檔案。
+
+### 絕對不要做的事
+
+- **不要宣稱任何資料是「即時」**。全站都是每日收盤資料，頁面必須標出實際資料日期（見 3-5）。
+- **不要用雙數值軸畫圖**。尺度差很多的兩個序列要指數化到同一基準（見 3-3、4）。
+- **不要讓多來源後備用固定優先序**。要比較資料本身的時間戳，否則停更的來源會蓋掉新資料（見 3）。
+- **不要在 `display:none` 的容器裡建立 Chart.js 圖表**（寬度為 0，見 5）。
+- **不要直接 `json.dump` 覆寫 `data/*.json`**，先合併既有欄位（見 6）。
+
+### 驗證清單（改完資料或圖表後照著跑）
+
+1. 開瀏覽器實際看畫面，不要只看 JSON
+2. 個股彈窗的 `modalHistory` 最大單日跳動 **不得超過 ±10%**（台股漲跌停），超過代表還原沒生效
+3. `document.documentElement.scrollWidth > clientWidth` 為真 = 有水平溢出（手機版常見）
+4. `treeChain` 必須維持 16/16
+5. Console 不應有錯誤（FinMind 限流造成的 CORS 錯誤除外，那是預期的退回快取行為）
 
 ---
 
@@ -14,7 +75,9 @@
 - **主要分支**：`main`
 - **GitHub Pages 線上展示網址**：
   - 💻 **首頁（電腦及週邊設備類股中樞）**：[https://itachi923.github.io/quanta-ai-supply-chain/](https://itachi923.github.io/quanta-ai-supply-chain/)
+  - 📰 **新聞與市場情報中心**：[https://itachi923.github.io/quanta-ai-supply-chain/news.html](https://itachi923.github.io/quanta-ai-supply-chain/news.html)
   - 🤖 **廣達旗艦專頁（廣達 2382 全景深度研究）**：[https://itachi923.github.io/quanta-ai-supply-chain/quanta.html](https://itachi923.github.io/quanta-ai-supply-chain/quanta.html)
+- **自動更新**：Windows 工作排程器 `QuantaSectorSite-DailyUpdate`（每日 17:15，錯過會在下次開機補跑）
 
 ---
 
@@ -82,7 +145,8 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
 ├── quanta.html                     # 旗艦專頁：廣達 (2382) 深度基本面與拓撲圖 (約 77 KB)
 ├── README.md                       # 專案說明文件
 ├── PROJECT_MEMORY.md               # 本交接記憶檔
-├── .gitignore                      # 忽略 desktop.ini / __pycache__ / .claude
+├── .gitignore                      # 忽略 desktop.ini / __pycache__ / .claude / logs
+├── logs/                           # 本機排程執行紀錄（gitignore，不進版控）
 ├── .github/
 │   └── workflows/
 │       └── daily-data-update.yml   # 平日 14:10 與 17:10 更新全部資料（唯一的排程）
@@ -102,7 +166,8 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
     ├── adjust_prices.py            # 還原股價：除權息（精確）+ 股票分割（啟發式後備）
     ├── enrich_tree_chains.py       # 為 16 檔個股注入精緻專屬產業鏈拓撲資料
     ├── update_sector_subgroups.py  # 更新 5 大子族群分組與龍頭標記
-    └── update_stock.py             # 更新廣達最新日線資料
+    ├── update_stock.py             # 更新廣達最新日線資料（同時提供交易日曆給指數腳本）
+    └── daily_update.ps1            # 本機排程主腳本：依序跑完全部更新並提交推送
 ```
 
 ---
@@ -385,7 +450,16 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
    - 將 16 檔股票細分為 5 大子族群分門別類展示。
    - 新增族群領軍龍頭（Bellwether）焦點卡片（標記廣達、川湖、奇鋐、研華、華碩為何是龍頭）。
    - 新增互動式財務指標綜合比較大表（支援排序、篩選、毛利高低顏色高亮）。
-16. **新聞與即時情報頁**（本次新增）：
+17. **報價改為每日收盤制 + 本機排程接手**（最新）：
+    - 使用者考量「不需要即時、只要每天更新到收盤價」且電腦無法整天開著，
+      決定移除盤中 */5 排程與整套 data-live 分支機制。
+    - 過程中發現前端無條件優先讀 data-live，一旦它停更就會蓋掉主分支較新的資料
+      （實測三頁都顯示前一天報價卻無任何錯誤），已改為單一同源來源。
+    - 查出 GitHub Actions 排程在本 repo 從未觸發過，逐項排除後研判為 GitHub 端問題，
+      改以 Windows 工作排程器（StartWhenAvailable 補跑模式）負責每日更新。
+    - 全站文案改為誠實標示「收盤價 YYYY-MM-DD 13:30:00」，不再出現「即時」。
+
+16. **新聞與市場情報頁**：
     - 新增 `news.html`，彙整 16 檔的盤面速覽、三大法人買賣超與相關新聞。
     - 三頁（中樞／情報／廣達）頁首加入共用切換列。
     - 新聞來源 FinMind `TaiwanStockNews`，含跨個股與跨媒體兩層去重。
@@ -435,7 +509,7 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
    - 除權息與股票分割皆已處理，因子取自 FinMind `TaiwanStockDividend` 實際配息配股金額。
    - 尚未處理 **現金增資認股**（`CashIncreaseSubscriptionRate` / `CashIncreaseSubscriptionpRrice`
      兩個欄位目前未使用）。這類事件較罕見，但嚴格來說也會造成價格缺口。
-4. **匯出功能**：將個股產業鏈拓撲圖匯出為 PNG / SVG 圖片供報告使用。
+4. **匯出功能**：將個股產業鏈拓撲圖匯出為 PNG / SVG 圖片供報告使用。**（唯一完全未動的項目）**
 5. ~~**類股指數大盤對照**~~ ✅ **已於 2026-11-26 完成**（`scripts/build_index_compare.py`）
    - 資料來自證交所 MI_INDEX 的「電腦及週邊設備類指數」。
    - 可再延伸：與其他科技類股指數（半導體、電子零組件）做多族群輪動比較。
