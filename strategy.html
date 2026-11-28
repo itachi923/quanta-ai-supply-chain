@@ -229,6 +229,13 @@
       font-family: var(--font-mono); font-size: 1.15rem; font-weight: 700;
       color: var(--text-title); white-space: nowrap;
     }
+    /* 回測區塊的 8 張數字卡。
+       注意：這裡一定要用 class 而不是行內樣式 —— 行內樣式的優先權高於
+       下方的 media query，會讓手機版降不了欄而撐出整頁水平捲軸。 */
+    .metrics-4 { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 1100px) { .metrics-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px)  { .metrics-4 { grid-template-columns: 1fr; } }
+
     .breadth-bar {
       height: 10px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-top: 8px;
     }
@@ -550,7 +557,7 @@
       .pick-grid { grid-template-columns: 1fr; }
       .alert-grid { grid-template-columns: 1fr; }
       .plan-grid { grid-template-columns: 1fr; }
-      .sector-metrics { grid-template-columns: 1fr; }
+      .sector-metrics:not(.metrics-4) { grid-template-columns: 1fr; }
       .section-head h2 { font-size: 1.12rem; }
       .bot-panel { right: 8px; bottom: 8px; height: calc(100vh - 70px); }
       .bot-fab { right: 14px; bottom: 14px; width: 54px; height: 54px; font-size: 1.4rem; }
@@ -588,7 +595,7 @@
     <div class="disclaimer-top">
       <div class="dt-head">⚠️ 請先讀：這一頁是「規則運算結果」，不是投資建議</div>
       本頁的評分、進場區間、停損停利價位與事件警示，全部由<strong>固定的技術面與籌碼面規則</strong>
-      對公開資料自動運算產生，沒有任何人為選股判斷，也<strong>未經歷史回測驗證</strong>。
+      對公開資料自動運算產生，沒有任何人為選股判斷。本頁下方附有這套規則的<strong>歷史回測結果</strong>，請務必連同它的假設與限制一起看 —— 回測顯示的優勢很薄，且高度依賴類股環境。
       它能幫你快速看出「目前哪些條件成立、哪些不成立」，但<strong>不預測未來、不保證獲利</strong>。
       所有價位都是依規則算出的參考值，實際進出請自行判斷並承擔結果；
       如需個人化建議，請諮詢持照的專業人士。
@@ -648,6 +655,8 @@
      ===================================================================== */
 
   var DATA = null;
+  var BT = null;              // 回測結果（data/backtest.json，載入失敗不影響其他區塊）
+  var BT_MODEL = 'staged';    // 預設顯示頁面實際建議的那套出場紀律
   var PROFILE = 'balanced';   // 預設風險屬性
   var SHOW_ALL_ALERTS = false;
 
@@ -691,6 +700,13 @@
       })
       .then(function (d) {
         DATA = d;
+        // 回測結果是加分資訊，抓不到也不該讓整頁掛掉
+        return fetch('data/backtest.json?t=' + Date.now())
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .catch(function () { return null; });
+      })
+      .then(function (b) {
+        BT = b;
         render();
         botInit();
       })
@@ -912,7 +928,11 @@
         h += '<div class="confirm-flag">⚠️ 尚未站上月線，需等條件確立才算進場訊號</div>';
       }
       if (p.rrWarning) {
-        h += '<div class="rr-flag">⚠️ 風險報酬比僅 ' + numf(p.rr, 2) + '，賠賺比例不佳</div>';
+        // 原本這裡寫「賠賺比例不佳、不容易長期獲利」。回測推翻了那個說法：
+        // 規劃 R:R >= 1.5 的訊號表現反而更差（高 R:R 來自上方沒有近壓力，
+        // 代表要跑更遠才會到目標）。所以改成陳述事實並指向回測，不再下斷語。
+        h += '<div class="rr-flag">⚠️ 風險報酬比 ' + numf(p.rr, 2) +
+             '：目標比停損近，宜縮小部位（<a href="#sec-backtest" style="color:inherit;">回測顯示這不代表該跳過</a>）</div>';
       }
       h += '<div class="plan-grid">';
       h += planCell('參考進場區', nt(p.entryLow) + '<br>～&nbsp;' + nt(p.entryHigh), 'ATR ' + numf(p.atr, 2) + '（' + numf(p.atrPct, 1) + '%）', '');
@@ -1053,6 +1073,150 @@
     return h;
   }
 
+  /* ---------------------------------------------------- 規則回測 */
+  function renderBacktest() {
+    if (!BT) return '';
+    var r = ((BT.results || {})[BT_MODEL] || {})[PROFILE];
+    if (!r || !r.trades) return '';
+    var p = BT.period || {};
+    var years = (p.tradingDays || 0) / 240;
+
+    var h = '<div class="section" id="sec-backtest">';
+    h += '<div class="section-head"><h2>📊 這套規則過去表現如何（歷史回測）</h2>';
+    h += '<span class="sh-note">' + esc(p.start) + ' ~ ' + esc(p.end) + '，' + p.stocks +
+         ' 檔、' + p.tradingDays + ' 個交易日（約 ' + numf(years, 1) + ' 年）· 已扣交易成本</span></div>';
+
+    h += '<div class="card">';
+
+    // 出場模型切換
+    h += '<div class="profile-switch">';
+    [['staged', '分段出場（頁面建議的紀律）'], ['simple', '單純停利（對照組）']].forEach(function (m) {
+      h += '<button class="profile-btn ' + (m[0] === BT_MODEL ? 'active' : '') +
+           '" onclick="setBtModel(\'' + m[0] + '\')">' + m[1] + '</button>';
+    });
+    h += '</div>';
+    h += '<div class="profile-desc">' + esc((BT.models || {})[BT_MODEL] || '') +
+         '　目前顯示的是<strong>' + esc(DATA.profiles[PROFILE].name) +
+         '</strong>的門檻（切換上方風險屬性會同步改變這裡）。</div>';
+
+    // 核心數字
+    h += '<div class="sector-metrics metrics-4">';
+    h += metric('交易筆數', numf(r.trades, 0) + '&nbsp;筆', '其中獲利 ' + r.wins + ' 筆');
+    h += metric('勝率', numf(r.winRate, 1) + '%',
+                '95% 信賴區間 ' + numf(r.winRateCI[0], 1) + '~' + numf(r.winRateCI[1], 1) + '%');
+    h += metric('每筆平均報酬', pctf(r.avgReturn), '中位數 ' + pctf(r.medianReturn), dirClass(r.avgReturn));
+    h += metric('獲利因子', numf(r.profitFactor, 2),
+                r.profitFactor >= 1.3 ? '總獲利 ÷ 總虧損' : '僅略高於 1，edge 很薄', dirClass(r.profitFactor - 1));
+    h += metric('平均獲利 / 平均虧損', pctf(r.avgWin, 1) + '&nbsp;/&nbsp;' + pctf(r.avgLoss, 1),
+                '最好 ' + pctf(r.best, 1) + '／最差 ' + pctf(r.worst, 1));
+    h += metric('對照同期買進持有', pctf(r.benchAvgReturn), '同一檔、同一段期間', dirClass(r.benchAvgReturn));
+    h += metric('超額報酬', pctf(r.alpha), numf(r.beatBenchPct, 0) + '% 的交易贏過買進持有', dirClass(r.alpha));
+    h += metric('投組最大回撤', pctf(-Math.abs(r.maxDrawdown), 1),
+                '資金分 ' + r.portfolioSlots + ' 份、每日按市值計價', 'down');
+    h += '</div>';
+
+    h += '<div class="outlook-box" style="margin-top:16px;">';
+    h += '<strong>怎麼讀這組數字：</strong>每筆平均 ' + pctf(r.avgReturn) + '、獲利因子 ' +
+         numf(r.profitFactor, 2) + '，代表這套規則在這段期間有<strong>正的但很薄的優勢</strong>。' +
+         '真正有意義的是<strong>超額報酬 ' + pctf(r.alpha) + '</strong> —— 同期買進持有同一檔是 ' +
+         pctf(r.benchAvgReturn) + '，所以這個優勢不是靠大盤漲上來的。' +
+         '但平均獲利 ' + pctf(r.avgWin, 1) + ' 與平均虧損 ' + pctf(r.avgLoss, 1) +
+         ' 幾乎一樣大，意思是這套規則<strong>靠的是勝率而不是賠賺比</strong>，' +
+         '只要紀律鬆掉（該停損不停損），優勢會立刻消失。';
+    h += '</div>';
+
+    // 類股階段 —— 回測最有行動價值的發現
+    if (r.byPhase) {
+      var phaseName = { expand: '擴張期', range: '整理期', contract: '收縮期', unknown: '資料不足' };
+      h += '<h3 style="font-size:1rem; font-weight:900; color:var(--text-title); margin:18px 0 8px;">' +
+           '依進場當時的類股階段拆開看</h3>';
+      h += '<div class="table-wrap"><table class="rank" style="min-width:420px;"><thead><tr>' +
+           '<th>類股階段</th><th>交易筆數</th><th>勝率</th><th>每筆平均報酬</th></tr></thead><tbody>';
+      ['expand', 'range', 'contract', 'unknown'].forEach(function (k) {
+        var v = r.byPhase[k];
+        if (!v) return;
+        h += '<tr><td>' + esc(phaseName[k] || k) + '</td><td>' + numf(v.trades, 0) + '</td>' +
+             '<td>' + numf(v.winRate, 1) + '%</td>' +
+             '<td class="' + dirClass(v.avgReturn) + '">' + pctf(v.avgReturn) + '</td></tr>';
+      });
+      h += '</tbody></table></div>';
+      var ex = r.byPhase.expand, co = r.byPhase.contract;
+      if (ex && co) {
+        h += '<div style="font-size:0.85rem; color:var(--text-body); margin-top:9px; line-height:1.75;">' +
+             '<strong>這是整份回測最有行動價值的一條：</strong>同一套規則，在擴張期每筆平均 ' +
+             pctf(ex.avgReturn) + '，在收縮期只有 ' + pctf(co.avgReturn) + '。' +
+             '也就是說，<strong>本頁最上方的類股階段判定不是裝飾</strong> —— ' +
+             '在收縮期照著訊號做，期望值會被壓到接近零。目前類股處於<strong>' +
+             esc((DATA.sector || {}).phase || '—') + '</strong>。</div>';
+      }
+    }
+
+    // 出場原因與持有天數
+    h += '<div class="method-grid" style="margin-top:18px;">';
+    var reasonName = {
+      target1: '觸及第一目標', target2: '觸及第二目標', stop: '停損出場',
+      stop_after_t1: '減碼後觸及停損', ma20_trail: 'MA20 移動停利',
+      time: '持有到期出場', time_after_t1: '減碼後持有到期'
+    };
+    var rs = '';
+    Object.keys(r.exitReasons || {}).sort(function (a, b) {
+      return r.exitReasons[b] - r.exitReasons[a];
+    }).forEach(function (k) {
+      rs += '<div class="kv" style="display:flex; justify-content:space-between; padding:3px 0; font-size:0.84rem;">' +
+            '<span>' + esc(reasonName[k] || k) + '</span><span class="num">' + r.exitReasons[k] + '&nbsp;筆</span></div>';
+    });
+    h += '<div class="method-item"><h4>出場原因分布</h4>' + rs + '</div>';
+    h += '<div class="method-item"><h4>預估持有天數準不準</h4><p>' +
+         '實際平均持有 <strong>' + numf(r.avgHoldDays, 1) + ' 個交易日</strong>，預估區間中值平均 ' +
+         numf(r.predictedHoldAvg, 1) + ' 日。在 ' + r.targetHits + ' 筆有觸及目標的交易裡，有 <strong>' +
+         numf(r.holdEstimateHitPct, 1) + '%</strong> 落在當初預估的天數區間內。</p></div>';
+    if (r.rrFiltered && r.rrFiltered.trades >= 30) {
+      h += '<div class="method-item"><h4>⚠️ 一個與直覺相反的發現</h4><p>' +
+           '只挑「規劃風險報酬比 ≥ 1.5」的訊號，表現反而<strong>更差</strong>（' +
+           r.rrFiltered.trades + ' 筆、勝率 ' + numf(r.rrFiltered.winRate, 1) + '%、平均 ' +
+           pctf(r.rrFiltered.avgReturn) + '）。原因是高 R:R 來自「上方沒有近期壓力」，' +
+           '代表價格要跑更遠才會到目標，命中率自然下降。' +
+           '所以卡片上的 R:R 偏低提示請當成<strong>部位大小的參考</strong>，' +
+           '不要當成「跳過這檔」的理由。</p></div>';
+    }
+    h += '</div>';
+
+    // 假設與限制
+    h += '<details class="more" style="margin-top:14px; border-bottom:none;"><summary>回測假設與已知限制（請務必看過再採信這些數字）</summary><div>';
+    h += '<p style="font-size:0.85rem; margin-bottom:8px;"><strong>成本：</strong>' +
+         esc((BT.costs || {}).note || '') + '</p>';
+    h += '<p style="font-size:0.85rem; font-weight:700; margin-bottom:4px;">防止偷看未來的作法：</p><ul class="exit-list">';
+    Object.keys(BT.assumptions || {}).forEach(function (k) {
+      h += '<li style="font-size:0.83rem;">' + esc(BT.assumptions[k]) + '</li>';
+    });
+    h += '</ul>';
+    h += '<p style="font-size:0.85rem; font-weight:700; margin:12px 0 4px;">限制：</p><ul class="exit-list">';
+    (BT.limitations || []).forEach(function (x) {
+      h += '<li style="font-size:0.83rem;">' + esc(x) + '</li>';
+    });
+    h += '</ul>';
+    if (BT.proxyCheck) {
+      h += '<p style="font-size:0.82rem; color:var(--text-muted); margin-top:10px;">' +
+           esc(BT.proxyCheck.note) + '</p>';
+    }
+    h += '<p style="font-size:0.82rem; color:var(--text-muted); margin-top:10px;">' +
+         '回測掃描 ' + numf((BT.scan || {}).barsScanned, 0) + ' 根日線，' +
+         '訊號成立 ' + numf((BT.scan || {}).signalsFired, 0) + ' 次，其中 ' +
+         numf((BT.scan || {}).unfilled, 0) + ' 次因為價格沒回到進場區而未成交。' +
+         '回測資料產生時間：' + esc(BT.updated_at || '—') + '</p>';
+    h += '</div></details>';
+
+    h += '</div></div>';
+    return h;
+  }
+
+  function setBtModel(m) {
+    BT_MODEL = m;
+    render();
+    var el = document.getElementById('sec-backtest');
+    if (el) el.scrollIntoView({ block: 'start' });
+  }
+
   /* ---------------------------------------------------- 方法論 */
   function renderMethod() {
     var m = DATA.methodology || {};
@@ -1083,6 +1247,7 @@
     h += renderAlerts();
     h += renderPicks();
     h += renderTable();
+    h += renderBacktest();
     h += renderOthers();
     h += renderMethod();
     document.getElementById('main-content').innerHTML = h;
@@ -1212,8 +1377,11 @@
       }
       if (p.rrWarning) {
         h += '<p style="color:#9f1239; background:#fff1f2; padding:7px 9px; border-radius:6px; margin-top:7px;">' +
-             '⚠️ 風險報酬比只有 ' + numf(p.rr, 2) + '（低於 1.5）。意思是要賺的距離比要賠的距離小，' +
-             '這種交易即使做對幾次，一次停損就可能吃掉多次獲利。</p>';
+             '⚠️ 風險報酬比只有 ' + numf(p.rr, 2) + '（低於 1.5），要賺的距離比要賠的距離小，' +
+             '所以部位不宜放大。不過要補一句：本站回測顯示，' +
+             '<strong>規劃 R:R 高的訊號表現反而更差</strong>，' +
+             '因為高 R:R 來自上方沒有近期壓力、價格要跑更遠才會到目標。' +
+             '所以這個數字請當成部位大小的參考，不是跳過這檔的理由。</p>';
       }
     }
     var top = s.reasons.filter(function (r) { return r.tone === 'bull'; }).slice(0, 3);
@@ -1560,7 +1728,9 @@
       h += '<p><strong>沒有任何方法能保證股票獲利，包含這一頁。</strong></p>';
       h += '<p>本頁的分數、進場區、目標價，全部是用固定規則對歷史資料算出來的。' +
            '規則描述的是「過去 60 天發生了什麼」，而不是「未來會發生什麼」。' +
-           '而且這套規則<strong>沒有經過歷史回測驗證</strong>，我不知道它的勝率是多少 —— 這點我不會假裝知道。</p>';
+           '這套規則<strong>有做過歷史回測</strong>，你可以問我「回測結果如何」看實際數字 —— ' +
+           '但那是樣本內、單一類股、約 4 年的結果，優勢很薄而且高度依賴類股環境。' +
+           '過去算得出來的勝率，不等於未來的勝率。</p>';
       h += '<p>如果有人（或任何網站、群組、老師）告訴你某檔股票「保證」或「一定會」漲，' +
            '那是明確的警訊，不是機會。</p>';
     } else if (kind === 'leverage') {
@@ -1580,6 +1750,85 @@
     }
     h += '<div class="src">本頁內容為規則運算結果，不構成投資建議。</div>';
     return { html: h, chips: ['什麼是停損', '什麼是風險報酬比', '這些分數怎麼算的', '現在類股適合進場嗎'] };
+  }
+
+  /* ---- 回測結果 ---- */
+  function ansBacktest() {
+    if (!BT) {
+      return { html: '<h4>📊 回測</h4><p>目前抓不到回測資料（data/backtest.json）。' +
+                     '請在專案目錄執行 <code>python scripts\\backtest_signals.py</code> 後重新整理。</p>',
+               chips: ['這些分數怎麼算的'] };
+    }
+    var r = ((BT.results || {})[BT_MODEL] || {})[PROFILE];
+    var p = BT.period || {};
+    var h = '<h4>📊 規則回測結果（' + esc(DATA.profiles[PROFILE].name) + '）</h4>';
+    if (!r || !r.trades) {
+      h += '<p>這個組合在回測區間沒有產生交易。</p>' + srcLine();
+      return { html: h, chips: ['現在適合買哪幾檔'] };
+    }
+    h += '<p>回測區間 ' + esc(p.start) + ' ~ ' + esc(p.end) + '，' + p.stocks + ' 檔、' +
+         p.tradingDays + ' 個交易日，已扣掉台股來回約 ' + numf((BT.costs || {}).roundTripPct, 2) + '% 的成本。</p>';
+    h += kv('交易筆數', numf(r.trades, 0) + ' 筆');
+    h += kv('勝率', numf(r.winRate, 1) + '%（CI ' + numf(r.winRateCI[0], 1) + '~' + numf(r.winRateCI[1], 1) + '%）');
+    h += kv('每筆平均報酬', pctf(r.avgReturn), dirClass(r.avgReturn));
+    h += kv('平均獲利 / 虧損', pctf(r.avgWin, 1) + ' / ' + pctf(r.avgLoss, 1));
+    h += kv('獲利因子', numf(r.profitFactor, 2));
+    h += kv('對照買進持有', pctf(r.benchAvgReturn), dirClass(r.benchAvgReturn));
+    h += kv('超額報酬', pctf(r.alpha), dirClass(r.alpha));
+    h += kv('投組最大回撤', pctf(-Math.abs(r.maxDrawdown), 1), 'down');
+    h += '<p style="margin-top:9px;"><strong>老實說：這個優勢很薄。</strong>獲利因子 ' +
+         numf(r.profitFactor, 2) + '、平均獲利 ' + pctf(r.avgWin, 1) + ' 與平均虧損 ' +
+         pctf(r.avgLoss, 1) + ' 幾乎一樣大，代表它<strong>靠勝率撐著、不是靠賠賺比</strong>。' +
+         '只要該停損的時候沒停損，優勢立刻消失。</p>';
+    if (r.byPhase && r.byPhase.expand && r.byPhase.contract) {
+      h += '<p><strong>最該記住的一條：</strong>同一套規則在<strong>擴張期</strong>每筆平均 ' +
+           pctf(r.byPhase.expand.avgReturn) + '（' + r.byPhase.expand.trades + ' 筆），' +
+           '在<strong>收縮期</strong>只有 ' + pctf(r.byPhase.contract.avgReturn) +
+           '（' + r.byPhase.contract.trades + ' 筆）。目前類股處於<strong>' +
+           esc((DATA.sector || {}).phase || '—') + '</strong>。</p>';
+    }
+    h += '<p style="font-size:0.8rem; color:var(--text-muted);">這是<strong>樣本內</strong>回測，' +
+         '單一類股、約 ' + numf((p.tradingDays || 0) / 240, 1) + ' 年，而且這段期間以 AI 伺服器題材為主軸。' +
+         '過去的規則表現不保證未來能複製。</p>';
+    h += srcLine('　回測產生於 ' + esc(BT.updated_at || '—'));
+    return { html: h, chips: ['回測怎麼避免偷看未來', '風險報酬比高比較好嗎', '現在類股適合進場嗎', '現在適合買哪幾檔'] };
+  }
+
+  function ansBacktestMethod() {
+    if (!BT) return ansBacktest();
+    var h = '<h4>🔬 回測怎麼避免偷看未來</h4>';
+    h += '<p>回測最容易出錯的地方就是不小心用到當下還不知道的資訊。這份回測的五道防線：</p><ul>';
+    Object.keys(BT.assumptions || {}).forEach(function (k) {
+      h += '<li>' + esc(BT.assumptions[k]) + '</li>';
+    });
+    h += '<li>' + esc((BT.costs || {}).note || '') + '</li>';
+    h += '</ul>';
+    h += '<p><strong>已知限制：</strong></p><ul>';
+    (BT.limitations || []).forEach(function (x) { h += '<li>' + esc(x) + '</li>'; });
+    h += '</ul>';
+    return { html: h, chips: ['回測結果如何', '風險報酬比高比較好嗎', '這些分數怎麼算的'] };
+  }
+
+  function ansRrFinding() {
+    var r = BT && ((BT.results || {})[BT_MODEL] || {})[PROFILE];
+    var f = r && r.rrFiltered;
+    var h = '<h4>🤔 風險報酬比高，表現就比較好嗎？</h4>';
+    h += '<p>一般的交易原則會說「風險報酬比低於 1.5 就不要做」。' +
+         '但本站回測的結果<strong>和這個直覺相反</strong>。</p>';
+    if (f && f.trades >= 30) {
+      h += '<p>在目前這個組合裡，只挑規劃 R:R ≥ 1.5 的訊號共 ' + f.trades + ' 筆，' +
+           '勝率 ' + numf(f.winRate, 1) + '%、每筆平均 ' + pctf(f.avgReturn) +
+           '，比不過濾的 ' + r.trades + ' 筆（勝率 ' + numf(r.winRate, 1) + '%、平均 ' +
+           pctf(r.avgReturn) + '）還要差。</p>';
+    }
+    h += '<p><strong>為什麼：</strong>本站的第一目標是取「上方最近的壓力區」（60 日高點或季線）。' +
+         '當 R:R 算出來很高，通常代表<strong>上方沒有近期壓力可參考</strong>，' +
+         '目標只好用 ATR 倍數往外推 —— 價格要跑更遠才會到目標，命中率自然下降。</p>';
+    h += '<p><strong>所以該怎麼用：</strong>把 R:R 當成<strong>決定部位大小</strong>的依據' +
+         '（比值低就買少一點），而不是「跳過這檔」的理由。</p>';
+    h += '<p style="font-size:0.8rem; color:var(--text-muted);">' +
+         '這條結論同樣受限於樣本：單一類股、約 4 年，不保證在別的市場成立。</p>';
+    return { html: h, chips: ['回測結果如何', '什麼是風險報酬比', '現在適合買哪幾檔'] };
   }
 
   /* ---- 方法論 ---- */
@@ -1663,7 +1912,18 @@
     if (has(q, ['可以問什麼', '你會什麼', '能問什麼', '怎麼用', '你是誰', '幫助', '說明', 'help', '哈囉', '你好', '嗨'])) {
       return ansHelp();
     }
-    if (has(q, ['怎麼算', '如何計算', '方法', '規則是什麼', '依據', '可靠嗎', '準嗎', '回測', '權重'])) {
+    /* 回測相關問題要排在方法論之前 —— 「準嗎」「有效嗎」這類問題，
+       現在已經有實際的統計數字可以回答，不該再丟一段方法論說明給使用者。 */
+    if (has(q, ['偷看未來', '前視', '怎麼回測', '回測方法', '回測假設', '回測怎麼', '有沒有作弊', '可信嗎'])) {
+      return ansBacktestMethod();
+    }
+    if (has(q, ['風險報酬比高', 'rr高', '報酬比高', '賠賺比'])) {
+      return ansRrFinding();
+    }
+    if (has(q, ['回測', '勝率', '績效', '有效嗎', '準嗎', '賺錢嗎', '實際表現', '過去表現', '獲利因子', '最大回撤'])) {
+      return ansBacktest();
+    }
+    if (has(q, ['怎麼算', '如何計算', '方法', '規則是什麼', '依據', '可靠嗎', '權重'])) {
       return ansMethod();
     }
 

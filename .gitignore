@@ -15,3 +15,6 @@ logs/
 # 回測專用的長期歷史資料（約 2.4 MB，前端不讀取）
 # 可用 python scripts\fetch_long_history.py 在兩分鐘內重新產生，因此不進版控
 data/history_long.json
+
+# 回測完整交易明細（逾 1 MB，前端只讀 backtest.json 的統計結果）
+data/backtest_trades.json
