@@ -1180,6 +1180,21 @@
       margin-bottom: 30px;
       box-shadow: var(--shadow-sm);
     }
+    .table-scroll-hint {
+      display: none;
+      align-items: center;
+      gap: 7px;
+      margin-top: 12px;
+      padding: 7px 12px;
+      background: #eff6ff;
+      border: 1px dashed #bfdbfe;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #1e40af;
+    }
+    .table-scroll-hint.show { display: flex; }
+
     .comp-table-container {
       overflow-x: auto;
       margin-top: 16px;
@@ -1189,13 +1204,15 @@
     .comp-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
-      min-width: 980px;
+      font-size: 0.84rem;
+      /* 壓到 11 欄的實際最小需求。數字愈小，需要橫向捲動的螢幕就愈少；
+         一旦要捲動，容器邊緣必然出現半截欄位，那就是「字被切掉」的來源。 */
+      min-width: 880px;
     }
     .comp-table th {
       background: #0f2c4d;
       color: #ffffff;
-      padding: 12px 14px;
+      padding: 11px 9px;
       font-weight: 700;
       text-align: right;
       cursor: pointer;
@@ -1213,7 +1230,7 @@
       background: #0284c7;
     }
     .comp-table td {
-      padding: 12px 14px;
+      padding: 11px 9px;
       border-bottom: 1px solid #f1f5f9;
       text-align: right;
       font-family: var(--font-mono);
@@ -1235,30 +1252,6 @@
       background: #fef3c7;
     }
 
-    /* 「操作」欄固定在右側。
-       這張表有 11 欄、最小寬度 980px，在一般螢幕上一定要橫向捲到底
-       才看得到最後一欄；捲到邊緣時它又緊貼容器圓角，看起來像被裁切。
-       固定之後它永遠完整可見，也不必捲到底才能按「查看」。
-       注意：sticky 元素一定要有不透明背景，否則底下的儲存格會透出來，
-       所以 hover 與龍頭列的背景色都要各自補一份。 */
-    .comp-table th:last-child,
-    .comp-table td:last-child {
-      position: sticky;
-      right: 0;
-      z-index: 2;
-      text-align: center;
-      background: #ffffff;
-      box-shadow: -7px 0 11px -7px rgba(15, 44, 77, 0.22);
-    }
-    .comp-table th:last-child {
-      background: #0f2c4d;
-      z-index: 3;
-      cursor: default;
-    }
-    .comp-table th:last-child:hover { background: #0f2c4d; }
-    .comp-table tr:hover td:last-child { background: #f8fafc; }
-    .comp-table tr.leader-row td:last-child { background: #fffdf5; }
-    .comp-table tr.leader-row:hover td:last-child { background: #fef3c7; }
     .comp-tag {
       font-size: 0.72rem;
       font-weight: 800;
@@ -1606,20 +1599,25 @@
         </div>
       </div>
 
+      <div class="table-scroll-hint" id="tableScrollHint">
+        <span>↔</span>
+        <span>欄位較多，此表可<strong>左右滑動</strong>查看「單季營收、毛利率、營益率、ROE」等欄位。</span>
+      </div>
+
       <div class="comp-table-container">
         <table class="comp-table" id="comparisonTable">
           <thead>
             <tr>
-              <th onclick="sortTable('id')">股票代號 / 名稱 ↕</th>
-              <th onclick="sortTable('subGroup')">所屬子族群 ↕</th>
-              <th>地位標記</th>
-              <th onclick="sortTable('price')">最新股價 (元) ↕</th>
-              <th onclick="sortTable('pct')">漲跌幅 (%) ↕</th>
-              <th onclick="sortTable('trailingEPS')">近四季 EPS ↕</th>
-              <th onclick="sortTable('q3Revenue')">單季合併營收 ↕</th>
-              <th onclick="sortTable('grossMargin')" class="active-sort" id="th-grossMargin">平均毛利率 ↕</th>
-              <th onclick="sortTable('operatingMargin')" id="th-operatingMargin">營業利益率 ↕</th>
-              <th onclick="sortTable('roe')" id="th-roe">ROE (%) ↕</th>
+              <th onclick="sortTable('id')">個股 ↕</th>
+              <th onclick="sortTable('subGroup')">子族群 ↕</th>
+              <th>標記</th>
+              <th onclick="sortTable('price')">股價 ↕</th>
+              <th onclick="sortTable('pct')">漲跌幅 ↕</th>
+              <th onclick="sortTable('trailingEPS')">近四季EPS ↕</th>
+              <th onclick="sortTable('q3Revenue')">單季營收 ↕</th>
+              <th onclick="sortTable('grossMargin')" class="active-sort" id="th-grossMargin">毛利率 ↕</th>
+              <th onclick="sortTable('operatingMargin')" id="th-operatingMargin">營益率 ↕</th>
+              <th onclick="sortTable('roe')" id="th-roe">ROE ↕</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -2093,7 +2091,20 @@
         `;
         tbody.appendChild(tr);
       });
+
+      updateTableScrollHint();
     }
+
+    // 只有在表格真的放不下、需要橫向捲動時才顯示提示。
+    // 用文字提示而不是漸層遮罩：任何蓋在內容上的東西，
+    // 都可能再次被看成「字被切掉」。
+    function updateTableScrollHint() {
+      const box = document.querySelector('.comp-table-container');
+      const hint = document.getElementById('tableScrollHint');
+      if (!box || !hint) return;
+      hint.classList.toggle('show', box.scrollWidth > box.clientWidth + 1);
+    }
+    window.addEventListener('resize', updateTableScrollHint);
 
     function sortTable(field) {
       if (currentTableSort.field === field) {
