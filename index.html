@@ -144,35 +144,13 @@
       margin-left: 6px;
     }
 
-    /* 關鍵按鍵：直通廣達旗艦專頁 */
-    .quanta-portal-btn {
-      background: linear-gradient(135deg, #0284c7 0%, #1d4ed8 100%);
-      color: #ffffff !important;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 800;
-      padding: 8px 18px;
-      border-radius: 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-      transition: all 0.25s ease;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-    .quanta-portal-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
-      background: linear-gradient(135deg, #0369a1 0%, #1e40af 100%);
-    }
-
     .container {
       max-width: 1400px;
       margin: 0 auto;
       padding: 24px 20px 80px;
     }
 
-    /* 頂部強推橫幅：廣達旗艦專頁 */
+    /* 頂部說明橫幅 */
     .hero-banner {
       background: linear-gradient(135deg, #0f2c4d 0%, #1e3a8a 50%, #0369a1 100%);
       color: #ffffff;
@@ -199,6 +177,7 @@
       font-family: var(--font-mono);
       pointer-events: none;
     }
+    .hero-banner-content { flex: 1; min-width: 0; }
     .hero-banner-content h1 {
       font-size: 1.8rem;
       font-weight: 900;
@@ -1349,17 +1328,9 @@
           <span class="brand-badge">TWSE SECTOR 04</span>
         </div>
       </a>
-
-      <!-- 核心功能按鈕：一鍵直達廣達 (2382) 專屬全景旗艦專頁 -->
-      <div style="display:flex; align-items:center; gap:14px;">
-        <a href="quanta.html" class="quanta-portal-btn">
-          <span>🤖 廣達 (2382) 投資基本面與產業鏈全景</span>
-          <span style="font-size:1.1rem;">➔</span>
-        </a>
-      </div>
     </div>
 
-    <!-- 頁面切換列（三頁共用） -->
+    <!-- 頁面切換列（五頁共用：改動時五個檔案都要同步） -->
     <div class="page-tabs-bar">
       <nav class="page-tabs">
         <a href="index.html" class="page-tab active">📊 類股中樞</a>
@@ -1388,20 +1359,15 @@
       </div>
     </div>
 
-    <!-- 頂部強推橫幅：廣達旗艦專頁快速入口 -->
+    <!-- 頂部說明橫幅（原本右側的廣達入口按鈕已移除，改由頁首切換列進入） -->
     <div class="hero-banner">
       <div class="hero-banner-content">
         <h1>🌟 電腦及週邊設備族群 · 掌握全球 AI 與雲端運算命脈</h1>
         <p>
           台灣「電腦及週邊設備類股」涵蓋全球 90% 以上的 AI 伺服器代工、高毛利專利導軌（川湖）、水冷散熱總冠軍（奇鋐/雙鴻）與工業物聯網（研華）。<br>
           👉 <strong>點選下方任一檔個股：</strong>皆會展開<strong>專屬雙向樹狀支鏈產業鏈圖</strong>、最新 60 天量價歷史線圖與財務獲利三率！<br>
-          👉 <strong>若您想專門研究中游代工霸主：</strong>可直接點選右上角按鈕，進入<strong>「廣達 (2382) 完整機櫃樹狀圖與每日量價線圖旗艦專頁」</strong>！
+          👉 <strong>若您想專門研究中游代工霸主：</strong>請從上方切換列進入<strong>「🤖 廣達 2382 專頁」</strong>，查看完整機櫃樹狀圖與每日量價線圖。
         </p>
-      </div>
-      <div>
-        <a href="quanta.html" class="quanta-portal-btn" style="padding:12px 24px; font-size:1.05rem;">
-          🚀 前往廣達 (2382) 旗艦專頁
-        </a>
       </div>
     </div>
 
