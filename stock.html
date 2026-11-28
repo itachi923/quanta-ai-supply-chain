@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>族群龍頭個股專頁 · 電腦及週邊設備類股</title>
+  <meta name="description" content="電腦及週邊設備類股五大子族群領軍龍頭的個股專頁：公司基本資料與產品結構、長期量價走勢與均線、財報獲利三率、專屬樹狀產業鏈拓撲圖、上下游供應鏈結構、三大法人籌碼動向與規則訊號定位。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #eaf3fb 0%, #dbeefe 50%, #eff6ff 100%);
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --card-border: #cfe5f8;
+      --text-title: #0a2540;
+      --text-body: #2d4156;
+      --text-muted: #5e768d;
+      --blue-quanta: #0284c7;
+      --blue-navy: #0f2c4d;
+      --blue-soft: #e0effe;
+      --blue-primary: #1e60d5;
+      --stock-red: #dc2626;
+      --stock-green: #16a34a;
+      --font-main: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "IBM Plex Mono", Consolas, monospace;
+      --shadow-sm: 0 2px 8px rgba(15, 44, 77, 0.05);
+      --shadow-md: 0 8px 24px rgba(15, 44, 77, 0.08);
+      --shadow-lg: 0 16px 36px rgba(15, 44, 77, 0.14);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-main);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-body);
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* 價格與金額不換行（專案通則） */
+    .num, .money { font-family: var(--font-mono); white-space: nowrap !important; word-break: keep-all; flex-shrink: 0; }
+    .up { color: var(--stock-red); }
+    .down { color: var(--stock-green); }
+    .flat { color: var(--text-muted); }
+
+    /* ---------------- 導航（六頁共用） ---------------- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(240, 246, 252, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(195, 222, 245, 0.85);
+      box-shadow: 0 2px 10px rgba(15, 44, 77, 0.04);
+    }
+    .nav-container {
+      max-width: 1400px; margin: 0 auto; padding: 12px 24px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-title); }
+    .brand-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #0284c7, #1e60d5);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; box-shadow: var(--shadow-sm);
+    }
+    .brand span:first-of-type { font-size: 1.05rem; font-weight: 900; }
+    .brand-badge {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      background: var(--blue-soft); color: var(--blue-primary);
+      padding: 2px 8px; border-radius: 5px; margin-left: 8px; font-weight: 600; letter-spacing: 0.5px;
+    }
+    .page-tabs-bar { border-top: 1px solid rgba(195, 222, 245, 0.85); background: rgba(255, 255, 255, 0.55); }
+    .page-tabs {
+      max-width: 1400px; margin: 0 auto; padding: 0 24px;
+      display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
+    }
+    .page-tabs::-webkit-scrollbar { display: none; }
+    .page-tab {
+      padding: 10px 18px; font-size: 0.92rem; font-weight: 800;
+      color: var(--text-muted); text-decoration: none;
+      border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.18s;
+    }
+    .page-tab:hover { color: var(--blue-quanta); }
+    .page-tab.active {
+      color: var(--blue-navy); border-bottom-color: var(--blue-quanta); background: rgba(255, 255, 255, 0.9);
+    }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 20px 24px 90px; }
+
+    /* ---------------- 龍頭切換列 ---------------- */
+    .leader-switch {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px;
+      background: #fff; border: 1px solid var(--card-border);
+      border-radius: var(--radius-md); padding: 12px 14px; box-shadow: var(--shadow-sm);
+    }
+    .leader-switch .ls-label {
+      font-size: 0.82rem; font-weight: 800; color: var(--text-muted);
+      display: flex; align-items: center; padding-right: 6px; white-space: nowrap;
+    }
+    .lbtn {
+      border: 1.5px solid var(--card-border); background: #fff; color: var(--text-body);
+      border-radius: 999px; padding: 7px 15px; cursor: pointer;
+      font-family: var(--font-main); font-size: 0.86rem; font-weight: 800;
+      white-space: nowrap; text-decoration: none; transition: all 0.16s;
+    }
+    .lbtn:hover { border-color: var(--blue-quanta); color: var(--blue-quanta); }
+    .lbtn.active { background: var(--blue-navy); border-color: var(--blue-navy); color: #fff; }
+    .lbtn .lb-sub { font-size: 0.72rem; opacity: 0.75; font-weight: 600; }
+
+    /* ---------------- Ticker ---------------- */
+    .ticker {
+      background: linear-gradient(135deg, #0f2c4d 0%, #1e3a8a 55%, #0369a1 100%);
+      color: #fff; border-radius: var(--radius-lg); padding: 24px 28px; margin-bottom: 22px;
+      box-shadow: var(--shadow-md); position: relative; overflow: hidden;
+    }
+    .ticker-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+    .ticker-name { font-size: 1.6rem; font-weight: 900; }
+    .ticker-id { font-family: var(--font-mono); font-size: 1rem; opacity: 0.85; }
+    .ticker-role {
+      font-size: 0.82rem; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.28);
+      padding: 3px 10px; border-radius: 999px; font-weight: 700;
+    }
+    .ticker-sub { font-size: 0.88rem; opacity: 0.9; margin-bottom: 16px; }
+    .ticker-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+    .tk {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+      border-radius: var(--radius-sm); padding: 10px 13px;
+      min-width: 0;   /* 允許 grid 項目收縮到比內容窄，否則會撐破容器 */
+    }
+    .tk .tk-l { font-size: 0.74rem; opacity: 0.82; font-weight: 700; }
+    .tk .tk-v { font-family: var(--font-mono); font-size: 1.18rem; font-weight: 700; white-space: nowrap; }
+    .tk .tk-s { font-size: 0.71rem; opacity: 0.75; white-space: nowrap; }
+    .tk-up { color: #fca5a5; }
+    .tk-down { color: #86efac; }
+
+    /* ---------------- 區塊 ---------------- */
+    .section-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+      padding: 22px 24px; margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 1.22rem; font-weight: 900; color: var(--text-title);
+      display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-bottom: 6px;
+    }
+    .section-note { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 16px; }
+    .chapter-tag {
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+      background: var(--blue-soft); color: var(--blue-primary);
+      padding: 2px 9px; border-radius: 5px;
+    }
+
+    .kv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+    .kv-box { background: #f8fbff; border: 1px solid #e2effb; border-radius: var(--radius-sm); padding: 12px 14px; }
+    .kv-box .kb-l { font-size: 0.76rem; color: var(--text-muted); font-weight: 700; }
+    .kv-box .kb-v { font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700; color: var(--text-title); white-space: nowrap; }
+    .kv-box .kb-s { font-size: 0.73rem; color: var(--text-muted); }
+
+    .prose { font-size: 0.92rem; line-height: 1.85; }
+    .prose strong { color: var(--blue-navy); }
+    .highlight-box {
+      background: #f8fbff; border: 1px solid #e2effb; border-left: 4px solid var(--blue-quanta);
+      border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 14px; font-size: 0.9rem; line-height: 1.8;
+    }
+    .leader-box {
+      background: #fffdf5; border: 1px solid #fde9b8; border-left: 4px solid #f59e0b;
+      border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 14px; font-size: 0.9rem; line-height: 1.8;
+    }
+
+    /* ---------------- 圖表 ---------------- */
+    .chart-toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .cbtn {
+      border: 1.5px solid var(--card-border); background: #fff; color: var(--text-muted);
+      border-radius: 8px; padding: 7px 14px; cursor: pointer;
+      font-family: var(--font-main); font-size: 0.84rem; font-weight: 800; white-space: nowrap; transition: all 0.16s;
+    }
+    .cbtn:hover { border-color: var(--blue-quanta); color: var(--blue-quanta); }
+    .cbtn.active { background: var(--blue-navy); border-color: var(--blue-navy); color: #fff; }
+    /* 價格面板與成交量面板上下分離，不使用雙數值軸（專案通則） */
+    .chart-price { position: relative; height: 330px; }
+    .chart-vol { position: relative; height: 130px; margin-top: 6px; }
+    .chart-wrap { position: relative; height: 300px; }
+
+    /* ---------------- 產業鏈樹狀圖 ---------------- */
+    .tree-toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+    .tree-scroll {
+      overflow-x: auto; border: 1px solid #e2effb; border-radius: var(--radius-sm);
+      background: linear-gradient(180deg, #fbfdff 0%, #f4f9ff 100%);
+    }
+    .tree-scroll svg { display: block; }
+    .tree-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 9px; }
+    .tnode { cursor: pointer; transition: opacity 0.18s; }
+    .tnode.faded { opacity: 0.22; }
+    .tlink { transition: opacity 0.18s, stroke 0.18s; }
+    .tlink.faded { opacity: 0.12; }
+    .tlink.hot { stroke: #f59e0b !important; stroke-width: 3 !important; opacity: 1 !important; }
+
+    /* ---------------- 供應鏈清單 ---------------- */
+    .chain-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .chain-col h4 {
+      font-size: 0.95rem; font-weight: 900; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .branch-block { background: #f8fbff; border: 1px solid #e2effb; border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 10px; }
+    .branch-title { font-size: 0.88rem; font-weight: 900; color: var(--blue-navy); margin-bottom: 7px; }
+    .leaf-row {
+      display: flex; justify-content: space-between; gap: 10px; align-items: baseline;
+      padding: 5px 0; border-bottom: 1px dashed #e2effb; font-size: 0.85rem;
+    }
+    .leaf-row:last-child { border-bottom: none; }
+    .leaf-name { font-weight: 700; color: var(--text-title); }
+    .leaf-role { font-size: 0.78rem; color: var(--text-muted); text-align: right; }
+
+    /* ---------------- 表格 ---------------- */
+    .table-wrap { overflow-x: auto; border: 1px solid var(--card-border); border-radius: var(--radius-sm); }
+    table.t { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 560px; }
+    table.t th {
+      background: #0f2c4d; color: #fff; font-weight: 700; font-size: 0.78rem;
+      padding: 10px 9px; text-align: right; white-space: nowrap;
+    }
+    table.t th:first-child, table.t td:first-child { text-align: left; }
+    table.t td {
+      padding: 9px; text-align: right; white-space: nowrap;
+      border-bottom: 1px solid #eef4fa; font-family: var(--font-mono);
+    }
+    table.t td:first-child { font-family: var(--font-main); }
+    table.t tr:hover { background: #f8fbff; }
+
+    .disclaimer {
+      background: #fffbeb; border: 1px solid #fcd34d; border-left: 5px solid #f59e0b;
+      border-radius: var(--radius-md); padding: 14px 18px; font-size: 0.86rem; color: #92400e; line-height: 1.8;
+    }
+    .loading { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+    .load-error {
+      background: #fef2f2; border: 1px solid #fecaca; border-left: 5px solid #dc2626;
+      border-radius: var(--radius-md); padding: 16px 18px; color: #991b1b; font-size: 0.9rem;
+    }
+
+    @media (max-width: 1000px) {
+      .ticker-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .chain-cols { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .container { padding: 16px 14px 80px; }
+      .page-tabs { padding: 0 12px; }
+      .page-tab { padding: 9px 13px; font-size: 0.85rem; }
+      .brand span:first-of-type { font-size: 0.92rem; }
+      .ticker { padding: 18px 16px; }
+      .ticker-name { font-size: 1.28rem; }
+      .ticker-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tk .tk-v { font-size: 1rem; }
+      .tk { padding: 9px 10px; }
+      .section-card { padding: 16px 14px; }
+      .section-title { font-size: 1.06rem; }
+      .chart-price { height: 260px; }
+    }
+    /* 極窄螢幕：兩欄仍放不下 ticker 的數字，改單欄 */
+    @media (max-width: 420px) {
+      .ticker-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">🏆</div>
+        <div>
+          <span>族群龍頭個股專頁</span>
+          <span class="brand-badge" id="brand-code">LEADER</span>
+        </div>
+      </a>
+    </div>
+    <!-- 頁面切換列（六頁共用：改動時六個檔案都要同步） -->
+    <div class="page-tabs-bar">
+      <nav class="page-tabs">
+        <a href="index.html" class="page-tab">📊 類股中樞</a>
+        <a href="strategy.html" class="page-tab">🎯 投資策略與訊號</a>
+        <a href="plan.html" class="page-tab">🧮 投資方案規劃</a>
+        <a href="stock.html" class="page-tab active">🏆 龍頭個股專頁</a>
+        <a href="news.html" class="page-tab">📰 新聞與市場情報</a>
+        <a href="quanta.html" class="page-tab">🤖 廣達 2382 專頁</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="leader-switch" id="leader-switch">
+      <span class="ls-label">五大子族群領軍龍頭：</span>
+    </div>
+    <div id="page-body">
+      <div class="loading">⏳ 正在載入個股資料…</div>
+    </div>
+  </div>
+
+  <script>
+  /* =====================================================================
+     族群龍頭個股專頁
+     =====================================================================
+     以 ?id=股號 決定顯示哪一檔，例如 stock.html?id=2059。
+     涵蓋 5 檔龍頭（華碩 2357、川湖 2059、奇鋐 3017、研華 2395、致伸 4915）；
+     廣達 2382 另有內容更深的旗艦專頁 quanta.html，這裡只提供連結過去。
+
+     為什麼做成單一樣板而不是 5 個複製檔：
+       quanta.html 有 118 KB 的手寫內容。若為 5 檔各複製一份，
+       日後任何版面或邏輯修正都要改 5 遍，必然會漂移 ——
+       本專案的頁首切換列就已經有 6 份副本要同步，不該再增加同類負擔。
+       這裡所有內容都由 data/*.json 驅動，改一次全部生效。
+
+     資料來源（全部同源靜態檔，無外部 API）：
+       data/sector_stocks.json    公司簡介、產品、財務三率、treeChain 產業鏈
+       data/leaders_history.json  約 300 根還原日線（build_leader_history.py 產生）
+       data/institutional.json    80 日三大法人與外資持股
+       data/signals.json          規則評分與進出場參考（strategy.html 同一份）
+     ===================================================================== */
+
+  var SECTOR = null, HIST = null, INST = null, SIG = null;
+  var STOCK = null;          // 目前顯示的個股
+  var LEADERS = [];
+  var CHART_MODE = 'line';   // line | candle
+  var RANGE = 120;           // 顯示天數；0 代表全區間
+  var charts = {};
+
+  var QUANTA_ID = '2382';
+
+  /* ---------------------------------------------------- 格式化 */
+  function nt(v, dp) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    var d = (dp === undefined) ? 1 : dp;
+    return 'NT$&nbsp;' + Number(v).toLocaleString('zh-TW', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function numf(v, dp) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    var d = (dp === undefined) ? 0 : dp;
+    return Number(v).toLocaleString('zh-TW', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function pctf(v, dp) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    var d = (dp === undefined) ? 2 : dp;
+    return (v > 0 ? '+' : '') + Number(v).toFixed(d) + '%';
+  }
+  function dirClass(v) {
+    if (v === null || v === undefined || v === 0 || isNaN(v)) return 'flat';
+    return v > 0 ? 'up' : 'down';
+  }
+  function esc(s) {
+    return String(s === null || s === undefined ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function sma(vals, n, i) {
+    if (i + 1 < n) return null;
+    var s = 0;
+    for (var k = i - n + 1; k <= i; k++) s += vals[k];
+    return s / n;
+  }
+
+  /* ---------------------------------------------------- 載入 */
+  function boot() {
+    var tasks = [
+      fetch('data/sector_stocks.json?t=' + Date.now()).then(function (r) { return r.json(); }),
+      fetch('data/leaders_history.json?t=' + Date.now()).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+      fetch('data/institutional.json?t=' + Date.now()).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+      fetch('data/signals.json?t=' + Date.now()).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
+    ];
+    Promise.all(tasks).then(function (res) {
+      SECTOR = res[0]; HIST = res[1]; INST = res[2]; SIG = res[3];
+      LEADERS = SECTOR.filter(function (s) { return s.isLeader; });
+      renderSwitch();
+      var id = new URLSearchParams(location.search).get('id');
+      // 預設顯示第一檔非廣達的龍頭；廣達導向內容更深的旗艦專頁
+      var target = LEADERS.filter(function (s) { return s.id !== QUANTA_ID; });
+      STOCK = SECTOR.filter(function (s) { return s.id === id; })[0] || target[0];
+      if (STOCK && STOCK.id === QUANTA_ID) { location.href = 'quanta.html'; return; }
+      render();
+    }).catch(function (e) {
+      document.getElementById('page-body').innerHTML =
+        '<div class="load-error"><strong>資料載入失敗：' + esc(e.message) + '</strong><br>' +
+        '請確認 data/sector_stocks.json 與 data/leaders_history.json 已產生。</div>';
+    });
+  }
+
+  function renderSwitch() {
+    var box = document.getElementById('leader-switch');
+    var cur = new URLSearchParams(location.search).get('id');
+    LEADERS.forEach(function (s) {
+      var a = document.createElement('a');
+      var isQ = s.id === QUANTA_ID;
+      a.className = 'lbtn' + ((cur === s.id || (!cur && !isQ && s === LEADERS.filter(function (x) { return x.id !== QUANTA_ID; })[0])) ? ' active' : '');
+      a.href = isQ ? 'quanta.html' : ('stock.html?id=' + s.id);
+      a.innerHTML = esc(s.name) + ' <span class="lb-sub">' + esc(s.id) + (isQ ? ' · 旗艦專頁' : '') + '</span>';
+      box.appendChild(a);
+    });
+  }
+
+  /* ---------------------------------------------------- Ticker */
+  function renderTicker() {
+    var s = STOCK;
+    var f = s.financials || {};
+    var bars = getBars();
+    var closes = bars.map(function (b) { return b.close; });
+    var hi = closes.length ? Math.max.apply(null, closes) : null;
+    var lo = closes.length ? Math.min.apply(null, closes) : null;
+    var pe = (f.trailingEPS && s.price) ? (s.price / f.trailingEPS) : null;
+    var sg = SIG ? (SIG.stocks || []).filter(function (x) { return x.id === s.id; })[0] : null;
+
+    var h = '<div class="ticker">';
+    h += '<div class="ticker-head">';
+    h += '<span class="ticker-name">' + esc(s.fullName || s.name) + '</span>';
+    h += '<span class="ticker-id">(' + esc(s.id) + '.TW)</span>';
+    if (s.leaderRole) h += '<span class="ticker-role">🏆 ' + esc(s.leaderRole) + '</span>';
+    h += '</div>';
+    h += '<div class="ticker-sub">' + esc(s.subGroupName || '') + '　·　收盤價 ' + esc(s.date || '') +
+         '（每日收盤後更新，非盤中即時報價）</div>';
+    h += '<div class="ticker-grid">';
+    h += tk('收盤價', nt(s.price), '', '');
+    h += tk('漲跌 / 漲跌幅',
+            (s.spread > 0 ? '+' : '') + numf(s.spread, 1) + '&nbsp;/&nbsp;' + pctf(s.pct),
+            '', s.pct > 0 ? 'tk-up' : (s.pct < 0 ? 'tk-down' : ''));
+    h += tk('成交量', numf(s.volume) + '&nbsp;張', '最新交易日', '');
+    h += tk('本益比（近四季）', pe ? numf(pe, 1) + '&nbsp;倍' : '—',
+            f.trailingEPS ? 'EPS ' + f.trailingEPS + ' 元' : '', '');
+    h += tk('近 ' + bars.length + ' 日區間',
+            (lo !== null ? numf(lo, 1) : '—') + '&nbsp;~&nbsp;' + (hi !== null ? numf(hi, 1) : '—'),
+            sg ? ('規則評分 ' + numf(sg.score.total, 1) + '（' + sg.score.label + '）') : '', '');
+    h += '</div></div>';
+    return h;
+  }
+  function tk(l, v, s, cls) {
+    return '<div class="tk"><div class="tk-l">' + esc(l) + '</div>' +
+           '<div class="tk-v ' + (cls || '') + '">' + v + '</div>' +
+           (s ? '<div class="tk-s">' + esc(s) + '</div>' : '') + '</div>';
+  }
+
+  function getBars() {
+    var hs = HIST && HIST.stocks ? HIST.stocks[STOCK.id] : null;
+    if (hs && hs.bars && hs.bars.length) return hs.bars;
+    // 退回 sector_stocks.json 的 60 根（leaders_history.json 尚未產生時）
+    return (STOCK.history || []).map(function (h) {
+      return { date: h.date, open: +(h.open || h.close), high: +(h.max || h.close),
+               low: +(h.min || h.close), close: +h.close, volume: +(h.Trading_Volume || 0) };
+    });
+  }
+
+  /* ---------------------------------------------------- 章節 1：公司基本資料 */
+  function renderProfile() {
+    var s = STOCK;
+    var h = '<section class="section-card">';
+    h += '<div class="section-title"><span class="chapter-tag">章節 1</span>🏢 ' + esc(s.name) +
+         ' 是做什麼的？核心業務與產品結構</div>';
+    h += '<div class="section-note">資料為本站整理的公司定位說明，非即時公告；財報數字見章節 3。</div>';
+    h += '<div class="prose">' + esc(s.description || '') + '</div>';
+    if (s.mainProducts) {
+      h += '<div class="highlight-box"><strong>主要產品與營收結構：</strong><br>' + esc(s.mainProducts) + '</div>';
+    }
+    if (s.leaderWhy) {
+      h += '<div class="leader-box"><strong>🏆 為什麼它是' + esc(s.subGroupName || '') + '的龍頭：</strong><br>' +
+           esc(s.leaderWhy) + '</div>';
+    }
+    h += '</section>';
+    return h;
+  }
+
+  /* ---------------------------------------------------- 章節 2：量價走勢 */
+  function renderChartSection() {
+    var bars = getBars();
+    var h = '<section class="section-card">';
+    h += '<div class="section-title"><span class="chapter-tag">章節 2</span>📈 ' + esc(STOCK.name) +
+         ' 歷史量價走勢與均線</div>';
+    h += '<div class="section-note">已還原除權息與股票分割，' + bars.length +
+         ' 個交易日（' + esc(bars.length ? bars[0].date : '') + ' ~ ' + esc(bars.length ? bars[bars.length - 1].date : '') +
+         '）。價格與成交量分為上下兩個面板，不使用雙數值軸。</div>';
+    h += '<div class="chart-toolbar">';
+    h += '<button class="cbtn' + (CHART_MODE === 'line' ? ' active' : '') + '" onclick="setMode(\'line\')">收盤線圖</button>';
+    h += '<button class="cbtn' + (CHART_MODE === 'candle' ? ' active' : '') + '" onclick="setMode(\'candle\')">K 線圖</button>';
+    h += '<span style="width:12px;"></span>';
+    [[20, '近 1 個月'], [60, '近 3 個月'], [120, '近 6 個月'], [240, '近 1 年'], [0, '全區間']].forEach(function (r) {
+      h += '<button class="cbtn' + (RANGE === r[0] ? ' active' : '') + '" onclick="setRange(' + r[0] + ')">' + r[1] + '</button>';
+    });
+    h += '</div>';
+    h += '<div class="chart-price"><canvas id="priceChart"></canvas></div>';
+    h += '<div class="chart-vol"><canvas id="volChart"></canvas></div>';
+    h += '</section>';
+    return h;
+  }
+
+  /* ---------------------------------------------------- 章節 3：財報三率 */
+  function renderFinancials() {
+    var f = STOCK.financials || {};
+    var h = '<section class="section-card">';
+    h += '<div class="section-title"><span class="chapter-tag">章節 3</span>📊 財報核心指標與獲利三率</div>';
+    h += '<div class="section-note">近四季累計 EPS 與最新一季營收；獲利三率為該季數據。</div>';
+    h += '<div class="kv-grid">';
+    h += kvb('近四季 EPS', f.trailingEPS ? numf(f.trailingEPS, 2) + '&nbsp;元' : '—', '累計四個季度');
+    h += kvb('單季合併營收', esc(f.q3Revenue || '—'), '最新一季');
+    h += kvb('毛利率', esc(f.grossMargin || '—'), '售價減直接成本');
+    h += kvb('營業利益率', esc(f.operatingMargin || '—'), '再扣營業費用');
+    h += kvb('ROE 股東權益報酬率', esc(f.roe || '—'), '股東每投入 1 元的回報');
+    h += kvb('現金殖利率', esc(f.dividendYield || '—'), '年配息 ÷ 股價');
+    h += '</div>';
+
+    // 三率的相對關係解讀 —— 用實際數字講，不套樣板
+    var gm = parseFloat(f.grossMargin), om = parseFloat(f.operatingMargin), roe = parseFloat(f.roe);
+    if (!isNaN(gm) && !isNaN(om)) {
+      var gap = gm - om;
+      var read = '毛利率 ' + f.grossMargin + ' 扣掉營業費用後，營業利益率為 ' + f.operatingMargin +
+                 '，兩者相差 ' + numf(gap, 1) + ' 個百分點 —— 這段差距就是研發、行銷與管理費用的佔比。';
+      if (!isNaN(roe)) {
+        read += ' 值得注意的是 ROE 為 ' + f.roe + '：';
+        if (roe > gm) {
+          read += '<strong>ROE 高於毛利率</strong>，代表獲利能力不是來自高價差，而是來自<strong>資產週轉速度</strong>（同樣的資本一年做更多次生意）與財務槓桿的運用。';
+        } else {
+          read += '毛利率高於 ROE，代表它靠的是<strong>產品定價能力</strong>而非週轉速度，這類公司通常有技術或專利壁壘。';
+        }
+      }
+      h += '<div class="highlight-box">📖 <strong>怎麼讀這三個數字：</strong>' + read + '</div>';
+    }
+    h += '</section>';
+    return h;
+  }
+  function kvb(l, v, s) {
+    return '<div class="kv-box"><div class="kb-l">' + esc(l) + '</div><div class="kb-v">' + v + '</div>' +
+           (s ? '<div class="kb-s">' + esc(s) + '</div>' : '') + '</div>';
+  }
+  </script>
+
+  <script>
+  /* ---------------------------------------------------- 章節 4：樹狀產業鏈拓撲圖
+     五欄橫向雙向拓撲：上游葉子 → 上游分支 → 核心個股 → 下游分支 → 下游葉子。
+     與首頁彈窗、廣達專頁同樣讀 treeChain，但這裡是為整頁寬度重新排版的精簡版本。
+     連接線一律用三次方貝茲曲線，點擊節點高亮關聯路徑（專案通則）。 */
+  var SVGNS = 'http://www.w3.org/2000/svg';
+
+  function el(tag, attrs) {
+    var e = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  // 文字寬度自適應：節點文字過長時縮字級，確保永不超出外框（下限 9px）
+  function fitSize(text, maxWidth, base) {
+    var len = String(text || '').length;
+    var cjk = (String(text || '').match(/[一-鿿]/g) || []).length;
+    var est = cjk * base + (len - cjk) * base * 0.55;
+    if (est <= maxWidth) return base;
+    return Math.max(9, base * maxWidth / est);
+  }
+
+  function renderTreeSection() {
+    var tc = STOCK.treeChain;
+    var h = '<section class="section-card">';
+    h += '<div class="section-title"><span class="chapter-tag">章節 4</span>🌳 ' +
+         esc(tc ? (tc.title || STOCK.name) : STOCK.name) + ' · 專屬樹狀產業鏈拓撲</div>';
+    if (!tc) {
+      h += '<div class="section-note">這檔尚未建立專屬產業鏈資料。</div></section>';
+      return h;
+    }
+    h += '<div class="section-note">向左串接上游供應，向右延展至下游客戶。點擊任一節點可高亮它與核心的關聯路徑。</div>';
+    h += '<div class="tree-toolbar">';
+    h += '<button class="cbtn" onclick="resetTree()">↺ 復原高亮</button>';
+    h += '<span id="tree-tip" style="font-size:0.84rem; color:var(--text-muted);">點擊節點查看關聯</span>';
+    h += '</div>';
+    h += '<div class="tree-scroll"><svg id="treeSvg"></svg></div>';
+    h += '<div class="tree-hint">💡 欄位較寬時此圖可左右滑動。上游 ' +
+         (tc.upstreamLeaves || []).length + ' 家 / ' + (tc.upstreamBranches || []).length +
+         ' 大類，下游 ' + (tc.downstreamLeaves || []).length + ' 家 / ' +
+         (tc.downstreamBranches || []).length + ' 大類。</div>';
+    h += '</section>';
+    return h;
+  }
+
+  function drawTree() {
+    var tc = STOCK.treeChain;
+    var svg = document.getElementById('treeSvg');
+    if (!tc || !svg) return;
+    svg.innerHTML = '';
+
+    var ub = tc.upstreamBranches || [], ul = tc.upstreamLeaves || [];
+    var db = tc.downstreamBranches || [], dl = tc.downstreamLeaves || [];
+
+    var LW = 168, LH = 38, BW = 150, BH = 46, CW = 182, CH = 70;
+    var gapY = 12;
+    var colX = [20, 20 + LW + 70, 20 + LW + 70 + BW + 80, 0, 0];
+    colX[3] = colX[2] + CW + 80;
+    colX[4] = colX[3] + BW + 70;
+    var width = colX[4] + LW + 20;
+
+    function stack(items, h, gap) {
+      var total = items.length * h + (items.length - 1) * gap;
+      return { total: total, at: function (i) { return i * (h + gap); } };
+    }
+    var sUL = stack(ul, LH, gapY), sUB = stack(ub, BH, 46);
+    var sDB = stack(db, BH, 46), sDL = stack(dl, LH, gapY);
+    var height = Math.max(sUL.total, sUB.total, sDB.total, sDL.total, CH) + 40;
+
+    svg.setAttribute('width', width);
+    svg.setAttribute('height', height);
+    svg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+    svg.style.minWidth = width + 'px';
+
+    function yStart(total) { return (height - total) / 2; }
+    var pos = {};   // id -> {x,y,w,h}
+
+    var linkLayer = el('g', {});
+    var nodeLayer = el('g', {});
+    svg.appendChild(linkLayer);
+    svg.appendChild(nodeLayer);
+
+    function node(x, y, w, h, label, sub, fill, stroke, textColor, key, cls) {
+      var g = el('g', { class: 'tnode ' + (cls || ''), 'data-key': key || '' });
+      g.appendChild(el('rect', { x: x, y: y, width: w, height: h, rx: 9,
+        fill: fill, stroke: stroke, 'stroke-width': 1.6 }));
+      var fs = fitSize(label, w - 18, sub ? 13 : 14);
+      var t = el('text', { x: x + w / 2, y: y + (sub ? h / 2 - 3 : h / 2 + 5),
+        'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: textColor });
+      t.textContent = label;
+      g.appendChild(t);
+      if (sub) {
+        var fs2 = fitSize(sub, w - 18, 10.5);
+        var t2 = el('text', { x: x + w / 2, y: y + h / 2 + 13, 'text-anchor': 'middle',
+          'font-size': fs2, fill: textColor, opacity: 0.78 });
+        t2.textContent = sub;
+        g.appendChild(t2);
+      }
+      nodeLayer.appendChild(g);
+      pos[key] = { x: x, y: y, w: w, h: h };
+      return g;
+    }
+
+    function link(a, b, color, key) {
+      if (!pos[a] || !pos[b]) return;
+      var p = pos[a], q = pos[b];
+      var x1 = p.x + p.w, y1 = p.y + p.h / 2, x2 = q.x, y2 = q.y + q.h / 2;
+      var dx = (x2 - x1) / 2;
+      var path = el('path', {
+        d: 'M ' + x1 + ' ' + y1 + ' C ' + (x1 + dx) + ' ' + y1 + ', ' + (x2 - dx) + ' ' + y2 + ', ' + x2 + ' ' + y2,
+        fill: 'none', stroke: color, 'stroke-width': 1.8, opacity: 0.5,
+        class: 'tlink', 'data-a': a, 'data-b': b
+      });
+      linkLayer.appendChild(path);
+    }
+
+    // 上游葉子
+    var y = yStart(sUL.total);
+    ul.forEach(function (l, i) {
+      node(colX[0], y + sUL.at(i), LW, LH, (l.icon ? l.icon + ' ' : '') + l.name, null,
+           '#ffffff', l.color || '#0369a1', '#0f2c4d', 'ul' + i, 'up');
+    });
+    // 上游分支
+    y = yStart(sUB.total);
+    ub.forEach(function (b, i) {
+      node(colX[1], y + sUB.at(i), BW, BH, (b.icon ? b.icon + ' ' : '') + b.name, null,
+           '#e0f2fe', '#0284c7', '#075985', b.id, 'up');
+    });
+    // 核心
+    node(colX[2], (height - CH) / 2, CW, CH, STOCK.name + ' (' + STOCK.id + ')',
+         STOCK.subGroupName || '', '#0f2c4d', '#0f2c4d', '#ffffff', 'core', 'core');
+    // 下游分支
+    y = yStart(sDB.total);
+    db.forEach(function (b, i) {
+      node(colX[3], y + sDB.at(i), BW, BH, (b.icon ? b.icon + ' ' : '') + b.name, null,
+           '#fef3c7', '#d97706', '#92400e', b.id, 'down');
+    });
+    // 下游葉子
+    y = yStart(sDL.total);
+    dl.forEach(function (l, i) {
+      node(colX[4], y + sDL.at(i), LW, LH, (l.icon ? l.icon + ' ' : '') + l.name, null,
+           '#ffffff', l.color || '#d97706', '#0f2c4d', 'dl' + i, 'down');
+    });
+
+    // 連線
+    ul.forEach(function (l, i) { link('ul' + i, l.branch, '#0ea5e9'); });
+    ub.forEach(function (b) { link(b.id, 'core', '#0284c7'); });
+    db.forEach(function (b) { link('core', b.id, '#f59e0b'); });
+    dl.forEach(function (l, i) { link(l.branch, 'dl' + i, '#f59e0b'); });
+
+    // 點擊高亮關聯路徑
+    nodeLayer.querySelectorAll('.tnode').forEach(function (g) {
+      g.addEventListener('click', function () { highlight(g.getAttribute('data-key')); });
+    });
+  }
+
+  function highlight(key) {
+    var svg = document.getElementById('treeSvg');
+    if (!svg) return;
+    if (key === 'core') { resetTree(); return; }
+    var tc = STOCK.treeChain;
+    var chain = new Set(['core', key]);
+    var label = key;
+    var ul = tc.upstreamLeaves || [], dl = tc.downstreamLeaves || [];
+    if (/^ul\d+$/.test(key)) { chain.add(ul[+key.slice(2)].branch); label = ul[+key.slice(2)].name; }
+    else if (/^dl\d+$/.test(key)) { chain.add(dl[+key.slice(2)].branch); label = dl[+key.slice(2)].name; }
+    else {
+      // 點到分支：把掛在它底下的葉子一併納入
+      ul.forEach(function (l, i) { if (l.branch === key) chain.add('ul' + i); });
+      dl.forEach(function (l, i) { if (l.branch === key) chain.add('dl' + i); });
+      var b = (tc.upstreamBranches || []).concat(tc.downstreamBranches || [])
+        .filter(function (x) { return x.id === key; })[0];
+      if (b) label = b.name;
+    }
+    svg.querySelectorAll('.tnode').forEach(function (g) {
+      g.classList.toggle('faded', !chain.has(g.getAttribute('data-key')));
+    });
+    svg.querySelectorAll('.tlink').forEach(function (p) {
+      var on = chain.has(p.getAttribute('data-a')) && chain.has(p.getAttribute('data-b'));
+      p.classList.toggle('hot', on);
+      p.classList.toggle('faded', !on);
+    });
+    var tip = document.getElementById('tree-tip');
+    if (tip) tip.innerHTML = '已高亮：<strong>' + esc(label) + '</strong> 與 ' + esc(STOCK.name) + ' 的關聯路徑';
+  }
+
+  function resetTree() {
+    var svg = document.getElementById('treeSvg');
+    if (!svg) return;
+    svg.querySelectorAll('.tnode').forEach(function (g) { g.classList.remove('faded'); });
+    svg.querySelectorAll('.tlink').forEach(function (p) { p.classList.remove('hot', 'faded'); });
+    var tip = document.getElementById('tree-tip');
+    if (tip) tip.textContent = '點擊節點查看關聯';
+  }
+
+  /* ---------------------------------------------------- 章節 5：上下游供應鏈結構
+     廣達專頁此處是「AI 機櫃 BOM 成本結構」，那是該公司特有的研究內容，
+     無法替其他公司憑空套用。這裡改列同樣來自 treeChain 的真實上下游名單。 */
+  function renderChainList() {
+    var tc = STOCK.treeChain;
+    if (!tc) return '';
+    var h = '<section class="section-card">';
+    h += '<div class="section-title"><span class="chapter-tag">章節 5</span>🔗 上下游供應鏈結構明細</div>';
+    h += '<div class="section-note">與章節 4 同一份資料的清單檢視，方便逐項閱讀每個環節的角色。</div>';
+    h += '<div class="chain-cols">';
+    h += chainCol('⬆️ 上游供應', tc.upstreamBranches, tc.upstreamLeaves, '#075985');
+    h += chainCol('⬇️ 下游應用與客戶', tc.downstreamBranches, tc.downstreamLeaves, '#92400e');
+    h += '</div></section>';
+    return h;
+  }
+  function chainCol(title, branches, leaves, color) {
+    var h = '<div class="chain-col"><h4 style="color:' + color + ';">' + title + '</h4>';
+    (branches || []).forEach(function (b) {
+      var mine = (leaves || []).filter(function (l) { return l.branch === b.id; });
+      h += '<div class="branch-block"><div class="branch-title">' +
+           (b.icon ? esc(b.icon) + ' ' : '') + esc(b.name) + '（' + mine.length + '）</div>';
+      mine.forEach(function (l) {
+        h += '<div class="leaf-row"><span class="leaf-name">' +
+             (l.icon ? esc(l.icon) + ' ' : '') + esc(l.name) + '</span>' +
+             '<span class="leaf-role">' + esc(l.role || '') + '</span></div>';
+      });
+      h += '</div>';
+    });
+    h += '</div>';
+    return h;
+  }
+  </script>
+
+  <script>
+  /* ---------------------------------------------------- 章節 6：籌碼面 */
+  function renderChips() {
+    var st = INST && INST.stocks ? INST.stocks[STOCK.id] : null;
+    var h = '<section class="section-card">';
+    h += '<div class="section-title"><span class="chapter-tag">章節 6</span>🧮 籌碼面：三大法人動向與外資持股</div>';
+    if (!st) { h += '<div class="section-note">查無這檔的籌碼資料。</div></section>'; return h; }
+    var sm = st.summary || {};
+    h += '<div class="section-note">單位為張（1 張 = 1000 股）。證交所收盤後才出表，' +
+         '因此籌碼資料日（' + esc(sm.lastDate || '—') + '）通常比股價日晚一個交易日。</div>';
+    h += '<div class="kv-grid">';
+    h += kvb('外資近 5 日', numf(sm.foreign5) + '&nbsp;張', '最新日 ' + numf(sm.foreign1) + ' 張');
+    h += kvb('外資近 20 日', numf(sm.foreign20) + '&nbsp;張', '');
+    h += kvb('投信近 5 日', numf(sm.trust5) + '&nbsp;張', '近 20 日 ' + numf(sm.trust20) + ' 張');
+    h += kvb('三大法人近 20 日', numf(sm.total20) + '&nbsp;張', '合計買賣超');
+    h += kvb('外資持股比例', (sm.foreignRatio !== undefined ? numf(sm.foreignRatio, 2) + '%' : '—'),
+             '20 日變化 ' + pctf(sm.foreignRatioChg20, 2).replace('%', ' 個百分點'));
+    h += kvb('外資連續', (sm.foreignStreak ? Math.abs(sm.foreignStreak) + ' 日' + (sm.foreignStreak > 0 ? '買超' : '賣超') : '—'), '');
+    h += '</div>';
+
+    // 依實際數字產生解讀，不套固定句型
+    var f5 = sm.foreign5 || 0, t5 = sm.trust5 || 0, read;
+    if (f5 > 0 && t5 > 0) read = '外資與投信<strong>同步買超</strong>，是籌碼面最乾淨的組合。';
+    else if (f5 < 0 && t5 < 0) read = '外資與投信<strong>同步賣超</strong>，此時技術面轉強訊號的可靠度會下降。';
+    else if (f5 < 0 && t5 > 0) read = '<strong>外資提款、投信承接</strong>的對作格局：外資資金量大看中長期，投信看中期績效，這種分歧通常伴隨震盪。';
+    else if (f5 > 0 && t5 < 0) read = '<strong>外資買、投信調節</strong>，常見於投信作帳結束或換股期間。';
+    else read = '近 5 日法人進出接近平盤，籌碼面沒有明確方向。';
+    h += '<div class="highlight-box">📖 <strong>籌碼結構解讀：</strong>' + read +
+         ' 另外要分開看：單日買超大但<strong>持股比持續下降</strong>，代表整體仍在調節。</div>';
+
+    h += '<div class="chart-wrap" style="height:260px; margin-top:16px;"><canvas id="chipsChart"></canvas></div>';
+    h += '</section>';
+    return h;
+  }
+
+  /* ---------------------------------------------------- 章節 7：投資定位與規則訊號 */
+  function renderVerdict() {
+    var sg = SIG ? (SIG.stocks || []).filter(function (x) { return x.id === STOCK.id; })[0] : null;
+    var h = '<section class="section-card">';
+    h += '<div class="section-title"><span class="chapter-tag">章節 7</span>🎯 投資定位與規則訊號</div>';
+    h += '<div class="section-note">以下為本站規則引擎的運算結果，不是投資建議。完整方法論見「投資策略與訊號」頁。</div>';
+
+    if (STOCK.leaderWhy) {
+      h += '<div class="leader-box"><strong>🏆 龍頭定位：</strong>' + esc(STOCK.leaderWhy) + '</div>';
+    }
+    if (sg) {
+      var sc = sg.score;
+      h += '<div class="kv-grid" style="margin-top:14px;">';
+      h += kvb('規則總分', numf(sc.total, 1) + '&nbsp;分', sc.label + '｜' + sc.action);
+      h += kvb('趨勢面 35%', numf(sc.trend, 0), '價格與均線位置');
+      h += kvb('動能面 25%', numf(sc.momentum, 0), 'MACD / RSI / KD');
+      h += kvb('籌碼面 25%', numf(sc.chips, 0), '法人與外資持股');
+      h += kvb('相對強度 15%', numf(sc.strength, 0), '對照類股指數');
+      h += kvb('MA20 乖離率', pctf(sg.ind.bias20, 1), '正值代表高於月線');
+      h += '</div>';
+
+      var p = sg.plans ? sg.plans.balanced : null;
+      if (p) {
+        h += '<div class="table-wrap" style="margin-top:16px;"><table class="t"><thead><tr>' +
+             '<th>項目</th><th>價位</th><th>相對進場中值</th></tr></thead><tbody>';
+        h += '<tr><td>參考進場區</td><td>' + numf(p.entryLow, 1) + ' ~ ' + numf(p.entryHigh, 1) + '</td><td>—</td></tr>';
+        h += '<tr><td>停損價</td><td class="down">' + numf(p.stop, 1) + '</td><td class="down">' + pctf(p.stopPct, 1) + '</td></tr>';
+        h += '<tr><td>第一目標（出一半）</td><td class="up">' + numf(p.target1, 1) + '</td><td class="up">' + pctf(p.target1Pct, 1) + '</td></tr>';
+        h += '<tr><td>第二目標（全出）</td><td class="up">' + numf(p.target2, 1) + '</td><td class="up">' + pctf(p.target2Pct, 1) + '</td></tr>';
+        h += '<tr><td>風險報酬比</td><td>' + numf(p.rr, 2) + ' : 1</td><td>' +
+             (p.needsConfirm ? '⚠️ 尚未站上月線' : '條件已成立') + '</td></tr>';
+        h += '</tbody></table></div>';
+        if (p.needsConfirm) {
+          h += '<div class="highlight-box">⚠️ <strong>目前收盤在 MA20 月線之下，依規則還不算進場訊號成立。</strong>' +
+               '上表價位是「條件成立後」才適用的參考值。</div>';
+        }
+      }
+      h += '<div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">';
+      h += '<a class="cbtn" href="strategy.html#stock-' + esc(STOCK.id) + '">查看完整訊號與評分依據 →</a>';
+      h += '<a class="cbtn" href="plan.html">用這檔試算投資方案 →</a>';
+      h += '</div>';
+    }
+
+    h += '<div class="disclaimer" style="margin-top:18px;">⚠️ <strong>本頁所有內容僅供研究參考，不構成投資建議。</strong>' +
+         '公司定位與產業鏈資料為本站整理，可能與最新公告有落差；技術與籌碼訊號為固定規則的運算結果，' +
+         '本站回測顯示其優勢很薄且高度依賴類股環境。投資決策與其後果請自行承擔，必要時諮詢持照專業人士。</div>';
+    h += '</section>';
+    return h;
+  }
+
+  /* ---------------------------------------------------- 圖表 */
+  function slice(bars) { return RANGE > 0 ? bars.slice(-RANGE) : bars; }
+
+  function drawCharts() {
+    Object.keys(charts).forEach(function (k) { if (charts[k]) charts[k].destroy(); });
+    charts = {};
+    var all = getBars();
+    var bars = slice(all);
+    if (!bars.length) return;
+    var labels = bars.map(function (b) { return b.date.slice(5); });
+    var closes = bars.map(function (b) { return b.close; });
+    var allCloses = all.map(function (b) { return b.close; });
+    var off = all.length - bars.length;
+    var ma20 = bars.map(function (b, i) { return sma(allCloses, 20, off + i); });
+    var ma60 = bars.map(function (b, i) { return sma(allCloses, 60, off + i); });
+
+    var ds = [];
+    if (CHART_MODE === 'line') {
+      ds.push({ label: '收盤價', data: closes, borderColor: '#0284c7', backgroundColor: 'rgba(2,132,199,0.10)',
+        borderWidth: 2, pointRadius: 0, fill: true, tension: 0.15, order: 3 });
+    } else {
+      // K 棒：以原生浮動長條繪製，[低,高] 影線 + [開,收] 實體，不引入額外函式庫
+      ds.push({ label: '影線', data: bars.map(function (b) { return [b.low, b.high]; }),
+        backgroundColor: bars.map(function (b) { return b.close >= b.open ? 'rgba(220,38,38,0.55)' : 'rgba(22,163,74,0.55)'; }),
+        barPercentage: 0.14, categoryPercentage: 1, order: 3 });
+      ds.push({ label: 'K 棒', data: bars.map(function (b) { return [Math.min(b.open, b.close), Math.max(b.open, b.close)]; }),
+        backgroundColor: bars.map(function (b) { return b.close >= b.open ? '#dc2626' : '#16a34a'; }),
+        barPercentage: 0.62, categoryPercentage: 1, order: 2 });
+    }
+    ds.push({ type: 'line', label: 'MA20 月線', data: ma20, borderColor: '#f59e0b',
+      borderWidth: 1.6, pointRadius: 0, fill: false, tension: 0.2, order: 1 });
+    ds.push({ type: 'line', label: 'MA60 季線', data: ma60, borderColor: '#8b5cf6',
+      borderWidth: 1.6, pointRadius: 0, fill: false, tension: 0.2, order: 1 });
+
+    var yFit = function (axis) { axis.width = 62; };   // 兩面板 Y 軸等寬，日期軸才對得齊
+
+    charts.price = new Chart(document.getElementById('priceChart'), {
+      type: CHART_MODE === 'line' ? 'line' : 'bar',
+      data: { labels: labels, datasets: ds },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: true, labels: { font: { size: 11 }, usePointStyle: true, boxWidth: 8 } },
+          tooltip: {
+            callbacks: {
+              label: function (c) {
+                if (Array.isArray(c.raw)) {
+                  var b = bars[c.dataIndex];
+                  return c.datasetIndex === 1
+                    ? ['開 ' + b.open + '　收 ' + b.close, '高 ' + b.high + '　低 ' + b.low]
+                    : null;
+                }
+                return c.dataset.label + '：' + (c.raw === null ? '—' : Number(c.raw).toFixed(1));
+              }
+            }
+          }
+        },
+        scales: {
+          x: { ticks: { maxTicksLimit: 10, font: { size: 10 } }, grid: { display: false } },
+          y: { position: 'right', afterFit: yFit, ticks: { font: { size: 10 } }, grid: { color: '#eef4fa' } }
+        }
+      }
+    });
+
+    charts.vol = new Chart(document.getElementById('volChart'), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '成交量（張）',
+          data: bars.map(function (b) { return Math.round(b.volume / 1000); }),
+          backgroundColor: bars.map(function (b) { return b.close >= b.open ? 'rgba(220,38,38,0.55)' : 'rgba(22,163,74,0.55)'; }),
+          barPercentage: 0.9, categoryPercentage: 1
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { display: false }, grid: { display: false } },
+          y: { position: 'right', afterFit: yFit, ticks: { font: { size: 9 }, maxTicksLimit: 4 }, grid: { color: '#eef4fa' } }
+        }
+      }
+    });
+
+    drawChipsChart();
+  }
+
+  function drawChipsChart() {
+    var cv = document.getElementById('chipsChart');
+    var st = INST && INST.stocks ? INST.stocks[STOCK.id] : null;
+    if (!cv || !st || !st.daily) return;
+    var d = st.daily.slice(-40);
+    charts.chips = new Chart(cv, {
+      type: 'bar',
+      data: {
+        labels: d.map(function (x) { return x.date.slice(5); }),
+        datasets: [
+          { label: '外資', data: d.map(function (x) { return x.foreign; }), backgroundColor: '#1e60d5' },
+          { label: '投信', data: d.map(function (x) { return x.trust; }), backgroundColor: '#f59e0b' },
+          { label: '自營商', data: d.map(function (x) { return x.dealer; }), backgroundColor: '#14b8a6' }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { font: { size: 11 }, usePointStyle: true, boxWidth: 8 } },
+          title: { display: true, text: '近 40 個交易日三大法人每日買賣超（張）', font: { size: 12 } }
+        },
+        scales: {
+          x: { stacked: true, ticks: { maxTicksLimit: 10, font: { size: 9 } }, grid: { display: false } },
+          y: { stacked: true, ticks: { font: { size: 10 } }, grid: { color: '#eef4fa' } }
+        }
+      }
+    });
+  }
+
+  /* ---------------------------------------------------- 總渲染 */
+  function render() {
+    document.title = STOCK.name + ' (' + STOCK.id + ') 個股專頁 · 電腦及週邊設備類股';
+    var bc = document.getElementById('brand-code');
+    if (bc) bc.textContent = STOCK.id;
+
+    var h = '';
+    h += renderTicker();
+    h += renderProfile();
+    h += renderChartSection();
+    h += renderFinancials();
+    h += renderTreeSection();
+    h += renderChainList();
+    h += renderChips();
+    h += renderVerdict();
+    document.getElementById('page-body').innerHTML = h;
+
+    // 圖表與 SVG 必須在元素進 DOM 之後才建立。
+    // 本專案踩過「在 display:none 容器裡建 Chart.js 導致寬度為 0」的坑，
+    // 所以本頁所有圖表區塊一律預設可見，不包在折疊元素裡。
+    drawCharts();
+    drawTree();
+  }
+
+  function setMode(m) { CHART_MODE = m; render(); document.getElementById('priceChart').scrollIntoView({ block: 'center' }); }
+  function setRange(r) { RANGE = r; render(); document.getElementById('priceChart').scrollIntoView({ block: 'center' }); }
+
+  boot();
+  </script>
+</body>
+</html>

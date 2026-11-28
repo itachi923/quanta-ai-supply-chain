@@ -77,7 +77,9 @@ $Steps = @(
     @{ Name = '類股新聞';                 Script = 'scripts\build_news.py' },
     # 訊號必須排最後：build_signals.py 不連網，它是把上面五份 JSON 換算成
     # 評分與進出場價位，任何一份沒更新到，算出來的訊號就是舊的。
-    @{ Name = '投資策略訊號';             Script = 'scripts\build_signals.py' }
+    @{ Name = '投資策略訊號';             Script = 'scripts\build_signals.py' },
+    # 龍頭個股專頁的長期日線：同樣不連網，從既有 JSON 增量累積
+    @{ Name = '龍頭個股日線';             Script = 'scripts\build_leader_history.py' }
 )
 
 $Failed = @()
@@ -98,7 +100,8 @@ $DataFiles = @(
     'data/index_compare.json',
     'data/institutional.json',
     'data/news.json',
-    'data/signals.json'
+    'data/signals.json',
+    'data/leaders_history.json'
 )
 
 git diff --quiet -- $DataFiles

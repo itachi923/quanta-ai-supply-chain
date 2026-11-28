@@ -1,7 +1,7 @@
 # 台灣電腦及週邊設備類股與廣達 AI 產業鏈中樞 —— 專案全景交接記憶檔 (Project Memory & Handover)
 
 > **產生時間**：2026-11-26  
-> **最後更新**：2026-11-29（新增投資方案規劃器 plan.html：風險預算法、三道防護閘門，見第 8 章）  
+> **最後更新**：2026-11-29（新增龍頭個股專頁 stock.html 與廣達「低毛利為何仍是龍頭」分析，見第 9 章）  
 > **專案狀態**：已完成全部核心功能開發並成功部署上線  
 > **適用對象**：接手的 AI 助手（如 Claude）、開發者或專案維護人員
 
@@ -20,11 +20,12 @@
 | 類股中樞 | `index.html` | https://itachi923.github.io/quanta-ai-supply-chain/ |
 | 投資策略與訊號 | `strategy.html` | https://itachi923.github.io/quanta-ai-supply-chain/strategy.html |
 | 投資方案規劃 | `plan.html` | https://itachi923.github.io/quanta-ai-supply-chain/plan.html |
+| 龍頭個股專頁 | `stock.html?id=股號` | https://itachi923.github.io/quanta-ai-supply-chain/stock.html |
 | 新聞與市場情報 | `news.html` | https://itachi923.github.io/quanta-ai-supply-chain/news.html |
 | 廣達 2382 專頁 | `quanta.html` | https://itachi923.github.io/quanta-ai-supply-chain/quanta.html |
 
-五頁以頁首切換列互通（`.page-tabs` / `.page-tab`，**五個檔案各有一份，改動要同步**；
-`news.html` 的頁尾 `.footer-links` 還有第六份連結列）。
+六頁以頁首切換列互通（`.page-tabs` / `.page-tab`，**六個檔案各有一份，改動要同步**；
+`news.html` 的頁尾 `.footer-links` 還有第七份連結列）。
 
 ### 現在的狀態（2026-11-27）
 
@@ -36,6 +37,8 @@
   **優勢是真的但很薄，且擴張期（+0.87%）遠優於收縮期（+0.06%）**（見 7-6）
 - **投資方案規劃器（2026-11-29 新增）**：風險預算法部位計算、依類股階段調整曝險、
   情境試算、三道防護閘門（非閒置資金／借貸資金／金額過小）（見第 8 章）
+- **龍頭個股專頁（2026-11-29 新增）**：`stock.html?id=` 單一樣板驅動 5 檔龍頭
+  （華碩、川湖、奇鋐、研華、致伸），比照廣達專頁的 7 章節配置（見第 9 章）
 - 資料更新由 **Windows 本機排程** 負責（`QuantaSectorSite-DailyUpdate`，每日 17:15）
 - GitHub Actions 的排程 **不可用**（見 3-6），workflow 保留為手動備援
 
@@ -181,6 +184,7 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
 ├── index.html                      # 主頁：電腦及週邊設備類股中樞
 ├── strategy.html                   # 投資策略與訊號中心（評分、進出場、事件警示、問答機器人，約 92 KB）
 ├── plan.html                       # 投資方案規劃器（風險預算法、情境試算、三道閘門，約 66 KB）
+├── stock.html                      # 龍頭個股專頁樣板（?id=股號 驅動 5 檔，約 50 KB）
 ├── news.html                       # 新聞與市場情報中心（盤面速覽 + 三大法人 + 新聞牆）
 ├── quanta.html                     # 旗艦專頁：廣達 (2382) 深度基本面與拓撲圖 (約 77 KB)
 ├── README.md                       # 專案說明文件
@@ -198,7 +202,8 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
 │   ├── index_compare.json          # 類股指數與大盤指數每日收盤（約 12 KB / 217 個交易日）
 │   ├── news.json                   # 類股新聞滾動封存（最近 10 天，已跨個股與跨媒體去重）
 │   ├── signals.json                # 策略訊號：評分、進出場價位、事件警示、名詞詞典（約 136 KB）
-│   └── backtest.json               # 回測統計結果（約 28 KB；完整明細與長期日線已 gitignore）
+│   ├── backtest.json               # 回測統計結果（約 28 KB；完整明細與長期日線已 gitignore）
+│   └── leaders_history.json        # 6 檔龍頭各 300 根還原日線（約 166 KB，供個股專頁繪圖）
 └── scripts/
     ├── build_sector_data.py        # 建構/更新 16 檔類股資料庫腳本 (串接證券 API，已改為保留 treeChain)
     ├── build_institutional_data.py # 建構/更新 16 檔籌碼面資料庫（三大法人 + 外資持股）
@@ -209,6 +214,7 @@ c:\Users\User\Desktop\0923\quanta-ai-supply-chain\
     ├── build_signals.py            # 把上列 JSON 換算成策略訊號（不連網，必須排最後）
     ├── fetch_long_history.py       # 【回測】抓 2023 年起長期日線與籌碼 -> history_long.json
     ├── backtest_signals.py         # 【回測】回放歷史訊號 -> backtest.json（手動執行，不在排程）
+    ├── build_leader_history.py     # 龍頭 300 根日線（不連網、增量累積，排在訊號之後）
     ├── adjust_prices.py            # 還原股價：除權息（精確）+ 股票分割（啟發式後備）
     ├── enrich_tree_chains.py       # 為 16 檔個股注入精緻專屬產業鏈拓撲資料
     ├── update_sector_subgroups.py  # 更新 5 大子族群分組與龍頭標記
@@ -873,3 +879,83 @@ python scripts\backtest_signals.py     # 約 2 分鐘，產生 data/backtest.jso
 3. 手動驗算至少一檔：停損距離、風險反推、集中度上限、股數、風險金額
 4. 手機版 375px 無水平溢出（`.calc-trace` 與表格要靠自身的 overflow-x 捲動）
 5. 類股處於收縮期時，保留現金應約 70%
+
+---
+
+## 9. 龍頭個股專頁 (`stock.html`) 與廣達毛利率分析
+
+> 2026-11-29 新增。第六頁。
+
+### 9-1) 為什麼是「一個樣板」而不是 5 個複製檔
+
+使用者要求「5 檔龍頭都要有跟廣達一樣的專門頁面」。實作成
+**單一 `stock.html`，以 `?id=股號` 驅動**，而不是複製 5 份 HTML：
+
+- `quanta.html` 有 115 KB 的手寫內容。複製 5 份之後，任何版面或邏輯修正都要改 5 遍，
+  必然漂移 —— 本專案光是頁首切換列就已經有 6 份副本要同步，不該再增加同類負擔。
+- 每一檔仍有自己的網址（`stock.html?id=2059`）、自己的標題與完整內容，
+  從使用者角度就是「自己的專頁」。
+
+涵蓋 5 檔：華碩 2357、川湖 2059、奇鋐 3017、研華 2395、致伸 4915。
+廣達 2382 維持 `quanta.html`（內容更深、含 BOM 成本與創辦史），
+`stock.html?id=2382` 會自動導向過去，頁內切換器也把廣達標成「旗艦專頁」。
+
+### 9-2) 七章節如何比照廣達專頁
+
+| 章節 | 廣達專頁 | 個股專頁 | 資料來源 |
+|---|---|---|---|
+| 1 | 公司簡介與產品 | 同 | `description` / `mainProducts` / `leaderWhy` |
+| 2 | 歷史日線與均線 | 同（300 根、收盤線⇄K 線、5 種期間） | `leaders_history.json` |
+| 3 | 財報獲利三率 | 同，另加「三率關係自動解讀」 | `financials` |
+| 4 | 樹狀產業鏈拓撲 | 同（五欄雙向、點擊高亮） | `treeChain` |
+| 5 | **AI 機櫃 BOM 成本** | **改為上下游供應鏈清單** | `treeChain` 的 branches/leaves |
+| 6 | 籌碼面 | 同（含 40 日堆疊柱狀圖） | `institutional.json` |
+| 7 | 投資價值總評 | 改為規則訊號定位 | `signals.json` |
+
+**第 5 章是刻意不同的**：AI 機櫃 BOM 成本結構是廣達特有的研究內容，
+無法替其他公司憑空套用。硬要套就會變成編造，所以改列同樣真實的上下游名單。
+**日後若有人要「補齊」各公司的 BOM，請先確認資料來源，不要用推估填空。**
+
+### 9-3) 資料管線
+
+`scripts/build_leader_history.py` → `data/leaders_history.json`（6 檔 × 300 根）
+
+- **不連網**。首次從 `history_long.json`（回測用、已 gitignore）取種，
+  之後每天只從 `sector_stocks.json` 的 60 根滾動視窗補最新一根。
+- 以「日期 → 單根日線」的字典合併，天然去重、冪等（連跑兩次結果相同）。
+- 排在 `daily_update.ps1` 的最後（訊號之後），GitHub Actions 同步加入。
+- 換一台沒有 `history_long.json` 的機器也能運作，只是前期歷史較短、會自己長回來。
+
+### 9-4) 實作中修掉的問題
+
+**CSS Grid 的 `1fr` 不會縮到小於內容的 min-content。**
+ticker 的 `.tk-v` 有 `white-space: nowrap`，在 375px 下兩欄的卡片撐到 392px，
+漲跌幅數字被切掉 —— 和使用者先前兩次回報的「字被切到」是同一類毛病。
+修法：`grid-template-columns: repeat(N, minmax(0, 1fr))` 搭配 `.tk { min-width: 0; }`，
+並在 420px 以下改單欄。**日後在任何 grid 裡放 nowrap 內容，都要用 `minmax(0, 1fr)`。**
+
+另一個教訓：用 `document.body.style.width` 模擬窄螢幕**測不到 media query**
+（它看的是視窗寬度）。驗證 RWD 一定要真的改視窗尺寸。
+
+### 9-5) 廣達「低毛利率為何仍是龍頭」（quanta.html 章節 3.5）
+
+`#margin-paradox` 區塊，錨點已加入頁內章節導覽。論據全部取自站上既有資料：
+
+| 公司 | 毛利率 | 營益率 | ROE | 單季營收 |
+|---|---|---|---|---|
+| 川湖 2059 | 68.2% | 57.1% | 29.8% | 28.5 億 |
+| **廣達 2382** | **8.7%** | **5.2%** | **27.6%** | **11,100 億** |
+| 奇鋐 3017 | 24.2% | 13.8% | 26.5% | 191 億 |
+| 研華 2395 | 40.5% | 16.8% | 20.2% | 150 億 |
+| 華碩 2357 | 17.2% | 7.8% | 16.8% | 1,665 億 |
+| 致伸 4915 | 16.8% | 4.6% | 14.2% | 160 億 |
+
+**核心論點**：廣達毛利率在六檔中最低，ROE 卻排第二 —— 這兩件事同時成立，
+就證明毛利率不等於賺錢能力。五個段落依序是：
+① 六檔對照數字 ② 規模把薄毛利放大（營收是川湖的 389 倍）
+③ 低毛利是會計結構造成的（BOM 裡 GPU/CPU 佔 68%，料件金額全額計入營收但價差不屬於組裝廠）
+④ 真正的護城河（資本門檻、L6→L12 一條龍、直通四大 CSP、台灣一小時供應鏈）
+⑤ 風險（營益率 5.2% 緩衝薄、客戶集中於少數 CSP 的資本支出循環）
+
+**不要把這一節改成「廣達很棒」的宣傳**。它的價值在於用同業對照數字解釋財務結構，
+第 ⑤ 段的風險論述是必要的平衡，不可刪除。

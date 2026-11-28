@@ -992,18 +992,20 @@
         <li><a href="#company-profile">公司簡介與商品</a></li>
         <li><a href="#stock-chart-section">股價與量價線圖</a></li>
         <li><a href="#financial-metrics">財務與獲利三率</a></li>
+        <li><a href="#margin-paradox">為何低毛利仍是龍頭</a></li>
         <li><a href="#tree-area">AI 產業鏈樹狀圖</a></li>
         <li><a href="#bom-area">機櫃 BOM 成本</a></li>
         <li><a href="#chips-area">籌碼面法人動向</a></li>
       </ul>
     </div>
 
-    <!-- 頁面切換列（五頁共用：改動時五個檔案都要同步） -->
+    <!-- 頁面切換列（六頁共用：改動時六個檔案都要同步） -->
     <div class="page-tabs-bar">
       <nav class="page-tabs">
         <a href="index.html" class="page-tab">📊 類股中樞</a>
         <a href="strategy.html" class="page-tab">🎯 投資策略與訊號</a>
         <a href="plan.html" class="page-tab">🧮 投資方案規劃</a>
+        <a href="stock.html" class="page-tab">🏆 龍頭個股專頁</a>
         <a href="news.html" class="page-tab">📰 新聞與市場情報</a>
         <a href="quanta.html" class="page-tab active">🤖 廣達 2382 專頁</a>
       </nav>
@@ -1251,6 +1253,182 @@
           <canvas id="marginsChart" height="150"></canvas>
         </div>
       </div>
+    </section>
+
+
+    <!-- ========================================================
+         章節 3.5：低毛利率為何仍是龍頭（杜邦拆解與商業模式）
+         資料來源：data/sector_stocks.json 六檔龍頭的財務三率與單季營收，
+         全部為站上既有數據，未引入任何外部估算。
+         ======================================================== -->
+    <section id="margin-paradox" class="section-card" style="border: 2px solid #fcd34d;">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">MARGIN PARADOX · DUPONT VIEW</span>
+          <h2 class="section-title">🤔 毛利率只有 8.7%，為什麼廣達還是龍頭？</h2>
+          <p class="section-desc">用同類股六檔龍頭的實際數字回答，而不是口號。</p>
+        </div>
+      </div>
+
+      <div style="background:#fffbeb; border:1px solid #fcd34d; border-left:5px solid #f59e0b; border-radius:12px; padding:16px 18px; font-size:0.95rem; line-height:1.85; margin-bottom:22px;">
+        <strong>一句話的答案：毛利率衡量的是「單位價差」，不是「股東賺到多少」。</strong><br>
+        廣達的毛利率只有川湖的 <strong>1/8</strong>，但<strong>股東權益報酬率（ROE）幾乎一樣高</strong> ——
+        廣達 27.6%、川湖 29.8%，在六檔龍頭裡排名第二。
+        差別在於：川湖靠<strong>高價差</strong>賺錢，廣達靠<strong>極高的週轉與規模</strong>賺錢。
+      </div>
+
+      <h3 style="font-size:1.08rem; font-weight:900; color:var(--blue-navy); margin-bottom:10px;">
+        ① 先看同類股六檔龍頭的實際數字
+      </h3>
+      <div style="overflow-x:auto; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:10px;">
+        <table style="width:100%; border-collapse:collapse; font-size:0.88rem; min-width:620px;">
+          <thead>
+            <tr style="background:#0f2c4d; color:#fff;">
+              <th style="padding:10px 12px; text-align:left; white-space:nowrap;">公司</th>
+              <th style="padding:10px 12px; text-align:right; white-space:nowrap;">毛利率</th>
+              <th style="padding:10px 12px; text-align:right; white-space:nowrap;">營業利益率</th>
+              <th style="padding:10px 12px; text-align:right; white-space:nowrap;">ROE</th>
+              <th style="padding:10px 12px; text-align:right; white-space:nowrap;">單季營收</th>
+            </tr>
+          </thead>
+          <tbody style="font-family:var(--font-mono);">
+            <tr style="border-bottom:1px solid #eef4fa;">
+              <td style="padding:9px 12px; font-family:var(--font-main);">川湖 (2059)</td>
+              <td style="padding:9px 12px; text-align:right; color:#b91c1c; font-weight:700;">68.2%</td>
+              <td style="padding:9px 12px; text-align:right;">57.1%</td>
+              <td style="padding:9px 12px; text-align:right; font-weight:700;">29.8%</td>
+              <td style="padding:9px 12px; text-align:right; white-space:nowrap;">28.5&nbsp;億</td>
+            </tr>
+            <tr style="background:#fffbeb; border-bottom:1px solid #eef4fa;">
+              <td style="padding:9px 12px; font-family:var(--font-main); font-weight:900;">廣達 (2382)</td>
+              <td style="padding:9px 12px; text-align:right; color:#16a34a; font-weight:700;">8.7%</td>
+              <td style="padding:9px 12px; text-align:right;">5.2%</td>
+              <td style="padding:9px 12px; text-align:right; font-weight:900; color:#b91c1c;">27.6%</td>
+              <td style="padding:9px 12px; text-align:right; white-space:nowrap; font-weight:900;">11,100&nbsp;億</td>
+            </tr>
+            <tr style="border-bottom:1px solid #eef4fa;">
+              <td style="padding:9px 12px; font-family:var(--font-main);">奇鋐 (3017)</td>
+              <td style="padding:9px 12px; text-align:right;">24.2%</td>
+              <td style="padding:9px 12px; text-align:right;">13.8%</td>
+              <td style="padding:9px 12px; text-align:right; font-weight:700;">26.5%</td>
+              <td style="padding:9px 12px; text-align:right; white-space:nowrap;">191&nbsp;億</td>
+            </tr>
+            <tr style="border-bottom:1px solid #eef4fa;">
+              <td style="padding:9px 12px; font-family:var(--font-main);">研華 (2395)</td>
+              <td style="padding:9px 12px; text-align:right;">40.5%</td>
+              <td style="padding:9px 12px; text-align:right;">16.8%</td>
+              <td style="padding:9px 12px; text-align:right;">20.2%</td>
+              <td style="padding:9px 12px; text-align:right; white-space:nowrap;">150&nbsp;億</td>
+            </tr>
+            <tr style="border-bottom:1px solid #eef4fa;">
+              <td style="padding:9px 12px; font-family:var(--font-main);">華碩 (2357)</td>
+              <td style="padding:9px 12px; text-align:right;">17.2%</td>
+              <td style="padding:9px 12px; text-align:right;">7.8%</td>
+              <td style="padding:9px 12px; text-align:right;">16.8%</td>
+              <td style="padding:9px 12px; text-align:right; white-space:nowrap;">1,665&nbsp;億</td>
+            </tr>
+            <tr>
+              <td style="padding:9px 12px; font-family:var(--font-main);">致伸 (4915)</td>
+              <td style="padding:9px 12px; text-align:right;">16.8%</td>
+              <td style="padding:9px 12px; text-align:right;">4.6%</td>
+              <td style="padding:9px 12px; text-align:right;">14.2%</td>
+              <td style="padding:9px 12px; text-align:right; white-space:nowrap;">160&nbsp;億</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:22px;">
+        關鍵對比：廣達的毛利率在六檔裡<strong>最低</strong>，ROE 卻<strong>排名第二</strong>。
+        這兩件事同時成立，就說明毛利率不等於賺錢能力。
+      </p>
+
+      <h3 style="font-size:1.08rem; font-weight:900; color:var(--blue-navy); margin-bottom:10px;">
+        ② 規模把薄毛利放大成巨額獲利
+      </h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; margin-bottom:12px;">
+        <div style="background:#f8fbff; border:1px solid #e2effb; border-radius:10px; padding:13px 15px;">
+          <div style="font-size:0.78rem; color:var(--text-muted); font-weight:700;">廣達單季營收</div>
+          <div style="font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:var(--blue-navy); white-space:nowrap;">1.11&nbsp;兆元</div>
+        </div>
+        <div style="background:#f8fbff; border:1px solid #e2effb; border-radius:10px; padding:13px 15px;">
+          <div style="font-size:0.78rem; color:var(--text-muted); font-weight:700;">是川湖營收的</div>
+          <div style="font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:#b91c1c; white-space:nowrap;">389&nbsp;倍</div>
+        </div>
+        <div style="background:#f8fbff; border:1px solid #e2effb; border-radius:10px; padding:13px 15px;">
+          <div style="font-size:0.78rem; color:var(--text-muted); font-weight:700;">是奇鋐營收的</div>
+          <div style="font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:#b91c1c; white-space:nowrap;">58&nbsp;倍</div>
+        </div>
+        <div style="background:#f8fbff; border:1px solid #e2effb; border-radius:10px; padding:13px 15px;">
+          <div style="font-size:0.78rem; color:var(--text-muted); font-weight:700;">近四季 EPS</div>
+          <div style="font-family:var(--font-mono); font-size:1.4rem; font-weight:700; color:var(--blue-navy); white-space:nowrap;">25.76&nbsp;元</div>
+        </div>
+      </div>
+      <p style="font-size:0.93rem; line-height:1.85; margin-bottom:22px;">
+        ROE 可以拆成三個部分：<strong>淨利率 × 資產週轉率 × 權益乘數</strong>。
+        川湖走的是第一項 —— 靠專利壁壘把價差拉到 68.2%；
+        廣達走的是第二項 —— 同一塊資本一年轉非常多次。
+        <strong>8.7% 的毛利率乘上 1.11 兆的營收，絕對金額遠大於 68.2% 乘上 28.5 億。</strong>
+        這就是代工業「薄利多銷、以量換利」的本質，不是經營效率不佳。
+      </p>
+
+      <h3 style="font-size:1.08rem; font-weight:900; color:var(--blue-navy); margin-bottom:10px;">
+        ③ 低毛利率其實是「會計結構」造成的
+      </h3>
+      <div style="background:#f0f9ff; border:1px solid #bae6fd; border-left:5px solid #0284c7; border-radius:10px; padding:15px 17px; font-size:0.93rem; line-height:1.85; margin-bottom:22px;">
+        回頭看本頁<strong>章節 5 的 BOM 成本結構</strong>：一台 AI 機櫃裡，
+        <strong>GPU／CPU 運算模組就佔了 68%</strong>。
+        這些高價晶片多由終端客戶（CSP）指定規格與供應商，廣達負責採購、組裝、整測與交付。<br><br>
+        問題是：<strong>這些晶片的金額會全額計入廣達的營收</strong>，但晶片本身的價差屬於輝達，不屬於組裝廠。
+        於是毛利率的分母被高價料件撐得很大，毛利率自然被稀釋到個位數。
+        <strong>這是營收認列方式的結果，而不是廣達在組裝這件事上賺得比別人少。</strong><br><br>
+        換個角度想：如果廣達改成只收「代工服務費」而不認列料件，營收會大幅縮水，
+        但毛利率會立刻跳到兩位數 —— 公司實際賺的錢卻一毛都沒變。
+      </div>
+
+      <h3 style="font-size:1.08rem; font-weight:900; color:var(--blue-navy); margin-bottom:10px;">
+        ④ 真正的護城河不在毛利率上
+      </h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; margin-bottom:22px;">
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 16px;">
+          <div style="font-weight:900; color:var(--blue-navy); margin-bottom:5px;">🏗️ 資本與信用門檻</div>
+          <div style="font-size:0.88rem; line-height:1.75;">單一 AI 機櫃造價上億元，一張大單的備料金額就是天文數字。
+          沒有千億級別的財務信貸與現金流，根本接不起這種訂單 —— 這道門檻把絕大多數廠商擋在外面。</div>
+        </div>
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 16px;">
+          <div style="font-weight:900; color:var(--blue-navy); margin-bottom:5px;">🔧 L6 → L12 一條龍整合</div>
+          <div style="font-size:0.88rem; line-height:1.75;">從主機板貼裝、次系統節點、整櫃系統整合到資料中心現場部署全包。
+          客戶要的不是便宜的零件，是「一個能直接上線的資料中心」—— 這種整合能力不會出現在毛利率上。</div>
+        </div>
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 16px;">
+          <div style="font-weight:900; color:var(--blue-navy); margin-bottom:5px;">🌐 直通四大 CSP 的客戶結構</div>
+          <div style="font-size:0.88rem; line-height:1.75;">透過雲達科技（QCT）白牌直供微軟、Google、AWS、Meta，
+          繞過傳統品牌商。客戶名單本身就是護城河 —— 超大規模雲端業者的認證與導入週期以年計。</div>
+        </div>
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 16px;">
+          <div style="font-weight:900; color:var(--blue-navy); margin-bottom:5px;">⚡ 台灣一小時供應鏈</div>
+          <div style="font-size:0.88rem; line-height:1.75;">從台積電先進封裝、川湖導軌、奇鋐水冷板到林口機櫃組裝，
+          關鍵組件可在一小時車程內打樣送測。AI 伺服器最難的是散熱與機構熱工程，反應速度決定良率爬升的快慢。</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.08rem; font-weight:900; color:var(--blue-navy); margin-bottom:10px;">
+        ⑤ 但這個模式的風險也要講清楚
+      </h3>
+      <div style="background:#fef2f2; border:1px solid #fecaca; border-left:5px solid #dc2626; border-radius:10px; padding:15px 17px; font-size:0.93rem; line-height:1.85;">
+        <strong>營業利益率只有 5.2%，代表緩衝非常薄。</strong>
+        匯率波動、料件漲價、良率不如預期、或客戶殺價，只要吃掉幾個百分點，獲利就會明顯縮水 ——
+        同樣的衝擊落在毛利率 68.2% 的川湖身上，只是刮傷。<br><br>
+        所以追蹤廣達時，<strong>該盯的是「營收規模能不能維持」與「營益率有沒有被侵蝕」，
+        而不是期待毛利率提升</strong>。以這個商業模式來說，毛利率大幅上升反而不太可能發生。
+        另一個結構性風險是客戶集中：營收高度依賴少數幾家 CSP 的資本支出循環，
+        一旦雲端業者放緩建置，衝擊會直接且快速。
+      </div>
+
+      <p style="font-size:0.84rem; color:var(--text-muted); margin-top:16px; line-height:1.75;">
+        📌 本節所有財務數字取自本站 <code>data/sector_stocks.json</code> 的六檔族群龍頭資料，
+        與章節 3 的獲利三率同源；BOM 成本結構引自本頁章節 5。
+        內容為財務結構的解釋與整理，<strong>不構成投資建議</strong>。
+      </p>
     </section>
 
     <!-- ========================================================
