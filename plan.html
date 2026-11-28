@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>電腦及週邊設備類股 · 投資方案規劃器</title>
+  <meta name="description" content="互動式投資方案規劃工具：教你如何選股、如何用風險預算法決定部位大小、如何分散與分批，並依你設定的資金與風險條件算出一份可檢驗的投資方案。所有計算公開透明，僅供教學與研究參考，不構成投資建議。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #eaf3fb 0%, #dbeefe 50%, #eff6ff 100%);
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --card-border: #cfe5f8;
+      --text-title: #0a2540;
+      --text-body: #2d4156;
+      --text-muted: #5e768d;
+      --blue-quanta: #0284c7;
+      --blue-navy: #0f2c4d;
+      --blue-soft: #e0effe;
+      --blue-primary: #1e60d5;
+      --stock-red: #dc2626;
+      --stock-green: #16a34a;
+      --warn-bg: #fffbeb;
+      --warn-border: #fcd34d;
+      --warn-text: #92400e;
+      --stop-bg: #fef2f2;
+      --stop-border: #fecaca;
+      --stop-text: #991b1b;
+      --font-main: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "IBM Plex Mono", Consolas, monospace;
+      --shadow-sm: 0 2px 8px rgba(15, 44, 77, 0.05);
+      --shadow-md: 0 8px 24px rgba(15, 44, 77, 0.08);
+      --shadow-lg: 0 16px 36px rgba(15, 44, 77, 0.14);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-main);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-body);
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .num, .money { font-family: var(--font-mono); white-space: nowrap !important; word-break: keep-all; flex-shrink: 0; }
+
+    /* ---------------- 導航（五頁共用） ---------------- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(240, 246, 252, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(195, 222, 245, 0.85);
+      box-shadow: 0 2px 10px rgba(15, 44, 77, 0.04);
+    }
+    .nav-container {
+      max-width: 1400px; margin: 0 auto; padding: 12px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-title); }
+    .brand-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #0284c7, #1e60d5);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; box-shadow: var(--shadow-sm);
+    }
+    .brand span:first-of-type { font-size: 1.05rem; font-weight: 900; }
+    .brand-badge {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      background: var(--blue-soft); color: var(--blue-primary);
+      padding: 2px 8px; border-radius: 5px; margin-left: 8px;
+      font-weight: 600; letter-spacing: 0.5px;
+    }
+    .page-tabs-bar { border-top: 1px solid rgba(195, 222, 245, 0.85); background: rgba(255, 255, 255, 0.55); }
+    .page-tabs {
+      max-width: 1400px; margin: 0 auto; padding: 0 24px;
+      display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
+    }
+    .page-tabs::-webkit-scrollbar { display: none; }
+    .page-tab {
+      padding: 10px 18px; font-size: 0.92rem; font-weight: 800;
+      color: var(--text-muted); text-decoration: none;
+      border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.18s;
+    }
+    .page-tab:hover { color: var(--blue-quanta); }
+    .page-tab.active {
+      color: var(--blue-navy); border-bottom-color: var(--blue-quanta);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 22px 24px 90px; }
+
+    /* ---------------- 置頂聲明 ---------------- */
+    .disclaimer-top {
+      background: var(--warn-bg); border: 1px solid var(--warn-border);
+      border-left: 5px solid #f59e0b; border-radius: var(--radius-md);
+      padding: 14px 18px; margin-bottom: 18px; font-size: 0.88rem; color: var(--warn-text);
+    }
+    .disclaimer-top .dt-head {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 900; font-size: 0.95rem; margin-bottom: 6px;
+    }
+    .can-cannot { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
+    .cc-box { border-radius: var(--radius-md); padding: 14px 16px; font-size: 0.87rem; }
+    .cc-can { background: #f0f9ff; border: 1px solid #bae6fd; }
+    .cc-cannot { background: #fef2f2; border: 1px solid #fecaca; }
+    .cc-box h3 { font-size: 0.95rem; font-weight: 900; margin-bottom: 7px; }
+    .cc-can h3 { color: #075985; }
+    .cc-cannot h3 { color: var(--stop-text); }
+    .cc-box ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .cc-box li { padding-left: 18px; position: relative; line-height: 1.65; }
+    .cc-can li::before { content: "✓"; position: absolute; left: 0; color: #0284c7; font-weight: 900; }
+    .cc-cannot li::before { content: "✕"; position: absolute; left: 0; color: var(--stock-red); font-weight: 900; }
+
+    /* ---------------- 區塊 ---------------- */
+    .section { margin-bottom: 28px; }
+    .section-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .section-head h2 {
+      font-size: 1.28rem; font-weight: 900; color: var(--text-title);
+      display: flex; align-items: center; gap: 9px;
+    }
+    .section-head .sh-note { font-size: 0.82rem; color: var(--text-muted); }
+    .card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 20px;
+    }
+
+    /* ---------------- 教學段 ---------------- */
+    .lesson { border-bottom: 1px solid #eef4fa; padding: 16px 0; }
+    .lesson:last-child { border-bottom: none; padding-bottom: 0; }
+    .lesson:first-child { padding-top: 0; }
+    .lesson h3 {
+      font-size: 1.02rem; font-weight: 900; color: var(--text-title);
+      margin-bottom: 7px; display: flex; align-items: center; gap: 8px;
+    }
+    .lesson .ln {
+      width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
+      background: var(--blue-navy); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700;
+    }
+    .lesson p { font-size: 0.89rem; margin-bottom: 8px; }
+    .lesson p:last-child { margin-bottom: 0; }
+    .formula {
+      background: #0f2c4d; color: #e0effe; border-radius: var(--radius-sm);
+      padding: 12px 15px; font-family: var(--font-mono); font-size: 0.86rem;
+      margin: 10px 0; overflow-x: auto; white-space: nowrap; line-height: 1.9;
+    }
+    .formula .hl { color: #7dd3fc; font-weight: 700; }
+    .formula .cm { color: #94a3b8; }
+    .eg {
+      background: #f8fbff; border: 1px solid #e2effb; border-left: 4px solid var(--blue-quanta);
+      border-radius: var(--radius-sm); padding: 11px 14px; font-size: 0.85rem; margin: 10px 0;
+    }
+    .eg strong { color: var(--blue-navy); }
+
+    /* ---------------- 問卷 ---------------- */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .field { display: flex; flex-direction: column; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: 0.89rem; font-weight: 800; color: var(--text-title); }
+    .field .hint { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; font-weight: 400; }
+    .field input[type="number"], .field input[type="text"] {
+      border: 1.5px solid var(--card-border); border-radius: 10px;
+      padding: 11px 13px; font-family: var(--font-mono); font-size: 1rem;
+      color: var(--text-title); outline: none; width: 100%;
+    }
+    .field input:focus { border-color: var(--blue-quanta); }
+    .opt-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .opt {
+      flex: 1; min-width: 110px; cursor: pointer;
+      border: 1.5px solid var(--card-border); border-radius: 10px;
+      padding: 10px 12px; background: #fff; text-align: center; transition: all 0.16s;
+    }
+    .opt:hover { border-color: var(--blue-quanta); }
+    .opt.sel { border-color: var(--blue-navy); background: var(--blue-navy); color: #fff; }
+    .opt .ot { font-size: 0.9rem; font-weight: 800; }
+    .opt .od { font-size: 0.72rem; opacity: 0.8; line-height: 1.5; }
+    .opt input { display: none; }
+    .gate-row {
+      display: flex; gap: 10px; align-items: flex-start;
+      background: #fffdf5; border: 1px solid #fde9b8; border-radius: 10px; padding: 12px 14px;
+    }
+    .gate-row input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; flex-shrink: 0; accent-color: var(--blue-primary); }
+    .gate-row label { font-size: 0.86rem; font-weight: 700; color: var(--warn-text); cursor: pointer; }
+    .gate-row .hint { font-weight: 400; }
+    .range-wrap { display: flex; align-items: center; gap: 12px; }
+    .range-wrap input[type="range"] { flex: 1; accent-color: var(--blue-primary); }
+    .range-val {
+      font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem;
+      color: var(--blue-navy); min-width: 56px; text-align: right; white-space: nowrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #1e60d5); color: #fff; border: none;
+      border-radius: 12px; padding: 14px 28px; font-family: var(--font-main);
+      font-size: 1rem; font-weight: 900; cursor: pointer; box-shadow: var(--shadow-md);
+      transition: transform 0.15s; width: 100%;
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-ghost {
+      background: #fff; border: 1.5px solid var(--card-border); color: var(--text-muted);
+      border-radius: 10px; padding: 9px 16px; font-family: var(--font-main);
+      font-size: 0.86rem; font-weight: 800; cursor: pointer;
+    }
+    .btn-ghost:hover { border-color: var(--blue-quanta); color: var(--blue-quanta); }
+
+    /* ---------------- 方案輸出 ---------------- */
+    .blocked {
+      background: var(--stop-bg); border: 1px solid var(--stop-border);
+      border-left: 6px solid var(--stock-red); border-radius: var(--radius-md);
+      padding: 18px 20px; color: var(--stop-text);
+    }
+    .blocked h3 { font-size: 1.05rem; font-weight: 900; margin-bottom: 8px; }
+    .blocked p { font-size: 0.89rem; margin-bottom: 8px; }
+    .blocked p:last-child { margin-bottom: 0; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .kpi { background: #f8fbff; border: 1px solid #e2effb; border-radius: var(--radius-sm); padding: 12px 14px; }
+    .kpi .k-label { font-size: 0.76rem; color: var(--text-muted); font-weight: 700; }
+    .kpi .k-value {
+      font-family: var(--font-mono); font-size: 1.22rem; font-weight: 700;
+      color: var(--text-title); white-space: nowrap;
+    }
+    .kpi .k-sub { font-size: 0.73rem; color: var(--text-muted); line-height: 1.5; }
+    .kpi.danger { background: #fef7f7; border-color: #fcdcdc; }
+    .kpi.good { background: #f7fbf8; border-color: #d8eede; }
+
+    .pos { border: 1px solid var(--card-border); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 14px; }
+    .pos-head {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 13px 16px; background: #f8fbff; border-bottom: 1px solid #e8f2fb; flex-wrap: wrap;
+    }
+    .pos-name { font-size: 1.05rem; font-weight: 900; color: var(--text-title); }
+    .pos-id { font-family: var(--font-mono); font-size: 0.84rem; color: var(--text-muted); font-weight: 700; }
+    .pos-weight {
+      font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: var(--blue-navy); white-space: nowrap;
+    }
+    .pos-body { padding: 14px 16px; }
+    .pos-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px;
+    }
+    .pcell { background: #fff; border: 1px solid #eef4fa; border-radius: var(--radius-sm); padding: 9px 11px; }
+    .pcell .pl { font-size: 0.73rem; color: var(--text-muted); font-weight: 700; }
+    .pcell .pv { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--text-title); white-space: nowrap; }
+    .pcell .ps { font-size: 0.71rem; color: var(--text-muted); white-space: nowrap; }
+    .pcell.stop { background: #fef7f7; border-color: #fcdcdc; }
+    .pcell.goal { background: #f7fbf8; border-color: #d8eede; }
+    .calc-trace {
+      background: #0f2c4d; color: #cbd5e1; border-radius: var(--radius-sm);
+      padding: 11px 14px; font-family: var(--font-mono); font-size: 0.78rem;
+      line-height: 1.85; overflow-x: auto; margin-top: 10px;
+    }
+    .calc-trace .hl { color: #7dd3fc; }
+    .calc-trace .warn { color: #fbbf24; }
+
+    .note-box {
+      background: #f8fbff; border: 1px solid #e2effb; border-left: 4px solid var(--blue-quanta);
+      border-radius: var(--radius-sm); padding: 13px 15px; font-size: 0.87rem; line-height: 1.75;
+    }
+    .note-box.warn { background: var(--warn-bg); border-color: var(--warn-border); border-left-color: #f59e0b; color: var(--warn-text); }
+    .note-box.stop { background: var(--stop-bg); border-color: var(--stop-border); border-left-color: var(--stock-red); color: var(--stop-text); }
+
+    table.plain { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    table.plain th {
+      background: #f1f7fd; color: var(--blue-navy); font-weight: 800; font-size: 0.79rem;
+      padding: 9px 11px; text-align: right; white-space: nowrap; border-bottom: 2px solid #dbeafe;
+    }
+    table.plain th:first-child, table.plain td:first-child { text-align: left; }
+    table.plain td {
+      padding: 8px 11px; text-align: right; white-space: nowrap;
+      border-bottom: 1px solid #eef4fa; font-family: var(--font-mono);
+    }
+    table.plain td:first-child { font-family: var(--font-main); }
+    .table-wrap { overflow-x: auto; border-radius: var(--radius-md); border: 1px solid var(--card-border); }
+    .up { color: var(--stock-red); }
+    .down { color: var(--stock-green); }
+    .flat { color: var(--text-muted); }
+
+    .steps { list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 11px; }
+    .steps li {
+      counter-increment: s; position: relative; padding-left: 38px;
+      font-size: 0.88rem; line-height: 1.7;
+    }
+    .steps li::before {
+      content: counter(s); position: absolute; left: 0; top: 1px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--blue-soft); color: var(--blue-primary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-weight: 700; font-size: 0.82rem;
+    }
+    details.more { margin-top: 12px; }
+    details.more > summary {
+      cursor: pointer; font-size: 0.87rem; font-weight: 800; color: var(--blue-primary);
+      list-style: none; display: flex; align-items: center; gap: 7px;
+    }
+    details.more > summary::-webkit-details-marker { display: none; }
+    details.more > summary::before { content: "▸"; transition: transform 0.18s; }
+    details.more[open] > summary::before { transform: rotate(90deg); }
+    details.more > div { margin-top: 10px; }
+
+    .loading { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+    .load-error {
+      background: #fef2f2; border: 1px solid #fecaca; border-left: 5px solid #dc2626;
+      border-radius: var(--radius-md); padding: 16px 18px; color: #991b1b; font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .can-cannot { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .pos-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .container { padding: 16px 14px 80px; }
+      .page-tabs { padding: 0 12px; }
+      .page-tab { padding: 9px 13px; font-size: 0.85rem; }
+      .brand span:first-of-type { font-size: 0.92rem; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .pos-row { grid-template-columns: 1fr; }
+      .section-head h2 { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">🧮</div>
+        <div>
+          <span>電腦及週邊設備類股 · 投資方案規劃器</span>
+          <span class="brand-badge">PLANNER</span>
+        </div>
+      </a>
+    </div>
+    <!-- 頁面切換列（五頁共用：改動時五個檔案都要同步） -->
+    <div class="page-tabs-bar">
+      <nav class="page-tabs">
+        <a href="index.html" class="page-tab">📊 類股中樞</a>
+        <a href="strategy.html" class="page-tab">🎯 投資策略與訊號</a>
+        <a href="plan.html" class="page-tab active">🧮 投資方案規劃</a>
+        <a href="news.html" class="page-tab">📰 新聞與市場情報</a>
+        <a href="quanta.html" class="page-tab">🤖 廣達 2382 專頁</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <div class="disclaimer-top">
+      <div class="dt-head">⚠️ 這是一台計算機，不是投資顧問</div>
+      這一頁會依照<strong>你自己輸入的條件</strong>與<strong>公開寫在頁面上的公式</strong>，
+      算出一份資金配置方案。每一個數字都會附上算式，你可以自己驗算、也可以不同意。
+      它<strong>不知道</strong>你的年齡、收入、負債、家庭責任、稅務狀況與其他投資，
+      所以它算出來的<strong>不是適合你的方案，而是「依這組規則算出來的方案」</strong>。
+      真正的投資決策請自行判斷並承擔結果，必要時諮詢持照的專業人士。
+    </div>
+
+    <div class="can-cannot">
+      <div class="cc-box cc-can">
+        <h3>✅ 這頁能幫你做的</h3>
+        <ul>
+          <li>教你<strong>風險預算法</strong>：先決定「最多能賠多少」，再反推該買多少</li>
+          <li>把抽象的「分散投資」變成具體的張數與金額</li>
+            <li>依目前訊號與你的條件，列出候選個股與各自的進場區、停損、目標</li>
+          <li>算出最壞情況（全部停損）會賠多少，讓你進場前就知道</li>
+          <li>把台股的真實限制算進去：一張 1000 股、零股、手續費低消 20 元</li>
+        </ul>
+      </div>
+      <div class="cc-box cc-cannot">
+        <h3>❌ 這頁不會做的</h3>
+        <ul>
+          <li>不會告訴你「該投入多少錢」—— 那取決於你的整體財務狀況</li>
+          <li>不會保證獲利，也不會預測股價</li>
+          <li>不會替你決定要不要買，只會算出「如果照這套規則做會長怎樣」</li>
+          <li>不接受借貸、融資、質押或生活必要資金</li>
+          <li>不會儲存或傳送你輸入的任何資料（全部在你的瀏覽器裡運算）</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============ 教學 ============ -->
+    <div class="section" id="sec-learn">
+      <div class="section-head">
+        <h2>📚 第一步：先搞懂三件事，再談買什麼</h2>
+        <span class="sh-note">多數人虧錢不是因為選錯股，而是因為買太多</span>
+      </div>
+      <div class="card">
+
+        <div class="lesson">
+          <h3><span class="ln">1</span>選股：看四個面向，不是看感覺</h3>
+          <p>本站把每檔股票拆成四個可量化的面向，加權成一個 0~100 的分數。
+             你不需要同意這個權重，但你需要知道它在看什麼：</p>
+          <div class="table-wrap" style="margin:10px 0;">
+            <table class="plain">
+              <thead><tr><th>面向</th><th>權重</th><th>它在問什麼</th></tr></thead>
+              <tbody>
+                <tr><td>趨勢面</td><td>35%</td><td style="text-align:left;">現在的價格站在月線、季線之上嗎？均線本身在往上嗎？</td></tr>
+                <tr><td>動能面</td><td>25%</td><td style="text-align:left;">上漲的力道在增強還是衰退？（MACD、RSI、KD）</td></tr>
+                <tr><td>籌碼面</td><td>25%</td><td style="text-align:left;">外資、投信在買還是在賣？外資持股比在增加嗎？</td></tr>
+                <tr><td>相對強度</td><td>15%</td><td style="text-align:left;">它比整個類股強還是弱？在 60 日區間的哪個位階？</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>要注意的是：分數高只代表「目前成立的條件比較多」，不代表報酬會比較好。</strong>
+             本站的歷史回測顯示，這套規則的優勢是正的但<strong>很薄</strong> ——
+             真正決定成敗的往往不是選到哪檔，而是下面兩件事。</p>
+        </div>
+
+        <div class="lesson">
+          <h3><span class="ln">2</span>部位大小：先決定能賠多少，再反推買多少</h3>
+          <p>這是整頁<strong>最重要</strong>的觀念。多數散戶的做法是「我有 50 萬，這檔看起來不錯，那就買 10 萬」——
+             這叫<strong>金額決定法</strong>，問題是每檔股票的波動不一樣，
+             同樣買 10 萬，買到波動大的股票實際承擔的風險可能是波動小的三倍。</p>
+          <p>專業的做法反過來：<strong>先決定這一筆最多能賠多少錢，再用停損距離反推該買多少。</strong></p>
+          <div class="formula">
+<span class="cm"># 風險預算法（Risk-Based Position Sizing）</span>
+單筆風險金額 = 總投入資金 × <span class="hl">單筆風險%</span>
+停損距離%   = (進場價 − 停損價) ÷ 進場價
+<span class="hl">部位金額</span>     = 單筆風險金額 ÷ 停損距離%
+          </div>
+          <div class="eg">
+            <strong>例：</strong>總投入 50 萬，單筆風險設 1.5%（= 7,500 元）。<br>
+            A 股停損距離 10% → 部位 = 7,500 ÷ 10% = <strong>75,000 元</strong><br>
+            B 股停損距離 5%　→ 部位 = 7,500 ÷ 5%　= <strong>150,000 元</strong><br>
+            買 B 股的金額是 A 股的兩倍，<strong>但兩筆的最大虧損都是 7,500 元</strong>。
+            這就是風險預算法的意義 —— 讓每一筆的「賠法」一致，而不是讓每一筆的「買法」一致。
+          </div>
+          <p>這個方法還有一個好處：它<strong>強迫你在進場前就想清楚停損在哪</strong>。
+             如果你算不出停損價，那就代表你根本還沒想好這筆交易。</p>
+        </div>
+
+        <div class="lesson">
+          <h3><span class="ln">3</span>分散與環境：決定你該不該把錢全放進去</h3>
+          <p><strong>分散</strong>的目的不是提高報酬，是讓單一判斷錯誤不會毀掉整個帳戶。
+             但分散也有代價 —— 檔數太多會讓你無法好好追蹤每一檔，
+             而且台股的最低手續費是 20 元，部位太小時成本佔比會失控。
+             這頁預設 <strong>2~5 檔</strong>，並會檢查每檔是否大到值得買。</p>
+          <p><strong>環境</strong>則是更容易被忽略的一層。本站回測了 2023 年起 942 個交易日的資料，
+             同一套規則在不同類股環境下的期望值差很多：</p>
+          <div class="table-wrap" style="margin:10px 0;">
+            <table class="plain">
+              <thead><tr><th>類股階段</th><th>交易筆數</th><th>勝率</th><th>每筆平均報酬</th></tr></thead>
+              <tbody id="phase-table-body"><tr><td colspan="4" style="text-align:center;">載入中…</td></tr></tbody>
+            </table>
+          </div>
+          <p>所以這頁不會不管環境就叫你把錢全部投入。
+             它會依<strong>目前的類股階段</strong>自動調整曝險上限 ——
+             收縮期時，方案會刻意要求你保留大部分現金。
+             <strong>空手不是沒做事，是在環境不利時成本最低的部位。</strong></p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ 問卷 ============ -->
+    <div class="section" id="sec-form">
+      <div class="section-head">
+        <h2>📝 第二步：告訴我你的條件</h2>
+        <span class="sh-note">全部在你的瀏覽器裡運算，不會上傳、不會儲存</span>
+      </div>
+      <div class="card">
+        <div class="form-grid">
+
+          <div class="field full">
+            <label for="capital">打算投入這個類股的金額（新台幣）</label>
+            <span class="hint">
+              請填<strong>你可以長期放著、全部虧光也不影響生活的閒置資金</strong>，
+              不是你的總資產，也不是你的存款。這一頁不會、也沒有能力判斷你「應該」投入多少 ——
+              那取決於你的收入穩定度、緊急預備金、負債與其他投資，這些我都不知道。
+            </span>
+            <input type="number" id="capital" value="500000" min="0" step="10000" inputmode="numeric">
+          </div>
+
+          <div class="field">
+            <label>你的投資型態</label>
+            <span class="hint">決定選股門檻與停損停利的寬度。三種型態的評分規則完全相同，差別只在門檻。</span>
+            <div class="opt-row" id="opt-profile"></div>
+          </div>
+
+          <div class="field">
+            <label>你預計的持有期間</label>
+            <span class="hint">本站的訊號是<strong>波段級</strong>的，預估持有 4~13 個交易日。選「長期」會另外給你提醒。</span>
+            <div class="opt-row" id="opt-horizon">
+              <label class="opt" data-k="short"><input type="radio" name="horizon" value="short"><div class="ot">短波段</div><div class="od">1~2 週</div></label>
+              <label class="opt sel" data-k="swing"><input type="radio" name="horizon" value="swing" checked><div class="ot">中波段</div><div class="od">2 週~3 個月</div></label>
+              <label class="opt" data-k="long"><input type="radio" name="horizon" value="long"><div class="ot">長期持有</div><div class="od">3 個月以上</div></label>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label for="riskPct">單筆最多能賠多少（佔總投入資金的比例）</label>
+            <span class="hint">
+              這是風險預算法的核心參數。數字愈小，同樣的停損距離下你買得愈少、能分散的檔數愈多。
+              一般的經驗範圍是 1%~2%；超過 3% 代表連續幾次停損就會讓你很難受，也更容易在該停損時下不了手。
+            </span>
+            <div class="range-wrap">
+              <input type="range" id="riskPct" min="0.5" max="4" step="0.25" value="1.5">
+              <span class="range-val" id="riskPctVal">1.5%</span>
+            </div>
+            <span class="hint" id="riskAmtHint"></span>
+          </div>
+
+          <div class="field">
+            <label>你的投資經驗</label>
+            <span class="hint">只影響提醒的強度，不影響計算。</span>
+            <div class="opt-row" id="opt-exp">
+              <label class="opt sel" data-k="new"><input type="radio" name="exp" value="new" checked><div class="ot">新手</div><div class="od">1 年以內</div></label>
+              <label class="opt" data-k="some"><input type="radio" name="exp" value="some"><div class="ot">有經驗</div><div class="od">1 年以上</div></label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>最多同時持有幾檔</label>
+            <span class="hint">檔數愈多愈分散，但每檔部位變小、手續費佔比上升，也更難追蹤。</span>
+            <div class="range-wrap">
+              <input type="range" id="maxPos" min="1" max="6" step="1" value="3">
+              <span class="range-val" id="maxPosVal">3 檔</span>
+            </div>
+          </div>
+
+          <div class="field full">
+            <div class="gate-row">
+              <input type="checkbox" id="gateIdle">
+              <label for="gateIdle">
+                我確認這筆錢是<strong>閒置資金</strong>
+                <span class="hint">
+                  —— 不是生活費、不是緊急預備金、不是半年內要用的錢（學費、房租、保費、手術費）。
+                  即使全部虧光，我的生活不會受到影響。
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field full">
+            <div class="gate-row">
+              <input type="checkbox" id="gateOwn">
+              <label for="gateOwn">
+                我確認這筆錢<strong>不是借來的</strong>
+                <span class="hint">
+                  —— 沒有使用融資、質押、信貸、現金卡、保單借款或向親友借貸。
+                  槓桿會同時放大獲利與虧損，但更致命的是它<strong>讓你失去等待的能力</strong>：
+                  融資有維持率，跌到一定程度會被強制賣出，即使你的判斷最後是對的，
+                  你也已經在最低點被迫出場了。
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field full">
+            <button class="btn-primary" id="btn-generate">產生我的投資方案</button>
+            <span class="hint" style="text-align:center; margin-top:8px;">
+              方案會依本站最新一個交易日的收盤訊號計算。按下去不會送出任何資料到伺服器。
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 方案輸出 ============ -->
+    <div id="plan-output"></div>
+
+  </div>
+
+  <script>
+  /* =====================================================================
+     投資方案規劃器
+     =====================================================================
+     資料來源：data/signals.json（當日訊號）、data/backtest.json（回測佐證）
+     全部在瀏覽器端運算，不送出任何使用者輸入。
+
+     設計立場（修改前請先讀）：
+       這一頁是**計算機與教材**，不是投資顧問。它與 strategy.html 的差別在於
+       它會吃使用者的個人條件（資金、風險偏好），所以更容易被誤認成個人化建議。
+       三個因此而來的硬性約束：
+
+       1) **每個數字都要附算式**。輸出一律同時顯示 calc-trace，
+          讓使用者能自己驗算。沒有算式的數字就是黑箱，不要加。
+       2) **不替使用者決定投入金額**。頁面只問「你打算投入多少」，
+          絕不根據年齡、收入去推薦一個金額 —— 我們沒有那些資料，
+          而且那是持照專業人士的工作。
+       3) **三道閘門不可拿掉**：非閒置資金、借貸資金、金額過小。
+          前兩者直接拒絕產生方案，第三者強制顯示警告。
+
+     不要把輸出的措辭改成「建議買進」「應該配置」。
+     一律是「依你設定的條件，這套規則算出來的方案是…」。
+     ===================================================================== */
+
+  var SIG = null;      // signals.json
+  var BT = null;       // backtest.json
+  var PROFILE = 'balanced';
+
+  /* 依類股階段決定「最多可動用多少比例的資金」。
+     數字不是拍腦袋來的 —— 取自本站回測各階段的每筆平均報酬：
+     擴張期 +0.87% / 整理期 +0.10% / 收縮期 +0.06%。
+     期望值接近零的環境就不該滿倉，差別只在要壓多低。 */
+  var PHASE_EXPOSURE = {
+    expand:   { ratio: 1.00, label: '擴張期', why: '回測顯示這是期望值最高的環境，可動用全部規劃資金' },
+    range:    { ratio: 0.60, label: '整理期', why: '回測每筆平均僅 +0.10%，曝險壓到六成、留現金等方向明朗' },
+    contract: { ratio: 0.30, label: '收縮期', why: '回測每筆平均僅 +0.06%，期望值接近零，曝險壓到三成' },
+    unknown:  { ratio: 0.50, label: '未知',   why: '無法判定環境時採中性曝險' }
+  };
+
+  var FEE_RATE = 0.001425;   // 證券商手續費
+  var FEE_MIN = 20;          // 多數券商的單筆最低手續費
+  var TAX_RATE = 0.003;      // 證交稅（賣出時收）
+  var LOT = 1000;            // 台股一張 = 1000 股
+
+  /* ---------------------------------------------------- 格式化 */
+  function nt(v, dp) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    var d = (dp === undefined) ? 0 : dp;
+    return 'NT$&nbsp;' + Number(v).toLocaleString('zh-TW', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function numf(v, dp) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    var d = (dp === undefined) ? 0 : dp;
+    return Number(v).toLocaleString('zh-TW', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function pctf(v, dp) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    var d = (dp === undefined) ? 2 : dp;
+    return (v > 0 ? '+' : '') + Number(v).toFixed(d) + '%';
+  }
+  function esc(s) {
+    return String(s === null || s === undefined ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function shareText(n) {
+    var lots = Math.floor(n / LOT), odd = n % LOT;
+    if (lots && odd) return lots + '&nbsp;張&nbsp;+&nbsp;' + odd + '&nbsp;股';
+    if (lots) return lots + '&nbsp;張';
+    return odd + '&nbsp;股（零股）';
+  }
+
+  /* ---------------------------------------------------- 載入 */
+  function boot() {
+    Promise.all([
+      fetch('data/signals.json?t=' + Date.now()).then(function (r) {
+        if (!r.ok) throw new Error('signals.json HTTP ' + r.status);
+        return r.json();
+      }),
+      fetch('data/backtest.json?t=' + Date.now())
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; })
+    ]).then(function (res) {
+      SIG = res[0];
+      BT = res[1];
+      initForm();
+      renderPhaseTable();
+    }).catch(function (e) {
+      document.getElementById('plan-output').innerHTML =
+        '<div class="load-error"><strong>資料載入失敗：' + esc(e.message) + '</strong><br>' +
+        '請確認 data/signals.json 存在（可執行 <code>python scripts\\build_signals.py</code> 產生）。</div>';
+    });
+  }
+
+  function renderPhaseTable() {
+    var tb = document.getElementById('phase-table-body');
+    if (!BT) { tb.innerHTML = '<tr><td colspan="4" style="text-align:center;">回測資料尚未產生</td></tr>'; return; }
+    var r = ((BT.results || {}).staged || {}).balanced;
+    if (!r || !r.byPhase) { tb.innerHTML = '<tr><td colspan="4" style="text-align:center;">—</td></tr>'; return; }
+    var name = { expand: '擴張期', range: '整理期', contract: '收縮期', unknown: '資料不足' };
+    var h = '';
+    ['expand', 'range', 'contract'].forEach(function (k) {
+      var v = r.byPhase[k];
+      if (!v) return;
+      var cur = (SIG && SIG.sector && SIG.sector.phaseKey === k);
+      h += '<tr' + (cur ? ' style="background:#eff6ff; font-weight:700;"' : '') + '>' +
+           '<td>' + name[k] + (cur ? ' ← 目前' : '') + '</td>' +
+           '<td>' + numf(v.trades) + '</td><td>' + numf(v.winRate, 1) + '%</td>' +
+           '<td class="' + (v.avgReturn > 0 ? 'up' : 'down') + '">' + pctf(v.avgReturn) + '</td></tr>';
+    });
+    tb.innerHTML = h;
+  }
+
+  /* ---------------------------------------------------- 表單 */
+  function initForm() {
+    var po = document.getElementById('opt-profile');
+    var h = '';
+    (SIG.profileOrder || []).forEach(function (k) {
+      var p = SIG.profiles[k];
+      var n = ((SIG.picks || {})[k] || []).length;
+      h += '<label class="opt ' + (k === PROFILE ? 'sel' : '') + '" data-k="' + k + '">' +
+           '<input type="radio" name="profile" value="' + k + '"' + (k === PROFILE ? ' checked' : '') + '>' +
+           '<div class="ot">' + esc(p.name) + '</div>' +
+           '<div class="od">目前 ' + n + ' 檔符合</div></label>';
+    });
+    po.innerHTML = h;
+
+    document.querySelectorAll('.opt-row').forEach(function (row) {
+      row.addEventListener('click', function (e) {
+        var opt = e.target.closest('.opt');
+        if (!opt) return;
+        row.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('sel'); });
+        opt.classList.add('sel');
+        var inp = opt.querySelector('input');
+        if (inp) inp.checked = true;
+        if (inp && inp.name === 'profile') PROFILE = inp.value;
+        syncHints();
+      });
+    });
+
+    ['capital', 'riskPct', 'maxPos'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', syncHints);
+    });
+    document.getElementById('btn-generate').addEventListener('click', generate);
+    syncHints();
+  }
+
+  function syncHints() {
+    var cap = Number(document.getElementById('capital').value) || 0;
+    var rp = Number(document.getElementById('riskPct').value);
+    var mp = Number(document.getElementById('maxPos').value);
+    document.getElementById('riskPctVal').textContent = rp + '%';
+    document.getElementById('maxPosVal').textContent = mp + ' 檔';
+    document.getElementById('riskAmtHint').innerHTML =
+      '以目前的設定：單筆最多賠 <strong>' + nt(cap * rp / 100) + '</strong>' +
+      '（' + rp + '% × ' + nt(cap) + '）。' +
+      '若連續 5 筆都停損，累計虧損約 <strong>' + nt(cap * rp / 100 * 5) + '</strong>' +
+      '（約總資金的 ' + numf(rp * 5, 1) + '%）—— 這種情況並不罕見，請確認你能接受。';
+  }
+
+  function readInput() {
+    function radio(n) {
+      var el = document.querySelector('input[name="' + n + '"]:checked');
+      return el ? el.value : null;
+    }
+    return {
+      capital: Number(document.getElementById('capital').value) || 0,
+      profile: radio('profile') || 'balanced',
+      horizon: radio('horizon') || 'swing',
+      exp: radio('exp') || 'new',
+      riskPct: Number(document.getElementById('riskPct').value),
+      maxPos: Number(document.getElementById('maxPos').value),
+      gateIdle: document.getElementById('gateIdle').checked,
+      gateOwn: document.getElementById('gateOwn').checked
+    };
+  }
+
+  /* ---------------------------------------------------- 三道閘門 */
+  function checkGates(inp) {
+    if (!inp.gateIdle) {
+      return {
+        title: '這筆錢必須是閒置資金，否則我不會幫你算',
+        body: '<p>你沒有勾選「這是閒置資金」。這不是形式上的免責聲明，而是這整套方法能不能用的<strong>前提</strong>。</p>' +
+              '<p>風險預算法成立的基礎是：<strong>你有能力等</strong>。本站的訊號預估持有 4~13 個交易日，' +
+              '但市場不會照表操課 —— 停損可能在第二天就觸發，也可能卡在不上不下的位置好幾週。' +
+              '如果這筆錢半年內要用（學費、房租、保費、手術費），你會在最糟的時間點被迫賣出，' +
+              '而那通常就是最低點。</p>' +
+              '<p>請先把生活必要資金與緊急預備金（一般建議 3~6 個月的生活費）準備好，再回來使用這個工具。</p>'
+      };
+    }
+    if (!inp.gateOwn) {
+      return {
+        title: '借來的錢，我不會幫你規劃進場',
+        body: '<p>你沒有勾選「這筆錢不是借來的」。融資、質押、信貸或向親友借貸來買股票，' +
+              '我不會給你任何支持這麼做的理由。</p>' +
+              '<p>原因很具體：槓桿會同時放大獲利與虧損，但真正致命的是它<strong>讓你失去等待的能力</strong>。' +
+              '融資有維持率，跌到一定程度會被券商強制賣出 —— 即使你的判斷最後是對的，' +
+              '你也已經在最低點被斷頭出場了。</p>' +
+              '<p>本站目前最高分個股的停損幅度都在 10% 以上，這種波動對槓桿部位是致命的。' +
+              '投入股市的錢，應該是全部虧光也不影響生活的閒置資金。</p>'
+      };
+    }
+    if (!inp.capital || inp.capital <= 0) {
+      return {
+        title: '請先填入打算投入的金額',
+        body: '<p>金額要大於 0 才能計算部位大小。</p>'
+      };
+    }
+    return null;
+  }
+
+  /* ---------------------------------------------------- 方案計算 */
+  function buildPlan(inp) {
+    var phaseKey = (SIG.sector && SIG.sector.phaseKey) || 'unknown';
+    var ex = PHASE_EXPOSURE[phaseKey] || PHASE_EXPOSURE.unknown;
+    var deployable = inp.capital * ex.ratio;
+    var riskAmt = inp.capital * inp.riskPct / 100;
+
+    var byId = {};
+    SIG.stocks.forEach(function (s) { byId[s.id] = s; });
+    var ids = (SIG.picks || {})[inp.profile] || [];
+    var cands = ids.map(function (id) { return byId[id]; })
+                   .filter(function (s) { return s && s.plans && s.plans[inp.profile]; })
+                   .slice(0, inp.maxPos);
+
+    var n = cands.length;
+    var perNameCap = n ? deployable / n : 0;
+    var remaining = deployable;
+    var positions = [];
+
+    cands.forEach(function (s) {
+      var p = s.plans[inp.profile];
+      var entry = p.entryMid;
+      var stopDist = (entry - p.stop) / entry;          // 停損距離（小數）
+      var byRisk = stopDist > 0 ? riskAmt / stopDist : 0;
+      var cap = Math.min(perNameCap, remaining);
+      var target = Math.min(byRisk, cap);
+      var shares = Math.floor(target / entry);
+      var limitedBy = (byRisk <= cap) ? 'risk' : 'concentration';
+      if (shares < 1) {
+        positions.push({
+          s: s, p: p, shares: 0, entry: entry, stopDist: stopDist,
+          byRisk: byRisk, cap: cap, limitedBy: 'tooExpensive'
+        });
+        return;
+      }
+      var amount = shares * entry;
+      remaining -= amount;
+      var risk = shares * (entry - p.stop);
+      var buyFee = Math.max(FEE_MIN, amount * FEE_RATE);
+      positions.push({
+        s: s, p: p, shares: shares, entry: entry, amount: amount,
+        stopDist: stopDist, risk: risk, byRisk: byRisk, cap: cap,
+        limitedBy: limitedBy, buyFee: buyFee,
+        riskPctOfCapital: risk / inp.capital * 100,
+        weight: amount / inp.capital * 100
+      });
+    });
+
+    var live = positions.filter(function (x) { return x.shares > 0; });
+    var invested = live.reduce(function (a, x) { return a + x.amount; }, 0);
+    var totalRisk = live.reduce(function (a, x) { return a + x.risk; }, 0);
+    var totalBuyFee = live.reduce(function (a, x) { return a + x.buyFee; }, 0);
+
+    return {
+      input: inp, phaseKey: phaseKey, exposure: ex,
+      deployable: deployable, riskAmt: riskAmt,
+      positions: positions, live: live,
+      invested: invested, cash: inp.capital - invested,
+      totalRisk: totalRisk, totalRiskPct: totalRisk / inp.capital * 100,
+      totalBuyFee: totalBuyFee,
+      candidateCount: ids.length
+    };
+  }
+
+  /* 情境試算：全部停損 / 一半停損一半達標 / 全部達第一目標。
+     賣出成本（手續費 + 證交稅）一併扣掉，否則會高估獲利。 */
+  function scenarios(plan) {
+    function sellCost(amount) { return Math.max(FEE_MIN, amount * FEE_RATE) + amount * TAX_RATE; }
+    function calc(exitOf) {
+      var pl = 0;
+      plan.live.forEach(function (x) {
+        var exitPx = exitOf(x);
+        var proceeds = x.shares * exitPx;
+        pl += proceeds - sellCost(proceeds) - x.amount - x.buyFee;
+      });
+      return pl;
+    }
+    var allStop = calc(function (x) { return x.p.stop; });
+    var allT1 = calc(function (x) { return x.p.target1; });
+    var mixed = 0;
+    plan.live.forEach(function (x, i) {
+      var exitPx = (i % 2 === 0) ? x.p.target1 : x.p.stop;
+      var proceeds = x.shares * exitPx;
+      mixed += proceeds - sellCost(proceeds) - x.amount - x.buyFee;
+    });
+    return {
+      allStop: allStop, allStopPct: allStop / plan.input.capital * 100,
+      mixed: mixed, mixedPct: mixed / plan.input.capital * 100,
+      allT1: allT1, allT1Pct: allT1 / plan.input.capital * 100
+    };
+  }
+  </script>
+
+  <script>
+  /* ---------------------------------------------------- 產生與輸出 */
+  function generate() {
+    var inp = readInput();
+    var out = document.getElementById('plan-output');
+
+    var gate = checkGates(inp);
+    if (gate) {
+      out.innerHTML = '<div class="section"><div class="blocked">' +
+        '<h3>🚫 ' + esc(gate.title) + '</h3>' + gate.body + '</div></div>';
+      out.scrollIntoView({ block: 'start' });
+      return;
+    }
+
+    var plan = buildPlan(inp);
+    out.innerHTML = renderPlan(plan);
+    out.scrollIntoView({ block: 'start' });
+  }
+
+  function renderPlan(plan) {
+    var inp = plan.input;
+    var sec = SIG.sector || {};
+    var h = '';
+
+    /* ---- 方案總覽 ---- */
+    h += '<div class="section" id="sec-plan">';
+    h += '<div class="section-head"><h2>🧾 第三步：你的方案</h2>' +
+         '<span class="sh-note">依 ' + esc(SIG.dataDate) + ' 收盤訊號計算 · 每個數字都附算式</span></div>';
+
+    // 環境與曝險
+    h += '<div class="card" style="margin-bottom:16px;">';
+    h += '<h3 style="font-size:1.02rem; font-weight:900; color:var(--text-title); margin-bottom:9px;">' +
+         '先決定「要不要全部投入」</h3>';
+    h += '<div class="note-box' + (plan.exposure.ratio < 0.7 ? ' warn' : '') + '">';
+    h += '目前類股處於<strong>' + esc(sec.phase || '—') + '</strong>。' + esc(plan.exposure.why) + '。<br>';
+    h += '因此這份方案的<strong>可動用資金上限為 ' + numf(plan.exposure.ratio * 100, 0) + '%</strong>：';
+    h += '<span class="num">' + nt(inp.capital) + ' × ' + numf(plan.exposure.ratio * 100, 0) + '% = ' +
+         nt(plan.deployable) + '</span>。';
+    if (plan.exposure.ratio < 1) {
+      h += '<br>剩下的 ' + nt(inp.capital - plan.deployable) + ' <strong>刻意不投入</strong> —— ' +
+           '這不是方案沒算完，是這個環境下期望值不足以支撐滿倉。';
+    }
+    h += '</div></div>';
+
+    /* ---- 沒有候選標的 ---- */
+    if (!plan.live.length) {
+      h += '<div class="card">';
+      if (!plan.candidateCount) {
+        h += '<div class="note-box warn"><strong>目前沒有任何個股通過「' +
+             esc(SIG.profiles[inp.profile].name) + '」的篩選條件，所以你的方案就是：不進場。</strong><br><br>' +
+             '這不是工具壞了，是規則給出的答案。在' + esc(sec.phase || '目前') +
+             '的環境下把門檻放寬去硬湊名單，等於在環境最差的時候承擔最大的部位風險。<br><br>' +
+             '你可以做的事：把投資型態切換到較寬鬆的選項看看有沒有標的、' +
+             '或是什麼都不做，把這筆錢留著等類股重新站上月線。' +
+             '<strong>空手也是一種部位，而且是這種盤勢下成本最低的部位。</strong></div>';
+      } else {
+        h += '<div class="note-box stop"><strong>有 ' + plan.candidateCount +
+             ' 檔通過篩選，但以你目前的資金 ' + nt(inp.capital) + ' 一股都買不起。</strong><br><br>';
+        var cheapest = plan.positions.reduce(function (a, b) {
+          return (!a || b.entry < a.entry) ? b : a;
+        }, null);
+        if (cheapest) {
+          h += '最便宜的是 ' + esc(cheapest.s.name) + '，每股約 ' + nt(cheapest.entry, 1) +
+               '，你的單檔可動用上限是 ' + nt(cheapest.cap) + '。<br><br>';
+        }
+        h += '這個類股有不少高價股（例如緯穎每股逾 1,600 元、奇鋐逾 2,800 元，一張就要上百萬），' +
+             '小資金在這個類股會特別吃力。可考慮的方向：提高投入金額、' +
+             '或選擇股價較低的類股（本工具只涵蓋電腦及週邊設備類股）。</div>';
+      }
+      h += '</div></div>';
+      h += renderMethodNote(plan);
+      return h;
+    }
+
+    /* ---- 關鍵數字 ---- */
+    var sc = scenarios(plan);
+    h += '<div class="card" style="margin-bottom:16px;">';
+    h += '<div class="kpi-grid">';
+    h += kpi('實際投入', nt(plan.invested), numf(plan.invested / inp.capital * 100, 1) + '% of 總資金');
+    h += kpi('保留現金', nt(plan.cash), numf(plan.cash / inp.capital * 100, 1) + '% of 總資金');
+    h += kpi('持有檔數', plan.live.length + '&nbsp;檔',
+             plan.candidateCount + ' 檔通過篩選，取前 ' + inp.maxPos + ' 檔');
+    h += kpi('買進手續費', nt(plan.totalBuyFee, 0), '含最低 ' + FEE_MIN + ' 元門檻');
+    h += '</div>';
+    h += '<div class="kpi-grid" style="margin-top:12px;">';
+    h += kpi('全部觸及停損會賠', nt(sc.allStop, 0), numf(sc.allStopPct, 2) + '% of 總資金（已含交易成本）', 'danger');
+    h += kpi('一半停損一半達標', nt(sc.mixed, 0), pctf(sc.mixedPct) + ' of 總資金', sc.mixed >= 0 ? 'good' : 'danger');
+    h += kpi('全部達第一目標會賺', nt(sc.allT1, 0), pctf(sc.allT1Pct) + ' of 總資金', 'good');
+    // 標示要誠實：實際總風險常低於「筆數 × 單筆風險%」的上限，
+    // 因為部位可能被集中度上限壓住。寫成等式會變成一條不成立的算式。
+    var budgetCap = plan.live.length * inp.riskPct;
+    h += kpi('實際總風險', nt(plan.totalRisk, 0),
+             '總資金的 ' + numf(plan.totalRiskPct, 2) + '%（風險預算上限 ' +
+             plan.live.length + ' 筆 × ' + inp.riskPct + '% = ' + numf(budgetCap, 2) + '%）');
+    h += '</div>';
+    h += '<div class="note-box" style="margin-top:14px;">' +
+         '<strong>先看最壞的那一格。</strong>如果這 ' + plan.live.length +
+         ' 檔全部觸及停損，你會賠掉 <strong>' + nt(Math.abs(sc.allStop), 0) + '</strong>' +
+         '（總資金的 ' + numf(Math.abs(sc.allStopPct), 2) + '%）。' +
+         '這個數字是你<strong>進場前就該接受</strong>的 —— 如果看到它會睡不著，' +
+         '代表單筆風險設太高或投入金額太大，請回上一步調低再算一次。<br><br>' +
+         '另外請注意：「全部達第一目標」是<strong>情境試算而非預期值</strong>。' +
+         '本站回測顯示勝率約 五成五、每筆平均僅 +0.59%，' +
+         '實務上最可能發生的是落在中間那一格附近，而不是全賺或全賠。</div>';
+    h += '</div>';
+
+    /* ---- 逐檔部位 ---- */
+    h += '<div class="card" style="margin-bottom:16px;">';
+    h += '<h3 style="font-size:1.02rem; font-weight:900; color:var(--text-title); margin-bottom:12px;">' +
+         '逐檔部位與進出場價位</h3>';
+    plan.positions.forEach(function (x) { h += renderPosition(x, plan); });
+    h += '</div>';
+
+    /* ---- 執行順序 ---- */
+    h += renderExecution(plan);
+
+    /* ---- 個人化提醒 ---- */
+    h += renderWarnings(plan);
+
+    h += '</div>';
+
+    /* ---- 方法與限制 ---- */
+    h += renderMethodNote(plan);
+    return h;
+  }
+
+  function kpi(label, value, sub, cls) {
+    return '<div class="kpi ' + (cls || '') + '"><div class="k-label">' + esc(label) + '</div>' +
+           '<div class="k-value">' + value + '</div>' +
+           (sub ? '<div class="k-sub">' + sub + '</div>' : '') + '</div>';
+  }
+
+  function renderPosition(x, plan) {
+    var s = x.s, p = x.p;
+    var h = '<div class="pos">';
+    h += '<div class="pos-head"><div>';
+    h += '<span class="pos-name">' + esc(s.name) + '</span> <span class="pos-id">' + esc(s.id) + '</span>';
+    h += '<div style="font-size:0.76rem; color:var(--text-muted);">' + esc(s.subGroupName || '') +
+         '｜規則評分 ' + numf(s.score.total, 1) + '（' + esc(s.score.label) + '）</div>';
+    h += '</div>';
+
+    if (x.shares < 1) {
+      h += '<div class="pos-weight" style="color:var(--stock-red);">買不起</div></div>';
+      h += '<div class="pos-body"><div class="note-box stop">' +
+           '每股 ' + nt(x.entry, 1) + '，而這檔的單檔可動用上限只有 ' + nt(x.cap) +
+           '，連 1 股都買不到，因此<strong>排除在方案之外</strong>。<br>' +
+           '台股雖然可以買零股（最小 1 股），但買不到 1 股就真的沒辦法了。</div></div></div>';
+      return h;
+    }
+
+    h += '<div class="pos-weight">' + nt(x.amount) + '<div style="font-size:0.74rem; color:var(--text-muted); font-weight:400; text-align:right;">' +
+         '佔總資金 ' + numf(x.weight, 1) + '%</div></div></div>';
+
+    h += '<div class="pos-body">';
+    h += '<div class="pos-row">';
+    h += pcell('買進股數', shareText(x.shares), '每股 ' + nt(x.entry, 1));
+    h += pcell('參考進場區', nt(p.entryLow, 1) + '&nbsp;~&nbsp;' + nt(p.entryHigh, 1),
+               '不要追高於上緣');
+    h += pcell('停損價', nt(p.stop, 1), pctf(p.stopPct, 1) + '，跌破就走', 'stop');
+    h += pcell('這筆最多賠', nt(x.risk, 0), '總資金的 ' + numf(x.riskPctOfCapital, 2) + '%', 'stop');
+    h += '</div>';
+    h += '<div class="pos-row">';
+    h += pcell('第一目標（出一半）', nt(p.target1, 1), pctf(p.target1Pct, 1), 'goal');
+    h += pcell('第二目標（全出）', nt(p.target2, 1), pctf(p.target2Pct, 1), 'goal');
+    h += pcell('風險報酬比', numf(p.rr, 2) + '&nbsp;:&nbsp;1', p.rr >= 1.5 ? '較理想' : '目標比停損近');
+    h += pcell('預估持有', p.holdDaysMin + '~' + p.holdDaysMax + '&nbsp;個交易日', '檢討日 ' + esc(p.reviewBy));
+    h += '</div>';
+
+    // 算式攤開 —— 這是這一頁與「報明牌」的根本差別
+    h += '<div class="calc-trace">';
+    h += '單筆風險金額 = ' + numf(plan.input.capital) + ' × ' + plan.input.riskPct + '% = <span class="hl">' +
+         numf(plan.riskAmt, 0) + '</span><br>';
+    h += '停損距離 = (' + numf(x.entry, 1) + ' − ' + numf(p.stop, 1) + ') ÷ ' + numf(x.entry, 1) +
+         ' = <span class="hl">' + numf(x.stopDist * 100, 2) + '%</span><br>';
+    h += '風險反推部位 = ' + numf(plan.riskAmt, 0) + ' ÷ ' + numf(x.stopDist * 100, 2) + '% = <span class="hl">' +
+         numf(x.byRisk, 0) + '</span><br>';
+    h += '單檔集中度上限 = ' + numf(plan.deployable, 0) + ' ÷ ' + plan.positions.length + ' 檔 = <span class="hl">' +
+         numf(x.cap, 0) + '</span><br>';
+    h += '實際部位 = min(兩者) = ' + numf(Math.min(x.byRisk, x.cap), 0) +
+         '　→　股數 = ⌊' + numf(Math.min(x.byRisk, x.cap), 0) + ' ÷ ' + numf(x.entry, 1) + '⌋ = <span class="hl">' +
+         numf(x.shares) + ' 股</span><br>';
+    h += '<span class="' + (x.limitedBy === 'concentration' ? 'warn' : '') + '">受限於：' +
+         (x.limitedBy === 'concentration'
+           ? '集中度上限（這檔的停損很近，照風險反推可以買更多，但為了分散而壓低）'
+           : '風險預算（這檔波動大／停損遠，所以只能買這麼多）') + '</span>';
+    h += '</div>';
+
+    // 進場條件
+    h += '<div class="note-box' + (p.needsConfirm ? ' warn' : '') + '" style="margin-top:12px;">';
+    h += '<strong>什麼時候進場：</strong>' + esc(p.trigger);
+    if (p.needsConfirm) {
+      h += '<br><br>⚠️ <strong>這檔目前收盤在 MA20 月線之下，訊號還沒成立。</strong>' +
+           '上面的股數與價位是「條件成立後」才適用的，現在不要先買。';
+    }
+    h += '</div>';
+
+    h += '<details class="more"><summary>什麼時候出場（' + p.exitRules.length + ' 條，任一條成立就動作）</summary><div>';
+    h += '<ul class="steps">';
+    p.exitRules.forEach(function (r) { h += '<li>' + esc(r) + '</li>'; });
+    h += '</ul></div></details>';
+
+    h += '</div></div>';
+    return h;
+  }
+
+  function pcell(label, value, sub, cls) {
+    return '<div class="pcell ' + (cls || '') + '"><div class="pl">' + esc(label) + '</div>' +
+           '<div class="pv">' + value + '</div>' + (sub ? '<div class="ps">' + sub + '</div>' : '') + '</div>';
+  }
+
+  function renderExecution(plan) {
+    var h = '<div class="card" style="margin-bottom:16px;">';
+    h += '<h3 style="font-size:1.02rem; font-weight:900; color:var(--text-title); margin-bottom:12px;">' +
+         '執行順序（照這個順序做，不要跳步）</h3>';
+    h += '<ul class="steps">';
+    h += '<li><strong>先把停損價寫下來。</strong>每一檔的停損價在上面的紅色格子裡。' +
+         '沒有先決定停損就進場的，不是投資，是賭。</li>';
+    h += '<li><strong>等價格進入參考進場區再掛單</strong>，不要在開盤就市價買進。' +
+         '進場區是刻意給的區間，不是單一價位 —— 分批買進比一次壓滿更能控制成本。</li>';
+    var needConfirm = plan.live.filter(function (x) { return x.p.needsConfirm; });
+    if (needConfirm.length) {
+      h += '<li><strong>這 ' + needConfirm.length + ' 檔要先等條件成立：' +
+           needConfirm.map(function (x) { return esc(x.s.name); }).join('、') +
+           '</strong>（目前在月線之下，需收盤站回並連 2 日守住）。在那之前它們的資金先放著不動。</li>';
+    }
+    h += '<li><strong>買進後立刻設定停損</strong>（券商的觸價單或你自己的提醒都可以）。' +
+         '人在賠錢的當下最難下決定，所以要在還冷靜的時候把規則設好。</li>';
+    h += '<li><strong>每天收盤後花三分鐘檢查</strong>：有沒有跌破停損、有沒有觸及第一目標、' +
+         '有沒有連 2 日收在 MA20 之下。可以用本站的「投資策略與訊號」頁。</li>';
+    h += '<li><strong>觸及第一目標先賣一半</strong>，剩下的用 MA20 當移動停利。' +
+         '本站回測顯示這套分段出場的平均報酬（+0.59%）優於單純停利（+0.35%）。</li>';
+    h += '<li><strong>到了檢討日還沒走到目標就換股。</strong>' +
+         '資金卡在原地的機會成本，常常比帳面上的小虧更可觀。</li>';
+    h += '</ul></div>';
+    return h;
+  }
+
+  function renderWarnings(plan) {
+    var inp = plan.input, w = [];
+
+    if (inp.capital < 30000) {
+      w.push(['stop', '資金規模讓手續費失控',
+        '投入 ' + nt(inp.capital) + ' 的情況下，單筆最低手續費 ' + FEE_MIN +
+        ' 元會佔掉很高的比例。買賣一趟（買 20 元 + 賣 20 元 + 證交稅）在小額交易上可能吃掉 1~2% 的本金，' +
+        '而本站回測的每筆平均報酬只有 +0.59%。<strong>成本會直接吃掉這套規則全部的優勢。</strong>' +
+        '建議先累積資金，或改用手續費結構較友善的定期定額工具。']);
+    } else if (inp.capital < 150000) {
+      w.push(['warn', '資金規模讓分散變得困難',
+        '這個類股有不少高價股（緯穎每股逾 1,600 元、奇鋐逾 2,800 元）。' +
+        '以 ' + nt(inp.capital) + ' 要分散到 ' + inp.maxPos + ' 檔，每檔的部位會很小，' +
+        '手續費佔比上升、零股流動性也較差。可以考慮把持有檔數調低到 1~2 檔，讓每筆部位有意義。']);
+    }
+
+    if (inp.riskPct >= 3) {
+      w.push(['warn', '單筆風險設得偏高',
+        '你設定單筆最多賠 ' + inp.riskPct + '%（' + nt(plan.riskAmt, 0) + '）。' +
+        '連續 5 筆停損就會虧掉約 ' + numf(inp.riskPct * 5, 1) + '% 的資金 —— ' +
+        '而以本站回測的勝率（約五成五），連續 5 次虧損在統計上大約每 180 筆交易就會出現一次，並不罕見。' +
+        '風險設太高最常見的後果不是賠得多，而是<strong>你會在該停損的時候下不了手</strong>。']);
+    }
+
+    if (inp.horizon === 'long') {
+      w.push(['warn', '你選了長期持有，但這套訊號是波段級的',
+        '本站的進出場規則以 MA20、ATR 與 60 日高低點為基礎，預估持有 4~13 個交易日，' +
+        '出場條件也都是短中期的（跌破月線、MACD 翻空）。' +
+        '如果你真的想長期持有，<strong>這套停損規則會把你洗出場</strong> —— ' +
+        '長期投資該看的是產業地位、獲利品質與估值，不是均線。' +
+        '本站的「類股中樞」與「廣達專頁」有基本面資料，比較適合長期視角。']);
+    }
+
+    if (inp.exp === 'new') {
+      w.push(['warn', '給新手的話',
+        '這份方案看起來很具體，但它只是<strong>一組規則的運算結果</strong>，不是保證。' +
+        '建議你先用<strong>最小的部位實際走完一輪</strong>（進場 → 停損或停利 → 檢討），' +
+        '體驗過「帳面虧損時想凹單」的感覺之後，再決定要不要放大金額。' +
+        '多數新手的第一個教訓不是選錯股，是在第一次停損時沒有執行紀律。']);
+    }
+
+    var tight = plan.live.filter(function (x) { return x.p.rr !== null && x.p.rr < 1.5; });
+    if (tight.length) {
+      w.push(['warn', tight.length + ' 檔的風險報酬比偏低',
+        tight.map(function (x) { return esc(x.s.name); }).join('、') +
+        ' 的目標距離比停損距離近。需要補充的是：' +
+        '本站回測顯示<strong>規劃 R:R 高的訊號表現反而更差</strong>' +
+        '（高 R:R 來自上方沒有近期壓力，價格要跑更遠才會到目標）。' +
+        '所以這個數字請當成<strong>部位大小的參考</strong>，不是跳過這檔的理由 —— ' +
+        '上面的計算已經把停損距離反映在股數裡了。']);
+    }
+
+    if (!w.length) return '';
+    var h = '<div class="card" style="margin-bottom:16px;">';
+    h += '<h3 style="font-size:1.02rem; font-weight:900; color:var(--text-title); margin-bottom:12px;">' +
+         '依你的條件，有幾件事要提醒</h3>';
+    w.forEach(function (x) {
+      h += '<div class="note-box ' + x[0] + '" style="margin-bottom:10px;">' +
+           '<strong>' + esc(x[1]) + '</strong><br>' + x[2] + '</div>';
+    });
+    h += '</div>';
+    return h;
+  }
+
+  function renderMethodNote(plan) {
+    var h = '<div class="section"><div class="section-head"><h2>📐 這份方案是怎麼算出來的</h2>' +
+            '<span class="sh-note">全部公式都在上面，你可以自己驗算</span></div>';
+    h += '<div class="card">';
+    h += '<div class="table-wrap"><table class="plain"><thead><tr>' +
+         '<th>步驟</th><th>公式</th><th>你的數值</th></tr></thead><tbody>';
+    var rows = [
+      ['可動用資金', '總資金 × 階段曝險比例',
+       nt(plan.input.capital) + ' × ' + numf(plan.exposure.ratio * 100, 0) + '% = ' + nt(plan.deployable)],
+      ['單筆風險金額', '總資金 × 單筆風險%',
+       nt(plan.input.capital) + ' × ' + plan.input.riskPct + '% = ' + nt(plan.riskAmt, 0)],
+      ['停損距離', '(進場中值 − 停損價) ÷ 進場中值', '逐檔不同，見各檔算式'],
+      ['風險反推部位', '單筆風險金額 ÷ 停損距離', '逐檔不同，見各檔算式'],
+      ['集中度上限', '可動用資金 ÷ 檔數',
+       nt(plan.deployable) + ' ÷ ' + plan.positions.length + ' = ' + nt(plan.deployable / Math.max(1, plan.positions.length))],
+      ['實際部位', 'min(風險反推, 集中度上限) 後無條件捨去到整股', '逐檔不同'],
+      ['交易成本', '手續費 0.1425%（最低 20 元）；賣出另加證交稅 0.3%', '來回約 0.585%']
+    ];
+    rows.forEach(function (r) {
+      h += '<tr><td>' + esc(r[0]) + '</td><td style="text-align:left; font-family:var(--font-mono); font-size:0.8rem;">' +
+           esc(r[1]) + '</td><td style="text-align:left;">' + r[2] + '</td></tr>';
+    });
+    h += '</tbody></table></div>';
+
+    h += '<h4 style="font-size:0.95rem; font-weight:900; color:var(--blue-navy); margin:16px 0 7px;">' +
+         '這份方案沒有考慮的事（很重要）</h4>';
+    h += '<ul class="steps">';
+    [
+      '<strong>你的其他資產與負債。</strong>工具只看你填的這筆錢，不知道它佔你總資產的 1% 還是 90%，' +
+      '而這才是決定風險承受度的關鍵。',
+      '<strong>稅務與你的個人情況。</strong>股利所得、二代健保補充保費、以及你的所得級距都沒有計入。',
+      '<strong>個股的基本面與產業風險。</strong>評分只看技術面與籌碼面，' +
+      '不包含財報品質、訂單能見度、客戶集中度、地緣政治等無法量化的因素。',
+      '<strong>流動性與滑價。</strong>零股的成交價可能比你預期的差，高價股尤其明顯。',
+      '<strong>規則本身會失效。</strong>本站回測的優勢很薄（獲利因子 1.22），' +
+      '而且只在單一類股、約 4 年、以 AI 伺服器題材為主軸的期間驗證過，不保證能複製。'
+    ].forEach(function (x) { h += '<li>' + x + '</li>'; });
+    h += '</ul>';
+
+    h += '<div class="note-box warn" style="margin-top:14px;">' +
+         '<strong>最後再說一次：這是一台計算機，不是投資顧問。</strong>' +
+         '它忠實地執行你設定的規則，但「這組規則適不適合你」這個問題，它沒有能力回答。' +
+         '真正的投資決策與其後果由你自行承擔；如需個人化的財務規劃，請諮詢持照的專業人士。</div>';
+
+    h += '</div></div>';
+    return h;
+  }
+
+  boot();
+  </script>
+</body>
+</html>
