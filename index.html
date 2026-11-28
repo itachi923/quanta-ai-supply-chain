@@ -166,17 +166,6 @@
       position: relative;
       overflow: hidden;
     }
-    .hero-banner::after {
-      content: "2382";
-      position: absolute;
-      right: -20px;
-      bottom: -30px;
-      font-size: 9rem;
-      font-weight: 900;
-      color: rgba(255, 255, 255, 0.05);
-      font-family: var(--font-mono);
-      pointer-events: none;
-    }
     .hero-banner-content { flex: 1; min-width: 0; }
     .hero-banner-content h1 {
       font-size: 1.8rem;
@@ -1685,16 +1674,6 @@
         </div>
       </div>
 
-      <!-- 廣達專屬彩蛋引導 -->
-      <div id="quantaSpecialNotice" style="display:none; background:#eff6ff; border:1.5px solid #93c5fd; border-radius:10px; padding:12px 18px; margin-bottom:18px; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-        <span style="font-size:0.9rem; font-weight:700; color:#1e40af;">
-          💡 廣達專屬：本站已建立包含「完整 3 兆元 AI 機櫃樹狀支鏈拓撲圖」與「獲利三率質變走勢」的旗艦專頁！
-        </span>
-        <a href="quanta.html" style="background:#2563eb; color:#fff; text-decoration:none; padding:6px 14px; border-radius:6px; font-size:0.85rem; font-weight:800;">
-          立即開啟廣達旗艦專頁 ➔
-        </a>
-      </div>
-
       <!-- ========================================================
            核心功能：如同廣達的專屬雙向樹狀支鏈產業鏈圖
            ======================================================== -->
@@ -1844,7 +1823,6 @@
         <div style="font-size:0.82rem; margin-top:4px;">每日收盤後自動更新 · 專屬樹狀產業鏈拓撲 · 動態量價線圖 · 支援廣達深度專頁</div>
       </div>
       <div class="footer-links">
-        <a href="quanta.html" style="color:#38bdf8; font-weight:800;">🤖 廣達旗艦專頁</a>
         <a href="#stocksGrid">精選16檔個股</a>
       </div>
     </div>
@@ -2284,10 +2262,6 @@
       spreadEl.innerHTML = `${isUp ? '▲&nbsp;+' : '▼&nbsp;'}${stock.spread !== undefined ? Math.abs(stock.spread) : ''}&nbsp;(${stock.pct || 0}%)`;
       spreadEl.style.background = isUp ? '#fef2f2' : '#f0fdf4';
       spreadEl.style.color = isUp ? 'var(--stock-red)' : 'var(--stock-green)';
-
-      // 廣達彩蛋專屬通道
-      const quantaNotice = document.getElementById('quantaSpecialNotice');
-      quantaNotice.style.display = (stockId === '2382') ? 'flex' : 'none';
 
       document.getElementById('m-products').textContent = stock.mainProducts || '無詳細資料';
       document.getElementById('m-description').textContent = stock.description || '';
