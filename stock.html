@@ -132,7 +132,7 @@
       min-width: 0;   /* 允許 grid 項目收縮到比內容窄，否則會撐破容器 */
     }
     .tk .tk-l { font-size: 0.74rem; opacity: 0.82; font-weight: 700; }
-    .tk .tk-v { font-family: var(--font-mono); font-size: 1.18rem; font-weight: 700; white-space: nowrap; }
+    .tk .tk-v { font-family: var(--font-mono); font-size: 1.18rem; font-weight: 700; white-space: normal; }
     .tk .tk-s { font-size: 0.71rem; opacity: 0.75; white-space: nowrap; }
     .tk-up { color: #fca5a5; }
     .tk-down { color: #86efac; }
@@ -425,7 +425,7 @@
     h += tk('本益比（近四季）', pe ? numf(pe, 1) + '&nbsp;倍' : '—',
             f.trailingEPS ? 'EPS ' + f.trailingEPS + ' 元' : '', '');
     h += tk('近 ' + bars.length + ' 日區間',
-            (lo !== null ? numf(lo, 1) : '—') + '&nbsp;~&nbsp;' + (hi !== null ? numf(hi, 1) : '—'),
+            (lo !== null ? numf(lo, 1) : '—') + ' ~ ' + (hi !== null ? numf(hi, 1) : '—'),
             sg ? ('規則評分 ' + numf(sg.score.total, 1) + '（' + sg.score.label + '）') : '', '');
     h += '</div></div>';
     return h;
