@@ -1234,6 +1234,31 @@
     .comp-table tr.leader-row:hover {
       background: #fef3c7;
     }
+
+    /* 「操作」欄固定在右側。
+       這張表有 11 欄、最小寬度 980px，在一般螢幕上一定要橫向捲到底
+       才看得到最後一欄；捲到邊緣時它又緊貼容器圓角，看起來像被裁切。
+       固定之後它永遠完整可見，也不必捲到底才能按「查看」。
+       注意：sticky 元素一定要有不透明背景，否則底下的儲存格會透出來，
+       所以 hover 與龍頭列的背景色都要各自補一份。 */
+    .comp-table th:last-child,
+    .comp-table td:last-child {
+      position: sticky;
+      right: 0;
+      z-index: 2;
+      text-align: center;
+      background: #ffffff;
+      box-shadow: -7px 0 11px -7px rgba(15, 44, 77, 0.22);
+    }
+    .comp-table th:last-child {
+      background: #0f2c4d;
+      z-index: 3;
+      cursor: default;
+    }
+    .comp-table th:last-child:hover { background: #0f2c4d; }
+    .comp-table tr:hover td:last-child { background: #f8fafc; }
+    .comp-table tr.leader-row td:last-child { background: #fffdf5; }
+    .comp-table tr.leader-row:hover td:last-child { background: #fef3c7; }
     .comp-tag {
       font-size: 0.72rem;
       font-weight: 800;
